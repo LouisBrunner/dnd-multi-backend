@@ -3,7 +3,8 @@ import TouchBackend from 'react-dnd-touch-backend';
 
 export default class MultiBackend {
   constructor(manager) {
-    this.current = 0;
+    console.log('MultiBackend');
+    this.current = 1;
 
     this.backends = [];
     this.backends.push(new HTML5Backend(manager));
@@ -19,6 +20,7 @@ export default class MultiBackend {
   // unmountComponent: => @component = null
 
   setup() {
+    console.log('setup');
     if (typeof window === 'undefined') {
       return;
     }
@@ -39,19 +41,19 @@ export default class MultiBackend {
     this.removeEventListeners(window);
     this.clearCurrentDragSourceNode();
     if (this.current > 0) {
-      this.backends[1].uninstallSourceNodeRemovalObserver()
+      this.backends[1].uninstallSourceNodeRemovalObserver();
     }
     this.removeEventListeners(window);
   }
 
   addEventListeners(target) {
-    this.addEventListener(target, 'touchstart', null, this.backendSwitcher)
+    this.addEventListener(target, 'touchstart', null, this.backendSwitcher);
 
-    for (capture in [false, true]) {
-      suffix = capture ? 'Capture' : '';
+    for (let capture of [false, true]) {
+      const suffix = capture ? 'Capture' : '';
       this.addEventListener(target, 'dragstart', 0, 'handleTopDragStart' + suffix, capture);
       this.addEventListener(target, 'dragenter', 0, 'handleTopDragEnter' + suffix, capture);
-      this.addEventListener(target, 'dragover', 0, 'handleTopDragOver' + suffix, capture)
+      this.addEventListener(target, 'dragover', 0, 'handleTopDragOver' + suffix, capture);
       this.addEventListener(target, 'drop', 0, 'handleTopDrop' + suffix, capture);
       if (capture) {
         this.addEventListener(target, 'dragend', 0, 'handleTopDragEnd' + suffix, capture);
@@ -59,17 +61,17 @@ export default class MultiBackend {
       }
     }
 
-    for (type in [{start: 'mousedown', move: 'mousemove', end: 'mouseup'}, {start: 'touchstart', move: 'touchmove', end: 'touchend'}]) {
-      this.addEventListener(target, type.start, 1, this.backends[1].getTopMoveStartHandler())
-      this.addEventListener(target, type.start, 1, 'handleTopMoveStartCapture', true)
-      this.addEventListener(target, type.move, 1, 'handleTopMove')
-      this.addEventListener(target, type.move, 1, 'handleTopMoveCapture', true)
-      this.addEventListener(target, type.end, 1, 'handleTopMoveEndCapture', true)
+    for (let type of [{start: 'mousedown', move: 'mousemove', end: 'mouseup'}, {start: 'touchstart', move: 'touchmove', end: 'touchend'}]) {
+      this.addEventListener(target, type.start, 1, this.backends[1].getTopMoveStartHandler());
+      this.addEventListener(target, type.start, 1, 'handleTopMoveStartCapture', true);
+      this.addEventListener(target, type.move, 1, 'handleTopMove');
+      this.addEventListener(target, type.move, 1, 'handleTopMoveCapture', true);
+      this.addEventListener(target, type.end, 1, 'handleTopMoveEndCapture', true);
     }
   }
 
   addEventListener(target, event, backend, handler, capture) {
-    var bound = handler;
+    let bound = handler;
     if (backend != null) {
       bound = this.eventHandler.bind(null, event, backend, handler, capture);
     }
@@ -78,7 +80,7 @@ export default class MultiBackend {
   }
 
   backendSwitcher(event) {
-    var oldBackend = this.current;
+    const oldBackend = this.current;
     if (this.current === 0 && event.touches != null) {
       this.current += 1;
       this.backends[1].getTopMoveStartHandler()(event);
@@ -89,6 +91,7 @@ export default class MultiBackend {
   }
 
   eventHandler(eventName, backend, handler, capture, event) {
+    console.log(eventName, backend, handler, capture, event);
     if (backend !== this.current) {
       return;
     }
@@ -96,9 +99,9 @@ export default class MultiBackend {
   }
 
   removeEventListeners(target) {
-    this.listeners.forEach(function(listener) {
+    for (let listener of this.listeners) {
       target.removeEventListener(listener.event, listener.func, listener.capture);
-    });
+    }
     this.listeners = [];
   }
 
@@ -113,7 +116,7 @@ export default class MultiBackend {
   }
 
   applyToBackend(func, args) {
-    self = this.backends[this.current];
+    const self = this.backends[this.current];
     if (func instanceof Function) {
       func.apply(self, args);
     } else {
