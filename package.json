@@ -1,0 +1,43 @@
+{
+  "name": "react-dnd-multi-backend",
+  "version": "2.1.2",
+  "description": "Multi Backend system for React DnD",
+  "main": "dist/react-dnd-multi-backend.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/"
+  },
+  "keywords": [
+    "react",
+    "dnd",
+    "drag",
+    "drop",
+    "html5",
+    "touch",
+    "react-dnd"
+  ],
+  "author": "Louis Brunner <louis.brunner.fr@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/"
+  },
+  "homepage": "https://github.com/",
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "peerDependencies": {
+    "react-dnd": "^2.0.0",
+    "react-dnd-html5-backend": "^2.0.0",
+    "react-dnd-touch-backend": "^0.3.3"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.16.0"
+  }
+}

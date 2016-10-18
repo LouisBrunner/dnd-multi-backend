@@ -1,0 +1,8 @@
+# OS files
+.DS_Store
+
+# Output
+dist
+
+# npm
+node_modules
