@@ -46,8 +46,5 @@
     "react-dnd": "^2.0.0",
     "react-dnd-html5-backend": "^2.0.0",
     "react-dnd-touch-backend": "^0.3.3"
-  },
-  "dependencies": {
-    "babel-polyfill": "^6.16.0"
   }
 }
