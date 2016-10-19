@@ -15,6 +15,11 @@ module.exports = {
       loader: 'babel-loader'
     }]
   },
+  externals: {
+    // Use external version of React and ReactDnD
+    "react": "React",
+    "react-dnd": "ReactDnD"
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {

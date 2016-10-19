@@ -13,8 +13,7 @@ export default class MultiBackend {
 
     const funcs = [
       'setup', 'teardown',
-      'addEventListeners', 'removeEventListeners',
-      'backendSwitcher', 'applyToBackend',
+      'addEventListeners', 'removeEventListeners', 'backendSwitcher', 'applyToBackend', 'previewEnabled',
       'connectDragSource', 'connectDragPreview', 'connectDropTarget'
     ];
     for (let func of funcs) {
@@ -59,7 +58,6 @@ export default class MultiBackend {
     target.removeEventListener('touchstart', this.backendSwitcher);
   }
 
-
   backendSwitcher(event) {
     const oldBackend = this.current;
     if (this.current === 0 && event.touches != null) {
@@ -71,6 +69,10 @@ export default class MultiBackend {
       this.backends[this.current].setup();
       // @component?.switchBackend?(@currentBackend)
     }
+  }
+
+  previewEnabled() {
+    return this.current === 1;
   }
 
   applyToBackend(func, args) {
@@ -89,3 +91,20 @@ export default class MultiBackend {
     return this.applyToBackend('connectDropTarget', arguments);
   }
 }
+
+// @Wrap: (component) =>
+//   displayName = component.displayName or component.name or 'Component'
+//
+//   return class HybridBackendWrapper extends React.Component
+//     @DecoratedComponent = component
+//     @displayName = "HybridBackend(#{displayName})"
+//
+//     @contextTypes: dragDropManager: React.PropTypes.object
+//
+//     componentDidMount: =>
+//       @context.dragDropManager.getBackend().mountComponent(@refs.actual)
+//
+//     componentWillUnmount: =>
+//       @context.dragDropManager.getBackend().unmountComponent(@refs.actual)
+//
+//     render: => React.createElement(component, Object.assign({}, @props, ref: 'actual'))
