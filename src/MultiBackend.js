@@ -2,17 +2,18 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
 
 export default class MultiBackend {
-  constructor(manager) {
-    this.current = 1;
+  constructor(manager, sourceOptions) {
+    const options = Object.assign({start: 0}, sourceOptions || {});
+
+    this.current = options.start;
 
     this.backends = [];
     this.backends.push(new HTML5Backend(manager));
     this.backends.push(new TouchBackend({enableMouseEvents: true})(manager));
 
-    // @component = null
-
     const funcs = [
       'setup', 'teardown',
+      'mountComponent', 'unmountComponent',
       'addEventListeners', 'removeEventListeners', 'backendSwitcher', 'applyToBackend', 'previewEnabled',
       'connectDragSource', 'connectDragPreview', 'connectDropTarget'
     ];
@@ -21,10 +22,13 @@ export default class MultiBackend {
     }
   }
 
-  // TODO
-  // mountComponent: (@component) =>
-  // unmountComponent: => @component = null
+  mountComponent(component) {
+    this.component = component;
+  }
 
+  unmountComponent() {
+    this.component = null;
+  }
 
   setup() {
     if (typeof window === 'undefined') {
@@ -67,7 +71,9 @@ export default class MultiBackend {
     if (this.current !== oldBackend) {
       this.backends[oldBackend].teardown();
       this.backends[this.current].setup();
-      // @component?.switchBackend?(@currentBackend)
+      if (this.component !== null) {
+        this.component.switchBackend(this.current, this.previewEnabled());
+      }
     }
   }
 
@@ -91,20 +97,3 @@ export default class MultiBackend {
     return this.applyToBackend('connectDropTarget', arguments);
   }
 }
-
-// @Wrap: (component) =>
-//   displayName = component.displayName or component.name or 'Component'
-//
-//   return class HybridBackendWrapper extends React.Component
-//     @DecoratedComponent = component
-//     @displayName = "HybridBackend(#{displayName})"
-//
-//     @contextTypes: dragDropManager: React.PropTypes.object
-//
-//     componentDidMount: =>
-//       @context.dragDropManager.getBackend().mountComponent(@refs.actual)
-//
-//     componentWillUnmount: =>
-//       @context.dragDropManager.getBackend().unmountComponent(@refs.actual)
-//
-//     render: => React.createElement(component, Object.assign({}, @props, ref: 'actual'))
