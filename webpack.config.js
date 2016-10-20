@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -12,15 +13,25 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      loader: 'babel-loader'
+      loader: 'babel-loader',
+      query: {
+        "presets": ["es2015"],
+        "plugins": [
+          'lodash',
+          "transform-decorators-legacy",
+          "transform-class-properties"
+        ]
+      }
+
     }]
   },
-  externals: {
+  externals: [
     // Use external version of React and ReactDnD
-    "react": "React",
-    "react-dnd": "ReactDnD"
-  },
+    {"react": "React"},
+    {"react-dnd": "ReactDnD"}
+  ],
   plugins: [
+    new LodashModuleReplacementPlugin,
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')

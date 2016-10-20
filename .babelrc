@@ -1,6 +1,7 @@
 {
   "presets": [ "es2015" ],
   "plugins": [
+    "lodash",
     "transform-decorators-legacy",
     "transform-class-properties"
   ]
