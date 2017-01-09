@@ -1,5 +1,7 @@
 # React DnD Multi Backend
 
+[![NPM Version][npm-image]][npm-url]
+
 This project is a Drag'n'Drop backend compatible with [React DnD](https://github.com/gaearon/react-dnd).
 It enables your application to use different backends depending on the situation. The backend starts by using the [React DnD HTML5 Backend](https://github.com/gaearon/react-dnd-html5-backend), but switches to the [React DnD Touch Backend](https://github.com/yahoo/react-dnd-touch-backend) if a touch event is triggered.
 You application can smoothly use the nice HTML5 compatible backend and fallback on the Touch one on mobile devices!
@@ -7,7 +9,11 @@ Moreover, because the Touch backend doesn't support preview, a `Preview` compone
 
 ## Installation
 
-You can use the minified UMD build in the `dist` folder.
+```bash
+npm install react-dnd-multi-backend
+```
+
+You can then use the minified UMD build in the `dist` folder.
 It exports a global `window.ReactDnDMultiBackend` when imported as a `<script>` tag.
 This file includes the `HTML5` and `Touch` backends, so no need to include them as well.
 
@@ -39,3 +45,8 @@ Thanks to the [React DnD HTML5 Backend](https://github.com/gaearon/react-dnd-htm
 ## License
 
 MIT
+
+
+
+[npm-image]: https://img.shields.io/npm/v/react-dnd-multi-backend.svg
+[npm-url]: https://npmjs.org/package/react-dnd-multi-backend
