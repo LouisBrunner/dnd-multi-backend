@@ -1,7 +1,18 @@
 {
   "name": "react-dnd-multi-backend",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Multi Backend system for React DnD",
+  "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "dnd",
+    "drag",
+    "drop",
+    "html5",
+    "touch",
+    "react-dnd"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib",
@@ -17,22 +28,10 @@
     "type": "git",
     "url": "https://github.com/LouisBrunner/react-dnd-multi-backend"
   },
-  "keywords": [
-    "react",
-    "dnd",
-    "drag",
-    "drop",
-    "html5",
-    "touch",
-    "react-dnd"
-  ],
-  "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/LouisBrunner/react-dnd-multi-backend/issues"
   },
   "homepage": "https://github.com/LouisBrunner/react-dnd-multi-backend",
-  "readme": "README.md",
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-eslint": "^7.0.0",
