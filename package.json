@@ -18,7 +18,7 @@
     "clean": "rimraf lib",
     "build:lib": "babel src/lib --out-dir lib",
     "build:umd": "webpack",
-    "build:examples": "webpack --config webpack/examples.js ; cp dist/ReactDnDMultiBackend.min.js examples",
+    "build:examples": "webpack --config webpack/examples.js",
     "build": "npm run build:lib && npm run build:umd",
     "lint": "eslint .",
     "test": "echo 'No tests yet'",
