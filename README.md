@@ -40,7 +40,12 @@ You must pass a function as the `generator` prop which takes 3 arguments:
 
 Note that this component will only be showed while using the Touch backend.
 
-You can see an example [here](https://github.com/LouisBrunner/react-dnd-multi-backend/blob/master/examples/index.html).
+You can see an example [here](https://github.com/LouisBrunner/react-dnd-multi-backend/blob/master/src/examples/).
+
+## Notes (or future improvements)
+
+ - The backend waits for a touch to switch from the `HTML5Backend` to the `TouchBackend`, any touch anywhere in the whole window do the trick. However, this means that if the first touch is trying to drag an element, it is not going to work because the backends didn't switch yet. From the second touch onward it will work like expected.
+ - At the moment, I don't have a way (or found a way) to automatically reload the `DragSources` and `DropTargets` automatically, so you have to do it yourself. The backend has two methods (`mountComponent` and `unmountComponent`) that you can call in the `componentWillMount` and `componentWillUnmount` of your root component to receive a notification (`switchBackend`) when a backend switch occur. This notification should be used to force the update of the `DragSources` and `DropTargets` so `connectDragSource` and `connectDropTarget` are called again on the new backend.
 
 ## Thanks
 
