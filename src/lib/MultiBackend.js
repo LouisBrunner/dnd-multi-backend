@@ -133,10 +133,11 @@ class MultiBackend {
       if (touchAndNotCurrent) { this.restrictTouchBackend(false); }
     }
 
-    this.nodes[nodeId] = {func: func, args: args, handlers: handlers};
+    const nodes = this.nodes;
+    nodes[nodeId] = {func: func, args: args, handlers: handlers};
 
     return function () {
-      delete this.nodes[nodeId];
+      delete nodes[nodeId];      
       for (let i = 0; i < handlers.length; ++i) {
         const handler = handlers[i];
         if (handler) {
