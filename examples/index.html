@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ReactDnDMultiBackend Examples</title>
+</head>
+<body>
+  <div id="root">React is not working</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-with-addons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+  <script src="https://unpkg.com/react-dnd@2.1.4/dist/ReactDnD.min.js"></script>
+  <script src="ReactDnDMultiBackend.min.js"></script>
+  <script>
+    var Card = React.createClass({
+      propTypes: {
+        color: React.PropTypes.string.isRequired,
+
+        isDragging: React.PropTypes.bool.isRequired,
+        connectDragSource: React.PropTypes.func.isRequired
+      },
+
+      render: function () {
+        var isDragging = this.props.isDragging;
+        var connectDragSource = this.props.connectDragSource;
+        var color = this.props.color;
+        var style = { width: '100px', height: '100px', backgroundColor: this.props.color, opacity: isDragging ? 0.5 : 1 };
+
+        return connectDragSource(React.createElement('div', {style: style}));
+      }
+    });
+
+    var spec = {
+      beginDrag: function (props) {
+        return {color: props.color};
+      }
+    };
+
+    function collect(connect, monitor) {
+      return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging()
+      };
+    }
+
+    var DragCard = ReactDnD.DragSource('square', spec, collect)(Card);
+
+    function generatePreview(type, item, style) {
+      Object.assign(style, {backgroundColor: '#22ff11', width: '50px', height: '50px'});
+      return React.createElement('div', {style: style}, 'Generated');
+    }
+
+    var App = React.createClass({
+      contextTypes: {dragDropManager: React.PropTypes.object},
+
+      getInitialState: function() {
+        return {backend: 0};
+      },
+
+      componentWillMount: function () {
+        this.context.dragDropManager.getBackend().mountComponent(this);
+      },
+
+      componentWillUnmount: function () {
+        this.context.dragDropManager.getBackend().unmountComponent();
+      },
+
+      switchBackend: function (backend) {
+        this.setState({backend: backend});
+      },
+
+      render: function () {
+        return React.createElement('div', {}, [
+          React.createElement(DragCard, {key: '1_' + this.state.backend, color: "#cc2211"}),
+          React.createElement(ReactDnDMultiBackend.Preview, {key: '2', generator: generatePreview})
+        ]);
+      }
+    });
+    var AppDnD = ReactDnD.DragDropContext(ReactDnDMultiBackend)(App);
+
+    ReactDOM.render(React.createElement(AppDnD), document.getElementById('root'));
+  </script>
+</body>
+</html>

@@ -22,14 +22,13 @@ module.exports = {
           "transform-class-properties"
         ]
       }
-
     }]
   },
-  externals: [
+  externals: {
     // Use external version of React and ReactDnD
-    {"react": "React"},
-    {"react-dnd": "ReactDnD"}
-  ],
+    "react": "React",
+    "react-dnd": "ReactDnD"
+  },
   plugins: [
     new LodashModuleReplacementPlugin,
     new webpack.DefinePlugin({

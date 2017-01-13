@@ -2,6 +2,8 @@
 
 [![NPM Version][npm-image]][npm-url]
 
+[Try it here!](https://louisbrunner.github.io/react-dnd-multi-backend/examples)
+
 This project is a Drag'n'Drop backend compatible with [React DnD](https://github.com/gaearon/react-dnd).
 It enables your application to use different backends depending on the situation. The backend starts by using the [React DnD HTML5 Backend](https://github.com/gaearon/react-dnd-html5-backend), but switches to the [React DnD Touch Backend](https://github.com/yahoo/react-dnd-touch-backend) if a touch event is triggered.
 You application can smoothly use the nice HTML5 compatible backend and fallback on the Touch one on mobile devices!
@@ -38,13 +40,15 @@ You must pass a function as the `generator` prop which takes 3 arguments:
 
 Note that this component will only be showed while using the Touch backend.
 
+You can see an example [here](https://github.com/LouisBrunner/react-dnd-multi-backend/blob/master/examples/index.html).
+
 ## Thanks
 
 Thanks to the [React DnD HTML5 Backend](https://github.com/gaearon/react-dnd-html5-backend) maintainers which obviously greatly inspired this project.
 
 ## License
 
-MIT
+MIT, Copyright (c) 2016-2017 Louis Brunner
 
 
 

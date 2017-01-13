@@ -66,12 +66,14 @@ export default class MultiBackend {
     const oldBackend = this.current;
     if (this.current === 0 && event.touches != null) {
       this.current += 1;
-      this.backends[1].getTopMoveStartHandler()(event);
+      if (this.current == 1) {
+        this.backends[this.current].getTopMoveStartHandler()(event);
+      }
     }
     if (this.current !== oldBackend) {
       this.backends[oldBackend].teardown();
       this.backends[this.current].setup();
-      if (this.component !== null) {
+      if (this.component && this.component.switchBackend) {
         this.component.switchBackend(this.current, this.previewEnabled());
       }
     }
