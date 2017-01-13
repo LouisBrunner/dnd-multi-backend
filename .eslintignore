@@ -2,4 +2,4 @@ examples
 dist
 lib
 **/node_modules
-**/webpack*.config.js
+**/webpack*

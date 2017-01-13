@@ -23,6 +23,9 @@ export default class MultiBackend {
   }
 
   mountComponent(component) {
+    if (!component.switchBackend) {
+      throw new Error('your component should implement the `switchBackend` method');
+    }
     this.component = component;
   }
 
@@ -73,7 +76,7 @@ export default class MultiBackend {
     if (this.current !== oldBackend) {
       this.backends[oldBackend].teardown();
       this.backends[this.current].setup();
-      if (this.component && this.component.switchBackend) {
+      if (this.component) {
         this.component.switchBackend(this.current, this.previewEnabled());
       }
     }

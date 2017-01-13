@@ -2,8 +2,8 @@
 .DS_Store
 
 # Output
-lib
-dist
+/lib
+/dist
 
 # npm
 node_modules
