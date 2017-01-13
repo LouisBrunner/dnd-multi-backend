@@ -1,6 +1,4 @@
-# React DnD Multi Backend
-
-[![NPM Version][npm-image]][npm-url]
+# React DnD Multi Backend [![NPM Version][npm-image]][npm-url]
 
 [Try it here!](https://louisbrunner.github.io/react-dnd-multi-backend/examples)
 
@@ -25,12 +23,14 @@ You can plug this backend in the `DragDropContext` the same way you do for any b
 
 You can also pass options to change the Backend behavior. Supported options are:
 
- - `start`: change the starting backend *0* is HTML5, *1* is Touch
+ - `start`: change the starting backend with `ReactDnDMultiBackend.Backend.HTML5` or `ReactDnDMultiBackend.Backend.Touch`
 
 
 Concerning the `Preview` class, it is created using the following snippet:
 ```
-  <ReactDnDMultiBackend.Preview generator={this.generatePreview} />
+  var MultiBackend = require('react-dnd-multi-backend');
+  ...
+  <MultiBackend.Preview generator={this.generatePreview} />
 ```
 You must pass a function as the `generator` prop which takes 3 arguments:
 
@@ -41,11 +41,6 @@ You must pass a function as the `generator` prop which takes 3 arguments:
 Note that this component will only be showed while using the Touch backend.
 
 You can see an example [here](https://github.com/LouisBrunner/react-dnd-multi-backend/blob/master/src/examples/).
-
-## Notes (or future improvements)
-
- - The backend waits for a touch to switch from the `HTML5Backend` to the `TouchBackend`, any touch anywhere in the whole window do the trick. However, this means that if the first touch is trying to drag an element, it is not going to work because the backends didn't switch yet. From the second touch onward it will work like expected.
- - At the moment, I don't have a way (or found a way) to automatically reload the `DragSources` and `DropTargets` automatically, so you have to do it yourself. The backend has two methods (`mountComponent` and `unmountComponent`) that you can call in the `componentWillMount` and `componentWillUnmount` of your root component to receive a notification (`switchBackend`) when a backend switch occur. This notification should be used to force the update of the `DragSources` and `DropTargets` so `connectDragSource` and `connectDropTarget` are called again on the new backend.
 
 ## Thanks
 

@@ -1,6 +1,6 @@
 {
   "name": "react-dnd-multi-backend",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "Multi Backend system for React DnD",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
   "license": "MIT",
@@ -43,6 +43,7 @@
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "eslint": "^3.8.1",
+    "eslint-loader": "^1.6.1",
     "lodash-webpack-plugin": "^0.10.2",
     "react": "^0.14.0 || ^15.0.0-0",
     "react-dom": "^15.4.2",
