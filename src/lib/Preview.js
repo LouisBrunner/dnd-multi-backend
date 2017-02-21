@@ -21,6 +21,6 @@ export default class Preview extends Component {
     if (!this.context.dragDropManager.getBackend().previewEnabled() || !this.props.isDragging || this.props.currentOffset === null) {
       return null;
     }
-    return this.props.generator(this.props.type, this.props.item, this.getStyle());
+    return this.props.generator(this.props.itemType, this.props.item, this.getStyle());
   }
 }
