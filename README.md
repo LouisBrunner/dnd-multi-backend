@@ -47,7 +47,7 @@ You can see an example [here](https://github.com/LouisBrunner/react-dnd-multi-ba
  - Update documentation for new version (+ migration instructions)
  - Write some tests (+ coverage)
  - Use CI?
- - Make backend switching completely backend-agnostic (now still tied to TouchBackend)
+ - TouchBackend doesn't handle mouse events anymore
 
 
 ## Thanks
