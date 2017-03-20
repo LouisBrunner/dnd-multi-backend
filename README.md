@@ -10,7 +10,7 @@ Moreover, because the Touch backend doesn't support preview, a `Preview` compone
 ## Installation
 
 ```bash
-npm install react-dnd-multi-backend
+npm install react-dnd-multi-backend@next
 ```
 
 You can then use the minified UMD build in the `dist` folder.
@@ -41,6 +41,14 @@ You must pass a function as the `generator` prop which takes 3 arguments:
 Note that this component will only be showed while using the Touch backend.
 
 You can see an example [here](https://github.com/LouisBrunner/react-dnd-multi-backend/blob/master/src/examples/).
+
+## Tasks
+
+ - Update documentation for new version (+ migration instructions)
+ - Write some tests (+ coverage)
+ - Use CI?
+ - Make backend switching completely backend-agnostic (now still tied to TouchBackend)
+
 
 ## Thanks
 

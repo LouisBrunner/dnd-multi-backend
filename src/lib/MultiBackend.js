@@ -1,21 +1,28 @@
-import HTML5Backend from 'react-dnd-html5-backend';
-import TouchBackend from 'react-dnd-touch-backend';
-
-const Backend = {
-  HTML5: 0,
-  TOUCH: 1,
-  MAX: 2
-};
-
-class MultiBackend {
+export default class {
   constructor(manager, sourceOptions) {
-    const options = Object.assign({start: Backend.HTML5}, sourceOptions || {});
+    const options = Object.assign({backends: []}, sourceOptions || {});
 
-    this.current = options.start;
+    if (options.backends.length < 1) {
+      throw new Error('You must at least specify one Backend');
+    }
+
+    this.current = 0;
 
     this.backends = [];
-    this.backends[Backend.HTML5] = new HTML5Backend(manager);
-    this.backends[Backend.TOUCH] = new TouchBackend({enableMouseEvents: true})(manager);
+    for (let backend of options.backends) {
+      if (!backend.backend) {
+        throw new Error(`You must specify a 'backend' property in your Backend entry: ${backend}`);
+      }
+      const transition = backend.transition;
+      if (transition && !transition._isMBTransition) {
+        throw new Error(`You must specify a valid 'transition' property (either undefined or the return of 'createTransition') in your Backend entry: ${backend}`);
+      }
+      this.backends.push({
+        instance: new backend.backend(manager),
+        preview: (backend.preview || false),
+        transition: transition
+      });
+    }
 
     this.nodes = {};
 
@@ -44,7 +51,7 @@ class MultiBackend {
     }
     this.constructor.isSetUp = true;
     this.addEventListeners(window);
-    this.backends[this.current].setup();
+    this.backends[this.current].instance.setup();
   }
 
   teardown() {
@@ -54,7 +61,7 @@ class MultiBackend {
 
     this.constructor.isSetUp = false;
     this.removeEventListeners(window);
-    this.backends[this.current].teardown();
+    this.backends[this.current].instance.teardown();
   }
 
   connectDragSource() {
@@ -67,39 +74,50 @@ class MultiBackend {
     return this.callBackends('connectDropTarget', arguments);
   }
 
-  // Use by Preview component
+  // Used by Preview component
   previewEnabled() {
-    return this.current === Backend.TOUCH;
+    return this.backends[this.current].preview;
   }
 
   // Multi Backend Listeners
   addEventListeners(target) {
-    target.addEventListener('touchstart', this.backendSwitcher, true);
+    for (let backend in this.backends) {
+      if (backend.transition) {
+        target.addEventListener(backend.transition.event, this.backendSwitcher, true);
+      }
+    }
   }
 
   removeEventListeners(target) {
-    target.removeEventListener('touchstart', this.backendSwitcher, true);
+    for (let backend in this.backends) {
+      if (backend.transition) {
+        target.removeEventListener(backend.transition.event, this.backendSwitcher, true);
+      }
+    }
   }
 
   // Switching logic
   backendSwitcher(event) {
     const oldBackend = this.current;
 
-    if (this.current === Backend.HTML5 && event.touches != null) {
-      this.current = Backend.TOUCH;
-      this.removeEventListeners(window);
+    let i = 0;
+    for (let backend in this.backends) {
+      if (i != this.current && backend.transition && backend.transition.check(event)) {
+        this.current = i;
+        break;
+      }
+      i += 1;
     }
 
     if (this.current !== oldBackend) {
-      this.backends[oldBackend].teardown();
+      this.backends[oldBackend].instance.teardown();
       this.cleanUpHandlers(oldBackend);
-      this.backends[this.current].setup();
+      this.backends[this.current].instance.setup();
 
-      if (this.current === Backend.TOUCH) {
+      if (this.current === 1) { // TODO: fix
         this.freeTouchBackend();
-        this.backends[this.current].handleTopMoveStartCapture(event);
-        this.backends[this.current].getTopMoveStartHandler()(event);
       }
+      event.target.dispatch(event);
     }
   }
 
@@ -113,21 +131,20 @@ class MultiBackend {
 
   // Which backend should be called
   applyToBackend(backend, func, args) {
-    const self = this.backends[backend];
+    const self = this.backends[backend].instance;
     return self[func].apply(self, args);
   }
 
   callBackends(func, args) {
-    let handlers = [];
+    const handlers = [];
     const nodeId = func + '_' + args[0];
 
-    for (let i = 0; i < Backend.MAX; ++i) {
+    for (let i = 0; i < this.backends.length; ++i) {
       if (i < this.current) {
         handlers.push(null);
         continue;
       }
-
-      const touchAndNotCurrent = i == Backend.TOUCH && i != this.current;
+      const touchAndNotCurrent = i === 1 && i != this.current; // TODO: fix
       if (touchAndNotCurrent) { this.restrictTouchBackend(true); }
       handlers.push(this.applyToBackend(i, func, args));
       if (touchAndNotCurrent) { this.restrictTouchBackend(false); }
@@ -137,7 +154,7 @@ class MultiBackend {
     nodes[nodeId] = {func: func, args: args, handlers: handlers};
 
     return function () {
-      delete nodes[nodeId];      
+      delete nodes[nodeId];
       for (let i = 0; i < handlers.length; ++i) {
         const handler = handlers[i];
         if (handler) {
@@ -147,19 +164,17 @@ class MultiBackend {
     };
   }
 
+  // TODO: fix
   // Special cases for TouchBackend
   restrictTouchBackend(enable) {
-    this.backends[Backend.TOUCH].listenerTypes = enable ? ['touch'] : ['touch', 'mouse'];
+    this.backends[1].instance.listenerTypes = enable ? ['touch'] : ['touch', 'mouse'];
   }
 
   freeTouchBackend() {
     for (let id of Object.keys(this.nodes)) {
       const node = this.nodes[id];
-      node.handlers[Backend.TOUCH]();
-      node.handlers[Backend.TOUCH] = this.applyToBackend(Backend.TOUCH, node.func, node.args);
+      node.handlers[1]();
+      node.handlers[1] = this.applyToBackend(1, node.func, node.args);
     }
   }
 }
-MultiBackend.Backend = Backend;
-
-export default MultiBackend;

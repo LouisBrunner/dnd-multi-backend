@@ -1,14 +1,16 @@
 import MultiBackend from './MultiBackend';
-import PreviewComponent from './Preview';
+import Preview from './Preview';
+import TouchTransition from './TouchTransition';
+import createTransition from './createTransition';
 
-export const Preview = PreviewComponent;
+export { Preview, TouchTransition, createTransition };
 
-export default function createMultiBackend(managerOrOptions) {
+export default (managerOrOptions) => {
   if (managerOrOptions.getMonitor) {
     return new MultiBackend(managerOrOptions);
   } else {
-    return function (manager) {
+    return (manager) => {
       return new MultiBackend(manager, managerOrOptions);
     };
   }
-}
+};
