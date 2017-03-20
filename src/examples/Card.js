@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { PropTypes, createClass } from 'react';
 import { DragSource } from 'react-dnd';
-const PropTypes = React.PropTypes;
 
 const spec = {
   beginDrag: function (props) {
@@ -15,7 +14,7 @@ function collect(connect, monitor) {
   };
 }
 
-const Card = React.createClass({
+const Card = createClass({
   propTypes: {
     color: PropTypes.string.isRequired,
 
@@ -26,7 +25,6 @@ const Card = React.createClass({
   render: function () {
     var isDragging = this.props.isDragging;
     var connectDragSource = this.props.connectDragSource;
-    var color = this.props.color;
     var style = { backgroundColor: this.props.color, opacity: isDragging ? 0.5 : 1 };
 
     return connectDragSource(<div className="square" style={style} />);

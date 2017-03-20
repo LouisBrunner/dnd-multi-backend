@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropTypes, createClass } from 'react';
 import { DropTarget } from 'react-dnd';
-const PropTypes = React.PropTypes;
 
 const spec = {
   drop: function (props, monitor) {
+    // eslint-disable-next-line no-console
     console.log('Dropped: ' + monitor.getItem().color);
   }
 };
@@ -16,7 +16,7 @@ function collect(connect, monitor) {
   };
 }
 
-const Basket = React.createClass({
+const Basket = createClass({
   propTypes: {
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired,

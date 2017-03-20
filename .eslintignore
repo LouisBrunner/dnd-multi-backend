@@ -1,5 +1,4 @@
-examples
-dist
-lib
+/examples
+/dist
+/lib
 **/node_modules
-**/webpack*
