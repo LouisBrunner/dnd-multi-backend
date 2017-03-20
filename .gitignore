@@ -3,7 +3,7 @@
 
 # Output
 /lib
-/dist
+/dist/examples*
 
 # npm
 node_modules

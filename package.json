@@ -15,10 +15,10 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "clean": "rm -rf dist lib",
+    "clean": "rm -rf lib",
     "build:lib": "babel src/lib --out-dir lib",
     "build:umd": "webpack",
-    "build:examples": "webpack --config webpack/examples.js",
+    "build:examples": "webpack --config webpack/examples.js && webpack --config webpack/examples_dist.js",
     "build": "npm run build:lib && npm run build:umd",
     "lint": "eslint .",
     "test": "echo 'No tests yet'",
