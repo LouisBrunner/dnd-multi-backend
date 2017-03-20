@@ -17,9 +17,9 @@
   "scripts": {
     "clean": "rm -rf lib",
     "build:lib": "babel src/lib --out-dir lib",
-    "build:umd": "webpack",
+    "build:dist": "webpack",
     "build:examples": "webpack --config webpack/examples.js && webpack --config webpack/examples_dist.js",
-    "build": "npm run build:lib && npm run build:umd",
+    "build": "npm run build:lib && npm run build:dist",
     "lint": "eslint .",
     "test": "echo 'No tests yet'",
     "test:watch": "npm run test -- --watch",

@@ -10,7 +10,7 @@ module.exports = webpackMerge(commonConfig(), {
     path: './dist',
     filename: '[name].min.js',
     libraryTarget: 'umd',
-    library: 'ReactDnDMultiBackend'
+    library: '[name]'
   },
   externals: {
     // Use external version of React and ReactDnD
