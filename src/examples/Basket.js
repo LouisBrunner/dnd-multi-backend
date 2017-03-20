@@ -24,10 +24,10 @@ const Basket = createClass({
   },
 
   render: function () {
-    var isOver = this.props.isOver;
-    var canDrop = this.props.canDrop;
-    var connectDropTarget = this.props.connectDropTarget;
-    var style = { backgroundColor: isOver && canDrop ? '#f3f3f3' : '#cccccc', border: '1px dashed black' };
+    const isOver = this.props.isOver;
+    const canDrop = this.props.canDrop;
+    const connectDropTarget = this.props.connectDropTarget;
+    const style = { backgroundColor: (isOver && canDrop) ? '#f3f3f3' : '#cccccc', border: '1px dashed black' };
 
     return connectDropTarget(<div className="square" style={style} />);
   }

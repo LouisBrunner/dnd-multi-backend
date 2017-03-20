@@ -23,9 +23,9 @@ const Card = createClass({
   },
 
   render: function () {
-    var isDragging = this.props.isDragging;
-    var connectDragSource = this.props.connectDragSource;
-    var style = { backgroundColor: this.props.color, opacity: isDragging ? 0.5 : 1 };
+    const isDragging = this.props.isDragging;
+    const connectDragSource = this.props.connectDragSource;
+    const style = { backgroundColor: this.props.color, opacity: isDragging ? 0.5 : 1 };
 
     return connectDragSource(<div className="square" style={style} />);
   }
