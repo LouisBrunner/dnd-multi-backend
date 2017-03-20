@@ -11,7 +11,7 @@ You application can smoothly use the nice HTML5 compatible backend and fallback 
 
 Moreover, because some backends don't support preview, a `Preview` component has been added to make it easier to mock the Drag'n'Drop "ghost".
 
-This is the next version of this package, see [Migrating from 2.x.x](#migrating-from-2.x.x) for instructions if you are coming from `react-dnd-multi-backend@2.x.x`.
+This is the **next** version of this package, see [Migrating from 2.x.x](#migrating-from-2xx) for instructions if you are coming from `react-dnd-multi-backend@2.x.x`.
 
 
 ## Installation
@@ -115,7 +115,7 @@ Note that this component will only be showed while using a backend flagged with 
 You can see an example [here](src/examples/) (Node.js style with `import`s).
 
 
-## Migration from 2.x.x
+## Migrating from 2.x.x
 
 TODO
 
