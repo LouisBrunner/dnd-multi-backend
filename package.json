@@ -24,6 +24,7 @@
     "test": "echo 'No tests yet'",
     "test:watch": "npm run test -- --watch",
     "install": "npm run clean && npm run build:lib",
+    "start": "webpack-dev-server --config webpack/dev.js",
     "prepublishOnly": "npm run lint && npm run clean && npm run test && npm run build:examples && npm run build"
   },
   "repository": {
@@ -40,6 +41,7 @@
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-class-properties": "^6.16.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-es2015-for-of": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.23.0",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
@@ -49,6 +51,7 @@
     "react": "^0.14.0 || ^15.0.0-0",
     "react-dom": "^15.4.2",
     "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.2",
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {

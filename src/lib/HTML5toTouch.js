@@ -9,7 +9,7 @@ export default {
       backend: HTML5Backend
     },
     {
-      backend: TouchBackend({enableMouseEvents: true}),
+      backend: TouchBackend({enableMouseEvents: false}),
       preview: true,
       transition: TouchTransition
     }

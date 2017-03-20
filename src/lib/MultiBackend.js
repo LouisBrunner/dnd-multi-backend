@@ -33,7 +33,6 @@ export default class {
       'addEventListeners', 'removeEventListeners',
       'backendSwitcher', 'cleanUpHandlers',
       'applyToBackend', 'callBackends',
-      'restrictTouchBackend', 'freeTouchBackend'
     ];
     for (let func of funcs) {
       this[func] = this[func].bind(this);
@@ -81,7 +80,7 @@ export default class {
 
   // Multi Backend Listeners
   addEventListeners(target) {
-    for (let backend in this.backends) {
+    for (let backend of this.backends) {
       if (backend.transition) {
         target.addEventListener(backend.transition.event, this.backendSwitcher, true);
       }
@@ -89,7 +88,7 @@ export default class {
   }
 
   removeEventListeners(target) {
-    for (let backend in this.backends) {
+    for (let backend of this.backends) {
       if (backend.transition) {
         target.removeEventListener(backend.transition.event, this.backendSwitcher, true);
       }
@@ -101,7 +100,7 @@ export default class {
     const oldBackend = this.current;
 
     let i = 0;
-    for (let backend in this.backends) {
+    for (let backend of this.backends) {
       if (i != this.current && backend.transition && backend.transition.check(event)) {
         this.current = i;
         break;
@@ -114,10 +113,8 @@ export default class {
       this.cleanUpHandlers(oldBackend);
       this.backends[this.current].instance.setup();
 
-      if (this.current === 1) { // TODO: fix
-        this.freeTouchBackend();
-      }
-      event.target.dispatch(event);
+      const newEvent = new event.constructor(event.type, event);
+      event.target.dispatchEvent(newEvent);
     }
   }
 
@@ -144,10 +141,7 @@ export default class {
         handlers.push(null);
         continue;
       }
-      const touchAndNotCurrent = i === 1 && i != this.current; // TODO: fix
-      if (touchAndNotCurrent) { this.restrictTouchBackend(true); }
       handlers.push(this.applyToBackend(i, func, args));
-      if (touchAndNotCurrent) { this.restrictTouchBackend(false); }
     }
 
     const nodes = this.nodes;
@@ -162,19 +156,5 @@ export default class {
         }
       }
     };
-  }
-
-  // TODO: fix
-  // Special cases for TouchBackend
-  restrictTouchBackend(enable) {
-    this.backends[1].instance.listenerTypes = enable ? ['touch'] : ['touch', 'mouse'];
-  }
-
-  freeTouchBackend() {
-    for (let id of Object.keys(this.nodes)) {
-      const node = this.nodes[id];
-      node.handlers[1]();
-      node.handlers[1] = this.applyToBackend(1, node.func, node.args);
-    }
   }
 }
