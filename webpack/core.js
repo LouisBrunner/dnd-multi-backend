@@ -1,38 +1,34 @@
 const webpack = require('webpack');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = function () {
   return {
     module: {
-      preLoaders: [
+      rules: [
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: 'eslint-loader',
-        },
-      ],
-      loaders: [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader',
+          use: ['babel-loader', 'eslint-loader'],
         },
       ],
     },
+    resolve: {
+      modules: [
+        './src', './node_modules'
+      ],
+    },
     plugins: [
-      new LodashModuleReplacementPlugin,
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': JSON.stringify('production')
         }
       }),
       new webpack.optimize.UglifyJsPlugin({
-          compress: {
-              warnings: false,
-          },
-          output: {
-              comments: false,
-          },
+        compress: {
+          warnings: false,
+        },
+        output: {
+          comments: false,
+        },
       }),
     ]
   };
