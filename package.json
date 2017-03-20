@@ -48,15 +48,15 @@
     "eslint": "^3.8.1",
     "eslint-loader": "^1.6.1",
     "eslint-plugin-react": "^6.10.2",
-    "react": "^0.14.0 || ^15.0.0-0",
-    "react-dom": "^15.4.2",
+    "react": "*",
+    "react-dom": "*",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2",
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
-    "react-dnd": "^2.0.0",
-    "react-dnd-html5-backend": "^2.0.0",
-    "react-dnd-touch-backend": "^0.3.3"
+    "react-dnd": "*",
+    "react-dnd-html5-backend": "*",
+    "react-dnd-touch-backend": "*"
   }
 }
