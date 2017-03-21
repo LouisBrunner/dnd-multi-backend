@@ -1,12 +1,10 @@
 import { expect, sinon, mount } from 'tests/framework';
-import React, { PureComponent } from 'react';
-import { DragDropContext, DragLayer } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-import MultiBackend from '../MultiBackend';
+import React from 'react';
 
 import Preview from '../Preview';
 
 before(() => { sinon.stub(console, 'error').callsFake((warning) => { throw new Error(warning); }); });
+// eslint-disable-next-line no-console
 after(() => { console.error.restore(); });
 
 describe('Preview component', () => {
