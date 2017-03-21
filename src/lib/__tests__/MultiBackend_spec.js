@@ -121,7 +121,7 @@ describe('MultiBackend class', () => {
       sinon.stub(backend, 'callBackends');
       backend.connectDragSource();
       expect(backend.callBackends).to.have.been.calledOnce;
-      expect(backend.callBackends).to.have.been.calledWithExactly('connectDragSource');
+      expect(backend.callBackends).to.have.been.calledWithExactly('connectDragSource', []);
     });
   });
 
@@ -131,7 +131,7 @@ describe('MultiBackend class', () => {
       sinon.stub(backend, 'callBackends');
       backend.connectDragPreview(1);
       expect(backend.callBackends).to.have.been.calledOnce;
-      expect(backend.callBackends).to.have.been.calledWithExactly('connectDragPreview', 1);
+      expect(backend.callBackends).to.have.been.calledWithExactly('connectDragPreview', [1]);
     });
   });
 
@@ -141,13 +141,18 @@ describe('MultiBackend class', () => {
       sinon.stub(backend, 'callBackends');
       backend.connectDropTarget(1, 2);
       expect(backend.callBackends).to.have.been.calledOnce;
-      expect(backend.callBackends).to.have.been.calledWithExactly('connectDropTarget', 1, 2);
+      expect(backend.callBackends).to.have.been.calledWithExactly('connectDropTarget', [1, 2]);
     });
   });
 
 
   describe('previewEnabled function', () => {
-    it('returns the current backend preview attribute');
+    it('returns the current backend preview attribute', () => {
+      const backend = createBackend();
+      expect(backend.previewEnabled()).to.equal(false);
+      backend.current = 1;
+      expect(backend.previewEnabled()).to.equal(true);
+    });
   });
 
   describe('addEventListeners function', () => {
@@ -167,10 +172,6 @@ describe('MultiBackend class', () => {
 
   describe('cleanUpHandlers function', () => {
     it('removes all the handlers for a certain backend');
-  });
-
-  describe('applyToBackend function', () => {
-    it('calls a function on a certain backend');
   });
 
   describe('callBackends function', () => {
