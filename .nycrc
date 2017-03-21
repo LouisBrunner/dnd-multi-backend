@@ -13,7 +13,7 @@
   "require": [
     "babel-register"
   ],
-  "all": true,
+  "cache": true,
   "sourceMap": false,
   "instrument": false
 }

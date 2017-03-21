@@ -3,7 +3,7 @@ export default class {
     const options = Object.assign({backends: []}, sourceOptions || {});
 
     if (options.backends.length < 1) {
-      throw new Error('You must at least specify one Backend');
+      throw new Error('You must specify at least one Backend');
     }
 
     this.current = 0;
