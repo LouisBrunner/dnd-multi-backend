@@ -23,6 +23,8 @@
     "lint": "eslint .",
     "test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/src nyc mocha --opts ./mocha.opts",
     "test:watch": "watch-run -i -p 'src/lib/**/*' npm run test",
+    "travis-test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/src nyc --reporter=lcov mocha --opts ./mocha.opts",
+    "travis-coverage": "cat ./coverage/lcov.info | coveralls",
     "install": "npm run clean && npm run build:lib",
     "start": "webpack-dev-server --config webpack/dev.js",
     "prepublishOnly": "npm run lint && npm run clean && npm run test && npm run build:examples && npm run build"
@@ -49,6 +51,7 @@
     "babel-register": "^6.24.0",
     "chai": "^3.5.0",
     "chai-enzyme": "^0.6.1",
+    "coveralls": "^2.12.0",
     "enzyme": "^2.7.1",
     "eslint": "^3.8.1",
     "eslint-loader": "^1.6.1",

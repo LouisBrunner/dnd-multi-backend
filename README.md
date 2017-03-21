@@ -1,4 +1,4 @@
-# React DnD Multi Backend [![NPM Version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
+# React DnD Multi Backend [![NPM Version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![dependencies Status][deps-image]][deps-url] [![devDependencies Status][deps-dev-image]][deps-dev-url]
 
 [Try it here!](https://louisbrunner.github.io/react-dnd-multi-backend/examples)
 
@@ -165,8 +165,7 @@ var TouchOnly = { backends: [{ backend: TouchBackend, preview: true }] };
 
 ## Tasks
 
- - More tests
- - Use CI?
+ - Finish tests
  - TouchBackend doesn't handle mouse events anymore
 
 
@@ -185,3 +184,9 @@ MIT, Copyright (c) 2016-2017 Louis Brunner
 [npm-url]: https://npmjs.org/package/react-dnd-multi-backend
 [travis-image]: https://travis-ci.org/LouisBrunner/react-dnd-multi-backend.svg?branch=master
 [travis-url]: https://travis-ci.org/LouisBrunner/react-dnd-multi-backend
+[coveralls-image]: https://coveralls.io/repos/github/LouisBrunner/react-dnd-multi-backend/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/LouisBrunner/react-dnd-multi-backend?branch=master
+[deps-image]: https://david-dm.org/louisbrunner/react-dnd-multi-backend/status.svg
+[deps-url]: https://david-dm.org/louisbrunner/react-dnd-multi-backend
+[deps-dev-image]: https://david-dm.org/louisbrunner/react-dnd-multi-backend/dev-status.svg
+[deps-dev-url]: https://david-dm.org/louisbrunner/react-dnd-multi-backend?type=dev
