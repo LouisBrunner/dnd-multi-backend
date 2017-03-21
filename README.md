@@ -1,4 +1,4 @@
-# React DnD Multi Backend [![NPM Version][npm-image]][npm-url]
+# React DnD Multi Backend [![NPM Version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 
 [Try it here!](https://louisbrunner.github.io/react-dnd-multi-backend/examples)
 
@@ -183,3 +183,5 @@ MIT, Copyright (c) 2016-2017 Louis Brunner
 
 [npm-image]: https://img.shields.io/npm/v/react-dnd-multi-backend.svg
 [npm-url]: https://npmjs.org/package/react-dnd-multi-backend
+[travis-image]: https://travis-ci.org/LouisBrunner/react-dnd-multi-backend.svg?branch=master
+[travis-url]: https://travis-ci.org/LouisBrunner/react-dnd-multi-backend
