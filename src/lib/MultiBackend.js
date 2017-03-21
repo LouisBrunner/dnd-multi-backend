@@ -34,7 +34,7 @@ export default class {
     }
 
     if (this.constructor.isSetUp) {
-      throw new Error('Cannot have two Multi backends at the same time.');
+      throw new Error('Cannot have two MultiBackends at the same time.');
     }
     this.constructor.isSetUp = true;
     this.addEventListeners(window);
@@ -51,14 +51,14 @@ export default class {
     this.backends[this.current].instance.teardown();
   }
 
-  connectDragSource = () => {
-    return this.callBackends('connectDragSource', arguments);
+  connectDragSource = (...args) => {
+    return this.callBackends('connectDragSource', args);
   }
-  connectDragPreview = () => {
-    return this.callBackends('connectDragPreview', arguments);
+  connectDragPreview = (...args) => {
+    return this.callBackends('connectDragPreview', args);
   }
-  connectDropTarget = () => {
-    return this.callBackends('connectDropTarget', arguments);
+  connectDropTarget = (...args) => {
+    return this.callBackends('connectDropTarget', args);
   }
 
   // Used by Preview component
@@ -114,12 +114,6 @@ export default class {
     }
   }
 
-  // Which backend should be called
-  applyToBackend = (backend, func, args) => {
-    const self = this.backends[backend].instance;
-    return self[func].apply(self, args);
-  }
-
   callBackends = (func, args) => {
     const handlers = [];
     const nodeId = func + '_' + args[0];
@@ -129,18 +123,18 @@ export default class {
         handlers.push(null);
         continue;
       }
-      handlers.push(this.applyToBackend(i, func, args));
+      handlers.push(this.backends[i].instance[func](...args));
     }
 
     const nodes = this.nodes;
     nodes[nodeId] = {func: func, args: args, handlers: handlers};
 
-    return function () {
+    return function (...args) {
       delete nodes[nodeId];
       for (let i = 0; i < handlers.length; ++i) {
         const handler = handlers[i];
         if (handler) {
-          handler(arguments);
+          handler(...args);
         }
       }
     };

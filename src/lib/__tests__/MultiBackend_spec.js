@@ -7,17 +7,7 @@ import MultiBackend from '../MultiBackend';
 describe('MultiBackend class', () => {
   const createBackend = (pipeline = HTML5toTouch, manager = null) => {
     if (manager === null) {
-      manager = {
-        getMonitor: () => {
-          return {
-            isDragging: () => {},
-            getItemType: () => {},
-            getItem: () => {},
-            subscribeToOffsetChange: () => {},
-            subscribeToStateChange: () => {},
-          };
-        },
-      };
+      manager = {getMonitor: sinon.stub(), getActions: sinon.stub(), getRegistry: sinon.stub(), getContext: sinon.stub()};
     }
     return new MultiBackend(manager, pipeline);
   };
@@ -71,24 +61,88 @@ describe('MultiBackend class', () => {
 
 
   describe('setup function', () => {
-    it('does nothing if it has no window');
-    it('fails if a backend already exist');
-    it('sets up the events and sub-backends');
+    it('does nothing if it has no window', () => {
+      const backend = createBackend();
+
+      const oldWindow = global.window;
+      delete global.window;
+      sinon.stub(backend, 'addEventListeners');
+      backend.setup();
+      expect(backend.addEventListeners).not.to.have.been.called;
+      global.window = oldWindow;
+      backend.teardown();
+    });
+
+    it('fails if a backend already exist', () => {
+      const backend = createBackend();
+      sinon.stub(backend, 'addEventListeners');
+      backend.setup();
+      expect(backend.addEventListeners).to.have.been.calledOnce;
+
+      const backend2 = createBackend();
+      sinon.stub(backend2, 'addEventListeners');
+      expect(() => { backend2.setup(); }).to.throw(Error, 'Cannot have two MultiBackends at the same time.');
+      expect(backend2.addEventListeners).not.to.have.been.called;
+
+      backend.teardown();
+    });
+
+    it('sets up the events and sub-backends', () => {
+      const backend = createBackend();
+      sinon.stub(backend, 'addEventListeners');
+      sinon.stub(backend.backends[0].instance, 'setup');
+      backend.setup();
+      expect(backend.addEventListeners).to.have.been.calledOnce;
+      expect(backend.backends[0].instance.setup).to.have.been.calledOnce;
+      backend.teardown();
+    });
   });
 
   describe('teardown function', () => {
-    it('does nothing if it has no window');
+    it('does nothing if it has no window', () => {
+      const backend = createBackend();
+
+      const oldWindow = global.window;
+      delete global.window;
+      sinon.stub(backend, 'removeEventListeners');
+      backend.teardown();
+      expect(backend.removeEventListeners).not.to.have.been.called;
+      global.window = oldWindow;
+    });
+
     it('cleans up the events and sub-backends');
+    it('can recreate a second backend');
   });
 
+
   describe('connectDragSource function', () => {
-    it('calls `callBackends` correctly');
+    it('calls `callBackends` correctly', () => {
+      const backend = createBackend();
+      sinon.stub(backend, 'callBackends');
+      backend.connectDragSource();
+      expect(backend.callBackends).to.have.been.calledOnce;
+      expect(backend.callBackends).to.have.been.calledWithExactly('connectDragSource');
+    });
   });
+
   describe('connectDragPreview function', () => {
-    it('calls `callBackends` correctly');
+    it('calls `callBackends` correctly', () => {
+      const backend = createBackend();
+      sinon.stub(backend, 'callBackends');
+      backend.connectDragPreview(1);
+      expect(backend.callBackends).to.have.been.calledOnce;
+      expect(backend.callBackends).to.have.been.calledWithExactly('connectDragPreview', 1);
+    });
   });
+
   describe('connectDropTarget function', () => {
-    it('calls `callBackends` correctly');
+    it('calls `callBackends` correctly', () => {
+      const backend = createBackend();
+      sinon.stub(backend, 'callBackends');
+      backend.connectDropTarget(1, 2);
+      expect(backend.callBackends).to.have.been.calledOnce;
+      expect(backend.callBackends).to.have.been.calledWithExactly('connectDropTarget', 1, 2);
+    });
   });
 
 
