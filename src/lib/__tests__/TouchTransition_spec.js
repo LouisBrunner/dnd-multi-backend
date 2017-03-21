@@ -1,4 +1,4 @@
-import { expect, sinon } from 'tests/framework';
+import { expect } from 'tests/framework';
 
 import TouchTransition from '../TouchTransition';
 

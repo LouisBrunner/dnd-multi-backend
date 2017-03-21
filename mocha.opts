@@ -1,4 +1,5 @@
 -R dot
 --growl
 --colors
+--require jsdom-global/register
 src/**/__tests__/*_spec.*
