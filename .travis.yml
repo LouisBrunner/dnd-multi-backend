@@ -6,6 +6,7 @@ node_js:
 
 script:
   - npm run travis-test
+  - npm run lint
 
 after_success:
   - npm run travis-coverage
