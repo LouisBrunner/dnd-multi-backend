@@ -5,5 +5,10 @@
     "transform-class-properties",
     "transform-react-jsx",
     "transform-es2015-for-of"
-  ]
+  ],
+  "env": {
+    "test": {
+      "plugins": ["istanbul"]
+    }
+  }
 }

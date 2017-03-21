@@ -25,22 +25,10 @@ export default class {
     }
 
     this.nodes = {};
-
-    const funcs = [
-      'setup', 'teardown',
-      'connectDragSource', 'connectDragPreview', 'connectDropTarget',
-      'previewEnabled',
-      'addEventListeners', 'removeEventListeners',
-      'backendSwitcher', 'cleanUpHandlers',
-      'applyToBackend', 'callBackends',
-    ];
-    for (let func of funcs) {
-      this[func] = this[func].bind(this);
-    }
   }
 
   // DnD Backend API
-  setup() {
+  setup = () => {
     if (typeof window === 'undefined') {
       return;
     }
@@ -53,7 +41,7 @@ export default class {
     this.backends[this.current].instance.setup();
   }
 
-  teardown() {
+  teardown = () => {
     if (typeof window === 'undefined') {
       return;
     }
@@ -63,23 +51,23 @@ export default class {
     this.backends[this.current].instance.teardown();
   }
 
-  connectDragSource() {
+  connectDragSource = () => {
     return this.callBackends('connectDragSource', arguments);
   }
-  connectDragPreview() {
+  connectDragPreview = () => {
     return this.callBackends('connectDragPreview', arguments);
   }
-  connectDropTarget() {
+  connectDropTarget = () => {
     return this.callBackends('connectDropTarget', arguments);
   }
 
   // Used by Preview component
-  previewEnabled() {
+  previewEnabled = () => {
     return this.backends[this.current].preview;
   }
 
   // Multi Backend Listeners
-  addEventListeners(target) {
+  addEventListeners = (target) => {
     for (let backend of this.backends) {
       if (backend.transition) {
         target.addEventListener(backend.transition.event, this.backendSwitcher, true);
@@ -87,7 +75,7 @@ export default class {
     }
   }
 
-  removeEventListeners(target) {
+  removeEventListeners = (target) => {
     for (let backend of this.backends) {
       if (backend.transition) {
         target.removeEventListener(backend.transition.event, this.backendSwitcher, true);
@@ -96,7 +84,7 @@ export default class {
   }
 
   // Switching logic
-  backendSwitcher(event) {
+  backendSwitcher = (event) => {
     const oldBackend = this.current;
 
     let i = 0;
@@ -118,7 +106,7 @@ export default class {
     }
   }
 
-  cleanUpHandlers(backend) {
+  cleanUpHandlers = (backend) => {
     for (let id of Object.keys(this.nodes)) {
       const node = this.nodes[id];
       node.handlers[backend]();
@@ -127,12 +115,12 @@ export default class {
   }
 
   // Which backend should be called
-  applyToBackend(backend, func, args) {
+  applyToBackend = (backend, func, args) => {
     const self = this.backends[backend].instance;
     return self[func].apply(self, args);
   }
 
-  callBackends(func, args) {
+  callBackends = (func, args) => {
     const handlers = [];
     const nodeId = func + '_' + args[0];
 

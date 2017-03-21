@@ -165,7 +165,7 @@ var TouchOnly = { backends: [{ backend: TouchBackend, preview: true }] };
 
 ## Tasks
 
- - Write some tests (+ coverage)
+ - More tests
  - Use CI?
  - TouchBackend doesn't handle mouse events anymore
 

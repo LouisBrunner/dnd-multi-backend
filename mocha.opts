@@ -1,0 +1,4 @@
+-R dot
+--growl
+--colors
+src/**/__tests__/*_spec.*
