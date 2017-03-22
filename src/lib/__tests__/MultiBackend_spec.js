@@ -216,7 +216,22 @@ describe('MultiBackend class', () => {
   });
 
   describe('callBackend function', () => {
-    it('has no test yet');
+    it('calls the current backend with the specified arguments', () => {
+      const backend = createBackend();
+      sinon.stub(backend.backends[0].instance, 'connectDragSource');
+      sinon.stub(backend.backends[1].instance, 'connectDragSource');
+
+      backend.callBackend('connectDragSource', [3, 2, 1]);
+      expect(backend.backends[0].instance.connectDragSource).to.have.been.calledOnce;
+      expect(backend.backends[0].instance.connectDragSource).to.have.been.calledWithExactly(3, 2, 1);
+      expect(backend.backends[1].instance.connectDragSource).not.to.have.been.called;
+
+      backend.current = 1;
+      backend.callBackend('connectDragSource', [3, 2, 1]);
+      expect(backend.backends[0].instance.connectDragSource).to.have.been.calledOnce;
+      expect(backend.backends[1].instance.connectDragSource).to.have.been.calledOnce;
+      expect(backend.backends[1].instance.connectDragSource).to.have.been.calledWithExactly(3, 2, 1);
+    });
   });
 
   describe('connectBackend function', () => {
