@@ -167,7 +167,6 @@ var TouchOnly = { backends: [{ backend: TouchBackend, preview: true }] };
 
 ## Tasks
 
- - Finish tests
  - Fix console.info from Touch
 
 

@@ -228,7 +228,43 @@ describe('MultiBackend class', () => {
 
 
   describe('backendSwitcher function', () => {
-    it('has no test yet');
+    it('does nothing', () => {
+      const backend = createBackend();
+      expect(backend.current).to.equal(0);
+      backend.backendSwitcher({type: 'mousedown'});
+      expect(backend.current).to.equal(0);
+    });
+
+    it('switches backend and re-calls the event handlers', () => {
+      const backend = createBackend();
+      expect(backend.current).to.equal(0);
+
+      const fakeEvent = {type: 'touchstart', touches: [], constructor: sinon.stub(), target: {dispatchEvent: sinon.stub()}};
+      const clonedEvent = {secret: Math.random()};
+      fakeEvent.constructor.returns(clonedEvent);
+
+      const oldHandler = sinon.stub();
+      const fakeNode = {func: 'connectDragSource', args: [2, 1, 4], handler: oldHandler};
+      const fakeHandler = {secret: Math.random()};
+      sinon.stub(backend, 'callBackend').returns(fakeHandler);
+      backend.nodes['123'] = fakeNode;
+
+      sinon.stub(backend.backends[0].instance, 'teardown');
+      sinon.stub(backend.backends[1].instance, 'setup');
+      backend.backendSwitcher(fakeEvent);
+      expect(backend.backends[0].instance.teardown).to.have.been.calledOnce;
+      expect(backend.backends[1].instance.setup).to.have.been.calledOnce;
+
+      expect(backend.current).to.equal(1);
+
+      expect(fakeEvent.target.dispatchEvent).to.have.been.calledOnce;
+      expect(fakeEvent.target.dispatchEvent).to.have.been.calledWithExactly(clonedEvent);
+
+      expect(oldHandler).to.have.been.calledOnce;
+      expect(backend.callBackend).to.have.been.calledOnce;
+      expect(backend.callBackend).to.have.been.calledWithExactly('connectDragSource', [2, 1, 4]);
+      expect(fakeNode.handler).to.equal(fakeHandler);
+    });
   });
 
   describe('callBackend function', () => {
@@ -251,6 +287,27 @@ describe('MultiBackend class', () => {
   });
 
   describe('connectBackend function', () => {
-    it('has no test yet');
+    it('connects the current backend and registers the node', () => {
+      const backend = createBackend();
+      const fakeReturn = {secret: Math.random()};
+      const fakeHandler = sinon.stub().returns(fakeReturn);
+      sinon.stub(backend, 'callBackend').returns(fakeHandler);
+
+      const handler = backend.connectBackend('funcName', [1, 2, 3]);
+      expect(backend.callBackend).to.have.been.calledOnce;
+      expect(backend.callBackend).to.have.been.calledWithExactly('funcName', [1, 2, 3]);
+      expect(backend.nodes).to.have.property('funcName_1');
+      const node = backend.nodes['funcName_1'];
+      expect(node).to.have.property('func', 'funcName');
+      expect(node).to.have.property('args').that.deep.equal([1, 2, 3]);
+      expect(node).to.have.property('handler', fakeHandler);
+
+      expect(fakeHandler).not.to.have.been.called;
+      const returnValue = handler(3, 2, 1);
+      expect(fakeHandler).to.have.been.calledOnce;
+      expect(fakeHandler).to.have.been.calledWithExactly(3, 2, 1);
+      expect(backend.nodes).not.to.have.property('funcName_1');
+      expect(returnValue).to.equal(fakeReturn);
+    });
   });
 });
