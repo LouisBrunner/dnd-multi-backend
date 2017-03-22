@@ -64,6 +64,7 @@
     "react-dom": "*",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0",
+    "sinon-spy-utils": "^1.0.0",
     "watch-run": "^1.2.5",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2",

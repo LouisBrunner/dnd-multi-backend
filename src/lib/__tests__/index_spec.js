@@ -1,4 +1,5 @@
-import { expect, sinon } from 'tests/framework';
+import { expect } from 'tests/framework';
+import { Mock } from 'sinon-spy-utils';
 
 import * as Module from '../index';
 
@@ -14,7 +15,7 @@ describe('ReactDnDMultiBackend module', () => {
   it('exports a function to create MultiBackend', () => {
     expect(Module.default).to.be.an.instanceof(Function);
 
-    const fakeManager = {getMonitor: sinon.stub(), getActions: sinon.stub(), getRegistry: sinon.stub(), getContext: sinon.stub()};
+    const fakeManager = Mock('getMonitor', 'getActions', 'getRegistry', 'getContext');
     expect(Module.default(HTML5toTouch)(fakeManager)).to.be.an.instanceof(MultiBackend);
     expect(() => { Module.default(fakeManager); }).to.throw(Error, 'You must specify at least one Backend');
   });

@@ -1,4 +1,5 @@
 import { expect, sinon } from 'tests/framework';
+import { Mock } from 'sinon-spy-utils';
 
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
@@ -23,7 +24,7 @@ const oldHTML5toTouch = {
 describe('MultiBackend class', () => {
   const createBackend = (pipeline = oldHTML5toTouch, manager = null) => {
     if (manager === null) {
-      manager = {getMonitor: sinon.stub(), getActions: sinon.stub(), getRegistry: sinon.stub(), getContext: sinon.stub()};
+      manager = Mock('getMonitor', 'getActions', 'getRegistry', 'getContext');
     }
     return new MultiBackend(manager, pipeline);
   };

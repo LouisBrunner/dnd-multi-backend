@@ -1,11 +1,8 @@
 import { expect, sinon, mount } from 'tests/framework';
+import { StubAndDo } from 'sinon-spy-utils';
 import React from 'react';
 
 import Preview from '../Preview';
-
-before(() => { sinon.stub(console, 'error').callsFake((warning) => { throw new Error(warning); }); });
-// eslint-disable-next-line no-console
-after(() => { console.error.restore(); });
 
 describe('Preview component', () => {
   const createComponent = ({preview = false, isDragging = false, currentOffset = null, generator = sinon.stub(), item = {}, itemType = ''} = {}) => {
@@ -28,7 +25,12 @@ describe('Preview component', () => {
         },
       },
     };
-    return mount(<Preview generator={generator} />, {context});
+    let component;
+    StubAndDo(console, 'error', (spies) => {
+      spies.error.callsFake((warning) => { throw new Error(warning); });
+      component = mount(<Preview generator={generator} />, {context});
+    });
+    return component;
   };
 
   it('is a DragLayer-decorated Preview', () => {
