@@ -48,8 +48,8 @@ You must pass a 'pipeline' to use as argument. This package includes `HTML5toTou
  - *require*:
 ```js
   var ReactDnD = require('react-dnd');
-  var MultiBackend = require('react-dnd-multi-backend');
-  var HTML5toTouch = require('react-dnd-multi-backend/lib/HTML5toTouch'); // or any other pipeline
+  var MultiBackend = require('react-dnd-multi-backend').default;
+  var HTML5toTouch = require('react-dnd-multi-backend/lib/HTML5toTouch').default; // or any other pipeline
   ...
   module.exports = ReactDnD.DragDropContext(MultiBackend(HTML5toTouch))(App);
 ```
@@ -83,7 +83,7 @@ Here is the `HTML5toTouch` pipeline code as an example:
 ...
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
-import TouchTransition from 'react-dnd-multi-backend/lib/TouchTransition';
+import MultiBackend, { TouchTransition } from 'react-dnd-multi-backend';
 ...
 const HTML5toTouch = {
   backends: [
@@ -104,9 +104,9 @@ export default DragDropContext(MultiBackend(HTML5toTouch))(App);
 `TouchTransition` is a predefined transition that you can use in your own pipelines, it is triggered when a *touchstart* is received. Transitions rea really easy to write, here is an example:
 
 ```js
-import createTransition from 'react-dnd-multi-backend/lib/createTransition';
+import { createTransition } from 'react-dnd-multi-backend';
 
-export default createTransition('touchstart', (event) => {
+const TouchTransition = createTransition('touchstart', (event) => {
   return event.touches != null;
 });
 ```
@@ -118,7 +118,7 @@ Concerning the `Preview` class, it is created using the following snippet:
 
  - *require*:
 ```js
-  var MultiBackend = require('react-dnd-multi-backend');
+  var MultiBackend = require('react-dnd-multi-backend').default;
   ...
   <MultiBackend.Preview generator={this.generatePreview} />
 ```
