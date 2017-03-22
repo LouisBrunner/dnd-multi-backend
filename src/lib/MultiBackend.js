@@ -98,19 +98,15 @@ export default class {
 
     if (this.current !== oldBackend) {
       this.backends[oldBackend].instance.teardown();
-      this.cleanUpHandlers(oldBackend);
+      for (let id of Object.keys(this.nodes)) {
+        const node = this.nodes[id];
+        node.handlers[oldBackend]();
+        node.handlers[oldBackend] = null;
+      }
       this.backends[this.current].instance.setup();
 
       const newEvent = new event.constructor(event.type, event);
       event.target.dispatchEvent(newEvent);
-    }
-  }
-
-  cleanUpHandlers = (backend) => {
-    for (let id of Object.keys(this.nodes)) {
-      const node = this.nodes[id];
-      node.handlers[backend]();
-      node.handlers[backend] = null;
     }
   }
 

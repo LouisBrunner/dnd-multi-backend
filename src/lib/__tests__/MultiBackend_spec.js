@@ -70,17 +70,20 @@ describe('MultiBackend class', () => {
       backend.setup();
       expect(backend.addEventListeners).not.to.have.been.called;
       global.window = oldWindow;
-      backend.teardown();
     });
 
     it('fails if a backend already exist', () => {
       const backend = createBackend();
       sinon.stub(backend, 'addEventListeners');
+      sinon.stub(backend, 'removeEventListeners');
+      sinon.stub(backend.backends[0].instance, 'setup');
+      sinon.stub(backend.backends[0].instance, 'teardown');
       backend.setup();
       expect(backend.addEventListeners).to.have.been.calledOnce;
 
       const backend2 = createBackend();
       sinon.stub(backend2, 'addEventListeners');
+      sinon.stub(backend2.backends[0].instance, 'setup');
       expect(() => { backend2.setup(); }).to.throw(Error, 'Cannot have two MultiBackends at the same time.');
       expect(backend2.addEventListeners).not.to.have.been.called;
 
@@ -90,7 +93,9 @@ describe('MultiBackend class', () => {
     it('sets up the events and sub-backends', () => {
       const backend = createBackend();
       sinon.stub(backend, 'addEventListeners');
+      sinon.stub(backend, 'removeEventListeners');
       sinon.stub(backend.backends[0].instance, 'setup');
+      sinon.stub(backend.backends[0].instance, 'teardown');
       backend.setup();
       expect(backend.addEventListeners).to.have.been.calledOnce;
       expect(backend.backends[0].instance.setup).to.have.been.calledOnce;
@@ -110,8 +115,38 @@ describe('MultiBackend class', () => {
       global.window = oldWindow;
     });
 
-    it('cleans up the events and sub-backends');
-    it('can recreate a second backend');
+    it('cleans up the events and sub-backends', () => {
+      const backend = createBackend();
+      sinon.stub(backend, 'addEventListeners');
+      sinon.stub(backend, 'removeEventListeners');
+      sinon.stub(backend.backends[0].instance, 'setup');
+      sinon.stub(backend.backends[0].instance, 'teardown');
+      backend.setup();
+      expect(backend.addEventListeners).to.have.been.calledOnce;
+      backend.teardown();
+      expect(backend.removeEventListeners).to.have.been.calledOnce;
+      expect(backend.backends[0].instance.teardown).to.have.been.calledOnce;
+    });
+
+    it('can recreate a second backend', () => {
+      const backend = createBackend();
+      sinon.stub(backend, 'addEventListeners');
+      sinon.stub(backend, 'removeEventListeners');
+      sinon.stub(backend.backends[0].instance, 'setup');
+      sinon.stub(backend.backends[0].instance, 'teardown');
+      backend.setup();
+      expect(backend.addEventListeners).to.have.been.calledOnce;
+      backend.teardown();
+
+      const backend2 = createBackend();
+      sinon.stub(backend2, 'addEventListeners');
+      sinon.stub(backend2, 'removeEventListeners');
+      sinon.stub(backend2.backends[0].instance, 'setup');
+      sinon.stub(backend2.backends[0].instance, 'teardown');
+      backend2.setup();
+      expect(backend2.addEventListeners).to.have.been.calledOnce;
+      backend2.teardown();
+    });
   });
 
 
@@ -156,22 +191,28 @@ describe('MultiBackend class', () => {
   });
 
   describe('addEventListeners function', () => {
-    it('registers the backends\' transitions');
+    it('registers the backends\' transitions', () => {
+      const backend = createBackend();
+      const fakeWindow = {addEventListener: sinon.stub()};
+      backend.addEventListeners(fakeWindow);
+      expect(fakeWindow.addEventListener).to.have.been.calledOnce;
+      expect(fakeWindow.addEventListener).to.have.been.calledWithExactly('touchstart', sinon.match.func, true);
+    });
   });
 
   describe('removeEventListeners function', () => {
-    it('removes the backends\' transitions');
+    it('removes the backends\' transitions', () => {
+      const backend = createBackend();
+      const fakeWindow = {removeEventListener: sinon.stub()};
+      backend.removeEventListeners(fakeWindow);
+      expect(fakeWindow.removeEventListener).to.have.been.calledOnce;
+      expect(fakeWindow.removeEventListener).to.have.been.calledWithExactly('touchstart', sinon.match.func, true);
+    });
   });
 
 
   describe('backendSwitcher function', () => {
-    it('does nothing (no transition)');
-    it('switches backend (transition)');
-  });
-
-
-  describe('cleanUpHandlers function', () => {
-    it('removes all the handlers for a certain backend');
+    it('has no test yet');
   });
 
   describe('callBackends function', () => {
