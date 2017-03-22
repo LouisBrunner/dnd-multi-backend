@@ -1,6 +1,6 @@
 import { expect } from 'tests/framework';
 import HTML5toTouch from '../HTML5toTouch';
-import TouchTransition from '../TouchTransition';
+import { TouchTransition } from '../Transitions';
 
 describe('HTML5toTouch pipeline', () => {
   it('has the HTML5 and Touch backends', () => {
@@ -10,6 +10,7 @@ describe('HTML5toTouch pipeline', () => {
 
     expect(HTML5toTouch.backends[0]).to.be.an.instanceof(Object);
     expect(HTML5toTouch.backends[0].backend).not.to.be.undefined;
+    expect(HTML5toTouch.backends[0].transition).to.be.undefined;
 
     expect(HTML5toTouch.backends[1]).to.be.an.instanceof(Object);
     expect(HTML5toTouch.backends[1].backend).not.to.be.undefined;

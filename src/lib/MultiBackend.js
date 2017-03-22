@@ -89,7 +89,7 @@ export default class {
 
     let i = 0;
     for (let backend of this.backends) {
-      if (i != this.current && backend.transition && backend.transition.check(event)) {
+      if (i !== this.current && backend.transition && backend.transition.check(event)) {
         this.current = i;
         break;
       }

@@ -111,6 +111,8 @@ const TouchTransition = createTransition('touchstart', (event) => {
 });
 ```
 
+You can also import `HTML5DragTransition` which works the same way, but detects when a HTML5 DragEvent is received.
+
 
 ### Preview
 

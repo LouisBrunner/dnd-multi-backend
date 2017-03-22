@@ -6,7 +6,7 @@ import MultiBackend from '../MultiBackend';
 import HTML5toTouch from '../HTML5toTouch';
 
 import Preview from '../Preview';
-import TouchTransition from '../TouchTransition';
+import { HTML5DragTransition, TouchTransition } from '../Transitions';
 import createTransition from '../createTransition';
 
 
@@ -21,6 +21,7 @@ describe('ReactDnDMultiBackend module', () => {
 
   it('exports utils components', () => {
     expect(Module.Preview).to.equal(Preview);
+    expect(Module.HTML5DragTransition).to.equal(HTML5DragTransition);
     expect(Module.TouchTransition).to.equal(TouchTransition);
     expect(Module.createTransition).to.equal(createTransition);
   });

@@ -1,11 +1,27 @@
 import { expect, sinon } from 'tests/framework';
-import HTML5toTouch from '../HTML5toTouch';
+
+import HTML5Backend from 'react-dnd-html5-backend';
+import TouchBackend from 'react-dnd-touch-backend';
+import { TouchTransition }  from '../Transitions';
 import createTransition from '../createTransition';
 
 import MultiBackend from '../MultiBackend';
 
+const oldHTML5toTouch = {
+  backends: [
+    {
+      backend: HTML5Backend
+    },
+    {
+      backend: TouchBackend({enableMouseEvents: true}),
+      preview: true,
+      transition: TouchTransition
+    }
+  ]
+};
+
 describe('MultiBackend class', () => {
-  const createBackend = (pipeline = HTML5toTouch, manager = null) => {
+  const createBackend = (pipeline = oldHTML5toTouch, manager = null) => {
     if (manager === null) {
       manager = {getMonitor: sinon.stub(), getActions: sinon.stub(), getRegistry: sinon.stub(), getContext: sinon.stub()};
     }
