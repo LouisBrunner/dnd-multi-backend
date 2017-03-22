@@ -52,13 +52,13 @@ export default class {
   }
 
   connectDragSource = (...args) => {
-    return this.callBackends('connectDragSource', args);
+    return this.connectBackend('connectDragSource', args);
   }
   connectDragPreview = (...args) => {
-    return this.callBackends('connectDragPreview', args);
+    return this.connectBackend('connectDragPreview', args);
   }
   connectDropTarget = (...args) => {
-    return this.callBackends('connectDropTarget', args);
+    return this.connectBackend('connectDropTarget', args);
   }
 
   // Used by Preview component
@@ -100,8 +100,8 @@ export default class {
       this.backends[oldBackend].instance.teardown();
       for (let id of Object.keys(this.nodes)) {
         const node = this.nodes[id];
-        node.handlers[oldBackend]();
-        node.handlers[oldBackend] = null;
+        node.handler();
+        node.handler = this.callBackend(node.func, node.args);
       }
       this.backends[this.current].instance.setup();
 
@@ -110,29 +110,19 @@ export default class {
     }
   }
 
-  callBackends = (func, args) => {
-    const handlers = [];
+  callBackend = (func, args) => {
+    return this.backends[this.current].instance[func](...args);
+  }
+
+  connectBackend = (func, args) => {
     const nodeId = func + '_' + args[0];
+    const handler = this.callBackend(func, args);
+    this.nodes[nodeId] = {func, args, handler};
 
-    for (let i = 0; i < this.backends.length; ++i) {
-      if (i < this.current) {
-        handlers.push(null);
-        continue;
-      }
-      handlers.push(this.backends[i].instance[func](...args));
-    }
-
-    const nodes = this.nodes;
-    nodes[nodeId] = {func: func, args: args, handlers: handlers};
-
-    return function (...args) {
-      delete nodes[nodeId];
-      for (let i = 0; i < handlers.length; ++i) {
-        const handler = handlers[i];
-        if (handler) {
-          handler(...args);
-        }
-      }
+    return (...args) => {
+      const r = this.nodes[nodeId].handler(...args);
+      delete this.nodes[nodeId];
+      return r;
     };
   }
 }

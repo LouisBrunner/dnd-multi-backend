@@ -151,32 +151,32 @@ describe('MultiBackend class', () => {
 
 
   describe('connectDragSource function', () => {
-    it('calls `callBackends` correctly', () => {
+    it('calls `connectBackend` correctly', () => {
       const backend = createBackend();
-      sinon.stub(backend, 'callBackends');
+      sinon.stub(backend, 'connectBackend');
       backend.connectDragSource();
-      expect(backend.callBackends).to.have.been.calledOnce;
-      expect(backend.callBackends).to.have.been.calledWithExactly('connectDragSource', []);
+      expect(backend.connectBackend).to.have.been.calledOnce;
+      expect(backend.connectBackend).to.have.been.calledWithExactly('connectDragSource', []);
     });
   });
 
   describe('connectDragPreview function', () => {
-    it('calls `callBackends` correctly', () => {
+    it('calls `connectBackend` correctly', () => {
       const backend = createBackend();
-      sinon.stub(backend, 'callBackends');
+      sinon.stub(backend, 'connectBackend');
       backend.connectDragPreview(1);
-      expect(backend.callBackends).to.have.been.calledOnce;
-      expect(backend.callBackends).to.have.been.calledWithExactly('connectDragPreview', [1]);
+      expect(backend.connectBackend).to.have.been.calledOnce;
+      expect(backend.connectBackend).to.have.been.calledWithExactly('connectDragPreview', [1]);
     });
   });
 
   describe('connectDropTarget function', () => {
-    it('calls `callBackends` correctly', () => {
+    it('calls `connectBackend` correctly', () => {
       const backend = createBackend();
-      sinon.stub(backend, 'callBackends');
+      sinon.stub(backend, 'connectBackend');
       backend.connectDropTarget(1, 2);
-      expect(backend.callBackends).to.have.been.calledOnce;
-      expect(backend.callBackends).to.have.been.calledWithExactly('connectDropTarget', [1, 2]);
+      expect(backend.connectBackend).to.have.been.calledOnce;
+      expect(backend.connectBackend).to.have.been.calledWithExactly('connectDropTarget', [1, 2]);
     });
   });
 
@@ -215,7 +215,11 @@ describe('MultiBackend class', () => {
     it('has no test yet');
   });
 
-  describe('callBackends function', () => {
+  describe('callBackend function', () => {
+    it('has no test yet');
+  });
+
+  describe('connectBackend function', () => {
     it('has no test yet');
   });
 });
