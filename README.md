@@ -155,7 +155,7 @@ You can see an example [here](src/examples/) (Node.js style with `import`s).
 
 ## Migrating from 2.x.x
 
-In 2.x.x, the pipeline was static but corresponded with the behavior of `HTML5toTouch`, so just including and passing this pipeline as a parameter would give you the same experience as before.
+In 2.x.x, the pipeline was static but corresponded with the behavior of `HTML5toTouch`, so just [including and passing this pipeline as a parameter](#backend) would give you the same experience as before.
 
 If you used the `start` option, it's a bit different.
 With `start: 0` or `start: Backend.HTML5`, **MultiBackend** simply used the default pipeline, so you can also just pass `HTML5toTouch`.
