@@ -7,7 +7,7 @@ module.exports = webpackMerge(commonConfig(), {
     RDMBHTML5toTouch: './src/lib/HTML5toTouch.js',
   },
   output: {
-    path: './dist',
+    path: `${__dirname}/../dist`,
     filename: '[name].min.js',
     libraryTarget: 'umd',
     library: '[name]'

@@ -26,6 +26,7 @@
     "travis-test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/src nyc --reporter=lcov mocha --opts ./.mocha.opts",
     "travis-coverage": "cat ./coverage/lcov.info | coveralls",
     "start": "webpack-dev-server --config webpack/dev.js",
+    "prepush": "npm run lint && npm run clean && npm run test && npm run build:dist && npm run build:examples",
     "prepublishOnly": "npm run lint && npm run clean && npm run test && npm run build:lib"
   },
   "repository": {

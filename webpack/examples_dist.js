@@ -4,7 +4,7 @@ const commonConfig = require('./core.js');
 module.exports = webpackMerge(commonConfig(), {
   entry: './src/examples/index.js',
   output: {
-    path: './dist',
+    path: `${__dirname}/../dist`,
     filename: 'examples.min.js'
   },
   externals: {
