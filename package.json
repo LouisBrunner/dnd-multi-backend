@@ -1,6 +1,6 @@
 {
   "name": "react-dnd-multi-backend",
-  "version": "2.3.1",
+  "version": "2.3.6",
   "description": "Multi Backend system for React DnD",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
   "license": "MIT",
@@ -26,8 +26,8 @@
     "travis-test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/src nyc --reporter=lcov mocha --opts ./.mocha.opts",
     "travis-coverage": "cat ./coverage/lcov.info | coveralls",
     "start": "webpack-dev-server --config webpack/dev.js",
-    "prepush": "npm run lint && npm run clean && npm run test && npm run build:dist && npm run build:examples",
-    "prepublishOnly": "npm run lint && npm run clean && npm run test && npm run build:lib"
+    "prepush": "npm run lint && npm run test && npm run build:dist && npm run build:examples",
+    "prepare": "npm run clean && npm run lint && npm run test && npm run build:lib"
   },
   "repository": {
     "type": "git",
