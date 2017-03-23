@@ -21,13 +21,12 @@
     "build:examples": "webpack --config webpack/examples.js && webpack --config webpack/examples_dist.js",
     "build": "npm run build:lib && npm run build:dist",
     "lint": "eslint .",
-    "test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/src nyc mocha --opts ./mocha.opts",
+    "test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/src nyc mocha --opts ./.mocha.opts",
     "test:watch": "watch-run -i -p 'src/lib/**/*' npm run test",
-    "travis-test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/src nyc --reporter=lcov mocha --opts ./mocha.opts",
+    "travis-test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/src nyc --reporter=lcov mocha --opts ./.mocha.opts",
     "travis-coverage": "cat ./coverage/lcov.info | coveralls",
-    "install": "npm run clean && npm run build:lib",
     "start": "webpack-dev-server --config webpack/dev.js",
-    "prepublishOnly": "npm run lint && npm run clean && npm run test && npm run build:examples && npm run build"
+    "prepublishOnly": "npm run lint && npm run clean && npm run test && npm run build:lib"
   },
   "repository": {
     "type": "git",

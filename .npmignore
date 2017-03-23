@@ -1,2 +1,28 @@
+# OS files
+.DS_Store
+
+# Input
+/src
+
+# Webpack
+/webpack
+webpack.config.js
+
+# Output
+/dist
+/examples
+
+# npm
+node_modules
+npm-debug.log
+
+# Config
 .babelrc
-examples
+.eslint*
+.mocha.opts
+.nycrc
+.travis.yml
+
+# Code coverage
+.nyc_output
+coverage
