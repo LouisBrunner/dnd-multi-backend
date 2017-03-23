@@ -17,7 +17,7 @@ describe('ReactDnDMultiBackend module', () => {
 
     const fakeManager = Mock('getMonitor', 'getActions', 'getRegistry', 'getContext');
     expect(Module.default(HTML5toTouch)(fakeManager)).to.be.an.instanceof(MultiBackend);
-    expect(() => { Module.default(fakeManager); }).to.throw(Error, 'You must specify at least one Backend');
+    expect(Module.default(fakeManager)).to.be.an.instanceof(MultiBackend);
   });
 
   it('exports utils components', () => {
