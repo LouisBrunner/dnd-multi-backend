@@ -1,6 +1,7 @@
 import React, { createClass } from 'react';
 import { DragDropContext } from 'react-dnd';
 import MultiBackend, { Preview } from 'lib/index.js';
+import HTML5toTouch from 'lib/HTML5toTouch.js';
 import Card from './Card';
 import Basket from './Basket';
 
@@ -22,4 +23,4 @@ const App = createClass({
   }
 });
 
-module.exports = DragDropContext(MultiBackend)(App);
+module.exports = DragDropContext(MultiBackend(HTML5toTouch))(App);

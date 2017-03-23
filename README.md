@@ -11,6 +11,8 @@ You application can smoothly use the nice HTML5 compatible backend and fallback 
 
 Moreover, because some backends don't support preview, a `Preview` component has been added to make it easier to mock the Drag'n'Drop "ghost".
 
+This is the **next** version of this package, see [Migrating from 2.x.x](#migrating-from-2xx) for instructions if you are coming from `react-dnd-multi-backend@2.x.x`.
+
 
 ## Installation
 
@@ -145,6 +147,18 @@ Note that this component will only be showed while using a backend flagged with 
 ### Example
 
 You can see an example [here](src/examples/) (Node.js style with `import`s).
+
+
+## Migrating from 2.x.x
+
+In 2.x.x, the pipeline was static but corresponded with the behavior of `HTML5toTouch`, so just [including and passing this pipeline as a parameter](#backend) would give you the same experience as before.
+
+If you used the `start` option, it's a bit different.
+With `start: 0` or `start: Backend.HTML5`, **MultiBackend** simply used the default pipeline, so you can also just pass `HTML5toTouch`.
+With `start: 1` or `start: Backend.TOUCH`, **MultiBackend** would only use the TouchBackend, so you can replace **MultiBackend** with **TouchBackend** (however, you would lose the `Preview` component) or create a simple pipeline (see [Create a custom pipeline](#create-a-custom-pipeline)) and pass it as a parameter:
+```js
+var TouchOnly = { backends: [{ backend: TouchBackend, preview: true }] };
+```
 
 
 ## Thanks
