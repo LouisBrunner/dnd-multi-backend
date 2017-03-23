@@ -3,8 +3,8 @@ import { DropTarget } from 'react-dnd';
 
 const spec = {
   drop: function (props, monitor) {
-    // eslint-disable-next-line no-console
-    console.log('Dropped: ' + monitor.getItem().color);
+    const message = 'Dropped: ' + monitor.getItem().color;
+    document.getElementById('console').innerHTML += message + '<br />';
   }
 };
 

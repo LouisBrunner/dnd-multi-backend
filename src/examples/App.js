@@ -18,6 +18,7 @@ const App = createClass({
               <Card color="#2211cc" />
               <Basket />
               <Preview generator={this.generatePreview} />
+              <div id="console" />
             </div>;
   }
 });
