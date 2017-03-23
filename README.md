@@ -19,7 +19,7 @@ This is the **next** version of this package, see [Migrating from 2.x.x](#migrat
 ### Node Installation
 
 ```sh
-npm install react-dnd-multi-backend
+npm install react-dnd-multi-backend@next
 ```
 
 You can then `MultiBackend = require('react-dnd-multi-backend')` or `import MultiBackend from 'react-dnd-multi-backend'`.
@@ -29,7 +29,10 @@ To get the `HTML5toTouch` pipeline, just require/import `react-dnd-multi-backend
 
 Use the minified UMD build in the `dist` folder: [here](dist/ReactDnDMultiBackend.min.js).
 It exports a global `window.ReactDnDMultiBackend` when imported as a `<script>` tag.
-This file also includes the `HTML5toTouch` pipeline.
+
+If you want to use the `HTML5toTouch` pipeline, also include [RDMBHTML5toTouch.min.js](dist/RDMBHTML5toTouch.min.js).
+It exports a global `window.RDMBHTML5toTouch` when imported as a `<script>` tag.
+This file also includes the `HTML5` and `Touch` backends, so no need to include them as well.
 
 
 ## Usage
@@ -63,8 +66,9 @@ You must pass a 'pipeline' to use as argument. This package includes `HTML5toTou
  - *browser*:
 ```js
   <script src="ReactDnDMultiBackend.min.js"></script>
+  <script src="RDMBHTML5toTouch.min.js"></script> <!-- or any other pipeline -->
   ...
-  var AppDnD = ReactDnD.DragDropContext(ReactDnDMultiBackend)(App);
+  var AppDnD = ReactDnD.DragDropContext(ReactDnDMultiBackend.default(RDMBHTML5toTouch.default))(App); // `.default` is only used to get the ES6 module default export
 ```
 
 ### Create a custom pipeline
