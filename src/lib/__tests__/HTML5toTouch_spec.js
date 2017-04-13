@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { expect } from 'tests/framework';
 import HTML5toTouch from '../HTML5toTouch';
 import { TouchTransition } from '../Transitions';

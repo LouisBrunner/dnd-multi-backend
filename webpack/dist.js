@@ -10,11 +10,11 @@ module.exports = webpackMerge(commonConfig(), {
     path: `${__dirname}/../dist`,
     filename: '[name].min.js',
     libraryTarget: 'umd',
-    library: '[name]'
+    library: '[name]',
   },
   externals: {
     // Use external version of React and ReactDnD
-    'react': 'React',
+    react: 'React',
     'react-dnd': 'ReactDnD',
   },
 });

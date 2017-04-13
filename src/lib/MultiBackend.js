@@ -9,18 +9,20 @@ export default class {
     this.current = 0;
 
     this.backends = [];
-    for (let backend of options.backends) {
+    for (const backend of options.backends) {
       if (!backend.backend) {
         throw new Error(`You must specify a 'backend' property in your Backend entry: ${backend}`);
       }
       const transition = backend.transition;
       if (transition && !transition._isMBTransition) {
-        throw new Error(`You must specify a valid 'transition' property (either undefined or the return of 'createTransition') in your Backend entry: ${backend}`);
+        throw new Error(
+          `You must specify a valid 'transition' property (either undefined or the return of 'createTransition') in your Backend entry: ${backend}`
+        );
       }
       this.backends.push({
         instance: new backend.backend(manager),
         preview: (backend.preview || false),
-        transition: transition
+        transition,
       });
     }
 
@@ -68,7 +70,7 @@ export default class {
 
   // Multi Backend Listeners
   addEventListeners = (target) => {
-    for (let backend of this.backends) {
+    for (const backend of this.backends) {
       if (backend.transition) {
         target.addEventListener(backend.transition.event, this.backendSwitcher, true);
       }
@@ -76,7 +78,7 @@ export default class {
   }
 
   removeEventListeners = (target) => {
-    for (let backend of this.backends) {
+    for (const backend of this.backends) {
       if (backend.transition) {
         target.removeEventListener(backend.transition.event, this.backendSwitcher, true);
       }
@@ -88,7 +90,7 @@ export default class {
     const oldBackend = this.current;
 
     let i = 0;
-    for (let backend of this.backends) {
+    for (const backend of this.backends) {
       if (i !== this.current && backend.transition && backend.transition.check(event)) {
         this.current = i;
         break;
@@ -98,7 +100,7 @@ export default class {
 
     if (this.current !== oldBackend) {
       this.backends[oldBackend].instance.teardown();
-      for (let id of Object.keys(this.nodes)) {
+      for (const id of Object.keys(this.nodes)) {
         const node = this.nodes[id];
         node.handler();
         node.handler = this.callBackend(node.func, node.args);
@@ -115,12 +117,12 @@ export default class {
   }
 
   connectBackend = (func, args) => {
-    const nodeId = func + '_' + args[0];
+    const nodeId = `${func}_${args[0]}`;
     const handler = this.callBackend(func, args);
     this.nodes[nodeId] = {func, args, handler};
 
-    return (...args) => {
-      const r = this.nodes[nodeId].handler(...args);
+    return (...subArgs) => {
+      const r = this.nodes[nodeId].handler(...subArgs);
       delete this.nodes[nodeId];
       return r;
     };

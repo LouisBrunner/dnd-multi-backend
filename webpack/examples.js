@@ -6,6 +6,6 @@ module.exports = webpackMerge(commonConfig(), {
   entry: './src/examples/index.js',
   output: {
     path: path.resolve('./examples'),
-    filename: 'examples.min.js'
+    filename: 'examples.min.js',
   },
 });

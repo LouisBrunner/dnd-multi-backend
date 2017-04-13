@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { expect, sinon, mount } from 'tests/framework';
 import { StubAndDo } from 'sinon-spy-utils';
 import React from 'react';
@@ -40,7 +41,9 @@ describe('Preview component', () => {
   });
 
   it('fails with no generator', () => {
-    expect(() => { createComponent({generator: null}); }).to.throw(Error, 'Warning: Failed prop type: The prop `generator` is marked as required in `Preview`, but its value is `null`.');
+    expect(() => { createComponent({generator: null}); }).to.throw(Error,
+      'Warning: Failed prop type: The prop `generator` is marked as required in `Preview`, but its value is `null`.'
+    );
   });
 
   it('no preview and no DnD', () => {
@@ -68,7 +71,7 @@ describe('Preview component', () => {
       itemType: 'toto',
       preview: true,
       isDragging: true, currentOffset: {x: 1000, y: 2000},
-      generator: generator
+      generator,
     });
     expect(component.html()).not.to.be.null;
     const div = component.find('div');
