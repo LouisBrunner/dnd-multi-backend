@@ -8,9 +8,8 @@ export { Preview, HTML5DragTransition, TouchTransition, createTransition };
 export default (managerOrOptions) => {
   if (managerOrOptions.getMonitor) {
     return new MultiBackend(managerOrOptions);
-  } else {
-    return (manager) => {
-      return new MultiBackend(manager, managerOrOptions);
-    };
   }
+  return (manager) => {
+    return new MultiBackend(manager, managerOrOptions);
+  };
 };

@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-expressions */
 import { expect, sinon } from 'tests/framework';
 import { Mock } from 'sinon-spy-utils';
 
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
-import { TouchTransition }  from '../Transitions';
+import { TouchTransition } from '../Transitions';
 import createTransition from '../createTransition';
 
 import MultiBackend from '../MultiBackend';
@@ -11,22 +12,23 @@ import MultiBackend from '../MultiBackend';
 const oldHTML5toTouch = {
   backends: [
     {
-      backend: HTML5Backend
+      backend: HTML5Backend,
     },
     {
       backend: TouchBackend({enableMouseEvents: true}),
       preview: true,
-      transition: TouchTransition
-    }
-  ]
+      transition: TouchTransition,
+    },
+  ],
 };
 
 describe('MultiBackend class', () => {
   const createBackend = (pipeline = oldHTML5toTouch, manager = null) => {
-    if (manager === null) {
-      manager = Mock('getMonitor', 'getActions', 'getRegistry', 'getContext');
+    let actualManager = manager;
+    if (actualManager === null) {
+      actualManager = Mock('getMonitor', 'getActions', 'getRegistry', 'getContext');
     }
-    return new MultiBackend(manager, pipeline);
+    return new MultiBackend(actualManager, pipeline);
   };
 
   describe('constructor', () => {
@@ -49,7 +51,9 @@ describe('MultiBackend class', () => {
 
     it('fails if a backend specifies an invalid `transition` property', () => {
       const pipeline = {backends: [{backend: {}, transition: {}}]};
-      expect(() => { createBackend(pipeline); } ).to.throw(Error, 'You must specify a valid \'transition\' property (either undefined or the return of \'createTransition\') in your Backend entry: [object Object]');
+      expect(() => { createBackend(pipeline); }).to.throw(Error,
+        'You must specify a valid \'transition\' property (either undefined or the return of \'createTransition\') in your Backend entry: [object Object]'
+      );
     });
 
     it('constructs correctly', () => {
@@ -60,7 +64,7 @@ describe('MultiBackend class', () => {
       const backend2ctr = sinon.stub().returns(backend2);
       const pipeline = {backends: [
         {backend: backend1ctr},
-        {backend: backend2ctr, preview: true, transition}
+        {backend: backend2ctr, preview: true, transition},
       ]};
       const manager = {secret: Math.random()};
       const backend = createBackend(pipeline, manager);
@@ -305,7 +309,7 @@ describe('MultiBackend class', () => {
       expect(backend.callBackend).to.have.been.calledOnce;
       expect(backend.callBackend).to.have.been.calledWithExactly('funcName', [1, 2, 3]);
       expect(backend.nodes).to.have.property('funcName_1');
-      const node = backend.nodes['funcName_1'];
+      const node = backend.nodes.funcName_1;
       expect(node).to.have.property('func', 'funcName');
       expect(node).to.have.property('args').that.deep.equal([1, 2, 3]);
       expect(node).to.have.property('handler', fakeHandler);

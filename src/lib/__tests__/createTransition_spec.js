@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { expect, sinon } from 'tests/framework';
 import createTransition from '../createTransition';
 

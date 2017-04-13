@@ -20,7 +20,7 @@ module.exports = webpackMerge(examplesConfig, {
     },
     overlay: {
       warnings: true,
-      errors: true
+      errors: true,
     },
   },
   plugins: [

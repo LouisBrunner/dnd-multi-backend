@@ -1,14 +1,17 @@
-import { PureComponent, PropTypes } from 'react';
+import { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { DragLayer } from 'react-dnd';
 
-@DragLayer((monitor) => ({
-  currentOffset: monitor.getSourceClientOffset(), isDragging: monitor.isDragging(), itemType: monitor.getItemType(), item: monitor.getItem()
-}))
+@DragLayer((monitor) => {
+  return {
+    currentOffset: monitor.getSourceClientOffset(), isDragging: monitor.isDragging(), itemType: monitor.getItemType(), item: monitor.getItem(),
+  };
+})
 export default class Preview extends PureComponent {
   static defaultProps = { currentOffset: { x: 0, y: 0 }, isDragging: false, itemType: '', item: {} };
   static propTypes = {
     currentOffset: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
-    isDragging: PropTypes.bool, itemType: PropTypes.string, item: PropTypes.any, generator: PropTypes.func.isRequired
+    isDragging: PropTypes.bool, itemType: PropTypes.string, item: PropTypes.any, generator: PropTypes.func.isRequired,
   };
   static contextTypes = { dragDropManager: PropTypes.object };
 

@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 
-module.exports = function () {
+module.exports = function wpConfig() {
   return {
     module: {
       rules: [
@@ -13,14 +13,14 @@ module.exports = function () {
     },
     resolve: {
       modules: [
-        './src', './node_modules'
+        './src', './node_modules',
       ],
     },
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': JSON.stringify('production')
-        }
+          NODE_ENV: JSON.stringify('production'),
+        },
       }),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
@@ -30,6 +30,6 @@ module.exports = function () {
           comments: false,
         },
       }),
-    ]
+    ],
   };
 };

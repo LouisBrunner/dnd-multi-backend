@@ -12,6 +12,6 @@ export default {
       backend: TouchBackend({enableMouseEvents: true}),
       preview: true,
       transition: TouchTransition,
-    }
-  ]
+    },
+  ],
 };
