@@ -148,7 +148,7 @@ You must pass a function as the `generator` prop which takes 3 arguments:
 Note that this component will only be showed while using a backend flagged with `preview: true` (see [Create a custom pipeline](#create-a-custom-pipeline)) which is the case for the Touch backend in the default `HTML5toTouch` pipeline.
 
 
-### Example
+### Examples
 
 You can see an example [here](src/examples/) (Node.js style with `import`s).
 

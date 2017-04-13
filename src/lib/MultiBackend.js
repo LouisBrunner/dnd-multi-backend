@@ -3,7 +3,10 @@ export default class {
     const options = Object.assign({backends: []}, sourceOptions || {});
 
     if (options.backends.length < 1) {
-      throw new Error('You must specify at least one Backend, if you are coming from 2.x.x (or don\'t understand this error) see this guide: https://github.com/louisbrunner/react-dnd-multi-backend/tree/next#migrating-from-2xx');
+      throw new Error(
+        `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
+        see this guide: https://github.com/louisbrunner/react-dnd-multi-backend/tree/next#migrating-from-2xx`
+      );
     }
 
     this.current = 0;

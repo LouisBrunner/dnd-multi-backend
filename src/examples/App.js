@@ -1,26 +1,28 @@
-import React, { createClass } from 'react';
+import React, { PureComponent } from 'react';
 import { DragDropContext } from 'react-dnd';
 import MultiBackend, { Preview } from 'lib/index.js';
 import HTML5toTouch from 'lib/HTML5toTouch.js';
 import Card from './Card';
 import Basket from './Basket';
 
-const App = createClass({
-  generatePreview: function (type, item, style) {
+class App extends PureComponent {
+  generatePreview(type, item, style) {
     Object.assign(style, {backgroundColor: item.color, width: '50px', height: '50px'});
     return <div style={style}>Generated</div>;
-  },
-
-  render: function () {
-    return  <div>
-              <Card color="#cc2211" />
-              <Card color="#22cc11" />
-              <Card color="#2211cc" />
-              <Basket />
-              <Preview generator={this.generatePreview} />
-              <div id="console" />
-            </div>;
   }
-});
 
-module.exports = DragDropContext(MultiBackend(HTML5toTouch))(App);
+  render() {
+    return (
+      <div>
+        <Card color="#cc2211" />
+        <Card color="#22cc11" />
+        <Card color="#2211cc" />
+        <Basket />
+        <Preview generator={this.generatePreview} />
+        <div id="console" />
+      </div>
+    );
+  }
+}
+
+export default DragDropContext(MultiBackend(HTML5toTouch))(App);

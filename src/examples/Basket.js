@@ -1,29 +1,30 @@
-import React, { PropTypes, createClass } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 
 const spec = {
-  drop: function (props, monitor) {
-    const message = 'Dropped: ' + monitor.getItem().color;
-    document.getElementById('console').innerHTML += message + '<br />';
-  }
+  drop: (props, monitor) => {
+    const message = `Dropped: ${monitor.getItem().color}`;
+    document.getElementById('console').innerHTML += `${message}<br />`;
+  },
 };
 
 function collect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
-    canDrop: monitor.canDrop()
+    canDrop: monitor.canDrop(),
   };
 }
 
-const Basket = createClass({
-  propTypes: {
+class Basket extends PureComponent {
+  static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired,
-    canDrop: PropTypes.bool.isRequired
-  },
+    canDrop: PropTypes.bool.isRequired,
+  }
 
-  render: function () {
+  render() {
     const isOver = this.props.isOver;
     const canDrop = this.props.canDrop;
     const connectDropTarget = this.props.connectDropTarget;
@@ -31,6 +32,6 @@ const Basket = createClass({
 
     return connectDropTarget(<div className="square" style={style} />);
   }
-});
+}
 
-module.exports = DropTarget('square', spec, collect)(Basket);
+export default DropTarget('square', spec, collect)(Basket);
