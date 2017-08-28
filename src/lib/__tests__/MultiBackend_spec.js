@@ -261,7 +261,7 @@ describe('MultiBackend class', () => {
         cancelable: true,
         bubbles: true,
         touches: [Math.random()],
-        target: {dispatchEvent: sinon.stub()}
+        target: {dispatchEvent: sinon.stub()},
       };
 
       const oldHandler = sinon.stub();
