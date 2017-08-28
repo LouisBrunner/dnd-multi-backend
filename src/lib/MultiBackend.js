@@ -1,4 +1,3 @@
-import HTML5toTouch from './HTML5toTouch';
 import objectAssign from './objectAssign';
 
 export default class {
@@ -6,10 +5,13 @@ export default class {
     const options = objectAssign({backends: []}, sourceOptions || {});
 
     if (options.backends.length < 1) {
-      options.backends = HTML5toTouch.backends;
+      throw new Error(
+        `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
+        see this guide: https://github.com/louisbrunner/react-dnd-multi-backend#migrating-from-2xx`
+      );
     }
 
-    this.current = options.start || 0;
+    this.current = 0;
 
     this.backends = [];
     for (const backend of options.backends) {

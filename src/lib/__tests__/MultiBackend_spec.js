@@ -32,16 +32,20 @@ describe('MultiBackend class', () => {
   };
 
   describe('constructor', () => {
-    it('defaults to HTML5toTouch if no backend are specified', () => {
+    it('fails if no backend are specified', () => {
       const pipeline = {backends: []};
-      const backend = createBackend(pipeline);
-      expect(backend.backends).to.have.length(2);
-      expect(backend.backends[0].instance).not.to.be.undefined;
-      expect(backend.backends[0].preview).to.equal(false);
-      expect(backend.backends[0].transition).to.be.undefined;
-      expect(backend.backends[1].instance).not.to.be.undefined;
-      expect(backend.backends[1].preview).to.equal(true);
-      expect(backend.backends[1].transition).to.equal(TouchTransition);
+      expect(() => { createBackend(pipeline); }).to.throw(Error,
+        `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
+        see this guide: https://github.com/louisbrunner/react-dnd-multi-backend#migrating-from-2xx`
+      );
+    });
+
+    it('fails if no backend are specified (prototype trick)', () => {
+      const pipeline = Object.create({backends: []});
+      expect(() => { createBackend(pipeline); }).to.throw(Error,
+        `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
+        see this guide: https://github.com/louisbrunner/react-dnd-multi-backend#migrating-from-2xx`
+      );
     });
 
     it('fails if a backend lacks the `backend` property', () => {

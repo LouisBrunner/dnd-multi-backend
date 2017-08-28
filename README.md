@@ -11,6 +11,8 @@ You application can smoothly use the nice HTML5 compatible backend and fallback 
 
 Moreover, because some backends don't support preview, a `Preview` component has been added to make it easier to mock the Drag'n'Drop "ghost".
 
+See [Migrating from 2.x.x](#migrating-from-2xx) for instructions if you are coming from `react-dnd-multi-backend@2.x.x`.
+
 
 ## Installation
 
@@ -27,7 +29,10 @@ To get the `HTML5toTouch` pipeline, just require/import `react-dnd-multi-backend
 
 Use the minified UMD build in the `dist` folder: [here](dist/ReactDnDMultiBackend.min.js).
 It exports a global `window.ReactDnDMultiBackend` when imported as a `<script>` tag.
-This file also includes the `HTML5toTouch` pipeline.
+
+If you want to use the `HTML5toTouch` pipeline, also include [RDMBHTML5toTouch.min.js](dist/RDMBHTML5toTouch.min.js).
+It exports a global `window.RDMBHTML5toTouch` when imported as a `<script>` tag.
+This file also includes the `HTML5` and `Touch` backends, so no need to include them as well.
 
 
 ## Usage
@@ -61,8 +66,9 @@ You must pass a 'pipeline' to use as argument. This package includes `HTML5toTou
  - *browser*:
 ```js
   <script src="ReactDnDMultiBackend.min.js"></script>
+  <script src="RDMBHTML5toTouch.min.js"></script> <!-- or any other pipeline -->
   ...
-  var AppDnD = ReactDnD.DragDropContext(ReactDnDMultiBackend)(App);
+  var AppDnD = ReactDnD.DragDropContext(ReactDnDMultiBackend.default(RDMBHTML5toTouch.default))(App); // `.default` is only used to get the ES6 module default export
 ```
 
 ### Create a custom pipeline
@@ -145,6 +151,18 @@ Note that this component will only be showed while using a backend flagged with 
 ### Examples
 
 You can see an example [here](src/examples/) (Node.js style with `import`s).
+
+
+## Migrating from 2.x.x
+
+In 2.x.x, the pipeline was static but corresponded with the behavior of `HTML5toTouch`, so just [including and passing this pipeline as a parameter](#backend) would give you the same experience as before.
+
+If you used the `start` option, it's a bit different.
+With `start: 0` or `start: Backend.HTML5`, **MultiBackend** simply used the default pipeline, so you can also just pass `HTML5toTouch`.
+With `start: 1` or `start: Backend.TOUCH`, **MultiBackend** would only use the TouchBackend, so you can replace **MultiBackend** with **TouchBackend** (however, you would lose the `Preview` component) or create a simple pipeline (see [Create a custom pipeline](#create-a-custom-pipeline)) and pass it as a parameter:
+```js
+var TouchOnly = { backends: [{ backend: TouchBackend, preview: true }] };
+```
 
 
 ## Thanks

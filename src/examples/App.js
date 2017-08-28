@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { DragDropContext } from 'react-dnd';
 import MultiBackend, { Preview } from 'lib/index.js';
+import HTML5toTouch from 'lib/HTML5toTouch.js';
 import Card from './Card';
 import Basket from './Basket';
 import objectAssign from 'object-assign';
@@ -25,4 +26,4 @@ class App extends PureComponent {
   }
 }
 
-export default DragDropContext(MultiBackend)(App);
+export default DragDropContext(MultiBackend(HTML5toTouch))(App);
