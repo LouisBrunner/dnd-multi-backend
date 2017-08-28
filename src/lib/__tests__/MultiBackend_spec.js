@@ -40,6 +40,14 @@ describe('MultiBackend class', () => {
       );
     });
 
+    it('fails if no backend are specified (prototype trick)', () => {
+      const pipeline = Object.create({backends: []});
+      expect(() => { createBackend(pipeline); }).to.throw(Error,
+        `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
+        see this guide: https://github.com/louisbrunner/react-dnd-multi-backend/tree/next#migrating-from-2xx`
+      );
+    });
+
     it('fails if a backend lacks the `backend` property', () => {
       const pipeline = {backends: [{}]};
       expect(() => { createBackend(pipeline); }).to.throw(Error, 'You must specify a \'backend\' property in your Backend entry: [object Object]');

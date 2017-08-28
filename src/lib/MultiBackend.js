@@ -1,6 +1,12 @@
 export default class {
   constructor(manager, sourceOptions) {
-    const options = Object.assign({backends: []}, sourceOptions || {});
+    const options = {backends: []};
+    const sourceOptionsDef = sourceOptions || {};
+    for (const optionName in sourceOptionsDef) {
+      if (Object.prototype.hasOwnProperty.call(sourceOptionsDef, optionName)) {
+        options[optionName] = sourceOptionsDef[optionName];
+      }
+    }
 
     if (options.backends.length < 1) {
       throw new Error(

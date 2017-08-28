@@ -4,10 +4,11 @@ import MultiBackend, { Preview } from 'lib/index.js';
 import HTML5toTouch from 'lib/HTML5toTouch.js';
 import Card from './Card';
 import Basket from './Basket';
+import objectAssign from 'object-assign';
 
 class App extends PureComponent {
   generatePreview(type, item, style) {
-    Object.assign(style, {backgroundColor: item.color, width: '50px', height: '50px'});
+    objectAssign(style, {backgroundColor: item.color, width: '50px', height: '50px'});
     return <div style={style}>Generated</div>;
   }
 

@@ -59,6 +59,7 @@
     "mocha": "^3.2.0",
     "mocha-jsdom": "^1.1.0",
     "nyc": "^11.0.2",
+    "object-assign": "^4.1.1",
     "react": ">=15.3.0",
     "react-addons-test-utils": "*",
     "react-dom": "*",
