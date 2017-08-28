@@ -251,9 +251,14 @@ describe('MultiBackend class', () => {
       const backend = createBackend();
       expect(backend.current).to.equal(0);
 
-      const fakeEvent = {type: 'touchstart', touches: [], constructor: sinon.stub(), target: {dispatchEvent: sinon.stub()}};
-      const clonedEvent = {secret: Math.random()};
-      fakeEvent.constructor.returns(clonedEvent);
+      const fakeEvent = {
+        constructor: TouchEvent.constructor,
+        type: 'touchstart',
+        cancelable: true,
+        bubbles: true,
+        touches: [Math.random()],
+        target: {dispatchEvent: sinon.stub()},
+      };
 
       const oldHandler = sinon.stub();
       const fakeNode = {func: 'connectDragSource', args: [2, 1, 4], handler: oldHandler};
@@ -270,7 +275,10 @@ describe('MultiBackend class', () => {
       expect(backend.current).to.equal(1);
 
       expect(fakeEvent.target.dispatchEvent).to.have.been.calledOnce;
-      expect(fakeEvent.target.dispatchEvent).to.have.been.calledWithExactly(clonedEvent);
+      expect(fakeEvent.target.dispatchEvent.firstCall.args).to.have.length(1);
+      const clonedEvent = fakeEvent.target.dispatchEvent.firstCall.args[0];
+      expect(clonedEvent.type).to.be.equal('touchstart');
+      expect(clonedEvent.cancelable).to.be.true;
 
       expect(oldHandler).to.have.been.calledOnce;
       expect(backend.callBackend).to.have.been.calledOnce;

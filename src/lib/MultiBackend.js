@@ -1,8 +1,9 @@
 import HTML5toTouch from './HTML5toTouch';
+import objectAssign from './objectAssign';
 
 export default class {
   constructor(manager, sourceOptions) {
-    const options = Object.assign({backends: []}, sourceOptions || {});
+    const options = objectAssign({backends: []}, sourceOptions || {});
 
     if (options.backends.length < 1) {
       options.backends = HTML5toTouch.backends;
@@ -109,7 +110,13 @@ export default class {
       }
       this.backends[this.current].instance.setup();
 
-      const newEvent = new event.constructor(event.type, event);
+      let newEvent = null;
+      try {
+        newEvent = new event.constructor(event.type, event);
+      } catch (_e) {
+        newEvent = document.createEvent('Event');
+        newEvent.initEvent(event.type, event.bubbles, event.cancelable);
+      }
       event.target.dispatchEvent(newEvent);
     }
   }
