@@ -14,7 +14,7 @@ export default class {
     this.current = 0;
 
     this.backends = [];
-    for (const backend of options.backends) {
+    options.backends.forEach((backend) => {
       if (!backend.backend) {
         throw new Error(`You must specify a 'backend' property in your Backend entry: ${backend}`);
       }
@@ -29,7 +29,7 @@ export default class {
         preview: (backend.preview || false),
         transition,
       });
-    }
+    });
 
     this.nodes = {};
   }
@@ -75,19 +75,19 @@ export default class {
 
   // Multi Backend Listeners
   addEventListeners = (target) => {
-    for (const backend of this.backends) {
+    this.backends.forEach((backend) => {
       if (backend.transition) {
         target.addEventListener(backend.transition.event, this.backendSwitcher, true);
       }
-    }
+    });
   }
 
   removeEventListeners = (target) => {
-    for (const backend of this.backends) {
+    this.backends.forEach((backend) => {
       if (backend.transition) {
         target.removeEventListener(backend.transition.event, this.backendSwitcher, true);
       }
-    }
+    });
   }
 
   // Switching logic
@@ -95,21 +95,22 @@ export default class {
     const oldBackend = this.current;
 
     let i = 0;
-    for (const backend of this.backends) {
+    this.backends.some((backend) => {
       if (i !== this.current && backend.transition && backend.transition.check(event)) {
         this.current = i;
-        break;
+        return true;
       }
       i += 1;
-    }
+      return false;
+    });
 
     if (this.current !== oldBackend) {
       this.backends[oldBackend].instance.teardown();
-      for (const id of Object.keys(this.nodes)) {
+      Object.keys(this.nodes).forEach((id) => {
         const node = this.nodes[id];
         node.handler();
         node.handler = this.callBackend(node.func, node.args);
-      }
+      });
       this.backends[this.current].instance.setup();
 
       let newEvent = null;
