@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf packages/*/lib",
-    "build:lib": "find packages -depth 1 -type dir -exec babel '{}'/src --out-dir '{}'/lib --ignore _spec.js ';'",
+    "build:lib": "find packages -mindepth 1 -maxdepth 1 -type d -exec babel '{}'/src --out-dir '{}'/lib --ignore _spec.js ';'",
     "build:dist": "webpack",
     "build:examples": "webpack --config webpack/examples.js",
     "build": "npm run build:lib && npm run build:dist && npm run build:examples",

@@ -1,7 +1,9 @@
 language: node_js
 node_js:
   - "node"
-  - "6"
+  - "lts/*"
+  - "8"
+  - "7"
 
 script:
   - npm run travis-test
