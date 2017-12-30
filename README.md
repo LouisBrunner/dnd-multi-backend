@@ -1,20 +1,24 @@
 # DnD Multi Backend [![NPM Version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
-This project is a Drag'n'Drop backend compatible with [DnD Core](https://github.com/gaearon/dnd-core).
+This project is a Drag'n'Drop backend compatible with [DnD Core](https://github.com/react-dnd/react-dnd).
 
 It enables your application to use different DnD backends depending on the situation. Different packages are available depending on your front-end framework:
 
-  - React: [react-dnd-multi-backend](packages/react-dnd-multi-backend)
+  - React: [`react-dnd-multi-backend`](packages/react-dnd-multi-backend)
   - Angular: coming soon!
-  - Any: [dnd-multi-backend](packages/dnd-multi-backend)
+  - Any: [`dnd-multi-backend`](packages/dnd-multi-backend)
 
-[Try them here!](https://louisbrunner.github.io/dnd-multi-backend)
+This project also contains some helpers (available standalone or included in other packages):
+
+ - React DnD Preview: [`react-dnd-preview`](packages/react-dnd-preview) (included in `react-dnd-multi-backend`)
+
+[Try them here!](https://louisbrunner.github.io/dnd-multi-backend/examples)
 
 
 ## Improvements
 
- - Split Preview into its own package
- - Write examples for `dnd-multi-backend`
+ - Write documentation & examples for `dnd-multi-backend`
+ - Write documentation & examples for `react-dnd-preview`
  - Angular-specific package
  - Use `babel-preset-env`
 

@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-expressions */
 import { expect, sinon, mount } from 'tests/framework';
 import { StubAndDo } from 'sinon-spy-utils';
-import React, { PureComponent } from 'react';
+import React from 'react';
 
-import Preview from '../Preview';
+import Preview from '../index';
 
 describe('Preview component', () => {
-  const createComponent = ({preview = false, isDragging = false, currentOffset = null, generator = sinon.stub(), item = {}, itemType = ''} = {}) => {
+  const createComponent = ({isDragging = false, currentOffset = null, generator = sinon.stub(), item = {}, itemType = ''} = {}) => {
     const context = {
       dragDropManager: {
         getMonitor: () => {
@@ -19,11 +19,6 @@ describe('Preview component', () => {
             subscribeToStateChange: () => {},
           };
         },
-        getBackend: () => {
-          return {
-            previewEnabled: () => { return preview; },
-          };
-        },
       },
     };
     let component;
@@ -34,9 +29,10 @@ describe('Preview component', () => {
     return component;
   };
 
-  it('is a PureComponent', () => {
+  it('is a DragLayer-decorated Preview', () => {
     const component = createComponent();
-    expect(component.node).to.be.an.instanceof(PureComponent);
+    expect(component.name()).to.equal('DragLayer(Preview)');
+    expect(component.node).to.be.an.instanceof(Preview);
   });
 
   it('fails with no generator', () => {
@@ -45,22 +41,12 @@ describe('Preview component', () => {
     );
   });
 
-  it('no preview and no DnD', () => {
+  it('is null when DnD is not in progress', () => {
     const component = createComponent();
     expect(component.html()).to.be.null;
   });
 
-  it('no preview and DnD', () => {
-    const component = createComponent({isDragging: true, currentOffset: {x: 1000, y: 2000}});
-    expect(component.html()).to.be.null;
-  });
-
-  it('preview and no DnD', () => {
-    const component = createComponent({preview: true});
-    expect(component.html()).to.be.null;
-  });
-
-  it('preview and DnD', () => {
+  it('is valid when DnD is in progress', () => {
     const generator = sinon.stub();
     generator.callsFake((type, item, style) => {
       return <div style={style}>{item.coucou}: {type}</div>;
@@ -68,7 +54,6 @@ describe('Preview component', () => {
     const component = createComponent({
       item: {coucou: 'dauphin'},
       itemType: 'toto',
-      preview: true,
       isDragging: true, currentOffset: {x: 1000, y: 2000},
       generator,
     });

@@ -1,6 +1,6 @@
 # React DnD Multi Backend [![NPM Version][npm-image]][npm-url] [![dependencies Status][deps-image]][deps-url] [![devDependencies Status][deps-dev-image]][deps-dev-url]
 
-[Try it here!](https://louisbrunner.github.io/dnd-multi-backend/react.html)
+[Try it here!](https://louisbrunner.github.io/dnd-multi-backend/examples/react.html)
 
 This project is a Drag'n'Drop backend compatible with [React DnD](https://github.com/gaearon/react-dnd).
 It enables your application to use different DnD backends depending on the situation.

@@ -6,8 +6,10 @@ module.exports = webpackMerge(commonConfig(), {
     DnDMultiBackend: './packages/dnd-multi-backend/src/index.js',
     ReactDnDMultiBackend: './packages/react-dnd-multi-backend/src/index.js',
     RDMBHTML5toTouch: './packages/react-dnd-multi-backend/src/HTML5toTouch.js',
+    ReactDnDPreview: './packages/react-dnd-preview/src/index.js',
     examples_agnostic: './packages/dnd-multi-backend/examples/index.js',
     examples_react: './packages/react-dnd-multi-backend/examples/index.js',
+    examples_react_preview: './packages/react-dnd-preview/examples/index.js',
   },
   output: {
     path: `${__dirname}/../dist`,

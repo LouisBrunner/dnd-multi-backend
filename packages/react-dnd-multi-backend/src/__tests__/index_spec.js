@@ -3,7 +3,7 @@ import { Mock } from 'sinon-spy-utils';
 
 import * as Module from '../index';
 
-import Preview from '../Preview';
+import Preview from 'react-dnd-preview';
 import MultiBackend, { HTML5DragTransition, TouchTransition, createTransition } from 'dnd-multi-backend';
 
 

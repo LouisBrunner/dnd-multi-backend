@@ -1,8 +1,8 @@
 # DnD Multi Backend [![NPM Version][npm-image]][npm-url] [![dependencies Status][deps-image]][deps-url] [![devDependencies Status][deps-dev-image]][deps-dev-url]
 
-[Try it here!](https://louisbrunner.github.io/dnd-multi-backend/agnostic.html)
+[Try it here!](https://louisbrunner.github.io/dnd-multi-backend/examples/agnostic.html)
 
-This project is a Drag'n'Drop backend compatible with [DnD Core](https://github.com/gaearon/dnd-core).
+This project is a Drag'n'Drop backend compatible with [DnD Core](https://github.com/react-dnd/react-dnd).
 It enables your application to use different DnD backends depending on the situation. This package is completely frontend-agnostic, you can refer to [this page](https://github.com/LouisBrunner/dnd-multi-backend) for frontend-specific packages. This means if your front-end is not yet supported, you'll have to roll out your own.
 
 ## Installation
