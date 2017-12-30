@@ -20,7 +20,6 @@ This project also contains some helpers (available standalone or included in oth
  - Write documentation & examples for `dnd-multi-backend`
  - Write documentation & examples for `react-dnd-preview`
  - Angular-specific package
- - Use `babel-preset-env`
 
 
 ## Thanks
