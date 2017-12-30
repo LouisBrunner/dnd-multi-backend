@@ -10,7 +10,7 @@ module.exports = webpackMerge(examplesConfig, {
   devServer: {
     port: 4001,
     compress: true,
-    contentBase: './examples',
+    contentBase: './docs',
     hot: true,
     stats: {
       cached: false,

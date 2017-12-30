@@ -3,12 +3,8 @@ import { Mock } from 'sinon-spy-utils';
 
 import * as Module from '../index';
 
-import MultiBackend from '../MultiBackend';
-import HTML5toTouch from '../HTML5toTouch';
-
 import Preview from '../Preview';
-import { HTML5DragTransition, TouchTransition } from '../Transitions';
-import createTransition from '../createTransition';
+import MultiBackend, { HTML5DragTransition, TouchTransition, createTransition } from 'dnd-multi-backend';
 
 
 describe('ReactDnDMultiBackend module', () => {
@@ -16,7 +12,7 @@ describe('ReactDnDMultiBackend module', () => {
     expect(Module.default).to.be.an.instanceof(Function);
 
     const fakeManager = Mock('getMonitor', 'getActions', 'getRegistry', 'getContext');
-    expect(Module.default(HTML5toTouch)(fakeManager)).to.be.an.instanceof(MultiBackend);
+    expect(Module.default).to.equal(MultiBackend);
     expect(() => { Module.default(fakeManager); }).to.throw(Error, 'You must specify at least one Backend');
   });
 

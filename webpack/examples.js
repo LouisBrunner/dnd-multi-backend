@@ -1,11 +1,13 @@
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./core.js');
-const path = require('path');
 
 module.exports = webpackMerge(commonConfig(), {
-  entry: './src/examples/index.js',
+  entry: {
+    agnostic: './packages/dnd-multi-backend/examples/index.js',
+    react: './packages/react-dnd-multi-backend/examples/index.js',
+  },
   output: {
-    path: path.resolve('./examples'),
-    filename: 'examples.min.js',
+    path: `${__dirname}/../docs`,
+    filename: 'examples_[name].min.js',
   },
 });

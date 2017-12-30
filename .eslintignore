@@ -1,5 +1,5 @@
-/coverage
-/examples
+/docs
 /dist
-/lib
+/coverage
+/packages/*/lib
 **/node_modules

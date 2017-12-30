@@ -13,7 +13,7 @@ module.exports = function wpConfig() {
     },
     resolve: {
       modules: [
-        './src', './node_modules',
+        '.', './node_modules',
       ],
     },
     plugins: [

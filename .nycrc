@@ -5,10 +5,10 @@
     "text-summary"
   ],
   "include": [
-    "src/lib/*"
+    "packages/*/src/*"
   ],
   "exclude": [
-    "src/**/*_spec.*"
+    "packages/*/src/**/*_spec.*"
   ],
   "require": [
     "babel-register"

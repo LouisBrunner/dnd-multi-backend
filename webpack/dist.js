@@ -3,8 +3,11 @@ const commonConfig = require('./core.js');
 
 module.exports = webpackMerge(commonConfig(), {
   entry: {
-    ReactDnDMultiBackend: './src/lib/index.js',
-    RDMBHTML5toTouch: './src/lib/HTML5toTouch.js',
+    DnDMultiBackend: './packages/dnd-multi-backend/src/index.js',
+    ReactDnDMultiBackend: './packages/react-dnd-multi-backend/src/index.js',
+    RDMBHTML5toTouch: './packages/react-dnd-multi-backend/src/HTML5toTouch.js',
+    examples_agnostic: './packages/dnd-multi-backend/examples/index.js',
+    examples_react: './packages/react-dnd-multi-backend/examples/index.js',
   },
   output: {
     path: `${__dirname}/../dist`,

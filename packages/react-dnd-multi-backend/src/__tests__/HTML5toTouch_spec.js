@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from 'tests/framework';
 import HTML5toTouch from '../HTML5toTouch';
-import { TouchTransition } from '../Transitions';
+import { TouchTransition } from 'dnd-multi-backend';
 
 describe('HTML5toTouch pipeline', () => {
   it('has the HTML5 and Touch backends', () => {

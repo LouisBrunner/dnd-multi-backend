@@ -2,4 +2,4 @@
 --growl
 --colors
 --require jsdom-global/register
-src/**/__tests__/*_spec.*
+packages/*/src/**/__tests__/*_spec.*

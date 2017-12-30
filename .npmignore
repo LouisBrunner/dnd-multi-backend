@@ -10,7 +10,7 @@ webpack.config.js
 
 # Output
 /dist
-/examples
+/docs
 
 # npm
 node_modules

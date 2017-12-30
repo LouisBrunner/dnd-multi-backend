@@ -36,7 +36,7 @@ describe('MultiBackend class', () => {
       const pipeline = {backends: []};
       expect(() => { createBackend(pipeline); }).to.throw(Error,
         `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
-        see this guide: https://github.com/louisbrunner/react-dnd-multi-backend#migrating-from-2xx`
+        see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-2xx`
       );
     });
 
@@ -44,7 +44,7 @@ describe('MultiBackend class', () => {
       const pipeline = Object.create({backends: []});
       expect(() => { createBackend(pipeline); }).to.throw(Error,
         `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
-        see this guide: https://github.com/louisbrunner/react-dnd-multi-backend#migrating-from-2xx`
+        see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-2xx`
       );
     });
 
