@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { expect, sinon, mount } from 'tests/framework';
 import { StubAndDo } from 'sinon-spy-utils';
-import React, { PureComponent } from 'react';
+import React from 'react';
 
 import Preview from '../Preview';
 
@@ -36,7 +36,8 @@ describe('Preview component', () => {
 
   it('is a PureComponent', () => {
     const component = createComponent();
-    expect(component.node).to.be.an.instanceof(PureComponent);
+    expect(component.name()).to.equal('DragLayer(Preview)');
+    expect(component.node).to.be.an.instanceof(Preview);
   });
 
   it('fails with no generator', () => {
