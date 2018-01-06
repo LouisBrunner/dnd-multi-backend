@@ -23,4 +23,18 @@ describe('Transitions collection', () => {
       expect(Transitions.TouchTransition.check({click: true})).to.equal(false);
     });
   });
+
+  describe('MouseTransition object', () => {
+    it('calls createTransition correctly', () => {
+      expect(Transitions.MouseTransition._isMBTransition).to.equal(true);
+      expect(Transitions.MouseTransition.event).to.equal('mousedown');
+
+      expect(Transitions.MouseTransition.check({touches: true})).to.equal(false);
+      expect(Transitions.MouseTransition.check({click: true})).to.equal(false);
+      expect(Transitions.MouseTransition.check({type: 'abc'})).to.equal(false);
+      expect(Transitions.MouseTransition.check({type: 'xyztouchxyz'})).to.equal(false);
+      expect(Transitions.MouseTransition.check({type: 'xyztouchamousexyz'})).to.equal(false);
+      expect(Transitions.MouseTransition.check({type: 'xyzmousexyz'})).to.equal(true);
+    });
+  });
 });
