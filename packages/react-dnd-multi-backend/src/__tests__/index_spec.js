@@ -4,7 +4,7 @@ import { Mock } from 'sinon-spy-utils';
 import * as Module from '../index';
 
 import Preview from '../Preview';
-import MultiBackend, { HTML5DragTransition, TouchTransition, createTransition } from 'dnd-multi-backend';
+import MultiBackend, { HTML5DragTransition, TouchTransition, MouseTransition, createTransition } from 'dnd-multi-backend';
 
 
 describe('ReactDnDMultiBackend module', () => {
@@ -20,6 +20,7 @@ describe('ReactDnDMultiBackend module', () => {
     expect(Module.Preview).to.equal(Preview);
     expect(Module.HTML5DragTransition).to.equal(HTML5DragTransition);
     expect(Module.TouchTransition).to.equal(TouchTransition);
+    expect(Module.MouseTransition).to.equal(MouseTransition);
     expect(Module.createTransition).to.equal(createTransition);
   });
 });
