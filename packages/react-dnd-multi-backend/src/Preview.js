@@ -9,6 +9,7 @@ export default class Preview extends PureComponent {
   static contextTypes = {dragDropManager: PropTypes.object};
 
   render() {
+    console.log(this.context); // eslint-disable-line
     if (!this.context.dragDropManager.getBackend().previewEnabled()) {
       return null;
     }

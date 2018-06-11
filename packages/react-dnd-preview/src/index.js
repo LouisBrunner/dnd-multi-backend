@@ -13,7 +13,6 @@ export default class Preview extends PureComponent {
     currentOffset: PropTypes.shape({x: PropTypes.number, y: PropTypes.number}),
     isDragging: PropTypes.bool, itemType: PropTypes.string, item: PropTypes.any, generator: PropTypes.func.isRequired,
   };
-  static contextTypes = { dragDropManager: PropTypes.object };
 
   getStyle() {
     const transform = `translate(${this.props.currentOffset.x}px, ${this.props.currentOffset.y}px)`;
