@@ -42,6 +42,7 @@
     "jest-enzyme": "^6.0.1",
     "lerna": "^2.11.0",
     "react": "^16.4.0",
+    "react-dnd-test-backend": "^4.0.5",
     "react-dom": "*",
     "react-test-renderer": "*",
     "uglifyjs-webpack-plugin": "^1.2.5",
