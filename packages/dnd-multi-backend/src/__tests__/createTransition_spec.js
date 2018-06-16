@@ -1,21 +1,19 @@
-/* eslint-disable no-unused-expressions */
-import { expect, sinon } from 'tests/framework';
 import createTransition from '../createTransition';
 
 describe('createTransition function', () => {
-  it('creates a valid transition', () => {
+  test('creates a valid transition', () => {
     const eventName = 'test_event';
-    const func = sinon.stub();
+    const func = jest.fn();
 
     const transition = createTransition(eventName, func);
 
-    expect(transition._isMBTransition).to.equal(true);
-    expect(transition.event).to.equal(eventName);
+    expect(transition._isMBTransition).toBe(true);
+    expect(transition.event).toBe(eventName);
 
     const fakeEvent = {secret: Math.random()};
-    expect(func).not.to.have.been.called;
+    expect(func).not.toBeCalled();
     transition.check(fakeEvent);
-    expect(func).to.have.been.calledOnce;
-    expect(func).to.have.been.calledWithExactly(fakeEvent);
+    expect(func).toHaveBeenCalledTimes(1);
+    expect(func).toBeCalledWith(fakeEvent);
   });
 });

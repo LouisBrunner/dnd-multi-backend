@@ -1,40 +1,38 @@
-import { expect } from 'tests/framework';
-
 import * as Transitions from '../Transitions';
 
 describe('Transitions collection', () => {
   describe('HTML5DragTransition object', () => {
-    it('calls createTransition correctly', () => {
-      expect(Transitions.HTML5DragTransition._isMBTransition).to.equal(true);
-      expect(Transitions.HTML5DragTransition.event).to.equal('dragstart');
+    test('calls createTransition correctly', () => {
+      expect(Transitions.HTML5DragTransition._isMBTransition).toBe(true);
+      expect(Transitions.HTML5DragTransition.event).toBe('dragstart');
 
-      expect(Transitions.HTML5DragTransition.check({type: 'xxxdragxxx'})).to.equal(true);
-      expect(Transitions.HTML5DragTransition.check({type: 'xxxdropxxx'})).to.equal(true);
-      expect(Transitions.HTML5DragTransition.check({drag: true})).to.equal(false);
+      expect(Transitions.HTML5DragTransition.check({type: 'xxxdragxxx'})).toBe(true);
+      expect(Transitions.HTML5DragTransition.check({type: 'xxxdropxxx'})).toBe(true);
+      expect(Transitions.HTML5DragTransition.check({drag: true})).toBe(false);
     });
   });
 
   describe('TouchTransition object', () => {
-    it('calls createTransition correctly', () => {
-      expect(Transitions.TouchTransition._isMBTransition).to.equal(true);
-      expect(Transitions.TouchTransition.event).to.equal('touchstart');
+    test('calls createTransition correctly', () => {
+      expect(Transitions.TouchTransition._isMBTransition).toBe(true);
+      expect(Transitions.TouchTransition.event).toBe('touchstart');
 
-      expect(Transitions.TouchTransition.check({touches: true})).to.equal(true);
-      expect(Transitions.TouchTransition.check({click: true})).to.equal(false);
+      expect(Transitions.TouchTransition.check({touches: true})).toBe(true);
+      expect(Transitions.TouchTransition.check({click: true})).toBe(false);
     });
   });
 
   describe('MouseTransition object', () => {
-    it('calls createTransition correctly', () => {
-      expect(Transitions.MouseTransition._isMBTransition).to.equal(true);
-      expect(Transitions.MouseTransition.event).to.equal('mousedown');
+    test('calls createTransition correctly', () => {
+      expect(Transitions.MouseTransition._isMBTransition).toBe(true);
+      expect(Transitions.MouseTransition.event).toBe('mousedown');
 
-      expect(Transitions.MouseTransition.check({touches: true})).to.equal(false);
-      expect(Transitions.MouseTransition.check({click: true})).to.equal(false);
-      expect(Transitions.MouseTransition.check({type: 'abc'})).to.equal(false);
-      expect(Transitions.MouseTransition.check({type: 'xyztouchxyz'})).to.equal(false);
-      expect(Transitions.MouseTransition.check({type: 'xyztouchamousexyz'})).to.equal(false);
-      expect(Transitions.MouseTransition.check({type: 'xyzmousexyz'})).to.equal(true);
+      expect(Transitions.MouseTransition.check({touches: true})).toBe(false);
+      expect(Transitions.MouseTransition.check({click: true})).toBe(false);
+      expect(Transitions.MouseTransition.check({type: 'abc'})).toBe(false);
+      expect(Transitions.MouseTransition.check({type: 'xyztouchxyz'})).toBe(false);
+      expect(Transitions.MouseTransition.check({type: 'xyztouchamousexyz'})).toBe(false);
+      expect(Transitions.MouseTransition.check({type: 'xyzmousexyz'})).toBe(true);
     });
   });
 });

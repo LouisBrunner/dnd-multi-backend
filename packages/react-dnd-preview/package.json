@@ -16,8 +16,8 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "prop-types": "^15.5.8",
-    "react": "*",
-    "react-dnd": "*"
+    "prop-types": "^15.6.1",
+    "react": "^16.4.1",
+    "react-dnd": "^4.0.5"
   }
 }

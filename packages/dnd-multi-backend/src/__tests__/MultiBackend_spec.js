@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-expressions */
-import { expect, sinon } from 'tests/framework';
-import { Mock } from 'sinon-spy-utils';
-
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
 import { TouchTransition } from '../Transitions';
@@ -26,46 +22,38 @@ describe('MultiBackend class', () => {
   const createBackend = (pipeline = oldHTML5toTouch, manager = null) => {
     let actualManager = manager;
     if (actualManager === null) {
-      actualManager = Mock('getMonitor', 'getActions', 'getRegistry', 'getContext');
+      actualManager = {getMonitor: jest.fn(), getActions: jest.fn(), getRegistry: jest.fn(), getContext: jest.fn()};
     }
     return new MultiBackend(actualManager, pipeline);
   };
 
   describe('constructor', () => {
-    it('fails if no backend are specified', () => {
+    test('fails if no backend are specified', () => {
       const pipeline = {backends: []};
-      expect(() => { createBackend(pipeline); }).to.throw(Error,
-        `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
-        see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-2xx`
-      );
+      expect(() => { createBackend(pipeline); }).toThrowError(Error);
     });
 
-    it('fails if no backend are specified (prototype trick)', () => {
+    test('fails if no backend are specified (prototype trick)', () => {
       const pipeline = Object.create({backends: []});
-      expect(() => { createBackend(pipeline); }).to.throw(Error,
-        `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
-        see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-2xx`
-      );
+      expect(() => { createBackend(pipeline); }).toThrowError(Error);
     });
 
-    it('fails if a backend lacks the `backend` property', () => {
+    test('fails if a backend lacks the `backend` property', () => {
       const pipeline = {backends: [{}]};
-      expect(() => { createBackend(pipeline); }).to.throw(Error, 'You must specify a \'backend\' property in your Backend entry: [object Object]');
+      expect(() => { createBackend(pipeline); }).toThrowError(Error);
     });
 
-    it('fails if a backend specifies an invalid `transition` property', () => {
+    test('fails if a backend specifies an invalid `transition` property', () => {
       const pipeline = {backends: [{backend: {}, transition: {}}]};
-      expect(() => { createBackend(pipeline); }).to.throw(Error,
-        'You must specify a valid \'transition\' property (either undefined or the return of \'createTransition\') in your Backend entry: [object Object]'
-      );
+      expect(() => { createBackend(pipeline); }).toThrowError(Error);
     });
 
-    it('constructs correctly', () => {
-      const transition = createTransition('haha', sinon.stub());
+    test('constructs correctly', () => {
+      const transition = createTransition('haha', jest.fn());
       const backend1 = {secret: Math.random()};
-      const backend1ctr = sinon.stub().returns(backend1);
+      const backend1ctr = jest.fn(() => { return backend1; });
       const backend2 = {secret: Math.random()};
-      const backend2ctr = sinon.stub().returns(backend2);
+      const backend2ctr = jest.fn(() => { return backend2; });
       const pipeline = {backends: [
         {backend: backend1ctr},
         {backend: backend2ctr, preview: true, transition},
@@ -73,187 +61,187 @@ describe('MultiBackend class', () => {
       const manager = {secret: Math.random()};
       const backend = createBackend(pipeline, manager);
 
-      expect(backend.current).to.equal(0);
-      expect(backend.nodes).to.deep.equal({});
-      expect(backend.backends).to.have.length(2);
+      expect(backend.current).toBe(0);
+      expect(backend.nodes).toEqual({});
+      expect(backend.backends).toHaveLength(2);
 
-      expect(backend1ctr).to.have.been.calledOnce;
-      expect(backend1ctr).to.have.been.calledWithExactly(manager);
-      expect(backend.backends[0].instance).to.equal(backend1);
-      expect(backend.backends[0].preview).to.equal(false);
-      expect(backend.backends[0].transition).to.be.undefined;
+      expect(backend1ctr).toHaveBeenCalledTimes(1);
+      expect(backend1ctr).toBeCalledWith(manager);
+      expect(backend.backends[0].instance).toBe(backend1);
+      expect(backend.backends[0].preview).toBe(false);
+      expect(backend.backends[0].transition).toBeUndefined();
 
-      expect(backend2ctr).to.have.been.calledOnce;
-      expect(backend2ctr).to.have.been.calledWithExactly(manager);
-      expect(backend.backends[1].instance).to.equal(backend2);
-      expect(backend.backends[1].preview).to.equal(true);
-      expect(backend.backends[1].transition).to.equal(transition);
+      expect(backend2ctr).toHaveBeenCalledTimes(1);
+      expect(backend2ctr).toBeCalledWith(manager);
+      expect(backend.backends[1].instance).toBe(backend2);
+      expect(backend.backends[1].preview).toBe(true);
+      expect(backend.backends[1].transition).toBe(transition);
     });
   });
 
 
   describe('setup function', () => {
-    it('does nothing if it has no window', () => {
+    test('does nothing if it has no window', () => {
       const backend = createBackend();
 
       const oldWindow = global.window;
       delete global.window;
-      sinon.stub(backend, 'addEventListeners');
+      jest.spyOn(backend, 'addEventListeners').mockImplementation(() => {});
       backend.setup();
-      expect(backend.addEventListeners).not.to.have.been.called;
+      expect(backend.addEventListeners).not.toBeCalled();
       global.window = oldWindow;
     });
 
-    it('fails if a backend already exist', () => {
+    test('fails if a backend already exist', () => {
       const backend = createBackend();
-      sinon.stub(backend, 'addEventListeners');
-      sinon.stub(backend, 'removeEventListeners');
-      sinon.stub(backend.backends[0].instance, 'setup');
-      sinon.stub(backend.backends[0].instance, 'teardown');
+      jest.spyOn(backend, 'addEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend, 'removeEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend.backends[0].instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
       backend.setup();
-      expect(backend.addEventListeners).to.have.been.calledOnce;
+      expect(backend.addEventListeners).toHaveBeenCalledTimes(1);
 
       const backend2 = createBackend();
-      sinon.stub(backend2, 'addEventListeners');
-      sinon.stub(backend2.backends[0].instance, 'setup');
-      expect(() => { backend2.setup(); }).to.throw(Error, 'Cannot have two MultiBackends at the same time.');
-      expect(backend2.addEventListeners).not.to.have.been.called;
+      jest.spyOn(backend2, 'addEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend2.backends[0].instance, 'setup').mockImplementation(() => {});
+      expect(() => { backend2.setup(); }).toThrowError(Error);
+      expect(backend2.addEventListeners).not.toBeCalled();
 
       backend.teardown();
     });
 
-    it('sets up the events and sub-backends', () => {
+    test('sets up the events and sub-backends', () => {
       const backend = createBackend();
-      sinon.stub(backend, 'addEventListeners');
-      sinon.stub(backend, 'removeEventListeners');
-      sinon.stub(backend.backends[0].instance, 'setup');
-      sinon.stub(backend.backends[0].instance, 'teardown');
+      jest.spyOn(backend, 'addEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend, 'removeEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend.backends[0].instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
       backend.setup();
-      expect(backend.addEventListeners).to.have.been.calledOnce;
-      expect(backend.backends[0].instance.setup).to.have.been.calledOnce;
+      expect(backend.addEventListeners).toHaveBeenCalledTimes(1);
+      expect(backend.backends[0].instance.setup).toHaveBeenCalledTimes(1);
       backend.teardown();
     });
   });
 
   describe('teardown function', () => {
-    it('does nothing if it has no window', () => {
+    test('does nothing if it has no window', () => {
       const backend = createBackend();
 
       const oldWindow = global.window;
       delete global.window;
-      sinon.stub(backend, 'removeEventListeners');
+      jest.spyOn(backend, 'removeEventListeners').mockImplementation(() => {});
       backend.teardown();
-      expect(backend.removeEventListeners).not.to.have.been.called;
+      expect(backend.removeEventListeners).not.toBeCalled();
       global.window = oldWindow;
     });
 
-    it('cleans up the events and sub-backends', () => {
+    test('cleans up the events and sub-backends', () => {
       const backend = createBackend();
-      sinon.stub(backend, 'addEventListeners');
-      sinon.stub(backend, 'removeEventListeners');
-      sinon.stub(backend.backends[0].instance, 'setup');
-      sinon.stub(backend.backends[0].instance, 'teardown');
+      jest.spyOn(backend, 'addEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend, 'removeEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend.backends[0].instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
       backend.setup();
-      expect(backend.addEventListeners).to.have.been.calledOnce;
+      expect(backend.addEventListeners).toHaveBeenCalledTimes(1);
       backend.teardown();
-      expect(backend.removeEventListeners).to.have.been.calledOnce;
-      expect(backend.backends[0].instance.teardown).to.have.been.calledOnce;
+      expect(backend.removeEventListeners).toHaveBeenCalledTimes(1);
+      expect(backend.backends[0].instance.teardown).toHaveBeenCalledTimes(1);
     });
 
-    it('can recreate a second backend', () => {
+    test('can recreate a second backend', () => {
       const backend = createBackend();
-      sinon.stub(backend, 'addEventListeners');
-      sinon.stub(backend, 'removeEventListeners');
-      sinon.stub(backend.backends[0].instance, 'setup');
-      sinon.stub(backend.backends[0].instance, 'teardown');
+      jest.spyOn(backend, 'addEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend, 'removeEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend.backends[0].instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
       backend.setup();
-      expect(backend.addEventListeners).to.have.been.calledOnce;
+      expect(backend.addEventListeners).toHaveBeenCalledTimes(1);
       backend.teardown();
 
       const backend2 = createBackend();
-      sinon.stub(backend2, 'addEventListeners');
-      sinon.stub(backend2, 'removeEventListeners');
-      sinon.stub(backend2.backends[0].instance, 'setup');
-      sinon.stub(backend2.backends[0].instance, 'teardown');
+      jest.spyOn(backend2, 'addEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend2, 'removeEventListeners').mockImplementation(() => {});
+      jest.spyOn(backend2.backends[0].instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend2.backends[0].instance, 'teardown').mockImplementation(() => {});
       backend2.setup();
-      expect(backend2.addEventListeners).to.have.been.calledOnce;
+      expect(backend2.addEventListeners).toHaveBeenCalledTimes(1);
       backend2.teardown();
     });
   });
 
 
   describe('connectDragSource function', () => {
-    it('calls `connectBackend` correctly', () => {
+    test('calls `connectBackend` correctly', () => {
       const backend = createBackend();
-      sinon.stub(backend, 'connectBackend');
+      jest.spyOn(backend, 'connectBackend').mockImplementation(() => {});
       backend.connectDragSource();
-      expect(backend.connectBackend).to.have.been.calledOnce;
-      expect(backend.connectBackend).to.have.been.calledWithExactly('connectDragSource', []);
+      expect(backend.connectBackend).toHaveBeenCalledTimes(1);
+      expect(backend.connectBackend).toBeCalledWith('connectDragSource', []);
     });
   });
 
   describe('connectDragPreview function', () => {
-    it('calls `connectBackend` correctly', () => {
+    test('calls `connectBackend` correctly', () => {
       const backend = createBackend();
-      sinon.stub(backend, 'connectBackend');
+      jest.spyOn(backend, 'connectBackend').mockImplementation(() => {});
       backend.connectDragPreview(1);
-      expect(backend.connectBackend).to.have.been.calledOnce;
-      expect(backend.connectBackend).to.have.been.calledWithExactly('connectDragPreview', [1]);
+      expect(backend.connectBackend).toHaveBeenCalledTimes(1);
+      expect(backend.connectBackend).toBeCalledWith('connectDragPreview', [1]);
     });
   });
 
   describe('connectDropTarget function', () => {
-    it('calls `connectBackend` correctly', () => {
+    test('calls `connectBackend` correctly', () => {
       const backend = createBackend();
-      sinon.stub(backend, 'connectBackend');
+      jest.spyOn(backend, 'connectBackend').mockImplementation(() => {});
       backend.connectDropTarget(1, 2);
-      expect(backend.connectBackend).to.have.been.calledOnce;
-      expect(backend.connectBackend).to.have.been.calledWithExactly('connectDropTarget', [1, 2]);
+      expect(backend.connectBackend).toHaveBeenCalledTimes(1);
+      expect(backend.connectBackend).toBeCalledWith('connectDropTarget', [1, 2]);
     });
   });
 
 
   describe('previewEnabled function', () => {
-    it('returns the current backend preview attribute', () => {
+    test('returns the current backend preview attribute', () => {
       const backend = createBackend();
-      expect(backend.previewEnabled()).to.equal(false);
+      expect(backend.previewEnabled()).toBe(false);
       backend.current = 1;
-      expect(backend.previewEnabled()).to.equal(true);
+      expect(backend.previewEnabled()).toBe(true);
     });
   });
 
   describe('addEventListeners function', () => {
-    it('registers the backends\' transitions', () => {
+    test('registers the backends\' transitions', () => {
       const backend = createBackend();
-      const fakeWindow = {addEventListener: sinon.stub()};
+      const fakeWindow = {addEventListener: jest.fn()};
       backend.addEventListeners(fakeWindow);
-      expect(fakeWindow.addEventListener).to.have.been.calledOnce;
-      expect(fakeWindow.addEventListener).to.have.been.calledWithExactly('touchstart', sinon.match.func, true);
+      expect(fakeWindow.addEventListener).toHaveBeenCalledTimes(1);
+      expect(fakeWindow.addEventListener).toBeCalledWith('touchstart', expect.any(Function), true);
     });
   });
 
   describe('removeEventListeners function', () => {
-    it('removes the backends\' transitions', () => {
+    test('removes the backends\' transitions', () => {
       const backend = createBackend();
-      const fakeWindow = {removeEventListener: sinon.stub()};
+      const fakeWindow = {removeEventListener: jest.fn()};
       backend.removeEventListeners(fakeWindow);
-      expect(fakeWindow.removeEventListener).to.have.been.calledOnce;
-      expect(fakeWindow.removeEventListener).to.have.been.calledWithExactly('touchstart', sinon.match.func, true);
+      expect(fakeWindow.removeEventListener).toHaveBeenCalledTimes(1);
+      expect(fakeWindow.removeEventListener).toBeCalledWith('touchstart', expect.any(Function), true);
     });
   });
 
 
   describe('backendSwitcher function', () => {
-    it('does nothing', () => {
+    test('does nothing', () => {
       const backend = createBackend();
-      expect(backend.current).to.equal(0);
+      expect(backend.current).toBe(0);
       backend.backendSwitcher({type: 'mousedown'});
-      expect(backend.current).to.equal(0);
+      expect(backend.current).toBe(0);
     });
 
-    it('switches backend and re-calls the event handlers', () => {
+    test('switches backend and re-calls the event handlers', () => {
       const backend = createBackend();
-      expect(backend.current).to.equal(0);
+      expect(backend.current).toBe(0);
 
       const fakeEvent = {
         constructor: TouchEvent.constructor,
@@ -261,77 +249,77 @@ describe('MultiBackend class', () => {
         cancelable: true,
         bubbles: true,
         touches: [Math.random()],
-        target: {dispatchEvent: sinon.stub()},
+        target: {dispatchEvent: jest.fn()},
       };
 
-      const oldHandler = sinon.stub();
+      const oldHandler = jest.fn();
       const fakeNode = {func: 'connectDragSource', args: [2, 1, 4], handler: oldHandler};
       const fakeHandler = {secret: Math.random()};
-      sinon.stub(backend, 'callBackend').returns(fakeHandler);
+      jest.spyOn(backend, 'callBackend').mockReturnValue(fakeHandler);
       backend.nodes['123'] = fakeNode;
 
-      sinon.stub(backend.backends[0].instance, 'teardown');
-      sinon.stub(backend.backends[1].instance, 'setup');
+      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
+      jest.spyOn(backend.backends[1].instance, 'setup').mockImplementation(() => {});
       backend.backendSwitcher(fakeEvent);
-      expect(backend.backends[0].instance.teardown).to.have.been.calledOnce;
-      expect(backend.backends[1].instance.setup).to.have.been.calledOnce;
+      expect(backend.backends[0].instance.teardown).toHaveBeenCalledTimes(1);
+      expect(backend.backends[1].instance.setup).toHaveBeenCalledTimes(1);
 
-      expect(backend.current).to.equal(1);
+      expect(backend.current).toBe(1);
 
-      expect(fakeEvent.target.dispatchEvent).to.have.been.calledOnce;
-      expect(fakeEvent.target.dispatchEvent.firstCall.args).to.have.length(1);
-      const clonedEvent = fakeEvent.target.dispatchEvent.firstCall.args[0];
-      expect(clonedEvent.type).to.be.equal('touchstart');
-      expect(clonedEvent.cancelable).to.be.true;
+      expect(fakeEvent.target.dispatchEvent).toHaveBeenCalledTimes(1);
+      expect(fakeEvent.target.dispatchEvent.mock.calls[0]).toHaveLength(1);
+      const clonedEvent = fakeEvent.target.dispatchEvent.mock.calls[0][0];
+      expect(clonedEvent.type).toBe('touchstart');
+      expect(clonedEvent.cancelable).toBe(true);
 
-      expect(oldHandler).to.have.been.calledOnce;
-      expect(backend.callBackend).to.have.been.calledOnce;
-      expect(backend.callBackend).to.have.been.calledWithExactly('connectDragSource', [2, 1, 4]);
-      expect(fakeNode.handler).to.equal(fakeHandler);
+      expect(oldHandler).toHaveBeenCalledTimes(1);
+      expect(backend.callBackend).toHaveBeenCalledTimes(1);
+      expect(backend.callBackend).toBeCalledWith('connectDragSource', [2, 1, 4]);
+      expect(fakeNode.handler).toBe(fakeHandler);
     });
   });
 
   describe('callBackend function', () => {
-    it('calls the current backend with the specified arguments', () => {
+    test('calls the current backend with the specified arguments', () => {
       const backend = createBackend();
-      sinon.stub(backend.backends[0].instance, 'connectDragSource');
-      sinon.stub(backend.backends[1].instance, 'connectDragSource');
+      jest.spyOn(backend.backends[0].instance, 'connectDragSource').mockImplementation(() => {});
+      jest.spyOn(backend.backends[1].instance, 'connectDragSource').mockImplementation(() => {});
 
       backend.callBackend('connectDragSource', [3, 2, 1]);
-      expect(backend.backends[0].instance.connectDragSource).to.have.been.calledOnce;
-      expect(backend.backends[0].instance.connectDragSource).to.have.been.calledWithExactly(3, 2, 1);
-      expect(backend.backends[1].instance.connectDragSource).not.to.have.been.called;
+      expect(backend.backends[0].instance.connectDragSource).toHaveBeenCalledTimes(1);
+      expect(backend.backends[0].instance.connectDragSource).toBeCalledWith(3, 2, 1);
+      expect(backend.backends[1].instance.connectDragSource).not.toBeCalled();
 
       backend.current = 1;
       backend.callBackend('connectDragSource', [3, 2, 1]);
-      expect(backend.backends[0].instance.connectDragSource).to.have.been.calledOnce;
-      expect(backend.backends[1].instance.connectDragSource).to.have.been.calledOnce;
-      expect(backend.backends[1].instance.connectDragSource).to.have.been.calledWithExactly(3, 2, 1);
+      expect(backend.backends[0].instance.connectDragSource).toHaveBeenCalledTimes(1);
+      expect(backend.backends[1].instance.connectDragSource).toHaveBeenCalledTimes(1);
+      expect(backend.backends[1].instance.connectDragSource).toBeCalledWith(3, 2, 1);
     });
   });
 
   describe('connectBackend function', () => {
-    it('connects the current backend and registers the node', () => {
+    test('connects the current backend and registers the node', () => {
       const backend = createBackend();
       const fakeReturn = {secret: Math.random()};
-      const fakeHandler = sinon.stub().returns(fakeReturn);
-      sinon.stub(backend, 'callBackend').returns(fakeHandler);
+      const fakeHandler = jest.fn().mockReturnValue(fakeReturn);
+      jest.spyOn(backend, 'callBackend').mockReturnValue(fakeHandler);
 
       const handler = backend.connectBackend('funcName', [1, 2, 3]);
-      expect(backend.callBackend).to.have.been.calledOnce;
-      expect(backend.callBackend).to.have.been.calledWithExactly('funcName', [1, 2, 3]);
-      expect(backend.nodes).to.have.property('funcName_1');
+      expect(backend.callBackend).toHaveBeenCalledTimes(1);
+      expect(backend.callBackend).toBeCalledWith('funcName', [1, 2, 3]);
+      expect(backend.nodes).toHaveProperty('funcName_1');
       const node = backend.nodes.funcName_1;
-      expect(node).to.have.property('func', 'funcName');
-      expect(node).to.have.property('args').that.deep.equal([1, 2, 3]);
-      expect(node).to.have.property('handler', fakeHandler);
+      expect(node).toHaveProperty('func', 'funcName');
+      expect(node).toHaveProperty('args', [1, 2, 3]);
+      expect(node).toHaveProperty('handler', fakeHandler);
 
-      expect(fakeHandler).not.to.have.been.called;
+      expect(fakeHandler).not.toBeCalled();
       const returnValue = handler(3, 2, 1);
-      expect(fakeHandler).to.have.been.calledOnce;
-      expect(fakeHandler).to.have.been.calledWithExactly(3, 2, 1);
-      expect(backend.nodes).not.to.have.property('funcName_1');
-      expect(returnValue).to.equal(fakeReturn);
+      expect(fakeHandler).toHaveBeenCalledTimes(1);
+      expect(fakeHandler).toBeCalledWith(3, 2, 1);
+      expect(backend.nodes).not.toHaveProperty('funcName_1');
+      expect(returnValue).toBe(fakeReturn);
     });
   });
 });

@@ -1,5 +1,3 @@
-const webpack = require('webpack');
-
 module.exports = function wpConfig() {
   return {
     module: {
@@ -16,20 +14,5 @@ module.exports = function wpConfig() {
         '.', './node_modules',
       ],
     },
-    plugins: [
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('production'),
-        },
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false,
-        },
-        output: {
-          comments: false,
-        },
-      }),
-    ],
   };
 };

@@ -1,5 +1,0 @@
--R dot
---growl
---colors
---require jsdom-global/register
-packages/*/src/**/__tests__/*_spec.*
