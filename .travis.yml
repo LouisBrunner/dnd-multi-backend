@@ -6,8 +6,8 @@ node_js:
   - "7"
 
 script:
-  - npm run travis-test
+  - npm run travis:test
   - npm run lint
 
 after_success:
-  - npm run travis-coverage
+  - npm run travis:coverage

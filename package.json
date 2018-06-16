@@ -9,10 +9,10 @@
     "build:examples": "webpack --mode production --config webpack/examples.js",
     "build": "npm run build:lib && npm run build:dist && npm run build:examples",
     "lint": "eslint .",
-    "test": "jest --coverage",
+    "test": "jest --config jest.config.js",
     "test:watch": "npm run test -- --watch",
-    "travis-test": "NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD nyc --reporter=lcov mocha --opts ./.mocha.opts",
-    "travis-coverage": "cat ./coverage/lcov.info | coveralls",
+    "travis:test": "CI=yes npm run test",
+    "travis:coverage": "cat ./coverage/lcov.info | coveralls",
     "start": "webpack-dev-server --mode development --config webpack/dev.js",
     "prepush": "npm run lint && npm run test && npm run build:dist && npm run build:examples",
     "prepare": "npm run clean && npm run lint && npm run build:lib",
@@ -49,12 +49,5 @@
     "webpack-command": "^0.2.1",
     "webpack-dev-server": "^3.1.4",
     "webpack-merge": "^4.1.2"
-  },
-  "jest": {
-    "verbose": true,
-    "setupTestFrameworkScriptFile": "<rootDir>/tests/setup.js",
-    "collectCoverageFrom": [
-      "packages/*/src/**/*.js"
-    ]
   }
 }
