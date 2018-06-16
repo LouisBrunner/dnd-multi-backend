@@ -4,21 +4,10 @@ const examplesConfig = require('./examples.js');
 
 module.exports = webpackMerge(examplesConfig, {
   devtool: 'cheap-module-eval-source-map',
-  devServer: {
+  serve: {
     port: 4001,
-    compress: true,
-    contentBase: './examples',
+    content: './examples',
     hot: true,
-    stats: {
-      cached: false,
-      cachedAssets: false,
-      colors: true,
-      exclude: ['node_modules'],
-    },
-    overlay: {
-      warnings: true,
-      errors: true,
-    },
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
