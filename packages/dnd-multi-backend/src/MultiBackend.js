@@ -1,5 +1,30 @@
 import objectAssign from './objectAssign';
 
+class PreviewList {
+  constructor() {
+    this.previews = [];
+  }
+
+  register = (preview) => {
+    this.previews.push(preview);
+  }
+
+  unregister = (preview) => {
+    let index;
+    while ((index = this.previews.indexOf(preview)) !== -1) {
+      this.previews.splice(index, 1);
+    }
+  }
+
+  backendChanged = (backend) => {
+    for (const preview of this.previews) {
+      preview.backendChanged(backend);
+    }
+  }
+}
+
+export const PreviewManager = new PreviewList();
+
 export default class {
   constructor(manager, sourceOptions) {
     const options = objectAssign({backends: []}, sourceOptions || {});
@@ -111,6 +136,7 @@ export default class {
         node.handler();
         node.handler = this.callBackend(node.func, node.args);
       });
+      PreviewManager.backendChanged(this);
       this.backends[this.current].instance.setup();
 
       let newEvent = null;

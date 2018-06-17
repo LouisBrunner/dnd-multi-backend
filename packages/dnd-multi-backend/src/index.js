@@ -1,8 +1,9 @@
-import MultiBackend from './MultiBackend';
-import { HTML5DragTransition, TouchTransition, MouseTransition } from './Transitions';
-import createTransition from './createTransition';
+export { HTML5DragTransition, TouchTransition, MouseTransition } from './Transitions';
+export { default as createTransition } from './createTransition';
 
-export { HTML5DragTransition, TouchTransition, MouseTransition, createTransition };
+import MultiBackend, { PreviewManager } from './MultiBackend';
+
+export { MultiBackend, PreviewManager };
 
 export default (managerOrOptions) => {
   if (managerOrOptions.getMonitor) {

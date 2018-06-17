@@ -3,7 +3,7 @@ import TouchBackend from 'react-dnd-touch-backend';
 import { TouchTransition } from '../Transitions';
 import createTransition from '../createTransition';
 
-import MultiBackend from '../MultiBackend';
+import MultiBackend, { PreviewManager } from '../MultiBackend';
 
 const oldHTML5toTouch = {
   backends: [
@@ -17,6 +17,41 @@ const oldHTML5toTouch = {
     },
   ],
 };
+
+describe('PreviewList class', () => {
+  const createPreview = () => {
+    return {backendChanged: jest.fn()};
+  };
+
+  test('does nothing when empty', () => {
+    PreviewManager.backendChanged(123);
+  });
+
+  test('notifies registered previews', () => {
+    const preview1 = createPreview(), preview2 = createPreview();
+    PreviewManager.register(preview1);
+    PreviewManager.register(preview2);
+    PreviewManager.backendChanged(123);
+    expect(preview1.backendChanged).toHaveBeenCalledWith(123);
+    expect(preview2.backendChanged).toHaveBeenCalledWith(123);
+    PreviewManager.unregister(preview1);
+    PreviewManager.unregister(preview2);
+  });
+
+  test('stops notifying after unregistering', () => {
+    const preview1 = createPreview(), preview2 = createPreview();
+    PreviewManager.register(preview1);
+    PreviewManager.register(preview2);
+    PreviewManager.backendChanged(123);
+    expect(preview1.backendChanged).toHaveBeenCalledWith(123);
+    expect(preview2.backendChanged).toHaveBeenCalledWith(123);
+    PreviewManager.unregister(preview2);
+    PreviewManager.backendChanged(456);
+    expect(preview1.backendChanged).toHaveBeenCalledWith(456);
+    expect(preview2.backendChanged).toHaveBeenCalledTimes(1);
+    PreviewManager.unregister(preview1);
+  });
+});
 
 describe('MultiBackend class', () => {
   const createBackend = (pipeline = oldHTML5toTouch, manager = null) => {
@@ -232,6 +267,14 @@ describe('MultiBackend class', () => {
 
 
   describe('backendSwitcher function', () => {
+    beforeEach(() => {
+      jest.spyOn(PreviewManager, 'backendChanged');
+    });
+
+    afterEach(() => {
+      PreviewManager.backendChanged.mockRestore();
+    });
+
     test('does nothing', () => {
       const backend = createBackend();
       expect(backend.current).toBe(0);
@@ -260,7 +303,9 @@ describe('MultiBackend class', () => {
 
       jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
       jest.spyOn(backend.backends[1].instance, 'setup').mockImplementation(() => {});
+      expect(PreviewManager.backendChanged).not.toHaveBeenCalled();
       backend.backendSwitcher(fakeEvent);
+      expect(PreviewManager.backendChanged).toHaveBeenCalledWith(backend);
       expect(backend.backends[0].instance.teardown).toHaveBeenCalledTimes(1);
       expect(backend.backends[1].instance.setup).toHaveBeenCalledTimes(1);
 

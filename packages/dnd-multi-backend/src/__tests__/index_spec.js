@@ -16,6 +16,7 @@ describe('ReactDnDMultiBackend module', () => {
   });
 
   test('exports utils components', () => {
+    expect(Module.MultiBackend).toBe(MultiBackend);
     expect(Module.HTML5DragTransition).toBe(HTML5DragTransition);
     expect(Module.TouchTransition).toBe(TouchTransition);
     expect(Module.MouseTransition).toBe(MouseTransition);
