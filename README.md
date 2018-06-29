@@ -5,7 +5,7 @@ This project is a Drag'n'Drop backend compatible with [DnD Core](https://github.
 It enables your application to use different DnD backends depending on the situation. Different packages are available depending on your front-end framework:
 
   - React: [`react-dnd-multi-backend`](packages/react-dnd-multi-backend)
-  - Angular: coming soon!
+  - Angular: [`angular-skyhook`](https://github.com/cormacrelf/angular-skyhook) (see [documentation](https://cormacrelf.github.io/angular-skyhook/angular-skyhook-multi-backend/) for more information)
   - Any: [`dnd-multi-backend`](packages/dnd-multi-backend)
 
 This project also contains some helpers (available standalone or included in other packages):
@@ -19,7 +19,6 @@ This project also contains some helpers (available standalone or included in oth
 
  - Write documentation & examples for `dnd-multi-backend`
  - Write documentation & examples for `react-dnd-preview`
- - Angular-specific package
 
 
 ## Thanks
