@@ -1,6 +1,6 @@
 {
   "name": "react-dnd-preview",
-  "version": "3.1.3",
+  "version": "3.1.5",
   "description": "Preview component for React DnD",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
   "license": "MIT",
@@ -16,8 +16,10 @@
   ],
   "main": "lib/index.js",
   "dependencies": {
-    "prop-types": "^15.6.1",
+    "prop-types": "^15.6.2"
+  },
+  "peerDependencies": {
     "react": "^16.4.1",
-    "react-dnd": "^4.0.5"
+    "react-dnd": "^5.0.0"
   }
 }
