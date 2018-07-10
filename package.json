@@ -18,11 +18,6 @@
     "prepare": "npm run clean && npm run lint && npm run build:lib && npm run test",
     "postinstall": "lerna bootstrap"
   },
-  "dependencies": {
-    "react-dnd-html5-backend": "^4.0.4",
-    "react-dnd-touch-backend": "^0.4.0",
-    "react-dnd": "^4.0.4"
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
@@ -42,10 +37,8 @@
     "jest": "^23.1.0",
     "jest-enzyme": "^6.0.1",
     "lerna": "^2.11.0",
-    "react": "^16.4.0",
-    "react-dnd-test-backend": "^4.0.5",
+    "react": "*",
     "react-dom": "*",
-    "react-test-renderer": "^16.4.1",
     "webpack": "^4.12.0",
     "webpack-command": "^0.2.1",
     "webpack-merge": "^4.1.3",

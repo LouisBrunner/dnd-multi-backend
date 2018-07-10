@@ -1,3 +1,5 @@
+const glob = require('glob');
+
 module.exports = {
   setupTestFrameworkScriptFile: '<rootDir>/tests/setup.js', // eslint-disable-line id-length
   collectCoverage: true,
@@ -5,4 +7,10 @@ module.exports = {
   collectCoverageFrom: [
     'packages/*/src/**/*.js',
   ],
+  verbose: true,
+  notify: true,
+  notifyMode: 'failure-success',
+  modulePaths: glob.sync('packages/*/node_modules').map((path) => {
+    return `<rootDir>/${path}`;
+  }),
 };

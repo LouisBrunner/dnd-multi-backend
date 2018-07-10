@@ -1,22 +1,6 @@
-import HTML5Backend from 'react-dnd-html5-backend';
-import TouchBackend from 'react-dnd-touch-backend';
-import { TouchTransition } from '../Transitions';
 import createTransition from '../createTransition';
 
 import MultiBackend, { PreviewManager } from '../MultiBackend';
-
-const oldHTML5toTouch = {
-  backends: [
-    {
-      backend: HTML5Backend,
-    },
-    {
-      backend: TouchBackend({enableMouseEvents: true}),
-      preview: true,
-      transition: TouchTransition,
-    },
-  ],
-};
 
 describe('PreviewList class', () => {
   const createPreview = () => {
@@ -54,7 +38,30 @@ describe('PreviewList class', () => {
 });
 
 describe('MultiBackend class', () => {
-  const createBackend = (pipeline = oldHTML5toTouch, manager = null) => {
+  let _defaultPipeline;
+
+  beforeEach(() => {
+    const newBackend = () => {
+      return {
+        secret: Math.random(),
+        setup: jest.fn(),
+        teardown: jest.fn(),
+        connectDragSource: jest.fn(),
+      };
+    };
+
+    const transition = createTransition('touchstart', jest.fn((event) => { return event.type === 'touchstart'; }));
+    const backend1 = newBackend();
+    const backend1ctr = jest.fn(() => { return backend1; });
+    const backend2 = newBackend();
+    const backend2ctr = jest.fn(() => { return backend2; });
+    _defaultPipeline = {backends: [
+      {backend: backend1ctr},
+      {backend: backend2ctr, preview: true, transition},
+    ]};
+  });
+
+  const createBackend = (pipeline = _defaultPipeline, manager = null) => {
     let actualManager = manager;
     if (actualManager === null) {
       actualManager = {getMonitor: jest.fn(), getActions: jest.fn(), getRegistry: jest.fn(), getContext: jest.fn()};
@@ -84,15 +91,7 @@ describe('MultiBackend class', () => {
     });
 
     test('constructs correctly', () => {
-      const transition = createTransition('haha', jest.fn());
-      const backend1 = {secret: Math.random()};
-      const backend1ctr = jest.fn(() => { return backend1; });
-      const backend2 = {secret: Math.random()};
-      const backend2ctr = jest.fn(() => { return backend2; });
-      const pipeline = {backends: [
-        {backend: backend1ctr},
-        {backend: backend2ctr, preview: true, transition},
-      ]};
+      const pipeline = _defaultPipeline;
       const manager = {secret: Math.random()};
       const backend = createBackend(pipeline, manager);
 
@@ -100,17 +99,17 @@ describe('MultiBackend class', () => {
       expect(backend.nodes).toEqual({});
       expect(backend.backends).toHaveLength(2);
 
-      expect(backend1ctr).toHaveBeenCalledTimes(1);
-      expect(backend1ctr).toBeCalledWith(manager);
-      expect(backend.backends[0].instance).toBe(backend1);
+      expect(pipeline.backends[0].backend).toHaveBeenCalledTimes(1);
+      expect(pipeline.backends[0].backend).toBeCalledWith(manager);
+      expect(backend.backends[0].instance).toBe(pipeline.backends[0].backend());
       expect(backend.backends[0].preview).toBe(false);
       expect(backend.backends[0].transition).toBeUndefined();
 
-      expect(backend2ctr).toHaveBeenCalledTimes(1);
-      expect(backend2ctr).toBeCalledWith(manager);
-      expect(backend.backends[1].instance).toBe(backend2);
+      expect(pipeline.backends[1].backend).toHaveBeenCalledTimes(1);
+      expect(pipeline.backends[1].backend).toBeCalledWith(manager);
+      expect(backend.backends[1].instance).toBe(pipeline.backends[1].backend());
       expect(backend.backends[1].preview).toBe(true);
-      expect(backend.backends[1].transition).toBe(transition);
+      expect(backend.backends[1].transition).toBe(pipeline.backends[1].transition);
     });
   });
 
@@ -278,8 +277,20 @@ describe('MultiBackend class', () => {
     test('does nothing', () => {
       const backend = createBackend();
       expect(backend.current).toBe(0);
-      backend.backendSwitcher({type: 'mousedown'});
+
+      const fakeEvent = {
+        constructor: MouseEvent.constructor,
+        type: 'mousedown',
+        cancelable: false,
+        bubbles: true,
+        client: [Math.random()],
+        target: {dispatchEvent: jest.fn()},
+      };
+
+      backend.backendSwitcher(fakeEvent);
       expect(backend.current).toBe(0);
+
+      expect(fakeEvent.target.dispatchEvent).not.toHaveBeenCalled();
     });
 
     test('switches backend and re-calls the event handlers', () => {

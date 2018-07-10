@@ -1,3 +1,5 @@
+const glob = require('glob');
+
 module.exports = function wpConfig() {
   return {
     module: {
@@ -10,9 +12,7 @@ module.exports = function wpConfig() {
       ],
     },
     resolve: {
-      modules: [
-        '.', './node_modules',
-      ],
+      modules: ['.', './node_modules'].concat(glob.sync('packages/*/node_modules')),
     },
   };
 };
