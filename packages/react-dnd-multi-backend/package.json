@@ -22,10 +22,10 @@
     "react-dnd-preview": "^3.1.7"
   },
   "peerDependencies": {
-    "react": "^16.4.1",
-    "react-dnd": "^5.0.0",
-    "react-dnd-html5-backend": "^5.0.1",
-    "react-dnd-touch-backend": "^0.5.1",
+    "react": "*",
+    "react-dnd": "*",
+    "react-dnd-html5-backend": "*",
+    "react-dnd-touch-backend": "*",
     "react-dom": "*"
   },
   "devDependencies": {
