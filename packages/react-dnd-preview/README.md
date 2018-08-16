@@ -6,21 +6,45 @@ This project is a React component compatible with [React DnD](https://github.com
 
 ## Installation
 
-TODO:
+```sh
+npm install react-dnd-preview
+```
 
+## Usage & Example
 
-## Usage
+Just include the `Preview` component close to the top component of your application (it places itself absolutely) and provide a function as the `generator` prop.
 
-TODO:
+This function will take 3 arguments: `itemType`, `item` (both defined by the `DragSource`) and `style` which will be used to position the preview element. The function needs to return something that React can render (React component, `null`, etc).
 
+See also the [examples](examples/) for more information.
 
-### Examples
+```js
+  import Preview from 'react-dnd-preview';
+  ...
 
-TODO:
+  class App extends React.Component {
+    ...
+
+    previewGenerator(itemType, item, style) {
+      return <div class="item-list__item" style={style}>{itemType}</div>;
+    }
+
+    ...
+
+    render() {
+      return (
+        <div>
+          <ItemList />
+          <Preview generator={this.previewGenerator} />
+        </div>
+      );
+    }
+  }
+```
 
 ## License
 
-MIT, Copyright (c) 2016-2017 Louis Brunner
+MIT, Copyright (c) 2016-2018 Louis Brunner
 
 
 

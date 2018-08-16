@@ -1,5 +1,6 @@
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./core.js');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = webpackMerge(commonConfig(), {
   entry: {
@@ -11,4 +12,7 @@ module.exports = webpackMerge(commonConfig(), {
     path: `${__dirname}/../examples`,
     filename: 'examples_[name].min.js',
   },
+  plugins: [
+    new CopyWebpackPlugin([{ from: 'dev/*', to: '.', flatten: true}]),
+  ],
 });

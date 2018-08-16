@@ -28,6 +28,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.16.0",
     "babel-register": "^6.26.0",
+    "copy-webpack-plugin": "^4.5.2",
     "coveralls": "^3.0.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",

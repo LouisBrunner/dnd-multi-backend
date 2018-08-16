@@ -1,9 +1,6 @@
 # OS files
 .DS_Store
 
-# Output
-/dist/examples_*
-
 # npm
 node_modules
 *-debug.log

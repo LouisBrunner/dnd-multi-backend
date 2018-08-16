@@ -6,12 +6,12 @@ This project is a Drag'n'Drop backend compatible with [React DnD](https://github
 It enables your application to use different DnD backends depending on the situation.
 You can either generate your own backend pipeline or use the default one (`HTML5toTouch`).
 
-[HTML5toTouch](src/lib/HTML5toTouch.js) starts by using the [React DnD HTML5 Backend](https://github.com/gaearon/react-dnd-html5-backend), but switches to the [React DnD Touch Backend](https://github.com/yahoo/react-dnd-touch-backend) if a touch event is triggered.
+[HTML5toTouch](src/HTML5toTouch.js) starts by using the [React DnD HTML5 Backend](https://github.com/gaearon/react-dnd-html5-backend), but switches to the [React DnD Touch Backend](https://github.com/yahoo/react-dnd-touch-backend) if a touch event is triggered.
 You application can smoothly use the nice HTML5 compatible backend and fallback on the Touch one on mobile devices!
 
 Moreover, because some backends don't support preview, a `Preview` component has been added to make it easier to mock the Drag'n'Drop "ghost".
 
-See [Migrating from 2.x.x](#migrating-from-2xx) for instructions if you are coming from `react-dnd-multi-backend@2.x.x`.
+See the [migration section](#migrating) for instructions when switching from `react-dnd-multi-backend@2.x.x` or `react-dnd-multi-backend@3.1.2`.
 
 
 ## Installation
@@ -44,6 +44,7 @@ Every code snippet will be presented in 3 different styles: Node.js `require`, N
 You can plug this backend in the `DragDropContext` the same way you do for any backend (e.g. `ReactDnDHTML5Backend`), you can see [the docs](http://gaearon.github.io/react-dnd/docs-html5-backend.html) for more information.
 
 You must pass a 'pipeline' to use as argument. This package includes `HTML5toTouch`, but you can write your own.
+Note that if you include this file, you will have to add `react-dnd-html5-backend` and `react-dnd-touch-backend` to your `package.json` `dependencies`.
 
  - *require*:
 ```js
@@ -150,10 +151,12 @@ Note that this component will only be showed while using a backend flagged with 
 
 ### Examples
 
-You can see an example [here](src/examples/) (Node.js style with `import`s).
+You can see an example [here](examples/) (Node.js style with `import`s).
 
 
-## Migrating from 2.x.x
+## Migrating
+
+### Migrating from 2.x.x
 
 In 2.x.x, the pipeline was static but corresponded with the behavior of `HTML5toTouch`, so just [including and passing this pipeline as a parameter](#backend) would give you the same experience as before.
 
@@ -164,14 +167,16 @@ With `start: 1` or `start: Backend.TOUCH`, **MultiBackend** would only use the T
 var TouchOnly = { backends: [{ backend: TouchBackend, preview: true }] };
 ```
 
-## Notes
+### Migrating from 3.1.2
 
-`react-dnd-touch-backend` is pinned to the version **0.3.13** because I have been running into issues with newer versions.
+Starting with `3.1.8`, the dependencies of `react-dnd-multi-backend` changed. `react`, `react-dom`, `react-dnd` become peer dependencies and you need to install them manually as `dependencies` in your project `package.json`.
+
+Note that if you use the `HTML5toTouch` pipeline, the same is true for `react-dnd-html5-backend` and `react-dnd-touch-backend`.
 
 
 ## License
 
-MIT, Copyright (c) 2016-2017 Louis Brunner
+MIT, Copyright (c) 2016-2018 Louis Brunner
 
 
 
