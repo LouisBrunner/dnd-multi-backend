@@ -1,7 +1,7 @@
 const generatePresets = ({modules} = {}) => {
   return [
     ['@babel/preset-env', {
-      modules: modules ? 'commonjs' : false,
+      modules: modules ? 'commonjs' : undefined,
       targets: {
         browsers: [
           '> 1%',
