@@ -1,6 +1,6 @@
 {
   "name": "dnd-multi-backend",
-  "version": "3.1.10",
+  "version": "3.1.11",
   "description": "Multi Backend system compatible with DnD Core / React DnD",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
   "license": "MIT",
