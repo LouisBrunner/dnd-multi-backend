@@ -28,7 +28,6 @@
     "@babel/register": "^7.0.0",
     "acorn": "^6.1.1",
     "ajv": "^6.10.0",
-    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.5",
@@ -47,6 +46,6 @@
     "webpack": "^4.29.6",
     "webpack-command": "^0.4.2",
     "webpack-merge": "^4.2.1",
-    "webpack-serve": "^2.0.3"
+    "webpack-dev-server": "^3.2.1"
   }
 }
