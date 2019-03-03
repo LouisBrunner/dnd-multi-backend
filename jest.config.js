@@ -1,7 +1,7 @@
 const glob = require('glob');
 
 module.exports = {
-  setupTestFrameworkScriptFile: '<rootDir>/tests/setup.js', // eslint-disable-line id-length
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
   collectCoverage: true,
   coverageReporters: process.env.CI ? ['lcov'] : ['text', 'text-summary', 'html'], // eslint-disable-line no-process-env
   collectCoverageFrom: [
