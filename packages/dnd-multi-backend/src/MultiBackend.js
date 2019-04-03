@@ -53,6 +53,7 @@ export default class {
         instance: new backend.backend(manager),
         preview: (backend.preview || false),
         transition,
+        skipDispatchOnTransition: Boolean(backend.skipDispatchOnTransition),
       });
     });
 
@@ -137,7 +138,13 @@ export default class {
         node.handler = this.callBackend(node.func, node.args);
       });
       PreviewManager.backendChanged(this);
-      this.backends[this.current].instance.setup();
+
+      const newBackend = this.backends[this.current];
+      newBackend.instance.setup();
+
+      if (newBackend.skipDispatchOnTransition) {
+        return;
+      }
 
       let newEvent = null;
       try {
