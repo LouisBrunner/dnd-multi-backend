@@ -39,6 +39,7 @@ describe('PreviewList class', () => {
 
 describe('MultiBackend class', () => {
   let _defaultPipeline;
+  let _pipelineWithSkipDispatch;
 
   beforeEach(() => {
     const newBackend = () => {
@@ -58,6 +59,10 @@ describe('MultiBackend class', () => {
     _defaultPipeline = {backends: [
       {backend: backend1ctr},
       {backend: backend2ctr, preview: true, transition},
+    ]};
+    _pipelineWithSkipDispatch = {backends: [
+      {backend: backend1ctr},
+      {backend: backend2ctr, preview: true, transition, skipDispatchOnTransition: true },
     ]};
   });
 
@@ -327,6 +332,43 @@ describe('MultiBackend class', () => {
       const clonedEvent = fakeEvent.target.dispatchEvent.mock.calls[0][0];
       expect(clonedEvent.type).toBe('touchstart');
       expect(clonedEvent.cancelable).toBe(true);
+
+      expect(oldHandler).toHaveBeenCalledTimes(1);
+      expect(backend.callBackend).toHaveBeenCalledTimes(1);
+      expect(backend.callBackend).toBeCalledWith('connectDragSource', [2, 1, 4]);
+      expect(fakeNode.handler).toBe(fakeHandler);
+    });
+
+    test('switches backend and does not re-call event handlers if skipDispatchOnTransition', () => {
+      const backend = createBackend(_pipelineWithSkipDispatch);
+      expect(backend.current).toBe(0);
+
+      const fakeEvent = {
+        constructor: TouchEvent.constructor,
+        type: 'touchstart',
+        cancelable: true,
+        bubbles: true,
+        touches: [Math.random()],
+        target: {dispatchEvent: jest.fn()},
+      };
+
+      const oldHandler = jest.fn();
+      const fakeNode = {func: 'connectDragSource', args: [2, 1, 4], handler: oldHandler};
+      const fakeHandler = {secret: Math.random()};
+      jest.spyOn(backend, 'callBackend').mockReturnValue(fakeHandler);
+      backend.nodes['123'] = fakeNode;
+
+      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
+      jest.spyOn(backend.backends[1].instance, 'setup').mockImplementation(() => {});
+      expect(PreviewManager.backendChanged).not.toHaveBeenCalled();
+      backend.backendSwitcher(fakeEvent);
+      expect(PreviewManager.backendChanged).toHaveBeenCalledWith(backend);
+      expect(backend.backends[0].instance.teardown).toHaveBeenCalledTimes(1);
+      expect(backend.backends[1].instance.setup).toHaveBeenCalledTimes(1);
+
+      expect(backend.current).toBe(1);
+
+      expect(fakeEvent.target.dispatchEvent).not.toHaveBeenCalled();
 
       expect(oldHandler).toHaveBeenCalledTimes(1);
       expect(backend.callBackend).toHaveBeenCalledTimes(1);

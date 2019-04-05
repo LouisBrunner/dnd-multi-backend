@@ -77,7 +77,10 @@ Note that if you include this file, you will have to add `react-dnd-html5-backen
 Creating a pipeline is fairly easy. A pipeline is composed of a list of backends, the first one will be the default one, loaded at the start of the **MultiBackend**, the order of the rest isn't important.
 
 Each backend entry must specify one property: `backend`, containing the class of the Backend to instantiate.
-But other options are available: `preview` (a boolean indicating if `Preview` components should be shown) and `transition` (an object returned by the `createTransition` function).
+But other options are available:
+- `preview` (a boolean indicating if `Preview` components should be shown)
+- `transition` (an object returned by the `createTransition` function)
+- `skipDispatchOnTransition` (a boolean indicating transition events should not be dispatched to new backend, defaults to `false`. See [note below](#note-on-skipdispatchontransition) for details and use cases.)
 
 Here is the `HTML5toTouch` pipeline code as an example:
 ```js
@@ -113,6 +116,37 @@ const TouchTransition = createTransition('touchstart', (event) => {
 ```
 
 You can also import `HTML5DragTransition` which works the same way, but detects when a HTML5 DragEvent is received.
+
+#### Note on `skipDispatchOnTransition`
+
+By default, when an event triggers a transition, `dnd-multi-backend` dispatches a cloned version of the event after setting up the new backend. This allows the newly activated backend to handle the original event.
+
+If your app code or another library has registered event listeners for the same events that are being used for transitions, this duplicate event may cause problems.
+
+You can optionally disable this behavior per backend:
+
+```js
+const CustomHTML5toTouch = {
+  backends: [
+    {
+      backend: HTML5Backend,
+      transition: MouseTransition
+      // by default, will dispatch a duplicate `mousedown` event when this backend is activated
+    },
+    {
+      backend: TouchBackend({enableMouseEvents: true}), // Note that you can call your backends with options
+      preview: true,
+      transition: TouchTransition,
+      // will not dispatch a duplicate `touchstart` event when this backend is activated
+      skipDispatchOnTransition: true
+    }
+  ]
+};
+```
+
+**WARNING:** if you enable `skipDispatchOnTransition`, the backend transition will happen as expected, but the new backend may not handle the first event!
+
+In this example, the first `touchstart` event would trigger the `TouchBackend` to replace the `HTML5Backend`—but the user would have to start a new touch event for the `TouchBackend` to register a drag.
 
 
 ### Preview
