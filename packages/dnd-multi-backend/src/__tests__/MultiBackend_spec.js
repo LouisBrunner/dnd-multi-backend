@@ -39,7 +39,7 @@ describe('PreviewList class', () => {
 
 describe('MultiBackend class', () => {
   let _defaultPipeline;
-  let _defaultPipelineWithSkipDispatch;
+  let _pipelineWithSkipDispatch;
 
   beforeEach(() => {
     const newBackend = () => {
@@ -60,7 +60,7 @@ describe('MultiBackend class', () => {
       {backend: backend1ctr},
       {backend: backend2ctr, preview: true, transition},
     ]};
-    _defaultPipelineWithSkipDispatch = {backends: [
+    _pipelineWithSkipDispatch = {backends: [
       {backend: backend1ctr},
       {backend: backend2ctr, preview: true, transition, skipDispatchOnTransition: true },
     ]};
@@ -340,7 +340,7 @@ describe('MultiBackend class', () => {
     });
 
     test('switches backend and does not re-call event handlers if skipDispatchOnTransition', () => {
-      const backend = createBackend(_defaultPipelineWithSkipDispatch);
+      const backend = createBackend(_pipelineWithSkipDispatch);
       expect(backend.current).toBe(0);
 
       const fakeEvent = {
