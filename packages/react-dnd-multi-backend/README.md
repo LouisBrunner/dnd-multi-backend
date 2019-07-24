@@ -16,7 +16,7 @@ See the [migration section](#migrating) for instructions when switching from `re
 
 ## Installation
 
-### Node Installation
+### NPM Installation
 
 ```sh
 npm install react-dnd-multi-backend
@@ -37,8 +37,6 @@ This file also includes the `HTML5` and `Touch` backends, so no need to include 
 
 ## Usage
 
-Every code snippet will be presented in 3 different styles: Node.js `require`, Node.js `import` and Browser Javascript (with required HTML `<script>`s).
-
 ### Backend
 
 You can plug this backend in the `DragDropContext` the same way you do for any backend (e.g. `ReactDnDHTML5Backend`), you can see [the docs](http://gaearon.github.io/react-dnd/docs-html5-backend.html) for more information.
@@ -46,30 +44,18 @@ You can plug this backend in the `DragDropContext` the same way you do for any b
 You must pass a 'pipeline' to use as argument. This package includes `HTML5toTouch`, but you can write your own.
 Note that if you include this file, you will have to add `react-dnd-html5-backend` and `react-dnd-touch-backend` to your `package.json` `dependencies`.
 
- - *require*:
 ```js
-  var ReactDnD = require('react-dnd');
-  var MultiBackend = require('react-dnd-multi-backend').default;
-  var HTML5toTouch = require('react-dnd-multi-backend/lib/HTML5toTouch').default; // or any other pipeline
-  ...
-  module.exports = ReactDnD.DragDropContext(MultiBackend(HTML5toTouch))(App);
-```
-
- - *import*:
-```js
-  import { DragDropContext } from 'react-dnd';
-  import MultiBackend from 'react-dnd-multi-backend';
-  import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch'; // or any other pipeline
-  ...
-  export default DragDropContext(MultiBackend(HTML5toTouch))(App);
-```
-
- - *browser*:
-```js
-  <script src="ReactDnDMultiBackend.min.js"></script>
-  <script src="RDMBHTML5toTouch.min.js"></script> <!-- or any other pipeline -->
-  ...
-  var AppDnD = ReactDnD.DragDropContext(ReactDnDMultiBackend.default(RDMBHTML5toTouch.default))(App); // `.default` is only used to get the ES6 module default export
+import { DndProvider } from 'react-dnd';
+import MultiBackend from 'react-dnd-multi-backend';
+import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch'; // or any other pipeline
+...
+function App() {
+  return (
+    <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+      <Example />
+    </DndProvider>
+  );
+}
 ```
 
 ### Create a custom pipeline
@@ -102,7 +88,13 @@ const HTML5toTouch = {
   ]
 };
 ...
-export default DragDropContext(MultiBackend(HTML5toTouch))(App);
+function App() {
+  return (
+    <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+      <Example />
+    </DndProvider>
+  );
+}
 ```
 
 `TouchTransition` is a predefined transition that you can use in your own pipelines, it is triggered when a *touchstart* is received. Transitions rea really easy to write, here is an example:
@@ -134,7 +126,9 @@ const CustomHTML5toTouch = {
       // by default, will dispatch a duplicate `mousedown` event when this backend is activated
     },
     {
-      backend: TouchBackend({enableMouseEvents: true}), // Note that you can call your backends with options
+      backend: TouchBackend,
+      // Note that you can call your backends with options
+      options: {enableMouseEvents: true},
       preview: true,
       transition: TouchTransition,
       // will not dispatch a duplicate `touchstart` event when this backend is activated
@@ -153,25 +147,10 @@ In this example, the first `touchstart` event would trigger the `TouchBackend` t
 
 Concerning the `Preview` class, it is created using the following snippet:
 
- - *require*:
-```js
-  var MultiBackend = require('react-dnd-multi-backend').default;
-  ...
-  <MultiBackend.Preview generator={this.generatePreview} />
-```
-
- - *import*:
 ```js
   import MultiBackend, { Preview } from 'react-dnd-multi-backend';
   ...
   <Preview generator={this.generatePreview} />
-```
-
- - *browser*:
-```js
-  <script src="ReactDnDMultiBackend.min.js"></script>
-  ...
-  <ReactDnDMultiBackend.Preview generator={this.generatePreview} />
 ```
 
 You must pass a function as the `generator` prop which takes 3 arguments:
@@ -185,7 +164,7 @@ Note that this component will only be showed while using a backend flagged with 
 
 ### Examples
 
-You can see an example [here](examples/) (Node.js style with `import`s).
+You can see an example [here](examples/).
 
 
 ## Migrating
@@ -207,10 +186,17 @@ Starting with `3.1.8`, the dependencies of `react-dnd-multi-backend` changed. `r
 
 Note that if you use the `HTML5toTouch` pipeline, the same is true for `react-dnd-html5-backend` and `react-dnd-touch-backend`.
 
+### Migrating from 3.x.x
+
+Starting with `4.0.0`, `react-dnd-multi-backend` will start using `react-dnd` (and the corresponding backends) `9.0.0` and later.
+
+This means you need to transition from `DragDropContext(MultiBackend(HTML5toTouch))(App)` to `<DndProvider backend={MultiBackend} options={HTML5toTouch}>`.
+Accordingly, the pipeline syntax changes and you should specify backend options as a separate property, e.g. `{backend: TouchBackend({enableMouseEvents: true})}` becomes `{backend: TouchBackend, options: {enableMouseEvents: true}}`.
+
 
 ## License
 
-MIT, Copyright (c) 2016-2018 Louis Brunner
+MIT, Copyright (c) 2016-2019 Louis Brunner
 
 
 

@@ -1,35 +1,24 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { DragSource } from 'react-dnd';
+import { useDrag } from 'react-dnd-cjs';
 
-const spec = {
-  beginDrag: (props) => {
-    return {color: props.color};
-  },
+const Card = (props) => {
+  const [collectedProps, drag] = useDrag({
+    item: {type: 'card', color: props.color},
+    collect: (monitor) => {
+      return {
+        isDragging: monitor.isDragging(),
+      };
+    },
+  });
+  const isDragging = collectedProps.isDragging;
+  const style = {backgroundColor: props.color, opacity: isDragging ? 0.5 : 1};
+
+  return <div className="square" style={style} ref={drag} />;
 };
 
-function collect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-  };
-}
+Card.propTypes = {
+  color: PropTypes.string.isRequired,
+};
 
-class Card extends PureComponent {
-  static propTypes = {
-    color: PropTypes.string.isRequired,
-
-    isDragging: PropTypes.bool.isRequired,
-    connectDragSource: PropTypes.func.isRequired,
-  }
-
-  render() {
-    const isDragging = this.props.isDragging;
-    const connectDragSource = this.props.connectDragSource;
-    const style = { backgroundColor: this.props.color, opacity: isDragging ? 0.5 : 1 };
-
-    return connectDragSource(<div className="square" style={style} />);
-  }
-}
-
-export default DragSource('square', spec, collect)(Card);
+export default Card;

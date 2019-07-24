@@ -1,7 +1,7 @@
 import * as Module from '../index';
 
 import Preview from '../Preview';
-import MultiBackend, { HTML5DragTransition, TouchTransition, MouseTransition, createTransition } from 'dnd-multi-backend';
+import { HTML5DragTransition, TouchTransition, MouseTransition, createTransition } from 'dnd-multi-backend';
 
 
 describe('ReactDnDMultiBackend module', () => {
@@ -9,8 +9,8 @@ describe('ReactDnDMultiBackend module', () => {
     expect(Module.default).toBeInstanceOf(Function);
 
     const fakeManager = {getMonitor: jest.fn(), getActions: jest.fn(), getRegistry: jest.fn(), getContext: jest.fn()};
-    expect(Module.default).toBe(MultiBackend);
-    expect(() => { Module.default(fakeManager); }).toThrowError(Error);
+    expect(Module.default(fakeManager, {}, {backends: [{backend: () => {}}]})).toBeInstanceOf(Object);
+    expect(() => { Module.default(fakeManager, {}); }).toThrowError(Error);
   });
 
   test('exports utils components', () => {

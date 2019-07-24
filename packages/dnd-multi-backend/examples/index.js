@@ -19,7 +19,7 @@ const pipeline = {
 };
 
 // Create manager
-const manager = createDragDropManager(MultiBackend(pipeline));
+const manager = createDragDropManager(MultiBackend, {}, pipeline);
 const registry = manager.getRegistry();
 
 // Create logic

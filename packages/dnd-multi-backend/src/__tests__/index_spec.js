@@ -11,8 +11,8 @@ describe('ReactDnDMultiBackend module', () => {
     expect(Module.default).toBeInstanceOf(Function);
 
     const fakeManager = {getMonitor: jest.fn(), getActions: jest.fn(), getRegistry: jest.fn(), getContext: jest.fn()};
-    expect(Module.default({backends: [{backend: () => {}}]})(fakeManager)).toBeInstanceOf(MultiBackend);
-    expect(() => { Module.default(fakeManager); }).toThrowError(Error);
+    expect(Module.default(fakeManager, {}, {backends: [{backend: () => {}}]})).toBeInstanceOf(MultiBackend);
+    expect(() => { Module.default(fakeManager, {}); }).toThrowError(Error);
   });
 
   test('exports utils components', () => {

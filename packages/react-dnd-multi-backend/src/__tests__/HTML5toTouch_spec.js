@@ -14,6 +14,7 @@ describe('HTML5toTouch pipeline', () => {
 
     expect(HTML5toTouch.backends[1]).toBeInstanceOf(Object);
     expect(HTML5toTouch.backends[1].backend).not.toBeUndefined();
+    expect(HTML5toTouch.backends[1].options).toBeInstanceOf(Object);
     expect(HTML5toTouch.backends[1].preview).toBe(true);
     expect(HTML5toTouch.backends[1].transition).toBe(TouchTransition);
   });

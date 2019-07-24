@@ -26,7 +26,7 @@ class PreviewList {
 export const PreviewManager = new PreviewList();
 
 export default class {
-  constructor(manager, sourceOptions) {
+  constructor(manager, context, sourceOptions) {
     const options = objectAssign({backends: []}, sourceOptions || {});
 
     if (options.backends.length < 1) {
@@ -50,7 +50,7 @@ export default class {
         );
       }
       this.backends.push({
-        instance: new backend.backend(manager),
+        instance: new backend.backend(manager, context, backend.options),
         preview: (backend.preview || false),
         transition,
         skipDispatchOnTransition: Boolean(backend.skipDispatchOnTransition),

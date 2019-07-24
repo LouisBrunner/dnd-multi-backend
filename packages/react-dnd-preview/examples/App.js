@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { DragDropContext } from 'react-dnd';
+import { DndProvider } from 'react-dnd-cjs';
 import { FakeSource, FakeTarget } from './Fakes';
-import TestBackend from 'react-dnd-test-backend';
+import TestBackend from 'react-dnd-test-backend-cjs';
 import Preview from '../src/index.js';
 import objectAssign from 'object-assign';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
 
@@ -79,15 +79,15 @@ class App extends Component {
   render() {
     return (
       <div>
-        <button
-          onMouseDown={this.startDrag} onMouseUp={this.stopDrag}
-          onTouchStart={this.startDrag} onTouchEnd={this.stopDrag}>
-          {this.state.isDragging ? 'Stop' : 'Start'} Drag
-        </button>
-        <Preview generator={this.generatePreview} />
+        <DndProvider backend={TestBackend}>
+          <button
+            onMouseDown={this.startDrag} onMouseUp={this.stopDrag}
+            onTouchStart={this.startDrag} onTouchEnd={this.stopDrag}>
+            {this.state.isDragging ? 'Stop' : 'Start'} Drag
+          </button>
+          <Preview generator={this.generatePreview} />
+        </DndProvider>
       </div>
     );
   }
 }
-
-export default DragDropContext(TestBackend)(App);

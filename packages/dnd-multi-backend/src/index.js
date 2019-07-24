@@ -5,11 +5,6 @@ import MultiBackend, { PreviewManager } from './MultiBackend';
 
 export { MultiBackend, PreviewManager };
 
-export default (managerOrOptions) => {
-  if (managerOrOptions.getMonitor) {
-    return new MultiBackend(managerOrOptions);
-  }
-  return (manager) => {
-    return new MultiBackend(manager, managerOrOptions);
-  };
+export default (manager, context, options) => {
+  return new MultiBackend(manager, context, options);
 };

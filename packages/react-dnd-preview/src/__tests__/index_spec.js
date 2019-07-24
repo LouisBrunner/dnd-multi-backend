@@ -1,24 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import TestBackend from 'react-dnd-test-backend';
-import { DragDropContext, DragSource } from 'react-dnd';
+import TestBackend from 'react-dnd-test-backend-cjs';
+import { DndProvider, useDrag } from 'react-dnd-cjs';
 
 import Preview from '../index';
 
 describe('Preview subcomponent', () => {
   const createComponent = ({generator = jest.fn(), source = null} = {}) => {
-    @DragDropContext(TestBackend)
-    class TestRoot extends React.Component {
-      render() {
-        return (
-          <div>
+    const TestRoot = () => {
+      return (
+        <div>
+          <DndProvider backend={TestBackend}>
             {source}
             <Preview generator={generator} />
-          </div>
-        );
-      }
-    }
+          </DndProvider>
+        </div>
+      );
+    };
 
     return mount(<TestRoot />);
   };
@@ -31,25 +29,20 @@ describe('Preview subcomponent', () => {
 
   test('is null when DnD is not in progress', () => {
     const component = createComponent().find(Preview);
-    expect(component.html()).toBeNull();
+    expect(component.html()).toEqual('');
   });
 
   test('is valid when DnD is in progress', () => {
     const generator = (type, item, style) => {
       return <div style={style}>{item.coucou}: {type}</div>;
     };
-    const Source = (
-      @DragSource('toto', {
-        beginDrag: () => { return {coucou: 'dauphin'}; },
-        canDrag: () => { return true; },
-      }, (connect) => {
-        return {connectDragSource: connect.dragSource()};
-      })
-      class DS extends React.Component {
-        static propTypes = {connectDragSource: PropTypes.func}
-        render() { return this.props.connectDragSource(<div />); }
-      }
-    );
+
+    const Source = () => {
+      const [_, drag] = useDrag({
+        item: {type: 'toto', coucou: 'dauphin'},
+      });
+      return <div ref={drag} />;
+    };
 
     const root = createComponent({source: <Source />, generator});
 

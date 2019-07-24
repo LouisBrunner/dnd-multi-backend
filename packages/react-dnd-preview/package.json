@@ -20,11 +20,11 @@
   },
   "devDependencies": {
     "react": "*",
-    "react-dnd": "*",
-    "react-dnd-test-backend": "^5.0.1"
+    "react-dnd-cjs": "9.0.0 - 9.3.1 || > 9.3.2",
+    "react-dnd-test-backend-cjs": "9.0.0 - 9.3.1 || > 9.3.2"
   },
   "peerDependencies": {
     "react": "*",
-    "react-dnd": "*"
+    "react-dnd-cjs": "9.0.0 - 9.3.1 || > 9.3.2"
   }
 }
