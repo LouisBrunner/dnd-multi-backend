@@ -1,6 +1,6 @@
 {
   "name": "react-dnd-multi-backend",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Multi Backend system compatible with React DnD",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
   "license": "MIT",
@@ -19,7 +19,7 @@
   "dependencies": {
     "dnd-multi-backend": "^3.2.1",
     "prop-types": "^15.6.2",
-    "react-dnd-preview": "^3.2.1"
+    "react-dnd-preview": "^3.2.2"
   },
   "peerDependencies": {
     "react": "*",
