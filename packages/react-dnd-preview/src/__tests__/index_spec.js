@@ -31,7 +31,7 @@ describe('Preview subcomponent', () => {
 
   test('is null when DnD is not in progress', () => {
     const component = createComponent().find(Preview);
-    expect(component.html()).toBeNull();
+    expect(component.html()).toEqual('');
   });
 
   test('is valid when DnD is in progress', () => {
