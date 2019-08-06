@@ -18,13 +18,12 @@
   "dependencies": {
     "prop-types": "^15.6.2"
   },
-  "devDependencies": {
-    "react": "*",
-    "react-dnd-cjs": "9.0.0 - 9.3.1 || > 9.3.2",
-    "react-dnd-test-backend-cjs": "9.0.0 - 9.3.1 || > 9.3.2"
-  },
   "peerDependencies": {
-    "react": "*",
-    "react-dnd-cjs": "9.0.0 - 9.3.1 || > 9.3.2"
+    "react": ">= 16.8",
+    "react-dnd-cjs": ">= 9.3.9"
+  },
+  "devDependencies": {
+    "react-dnd-cjs": ">= 9.3.9",
+    "react-dnd-test-backend-cjs": ">= 9.3.9"
   }
 }
