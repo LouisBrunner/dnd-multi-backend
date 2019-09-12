@@ -1,24 +1,33 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import TestBackend from 'react-dnd-test-backend-cjs';
-import { DndProvider, useDrag } from 'react-dnd-cjs';
+import { DndProvider, DragSource } from 'react-dnd-cjs';
 
 import Preview from '../index';
 
 describe('Preview subcomponent', () => {
-  const createComponent = ({generator = jest.fn(), source = null} = {}) => {
-    const TestRoot = () => {
+  // = () => { return null; }
+  const createComponent = ({generator, source = null} = {}) => {
+    console.log(1, generator); // eslint-disable-line
+    const TestRoot = (props) => {
+      console.log(this, props); // eslint-disable-line
+      console.log(2, props.previewGenerator, generator); // eslint-disable-line
       return (
         <div>
           <DndProvider backend={TestBackend}>
             {source}
-            <Preview generator={generator} />
+            <Preview generator={() => {
+              console.log(this, props); // eslint-disable-line
+              console.log(3, props.previewGenerator, generator); // eslint-disable-line
+              return props.previewGenerator();
+            }} />
           </DndProvider>
         </div>
       );
     };
 
-    return mount(<TestRoot />);
+    return mount(<TestRoot previewGenerator={generator} />);
   };
 
   test('is a DragLayer-decorated Preview', () => {
@@ -37,17 +46,24 @@ describe('Preview subcomponent', () => {
       return <div style={style}>{item.coucou}: {type}</div>;
     };
 
-    const Source = () => {
-      const [_, drag] = useDrag({
-        item: {type: 'toto', coucou: 'dauphin'},
-      });
-      return <div ref={drag} />;
-    };
+    const Source = (
+      @DragSource('toto', {
+        beginDrag: () => { return {coucou: 'dauphin'}; },
+        canDrag: () => { return true; },
+      }, (connect) => {
+        return {connectDragSource: connect.dragSource()};
+      })
+      class DS extends React.Component {
+        static propTypes = {connectDragSource: PropTypes.func}
+        render() { return this.props.connectDragSource(<div />); }
+      }
+    );
 
-    const root = createComponent({source: <Source />, generator});
+    const root = createComponent({generator, source: <Source />});
 
-    const backend = root.instance().getManager().getBackend();
-    backend.simulateBeginDrag([root.find(Source).instance().getHandlerId()], {
+    const instance = root.find(Source).instance();
+    const backend = instance.manager.getBackend();
+    backend.simulateBeginDrag([instance.getHandlerId()], {
       clientOffset: {x: 1, y: 2},
       getSourceClientOffset: () => {
         return {x: 1000, y: 2000};
