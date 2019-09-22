@@ -16,6 +16,11 @@
   "plugins": [
     "react"
   ],
+  "settings": {
+    "react": {
+        "version": "detect"
+    }
+  },
   "rules": {
     "no-await-in-loop": ["error"],
     "no-compare-neg-zero": ["error"],

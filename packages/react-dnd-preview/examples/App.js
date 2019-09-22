@@ -17,10 +17,11 @@ export default class App extends Component {
     this.StopDrag();
   }
 
-  setup(manager) {
+  setup = (manager) => {
     this.manager = manager;
-    this.backend = manager.getBackend();
+    this.backend = new TestBackend(manager);
     this.registry = manager.getRegistry();
+    return this.backend;
   }
 
   startDrag = () => {
@@ -79,7 +80,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <DndProvider backend={TestBackend}>
+        <DndProvider backend={this.setup}>
           <button
             onMouseDown={this.startDrag} onMouseUp={this.stopDrag}
             onTouchStart={this.startDrag} onTouchEnd={this.stopDrag}>
