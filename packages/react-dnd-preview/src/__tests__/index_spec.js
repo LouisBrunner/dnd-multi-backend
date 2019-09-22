@@ -6,28 +6,21 @@ import { DndProvider, DragSource } from 'react-dnd-cjs';
 
 import Preview from '../index';
 
-describe('Preview subcomponent', () => {
-  // = () => { return null; }
-  const createComponent = ({generator, source = null} = {}) => {
-    console.log(1, generator); // eslint-disable-line
-    const TestRoot = (props) => {
-      console.log(this, props); // eslint-disable-line
-      console.log(2, props.previewGenerator, generator); // eslint-disable-line
-      return (
-        <div>
-          <DndProvider backend={TestBackend}>
-            {source}
-            <Preview generator={() => {
-              console.log(this, props); // eslint-disable-line
-              console.log(3, props.previewGenerator, generator); // eslint-disable-line
-              return props.previewGenerator();
-            }} />
-          </DndProvider>
-        </div>
-      );
-    };
+let FIXME_super_huge_hack_cant_understand_what_is_going_on = null; // eslint-disable-line id-length
 
-    return mount(<TestRoot previewGenerator={generator} />);
+describe('Preview subcomponent', () => {
+  const createComponent = ({generator = () => { return null; }, source = null} = {}) => {
+    FIXME_super_huge_hack_cant_understand_what_is_going_on = generator;
+    return mount(
+      <div>
+        <DndProvider backend={TestBackend}>
+          {source}
+          <Preview generator={(...args) => {
+            return FIXME_super_huge_hack_cant_understand_what_is_going_on(...args);
+          }} />
+        </DndProvider>
+      </div>
+    );
   };
 
   test('is a DragLayer-decorated Preview', () => {

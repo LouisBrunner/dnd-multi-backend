@@ -24,7 +24,6 @@ class Preview extends PureComponent {
     if (!this.props.isDragging || this.props.currentOffset === null) {
       return null;
     }
-    console.log(this.props.generator); // eslint-disable-line
     return this.props.generator(this.props.itemType, this.props.item, this.getStyle());
   }
 }
