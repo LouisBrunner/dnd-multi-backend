@@ -20,7 +20,7 @@ You should only use this package if your framework is not in the supported list:
 In this case, you will need to write a [custom pipeline](../react-dnd-multi-backend#create-a-custom-pipeline) including as many `dnd-core` backends as you wish. See also the [examples](examples/) for more information.
 
 ```js
-import { DragDropManager, DragSource, DropTarget } from 'dnd-core';
+import { createDragDropManager } from 'dnd-core';
 import MultiBackend from 'dnd-multi-backend';
 
 // Define the backend and pipeline
@@ -68,7 +68,7 @@ const pipeline = {
 };
 
 // Setup the manager
-const manager = new DragDropManager(MultiBackend(pipeline));
+const manager = createDragDropManager(MultiBackend, {}, pipeline);
 const registry = manager.getRegistry();
 
 // Setup your DnD logic

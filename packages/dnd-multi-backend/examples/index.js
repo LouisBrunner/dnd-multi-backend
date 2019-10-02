@@ -1,4 +1,4 @@
-import { createDragDropManager } from 'dnd-core';
+import { createDragDropManager } from 'dnd-core-cjs';
 import MultiBackend, { MouseTransition, TouchTransition } from '../src/index.js';
 import { HTML5Backend, TouchBackend } from './Backends.js';
 import { DragSource, DropTarget } from './DnD.js';
@@ -19,7 +19,7 @@ const pipeline = {
 };
 
 // Create manager
-const manager = createDragDropManager(MultiBackend(pipeline));
+const manager = createDragDropManager(MultiBackend, {}, pipeline);
 const registry = manager.getRegistry();
 
 // Create logic

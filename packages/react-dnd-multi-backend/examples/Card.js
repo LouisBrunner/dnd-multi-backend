@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { DragSource } from 'react-dnd';
+import { DragSource } from 'react-dnd-cjs';
 
 const spec = {
   beginDrag: (props) => {
@@ -18,7 +18,6 @@ function collect(connect, monitor) {
 class Card extends PureComponent {
   static propTypes = {
     color: PropTypes.string.isRequired,
-
     isDragging: PropTypes.bool.isRequired,
     connectDragSource: PropTypes.func.isRequired,
   }
@@ -27,7 +26,6 @@ class Card extends PureComponent {
     const isDragging = this.props.isDragging;
     const connectDragSource = this.props.connectDragSource;
     const style = { backgroundColor: this.props.color, opacity: isDragging ? 0.5 : 1 };
-
     return connectDragSource(<div className="square" style={style} />);
   }
 }

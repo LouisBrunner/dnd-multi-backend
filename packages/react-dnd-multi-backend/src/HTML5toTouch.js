@@ -1,5 +1,5 @@
-import HTML5Backend from 'react-dnd-html5-backend';
-import TouchBackend from 'react-dnd-touch-backend';
+import HTML5Backend from 'react-dnd-html5-backend-cjs';
+import TouchBackend from 'react-dnd-touch-backend-cjs';
 
 import { TouchTransition, MouseTransition } from 'dnd-multi-backend';
 
@@ -10,7 +10,8 @@ export default {
       transition: MouseTransition,
     },
     {
-      backend: TouchBackend({enableMouseEvents: true}),
+      backend: TouchBackend,
+      options: {enableMouseEvents: true},
       preview: true,
       transition: TouchTransition,
     },

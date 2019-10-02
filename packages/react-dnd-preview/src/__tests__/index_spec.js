@@ -1,26 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import TestBackend from 'react-dnd-test-backend';
-import { DragDropContext, DragSource } from 'react-dnd';
+import TestBackend from 'react-dnd-test-backend-cjs';
+import { DndProvider, DragSource } from 'react-dnd-cjs';
 
 import Preview from '../index';
 
-describe('Preview subcomponent', () => {
-  const createComponent = ({generator = jest.fn(), source = null} = {}) => {
-    @DragDropContext(TestBackend)
-    class TestRoot extends React.Component {
-      render() {
-        return (
-          <div>
-            {source}
-            <Preview generator={generator} />
-          </div>
-        );
-      }
-    }
+let FIXME_super_huge_hack_cant_understand_what_is_going_on = null; // eslint-disable-line id-length
 
-    return mount(<TestRoot />);
+describe('Preview subcomponent', () => {
+  const createComponent = ({generator = () => { return null; }, source = null} = {}) => {
+    FIXME_super_huge_hack_cant_understand_what_is_going_on = generator;
+    return mount(
+      <div>
+        <DndProvider backend={TestBackend}>
+          {source}
+          <Preview generator={(...args) => {
+            return FIXME_super_huge_hack_cant_understand_what_is_going_on(...args);
+          }} />
+        </DndProvider>
+      </div>
+    );
   };
 
   test('is a DragLayer-decorated Preview', () => {
@@ -38,6 +38,7 @@ describe('Preview subcomponent', () => {
     const generator = (type, item, style) => {
       return <div style={style}>{item.coucou}: {type}</div>;
     };
+
     const Source = (
       @DragSource('toto', {
         beginDrag: () => { return {coucou: 'dauphin'}; },
@@ -51,10 +52,11 @@ describe('Preview subcomponent', () => {
       }
     );
 
-    const root = createComponent({source: <Source />, generator});
+    const root = createComponent({generator, source: <Source />});
 
-    const backend = root.instance().getManager().getBackend();
-    backend.simulateBeginDrag([root.find(Source).instance().getHandlerId()], {
+    const instance = root.find(Source).instance();
+    const backend = instance.manager.getBackend();
+    backend.simulateBeginDrag([instance.getHandlerId()], {
       clientOffset: {x: 1, y: 2},
       getSourceClientOffset: () => {
         return {x: 1000, y: 2000};

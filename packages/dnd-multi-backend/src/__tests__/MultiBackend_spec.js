@@ -38,6 +38,7 @@ describe('PreviewList class', () => {
 });
 
 describe('MultiBackend class', () => {
+  let _defaultContext;
   let _defaultPipeline;
   let _pipelineWithSkipDispatch;
 
@@ -56,13 +57,14 @@ describe('MultiBackend class', () => {
     const backend1ctr = jest.fn(() => { return backend1; });
     const backend2 = newBackend();
     const backend2ctr = jest.fn(() => { return backend2; });
+    _defaultContext = {qrt: Math.random()};
     _defaultPipeline = {backends: [
       {backend: backend1ctr},
-      {backend: backend2ctr, preview: true, transition},
+      {backend: backend2ctr, options: {abc: 123}, preview: true, transition},
     ]};
     _pipelineWithSkipDispatch = {backends: [
       {backend: backend1ctr},
-      {backend: backend2ctr, preview: true, transition, skipDispatchOnTransition: true },
+      {backend: backend2ctr, options: {abc: 123}, preview: true, transition, skipDispatchOnTransition: true },
     ]};
   });
 
@@ -71,7 +73,7 @@ describe('MultiBackend class', () => {
     if (actualManager === null) {
       actualManager = {getMonitor: jest.fn(), getActions: jest.fn(), getRegistry: jest.fn(), getContext: jest.fn()};
     }
-    return new MultiBackend(actualManager, pipeline);
+    return new MultiBackend(actualManager, _defaultContext, pipeline);
   };
 
   describe('constructor', () => {
@@ -105,13 +107,13 @@ describe('MultiBackend class', () => {
       expect(backend.backends).toHaveLength(2);
 
       expect(pipeline.backends[0].backend).toHaveBeenCalledTimes(1);
-      expect(pipeline.backends[0].backend).toBeCalledWith(manager);
+      expect(pipeline.backends[0].backend).toBeCalledWith(manager, _defaultContext, undefined);
       expect(backend.backends[0].instance).toBe(pipeline.backends[0].backend());
       expect(backend.backends[0].preview).toBe(false);
       expect(backend.backends[0].transition).toBeUndefined();
 
       expect(pipeline.backends[1].backend).toHaveBeenCalledTimes(1);
-      expect(pipeline.backends[1].backend).toBeCalledWith(manager);
+      expect(pipeline.backends[1].backend).toBeCalledWith(manager, _defaultContext, pipeline.backends[1].options);
       expect(backend.backends[1].instance).toBe(pipeline.backends[1].backend());
       expect(backend.backends[1].preview).toBe(true);
       expect(backend.backends[1].transition).toBe(pipeline.backends[1].transition);

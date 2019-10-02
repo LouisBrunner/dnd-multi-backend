@@ -1,6 +1,6 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { DragLayer } from 'react-dnd';
+import { DragLayer } from 'react-dnd-cjs';
 
 export default
 @DragLayer((monitor) => {

@@ -19,17 +19,8 @@ describe('Preview component', () => {
     jest.resetAllMocks();
   });
 
-  const createComponent = ({preview = false, generator = jest.fn()} = {}) => {
-    const context = {
-      dragDropManager: {
-        getBackend: () => {
-          return {
-            previewEnabled: () => { return preview; },
-          };
-        },
-      },
-    };
-    return mount(<Preview generator={generator} />, {context});
+  const createComponent = ({generator = jest.fn()} = {}) => {
+    return mount(<Preview generator={generator} />);
   };
 
   test('is a PureComponent', () => {
@@ -54,10 +45,7 @@ describe('Preview component', () => {
   });
 
   test('is not empty (preview)', () => {
-    const component = createComponent({
-      preview: true,
-      generator: () => {},
-    });
+    const component = createComponent();
     expect(component.find(DnDPreview)).not.toExist();
 
     component.instance().backendChanged({
