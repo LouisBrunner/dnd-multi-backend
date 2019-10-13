@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { DragSource } from 'react-dnd-cjs';
+import { DragSource } from 'react-dnd';
 
 const spec = {
   beginDrag: (props) => {

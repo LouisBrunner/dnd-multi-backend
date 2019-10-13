@@ -7,7 +7,7 @@ module.exports = webpackMerge(examplesConfig, {
   mode: 'development',
   serve: {
     port: 4001,
-    content: './dev',
+    content: './examples',
     hot: true,
   },
   plugins: [

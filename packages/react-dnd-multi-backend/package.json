@@ -15,22 +15,23 @@
     "touch",
     "react-dnd"
   ],
-  "main": "lib/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "dependencies": {
     "dnd-multi-backend": "^4.0.0",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.7.2",
     "react-dnd-preview": "^4.0.0"
   },
   "peerDependencies": {
-    "react": ">= 16.8",
-    "react-dnd-cjs": ">= 9.3.9",
-    "react-dnd-html5-backend-cjs": ">= 9.3.9",
-    "react-dnd-touch-backend-cjs": ">= 9.3.9",
-    "react-dom": ">= 16.8"
+    "react": "^16.10",
+    "react-dnd": "^9.4.0",
+    "react-dnd-html5-backend": "^9.4.0",
+    "react-dnd-touch-backend": "^9.4.0",
+    "react-dom": "^16.10"
   },
   "devDependencies": {
     "object-assign": "^4.1.1",
-    "react-dnd-html5-backend-cjs": ">= 9.3.9",
-    "react-dnd-touch-backend-cjs": ">= 9.3.9"
+    "react-dnd-html5-backend": "^9.4.0",
+    "react-dnd-touch-backend": "^9.4.0"
   }
 }

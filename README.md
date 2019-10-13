@@ -23,7 +23,7 @@ This project also contains some helpers (available standalone or included in oth
 
 ## Thanks
 
-Thanks to the [React DnD HTML5 Backend](https://github.com/gaearon/react-dnd-html5-backend) maintainers which obviously greatly inspired this project.
+Thanks to the [React DnD HTML5 Backend](https://github.com/react-dnd/react-dnd) maintainers which obviously greatly inspired this project.
 
 
 ## License

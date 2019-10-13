@@ -2,7 +2,7 @@
 
 [Try it here!](https://louisbrunner.github.io/dnd-multi-backend/examples/react-dnd-preview.html)
 
-This project is a React component compatible with [React DnD](https://github.com/gaearon/react-dnd) that can be used to emulate a Drag'n'Drop "ghost" when a Backend system doesn't have one (e.g. `react-dnd-touch-backend`).
+This project is a React component compatible with [React DnD](https://github.com/react-dnd/react-dnd) that can be used to emulate a Drag'n'Drop "ghost" when a Backend system doesn't have one (e.g. `react-dnd-touch-backend`).
 
 ## Installation
 

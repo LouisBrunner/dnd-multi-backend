@@ -2,11 +2,11 @@
 
 [Try it here!](https://louisbrunner.github.io/dnd-multi-backend/examples/react-dnd-multi-backend.html)
 
-This project is a Drag'n'Drop backend compatible with [React DnD](https://github.com/gaearon/react-dnd).
+This project is a Drag'n'Drop backend compatible with [React DnD](https://github.com/react-dnd/react-dnd).
 It enables your application to use different DnD backends depending on the situation.
 You can either generate your own backend pipeline or use the default one (`HTML5toTouch`).
 
-[HTML5toTouch](src/HTML5toTouch.js) starts by using the [React DnD HTML5 Backend](https://github.com/gaearon/react-dnd-html5-backend), but switches to the [React DnD Touch Backend](https://github.com/yahoo/react-dnd-touch-backend) if a touch event is triggered.
+[HTML5toTouch](src/HTML5toTouch.js) starts by using the [React DnD HTML5 Backend](https://react-dnd.github.io/react-dnd/docs/backends/html5), but switches to the [React DnD Touch Backend](https://react-dnd.github.io/react-dnd/docs/backends/touch) if a touch event is triggered.
 You application can smoothly use the nice HTML5 compatible backend and fallback on the Touch one on mobile devices!
 
 Moreover, because some backends don't support preview, a `Preview` component has been added to make it easier to mock the Drag'n'Drop "ghost".
@@ -23,16 +23,16 @@ npm install react-dnd-multi-backend
 ```
 
 You can then `MultiBackend = require('react-dnd-multi-backend')` or `import MultiBackend from 'react-dnd-multi-backend'`.
-To get the `HTML5toTouch` pipeline, just require/import `react-dnd-multi-backend/lib/HTML5toTouch`.
+To get the `HTML5toTouch` pipeline, just require/import `react-dnd-multi-backend/dist/BUILD_TYPE/HTML5toTouch` (where `BUILD_TYPE` is either `cjs` for CommonJS or `esm` for ES Module).
 
 ### Browser Installation
 
-Use the minified UMD build in the `dist` folder: https://www.jsdelivr.com/package/npm/react-dnd-multi-backend?path=dist.
+Use the minified UMD build in the `dist` folder: https://www.jsdelivr.com/package/npm/react-dnd-multi-backend?path=dist%2Fumd.
 
-`ReactDnDMultiBackend.min.js` exports a global `window.ReactDnDMultiBackend` when imported as a `<script>` tag.
+`react-dnd-multi-backend.min.js` exports a global `window.ReactDnDMultiBackend` when imported as a `<script>` tag.
 
-If you want to use the `HTML5toTouch` pipeline, also include `RDMBHTML5toTouch.min.js`.
-It exports a global `window.RDMBHTML5toTouch` when imported as a `<script>` tag.
+If you want to use the `HTML5toTouch` pipeline, also include `HTML5toTouch.min.js`.
+It exports a global `window.HTML5toTouch` when imported as a `<script>` tag.
 This file also includes the `HTML5` and `Touch` backends, so no need to include them as well.
 
 
@@ -40,7 +40,7 @@ This file also includes the `HTML5` and `Touch` backends, so no need to include 
 
 ### Backend
 
-You can plug this backend in the `DragDropContext` the same way you do for any backend (e.g. `ReactDnDHTML5Backend`), you can see [the docs](http://gaearon.github.io/react-dnd/docs-html5-backend.html) for more information.
+You can plug this backend in the `DragDropContext` the same way you do for any backend (e.g. `ReactDnDHTML5Backend`), you can see [the docs](https://react-dnd.github.io/react-dnd/docs/backends/html5) for more information.
 
 You must pass a 'pipeline' to use as argument. This package includes `HTML5toTouch`, but you can write your own.
 Note that if you include this file, you will have to add `react-dnd-html5-backend` and `react-dnd-touch-backend` to your `package.json` `dependencies`.
