@@ -27,10 +27,11 @@ To get the `HTML5toTouch` pipeline, just require/import `react-dnd-multi-backend
 
 ### Browser Installation
 
-Use the minified UMD build in the `dist` folder: [here](dist/ReactDnDMultiBackend.min.js).
-It exports a global `window.ReactDnDMultiBackend` when imported as a `<script>` tag.
+Use the minified UMD build in the `dist` folder: https://www.jsdelivr.com/package/npm/react-dnd-multi-backend?path=dist.
 
-If you want to use the `HTML5toTouch` pipeline, also include [RDMBHTML5toTouch.min.js](dist/RDMBHTML5toTouch.min.js).
+`ReactDnDMultiBackend.min.js` exports a global `window.ReactDnDMultiBackend` when imported as a `<script>` tag.
+
+If you want to use the `HTML5toTouch` pipeline, also include `RDMBHTML5toTouch.min.js`.
 It exports a global `window.RDMBHTML5toTouch` when imported as a `<script>` tag.
 This file also includes the `HTML5` and `Touch` backends, so no need to include them as well.
 

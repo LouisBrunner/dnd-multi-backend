@@ -14,8 +14,8 @@
     "travis:test": "CI=yes npm run test",
     "travis:coverage": "cat ./coverage/lcov.info | coveralls",
     "start": "webpack-dev-server --config webpack/dev.js",
-    "prepush": "npm run lint && npm run test && npm run build:dist && npm run build:examples",
-    "prepare": "npm run clean && npm run lint && npm run build:lib && npm run test",
+    "prepush": "npm run lint && npm run test",
+    "prepare": "npm run clean && npm run lint && npm run build:lib && npm run build:dist && npm run test",
     "postinstall": "lerna bootstrap"
   },
   "devDependencies": {
