@@ -10,6 +10,7 @@ script:
 after_success:
   - npm run travis:coverage
   - npm run build:examples
+  - sed -i '' '/\/examples/d' .gitignore # allow examples js to be committed
 
 deploy:
   provider: pages
@@ -17,3 +18,4 @@ deploy:
   github_token: $GITHUB_TOKEN
   on:
     branch: master
+    node_js: node
