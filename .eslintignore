@@ -1,5 +1,4 @@
 /examples
-/dist
 /coverage
-/packages/*/lib
+/packages/*/dist
 **/node_modules

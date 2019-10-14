@@ -8,3 +8,7 @@ node_modules
 # Code coverage
 /.nyc_output
 /coverage
+
+# Examples
+/examples/*.js
+/dist

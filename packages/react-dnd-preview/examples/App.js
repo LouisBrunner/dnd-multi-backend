@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { DndProvider } from 'react-dnd-cjs';
+import { DndProvider } from 'react-dnd';
 import { FakeSource, FakeTarget } from './Fakes';
-import TestBackend from 'react-dnd-test-backend-cjs';
+import TestBackend from 'react-dnd-test-backend';
 import Preview from '../src/index.js';
 import objectAssign from 'object-assign';
 

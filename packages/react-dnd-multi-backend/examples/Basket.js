@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { DropTarget } from 'react-dnd-cjs';
+import { DropTarget } from 'react-dnd';
 
 const spec = {
   drop: (props, monitor) => {

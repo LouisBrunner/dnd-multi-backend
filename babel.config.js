@@ -1,7 +1,7 @@
-const generatePresets = ({modules} = {}) => {
+const generatePresets = ({ modules } = {}) => {
   return [
     ['@babel/preset-env', {
-      modules: modules ? 'commonjs' : undefined,
+      modules,
       targets: {
         browsers: [
           '> 1%',
@@ -15,14 +15,15 @@ const generatePresets = ({modules} = {}) => {
 };
 
 module.exports = {
-  presets: generatePresets({modules: false}),
+  // eslint-disable-next-line no-process-env
+  presets: generatePresets({ modules: process.env.CJS === 'yes' ? 'commonjs' : false }),
   env: {
     test: {
-      presets: generatePresets({modules: true}),
+      presets: generatePresets({ modules: 'commonjs' }),
     },
   },
   plugins: [
-    ['@babel/plugin-proposal-decorators', {legacy: true}],
-    ['@babel/plugin-proposal-class-properties', {loose: true}],
+    ['@babel/plugin-proposal-decorators', { legacy: true }],
+    ['@babel/plugin-proposal-class-properties', { loose: true }],
   ],
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import TestBackend from 'react-dnd-test-backend-cjs';
-import { DndProvider, DragSource } from 'react-dnd-cjs';
+import TestBackend from 'react-dnd-test-backend';
+import { DndProvider, DragSource } from 'react-dnd';
 
 import Preview from '../index';
 

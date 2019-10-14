@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { DndProvider } from 'react-dnd-cjs';
+import { DndProvider } from 'react-dnd';
 import MultiBackend, { Preview } from '../src/index.js';
 import HTML5toTouch from '../src/HTML5toTouch.js';
 import Card from './Card';
