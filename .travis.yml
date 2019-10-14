@@ -10,7 +10,6 @@ script:
 after_success:
   - npm run travis:coverage
   - npm run build:examples
-  - touch .nojekyll # See https://github.com/zeit/next.js/wiki/Deploying-a-Next.js-app-into-GitHub-Pages#add-a-nojekyll-file
 
 deploy:
   provider: pages
