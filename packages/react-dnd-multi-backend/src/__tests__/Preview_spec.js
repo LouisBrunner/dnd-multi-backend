@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import DnDPreview from 'react-dnd-preview';
 import Preview from '../Preview';
 import { PreviewManager } from 'dnd-multi-backend';
+import { wrapInTestContext } from 'react-dnd-test-utils';
 
 jest.mock('dnd-multi-backend', () => {
   return {
@@ -20,11 +20,12 @@ describe('Preview component', () => {
   });
 
   const createComponent = ({generator = jest.fn()} = {}) => {
-    return mount(<Preview generator={generator} />);
+    const Wrapped = wrapInTestContext(Preview);
+    return mount(<Wrapped generator={generator} />);
   };
 
   test('is a PureComponent', () => {
-    const component = createComponent();
+    const component = createComponent().find(Preview);
     expect(component.name()).toBe('Preview');
     expect(component.instance()).toBeInstanceOf(React.PureComponent);
   });
@@ -32,7 +33,7 @@ describe('Preview component', () => {
   test('registers with the backend', () => {
     expect(PreviewManager.register).not.toBeCalled();
     const component = createComponent();
-    const instance = component.instance();
+    const instance = component.find(Preview).instance();
     expect(PreviewManager.register).toBeCalledWith(instance);
     expect(PreviewManager.unregister).not.toBeCalled();
     component.unmount();
@@ -41,23 +42,27 @@ describe('Preview component', () => {
 
   test('is empty (no preview)', () => {
     const component = createComponent();
-    expect(component.html()).toBeNull();
+    expect(component.find(Preview).html()).toBeNull();
   });
 
   test('is not empty (preview)', () => {
-    const component = createComponent();
-    expect(component.find(DnDPreview)).not.toExist();
+    const component = createComponent({
+      generator: () => { // eslint-disable-line react/display-name
+        return <div>abc</div>;
+      },
+    });
+    expect(component.find(Preview).html()).toBeNull();
 
-    component.instance().backendChanged({
+    component.find(Preview).instance().backendChanged({
       previewEnabled: () => { return true; },
     });
     component.update();
-    expect(component.find(DnDPreview)).toExist();
+    expect(component.find(Preview).html()).not.toBeNull();
 
-    component.instance().backendChanged({
+    component.find(Preview).instance().backendChanged({
       previewEnabled: () => { return false; },
     });
     component.update();
-    expect(component.find(DnDPreview)).not.toExist();
+    expect(component.find(Preview).html()).toBeNull();
   });
 });

@@ -3,7 +3,6 @@ import { DndProvider } from 'react-dnd';
 import { FakeSource, FakeTarget } from './Fakes';
 import TestBackend from 'react-dnd-test-backend';
 import Preview from '../src/index.js';
-import objectAssign from 'object-assign';
 
 export default class App extends Component {
   constructor(props) {
@@ -73,8 +72,7 @@ export default class App extends Component {
   }
 
   generatePreview(type, item, style) {
-    objectAssign(style, {backgroundColor: item.color, width: '50px', height: '50px'});
-    return <div style={style}>Generated {type}</div>;
+    return <div style={{...style, backgroundColor: item.color, width: '50px', height: '50px'}}>Generated {type}</div>;
   }
 
   render() {

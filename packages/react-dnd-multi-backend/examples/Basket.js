@@ -1,37 +1,26 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { DropTarget } from 'react-dnd';
+import React from 'react';
+import { useDrop } from 'react-dnd';
 
-const spec = {
-  drop: (props, monitor) => {
-    const message = `Dropped: ${monitor.getItem().color}`;
-    document.getElementById('console').innerHTML += `${message}<br />`;
-  },
+const Basket = () => {
+  const [collectedProps, drop] = useDrop({
+    accept: 'card',
+    drop: (item) => {
+      const message = `Dropped: ${item.color}`;
+      document.getElementById('console').innerHTML += `${message}<br />`;
+    },
+    collect: (monitor) => {
+      return {
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+      };
+    },
+  });
+
+  const isOver = collectedProps.isOver;
+  const canDrop = collectedProps.canDrop;
+  const style = {backgroundColor: (isOver && canDrop) ? '#f3f3f3' : '#cccccc', border: '1px dashed black'};
+
+  return <div className="square" style={style} ref={drop} />;
 };
 
-function collect(connect, monitor) {
-  return {
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop(),
-  };
-}
-
-class Basket extends PureComponent {
-  static propTypes = {
-    connectDropTarget: PropTypes.func.isRequired,
-    isOver: PropTypes.bool.isRequired,
-    canDrop: PropTypes.bool.isRequired,
-  }
-
-  render() {
-    const isOver = this.props.isOver;
-    const canDrop = this.props.canDrop;
-    const connectDropTarget = this.props.connectDropTarget;
-    const style = { backgroundColor: (isOver && canDrop) ? '#f3f3f3' : '#cccccc', border: '1px dashed black' };
-
-    return connectDropTarget(<div className="square" style={style} />);
-  }
-}
-
-export default DropTarget('square', spec, collect)(Basket);
+export default Basket;
