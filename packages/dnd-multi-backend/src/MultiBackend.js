@@ -50,7 +50,7 @@ export default class {
         );
       }
       this.backends.push({
-        instance: new backend.backend(manager, context, backend.options),
+        instance: backend.backend(manager, context, backend.options),
         preview: (backend.preview || false),
         transition,
         skipDispatchOnTransition: Boolean(backend.skipDispatchOnTransition),
