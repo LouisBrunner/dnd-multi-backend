@@ -1,6 +1,2 @@
-import MultiBackend, { HTML5DragTransition, TouchTransition, MouseTransition, createTransition } from 'dnd-multi-backend';
-import Preview from './Preview';
-
-export { Preview, HTML5DragTransition, TouchTransition, MouseTransition, createTransition };
-
-export default MultiBackend;
+export {default, HTML5DragTransition, TouchTransition, MouseTransition, createTransition } from 'dnd-multi-backend';
+export {default as Preview} from './Preview';

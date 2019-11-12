@@ -11,7 +11,7 @@ You application can smoothly use the nice HTML5 compatible backend and fallback 
 
 Moreover, because some backends don't support preview, a `Preview` component has been added to make it easier to mock the Drag'n'Drop "ghost".
 
-See the [migration section](#migrating) for instructions when switching from `react-dnd-multi-backend@2.x.x` or `react-dnd-multi-backend@3.1.2`.
+See the [migration section](#migrating) for instructions when switching from `2.x.x`, `3.x.x` or `4.x.x`.
 
 
 ## Installation
@@ -48,15 +48,15 @@ Note that if you include this file, you will have to add `react-dnd-html5-backen
 ```js
 import { DndProvider } from 'react-dnd';
 import MultiBackend from 'react-dnd-multi-backend';
-import HTML5toTouch from 'react-dnd-multi-backend/lib/HTML5toTouch'; // or any other pipeline
+import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch'; // or any other pipeline
 ...
-function App() {
+const App = () => {
   return (
     <DndProvider backend={MultiBackend} options={HTML5toTouch}>
       <Example />
     </DndProvider>
   );
-}
+};
 ```
 
 ### Create a custom pipeline
@@ -65,9 +65,10 @@ Creating a pipeline is fairly easy. A pipeline is composed of a list of backends
 
 Each backend entry must specify one property: `backend`, containing the class of the Backend to instantiate.
 But other options are available:
-- `preview` (a boolean indicating if `Preview` components should be shown)
-- `transition` (an object returned by the `createTransition` function)
-- `skipDispatchOnTransition` (a boolean indicating transition events should not be dispatched to new backend, defaults to `false`. See [note below](#note-on-skipdispatchontransition) for details and use cases.)
+
+ - `preview` (a boolean indicating if `Preview` components should be shown)
+ - `transition` (an object returned by the `createTransition` function)
+ - `skipDispatchOnTransition` (a boolean indicating transition events should not be dispatched to new backend, defaults to `false`. See [note below](#note-on-skipdispatchontransition) for details and use cases.)
 
 Here is the `HTML5toTouch` pipeline code as an example:
 ```js
@@ -89,13 +90,13 @@ const HTML5toTouch = {
   ]
 };
 ...
-function App() {
+const App = () => {
   return (
     <DndProvider backend={MultiBackend} options={HTML5toTouch}>
       <Example />
     </DndProvider>
   );
-}
+};
 ```
 
 `TouchTransition` is a predefined transition that you can use in your own pipelines, it is triggered when a *touchstart* is received. Transitions rea really easy to write, here is an example:
@@ -146,22 +147,47 @@ In this example, the first `touchstart` event would trigger the `TouchBackend` t
 
 ### Preview
 
-Concerning the `Preview` class, it is created using the following snippet:
+The `Preview` class is usable in two different ways: function-based and context-based.
+Both of them receive the same data formatted the same way, an object containing 3 properties:
 
-```js
-  import MultiBackend, { Preview } from 'react-dnd-multi-backend';
-  ...
-  <Preview generator={this.generatePreview} />
-```
-
-You must pass a function as the `generator` prop which takes 3 arguments:
-
- - `type`: the type of the item (`monitor.getItemType()`)
+ - `itemType`: the type of the item (`monitor.getItemType()`)
  - `item`: the item (`monitor.getItem()`)
  - `style`: an object representing the style (used for positioning), it should be passed to the `style` property of your preview component
 
 Note that this component will only be showed while using a backend flagged with `preview: true` (see [Create a custom pipeline](#create-a-custom-pipeline)) which is the case for the Touch backend in the default `HTML5toTouch` pipeline.
 
+#### Function-based
+
+```js
+  import MultiBackend, { Preview } from 'react-dnd-multi-backend';
+  ...
+  const generatePreview = ({itemType, item, style}) => {
+    // render your preview
+  };
+  ...
+  <Preview generator={generatePreview} />
+  // or
+  <Preview>{generatePreview}</Preview>
+```
+
+#### Context-based
+
+```js
+  import MultiBackend, { Preview } from 'react-dnd-multi-backend';
+  ...
+  const MyPreview = () => {
+    const {itemType, item, style} = useContext(Preview.Component);
+    // render your preview
+  };
+  ...
+  <Preview>
+    <MyPreview />
+    // or
+    <Preview.Context.Consumer>
+      {({itemType, item, style}) => /* render your preview */}
+    </Preview.Context.Consumer>
+  </Preview>
+```
 
 ### Examples
 
@@ -193,6 +219,11 @@ Starting with `4.0.0`, `react-dnd-multi-backend` will start using `react-dnd` (a
 
 This means you need to transition from `DragDropContext(MultiBackend(HTML5toTouch))(App)` to `<DndProvider backend={MultiBackend} options={HTML5toTouch}>`.
 Accordingly, the pipeline syntax changes and you should specify backend options as a separate property, e.g. `{backend: TouchBackend({enableMouseEvents: true})}` becomes `{backend: TouchBackend, options: {enableMouseEvents: true}}`.
+Note that if you use the `HTML5toTouch` pipeline, the same is true for `react-dnd-html5-backend` and `react-dnd-touch-backend`.
+
+### Migrating from 4.x.x
+
+Starting with `5.0.0`, `react-dnd-preview` (which provides the `Preview` component) will start passing its arguments packed in one argument, an object `{itemType, item, style}`, instead of 3 different arguments (`itemType`, `item` and `style`). This means that will need to change your generator function to receive arguments correctly.
 
 
 ## License

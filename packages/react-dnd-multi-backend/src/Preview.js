@@ -1,31 +1,30 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import DnDPreview from 'react-dnd-preview';
+import React, { useState, useEffect } from 'react';
+import DnDPreview, { Context } from 'react-dnd-preview';
 import { PreviewManager } from 'dnd-multi-backend';
 
-export default class Preview extends PureComponent {
-  static propTypes = {generator: PropTypes.func.isRequired};
+const Preview = (props) => {
+  const [enabled, setEnabled] = useState(false);
 
-  constructor(props) {
-    super(props);
+  useEffect(() => {
+    const observer = {
+      backendChanged: (backend) => {
+        setEnabled(backend.previewEnabled());
+      },
+    };
 
-    this.state = {enabled: false};
+    PreviewManager.register(observer);
+    return () => {
+      PreviewManager.unregister(observer);
+    };
+  });
 
-    PreviewManager.register(this);
+  if (!enabled) {
+    return null;
   }
+  return <DnDPreview {...props} />;
+};
 
-  backendChanged = (backend) => {
-    this.setState({enabled: backend.previewEnabled()});
-  }
+Preview.Context = Context;
+Preview.propTypes = DnDPreview.propTypes;
 
-  componentWillUnmount() {
-    PreviewManager.unregister(this);
-  }
-
-  render() {
-    if (!this.state.enabled) {
-      return null;
-    }
-    return <DnDPreview {...this.props} />;
-  }
-}
+export default Preview;
