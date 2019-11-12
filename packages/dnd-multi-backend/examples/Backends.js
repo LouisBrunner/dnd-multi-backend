@@ -101,14 +101,22 @@ class DnDBackend {
   }
 }
 
-export class HTML5Backend extends DnDBackend {
+class HTML5BackendImpl extends DnDBackend {
   constructor(manager) {
     super(manager, 'HTML5', ['dragstart'], ['dragover', 'dragenter'], ['drop'], {draggable: true});
   }
 }
 
-export class TouchBackend extends DnDBackend {
+export const HTML5Backend = (manager) => {
+  return new HTML5BackendImpl(manager);
+};
+
+class TouchBackendImpl extends DnDBackend {
   constructor(manager) {
     super(manager, 'Touch', ['touchstart', 'mousedown'], ['touchmove', 'mousemove'], ['touchend', 'mouseup']);
   }
 }
+
+export const TouchBackend = (manager) => {
+  return new TouchBackendImpl(manager);
+};

@@ -19,25 +19,23 @@ describe('Preview component', () => {
     jest.resetAllMocks();
   });
 
+  const getLastRegister = () => {
+    return PreviewManager.register.mock.calls[PreviewManager.register.mock.calls.length - 1][0];
+  };
+
   const createComponent = ({generator = jest.fn()} = {}) => {
     const Wrapped = wrapInTestContext(Preview);
     return mount(<Wrapped generator={generator} />);
   };
 
-  test('is a PureComponent', () => {
-    const component = createComponent().find(Preview);
-    expect(component.name()).toBe('Preview');
-    expect(component.instance()).toBeInstanceOf(React.PureComponent);
-  });
-
   test('registers with the backend', () => {
     expect(PreviewManager.register).not.toBeCalled();
     const component = createComponent();
-    const instance = component.find(Preview).instance();
-    expect(PreviewManager.register).toBeCalledWith(instance);
+    const matcher = expect.objectContaining({backendChanged: expect.any(Function)});
+    expect(PreviewManager.register).toBeCalledWith(matcher);
     expect(PreviewManager.unregister).not.toBeCalled();
     component.unmount();
-    expect(PreviewManager.unregister).toBeCalledWith(instance);
+    expect(PreviewManager.unregister).toBeCalledWith(matcher);
   });
 
   test('is empty (no preview)', () => {
@@ -53,13 +51,13 @@ describe('Preview component', () => {
     });
     expect(component.find(Preview).html()).toBeNull();
 
-    component.find(Preview).instance().backendChanged({
+    getLastRegister().backendChanged({
       previewEnabled: () => { return true; },
     });
     component.update();
     expect(component.find(Preview).html()).not.toBeNull();
 
-    component.find(Preview).instance().backendChanged({
+    getLastRegister().backendChanged({
       previewEnabled: () => { return false; },
     });
     component.update();

@@ -1,8 +1,11 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useDragLayer } from 'react-dnd';
 
-const getStyle = (props) => {
-  const transform = `translate(${props.currentOffset.x}px, ${props.currentOffset.y}px)`;
+const PreviewContext = React.createContext();
+
+const getStyle = (currentOffset) => {
+  const transform = `translate(${currentOffset.x}px, ${currentOffset.y}px)`;
   return {pointerEvents: 'none', position: 'fixed', top: 0, left: 0, transform, WebkitTransform: transform};
 };
 
@@ -19,11 +22,31 @@ const Preview = (props) => {
   if (!collectedProps.isDragging || collectedProps.currentOffset === null) {
     return null;
   }
-  return props.generator(this.props.itemType, this.props.item, getStyle(collectedProps));
+
+  const data = {
+    itemType: collectedProps.itemType,
+    item: collectedProps.item,
+    style: getStyle(collectedProps.currentOffset),
+  };
+
+  let child;
+  if (props.children && (typeof props.children === 'function')) {
+    child = props.children(data);
+  } else if (props.children) {
+    child = props.children;
+  } else {
+    child = props.generator(data);
+  }
+  return <PreviewContext.Provider value={data}>{child}</PreviewContext.Provider>;
 };
 
 Preview.propTypes = {
-  generator: PropTypes.func.isRequired,
+  generator: PropTypes.func,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func,
+  ]),
 };
 
+export const Context = PreviewContext;
 export default Preview;

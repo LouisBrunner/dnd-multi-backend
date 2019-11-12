@@ -113,7 +113,7 @@ manager.getBackend().connectDropTarget(dstId, dstP);
 
 ## License
 
-MIT, Copyright (c) 2016-2018 Louis Brunner
+MIT, Copyright (c) 2016-2019 Louis Brunner
 
 
 
