@@ -25,6 +25,8 @@ Both of them receive the same data formatted the same way, an object containing 
 
 The function needs to return something that React can render (React component, `null`, etc).
 
+See also the [examples](examples/) for more information.
+
 ### Function-based
 
 ```js
