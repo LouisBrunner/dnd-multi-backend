@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 
 import Preview from '../Preview';
@@ -51,14 +52,18 @@ describe('Preview component', () => {
     });
     expect(component.find(Preview).html()).toBeNull();
 
-    getLastRegister().backendChanged({
-      previewEnabled: () => { return true; },
+    act(() => {
+      getLastRegister().backendChanged({
+        previewEnabled: () => { return true; },
+      });
     });
     component.update();
     expect(component.find(Preview).html()).not.toBeNull();
 
-    getLastRegister().backendChanged({
-      previewEnabled: () => { return false; },
+    act(() => {
+      getLastRegister().backendChanged({
+        previewEnabled: () => { return false; },
+      });
     });
     component.update();
     expect(component.find(Preview).html()).toBeNull();

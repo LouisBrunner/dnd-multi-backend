@@ -23,8 +23,8 @@
     "react-dnd-preview": "^5.0.0"
   },
   "peerDependencies": {
-    "react": "^16.10",
-    "react-dnd-html5-backend": "^9.4.0",
-    "react-dnd-touch-backend": "^9.4.0"
+    "react": "^16.13",
+    "react-dnd-html5-backend": "^10.0.2",
+    "react-dnd-touch-backend": "^10.0.2"
   }
 }
