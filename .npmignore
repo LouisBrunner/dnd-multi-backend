@@ -20,7 +20,7 @@ npm-debug.log
 .eslint*
 .mocha.opts
 .nycrc
-.travis.yml
+.github
 
 # Code coverage
 .nyc_output
