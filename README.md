@@ -1,4 +1,4 @@
-# DnD Multi Backend [![NPM Version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
+# DnD Multi Backend [![NPM Version][npm-image]][npm-url] ![Build Status][ci-image] [![Coverage Status][coveralls-image]][coveralls-url]
 
 This project is a Drag'n'Drop backend compatible with [DnD Core](https://github.com/react-dnd/react-dnd).
 
@@ -28,13 +28,12 @@ Thanks to the [React DnD HTML5 Backend](https://github.com/react-dnd/react-dnd) 
 
 ## License
 
-MIT, Copyright (c) 2016-2019 Louis Brunner
+MIT, Copyright (c) 2016-2020 Louis Brunner
 
 
 
 [npm-image]: https://img.shields.io/npm/v/dnd-multi-backend.svg
 [npm-url]: https://npmjs.org/package/dnd-multi-backend
-[travis-image]: https://travis-ci.org/LouisBrunner/dnd-multi-backend.svg?branch=master
-[travis-url]: https://travis-ci.org/LouisBrunner/dnd-multi-backend
+[ci-image]: https://github.com/LouisBrunner/dnd-multi-backend/workflows/Build/badge.svg
 [coveralls-image]: https://coveralls.io/repos/github/LouisBrunner/dnd-multi-backend/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/LouisBrunner/dnd-multi-backend?branch=master

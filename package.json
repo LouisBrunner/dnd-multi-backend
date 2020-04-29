@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "test": "jest --config jest.config.js",
     "test:watch": "npm run test -- --watch",
-    "ci:test": "CI=yes npm run test",
+    "test:ci": "CI=yes npm run test",
     "start": "webpack-dev-server --config webpack/dev.js",
     "prepush": "npm run lint && npm run test",
     "prepare": "npm run clean && npm run lint && npm run build && npm run test",

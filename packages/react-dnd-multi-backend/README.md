@@ -228,7 +228,7 @@ Starting with `5.0.0`, `react-dnd-preview` (which provides the `Preview` compone
 
 ## License
 
-MIT, Copyright (c) 2016-2019 Louis Brunner
+MIT, Copyright (c) 2016-2020 Louis Brunner
 
 
 
