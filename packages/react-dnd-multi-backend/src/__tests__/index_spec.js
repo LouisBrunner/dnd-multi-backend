@@ -1,6 +1,6 @@
 import * as Module from '../index';
 
-import Preview from '../Preview';
+import { Preview, PreviewContext } from '../Preview';
 import { HTML5DragTransition, TouchTransition, MouseTransition, createTransition } from 'dnd-multi-backend';
 
 
@@ -15,6 +15,7 @@ describe('ReactDnDMultiBackend module', () => {
 
   test('exports utils components', () => {
     expect(Module.Preview).toBe(Preview);
+    expect(Module.PreviewContext).toBe(PreviewContext);
     expect(Module.HTML5DragTransition).toBe(HTML5DragTransition);
     expect(Module.TouchTransition).toBe(TouchTransition);
     expect(Module.MouseTransition).toBe(MouseTransition);

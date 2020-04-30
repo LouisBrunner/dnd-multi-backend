@@ -11,7 +11,7 @@ You application can smoothly use the nice HTML5 compatible backend and fallback 
 
 Moreover, because some backends don't support preview, a `Preview` component has been added to make it easier to mock the Drag'n'Drop "ghost".
 
-See the [migration section](#migrating) for instructions when switching from `2.x.x`, `3.x.x` or `4.x.x`.
+See the [migration section](#migrating) for instructions when switching from `2.x.x`, `3.x.x`, `4.x.x` or `5.0.x`.
 
 
 ## Installation
@@ -38,7 +38,27 @@ This file also includes the `HTML5` and `Touch` backends, so no need to include 
 
 ## Usage
 
-### Backend
+### DndProvider (new API)
+
+You can use the `DndProvider` component the same way you do the one from `react-dnd` ([docs](https://react-dnd.github.io/react-dnd/docs/api/dnd-provider) for more information), at the difference that you don't need to specify `backend` as a prop, it is implied to be `MultiBackend`.
+
+You must pass a 'pipeline' to use as argument. This package includes `HTML5toTouch`, but you can write your own.
+Note that if you include this file, you will have to add `react-dnd-html5-backend` and `react-dnd-touch-backend` to your `package.json` `dependencies`.
+
+```js
+import { DndProvider } from 'react-dnd-multi-backend';
+import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch'; // or any other pipeline
+...
+const App = () => {
+  return (
+    <DndProvider options={HTML5toTouch}>
+      <Example />
+    </DndProvider>
+  );
+};
+```
+
+### Backend (old API)
 
 You can plug this backend in the `DragDropContext` the same way you do for any backend (e.g. `ReactDnDHTML5Backend`), you can see [the docs](https://react-dnd.github.io/react-dnd/docs/backends/html5) for more information.
 
@@ -224,6 +244,15 @@ Note that if you use the `HTML5toTouch` pipeline, the same is true for `react-dn
 ### Migrating from 4.x.x
 
 Starting with `5.0.0`, `react-dnd-preview` (which provides the `Preview` component) will start passing its arguments packed in one argument, an object `{itemType, item, style}`, instead of 3 different arguments (`itemType`, `item` and `style`). This means that will need to change your generator function to receive arguments correctly.
+
+### Migrating from 5.0.x
+
+Starting with `5.1.0`, `react-dnd-multi-backend` will export a new `DndProvider` which you can use instead of the one from `react-dnd`. You don't need to pass the `backend` prop to that component as it's implied you are using `MultiBackend`, however the major benefits is under the hood:
+
+ - No longer relying on global values, allowing better encapsulation of the backend and previews
+ - `Preview` will be mounted with `DndProvider` using a `React.createPortal`, thus you don't need to worry about mounting your `Preview` at the top of the tree for the absolute positioning to work correctly
+
+Note that this isn't a breaking change, you can continue using the library as before.
 
 
 ## License

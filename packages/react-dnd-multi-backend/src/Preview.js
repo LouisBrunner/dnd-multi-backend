@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import DnDPreview, { Context } from 'react-dnd-preview';
-import { PreviewManager } from 'dnd-multi-backend';
+import React, { useState, useEffect, useContext } from 'react';
+import ReactDOM from 'react-dom';
+import DnDPreview, { Context as PreviewContext } from 'react-dnd-preview';
+import { PreviewsContext, PreviewPortalContext } from './DndProvider';
 
 const Preview = (props) => {
   const [enabled, setEnabled] = useState(false);
+  const previews = useContext(PreviewsContext);
+  const portal = useContext(PreviewPortalContext);
 
   useEffect(() => {
     const observer = {
@@ -12,19 +15,24 @@ const Preview = (props) => {
       },
     };
 
-    PreviewManager.register(observer);
+    previews.register(observer);
     return () => {
-      PreviewManager.unregister(observer);
+      previews.unregister(observer);
     };
-  });
+  }, [previews, setEnabled]);
 
   if (!enabled) {
     return null;
   }
-  return <DnDPreview {...props} />;
+
+  const result = <DnDPreview {...props} />;
+  if (portal) {
+    return ReactDOM.createPortal(result, portal);
+  }
+  return result;
 };
 
-Preview.Context = Context;
+Preview.Context = PreviewContext;
 Preview.propTypes = DnDPreview.propTypes;
 
-export default Preview;
+export { Preview, PreviewContext };

@@ -24,6 +24,7 @@
   },
   "peerDependencies": {
     "react": "^16.13",
+    "react-dom": "^16.13",
     "react-dnd-html5-backend": "^10.0.2",
     "react-dnd-touch-backend": "^10.0.2"
   }

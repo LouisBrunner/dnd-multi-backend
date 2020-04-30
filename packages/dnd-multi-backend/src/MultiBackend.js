@@ -1,33 +1,8 @@
-import objectAssign from './objectAssign';
-
-class PreviewList {
-  constructor() {
-    this.previews = [];
-  }
-
-  register = (preview) => {
-    this.previews.push(preview);
-  }
-
-  unregister = (preview) => {
-    let index;
-    while ((index = this.previews.indexOf(preview)) !== -1) {
-      this.previews.splice(index, 1);
-    }
-  }
-
-  backendChanged = (backend) => {
-    for (const preview of this.previews) {
-      preview.backendChanged(backend);
-    }
-  }
-}
-
-export const PreviewManager = new PreviewList();
+import { PreviewManager } from './PreviewList';
 
 export default class {
   constructor(manager, context, sourceOptions) {
-    const options = objectAssign({backends: []}, sourceOptions || {});
+    const options = Object.assign({backends: []}, sourceOptions || {});
 
     if (options.backends.length < 1) {
       throw new Error(
@@ -37,6 +12,18 @@ export default class {
     }
 
     this.current = 0;
+
+    if (!options.previews) {
+      // TODO: start deprecating `PreviewManager`
+      // console.warn(
+      //   `Deprecation notice: you are using 'MultiBackend' without specifying the 'previews' option
+      //   (which enable/disable previews components based on the selected backend).
+      //   The global 'PreviewList' will be used but this behavior might change in the future.
+      //   Consider switching to 'DndProvider' from 'react-dnd-multi-backend' (if using React)
+      //   or explicitely disable this warning with 'previews: null'`);
+      options.previews = PreviewManager;
+    }
+    this.previews = options.previews;
 
     this.backends = [];
     options.backends.forEach((backend) => {
@@ -137,7 +124,7 @@ export default class {
         node.handler();
         node.handler = this.callBackend(node.func, node.args);
       });
-      PreviewManager.backendChanged(this);
+      this.previews.backendChanged(this);
 
       const newBackend = this.backends[this.current];
       newBackend.instance.setup();

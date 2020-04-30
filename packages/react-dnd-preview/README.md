@@ -70,7 +70,7 @@ See also the [examples](examples/) for more information.
           <MyPreview />
           // or
           <Context.Consumer>
-            {({itemType, item, style}) => return <div class="item-list__item" style={style}>{itemType}</div>;}
+            {({itemType, item, style}) => <div class="item-list__item" style={style}>{itemType}</div>}
           </Context.Consumer>
         </Preview>
       </DndProvider>

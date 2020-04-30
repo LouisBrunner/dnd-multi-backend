@@ -1,41 +1,7 @@
 import createTransition from '../createTransition';
 
-import MultiBackend, { PreviewManager } from '../MultiBackend';
-
-describe('PreviewList class', () => {
-  const createPreview = () => {
-    return {backendChanged: jest.fn()};
-  };
-
-  test('does nothing when empty', () => {
-    PreviewManager.backendChanged(123);
-  });
-
-  test('notifies registered previews', () => {
-    const preview1 = createPreview(), preview2 = createPreview();
-    PreviewManager.register(preview1);
-    PreviewManager.register(preview2);
-    PreviewManager.backendChanged(123);
-    expect(preview1.backendChanged).toHaveBeenCalledWith(123);
-    expect(preview2.backendChanged).toHaveBeenCalledWith(123);
-    PreviewManager.unregister(preview1);
-    PreviewManager.unregister(preview2);
-  });
-
-  test('stops notifying after unregistering', () => {
-    const preview1 = createPreview(), preview2 = createPreview();
-    PreviewManager.register(preview1);
-    PreviewManager.register(preview2);
-    PreviewManager.backendChanged(123);
-    expect(preview1.backendChanged).toHaveBeenCalledWith(123);
-    expect(preview2.backendChanged).toHaveBeenCalledWith(123);
-    PreviewManager.unregister(preview2);
-    PreviewManager.backendChanged(456);
-    expect(preview1.backendChanged).toHaveBeenCalledWith(456);
-    expect(preview2.backendChanged).toHaveBeenCalledTimes(1);
-    PreviewManager.unregister(preview1);
-  });
-});
+import MultiBackend from '../MultiBackend';
+import { PreviewManager } from '../index';
 
 describe('MultiBackend class', () => {
   let _defaultContext;
@@ -93,7 +59,7 @@ describe('MultiBackend class', () => {
     });
 
     test('fails if a backend specifies an invalid `transition` property', () => {
-      const pipeline = {backends: [{backend: {}, transition: {}}]};
+      const pipeline = {backends: [{backend: () => {}, transition: {}}]};
       expect(() => { createBackend(pipeline); }).toThrowError(Error);
     });
 

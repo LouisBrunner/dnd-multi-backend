@@ -1,20 +1,8 @@
-import React, { Component, useContext } from 'react';
+import React, { Component } from 'react';
 import { DndProvider } from 'react-dnd';
 import { FakeSource, FakeTarget } from './Fakes';
 import TestBackend from 'react-dnd-test-backend';
-import Preview, { Context as PreviewContext } from '../src/index.js';
-
-const generatePreview = ({itemType, item, style}, i, method) => { // eslint-disable-line react/prop-types
-  return ( // eslint-disable-next-line react/prop-types
-    <div style={{...style, backgroundColor: item.color, width: '50px', height: '50px', top: `${i * 50}px`, whiteSpace: 'nowrap'}}>
-      Generated {itemType}<br />{method}
-    </div>
-  );
-};
-
-const PreviewComponent = () => {
-  return generatePreview(useContext(PreviewContext), 2, 'with children/context/component');
-};
+import { Components } from './methods/Components';
 
 export default class App extends Component {
   constructor(props) {
@@ -62,7 +50,7 @@ export default class App extends Component {
       this.backend.simulateHover([id], {
         clientOffset: {x: 500 * Math.random(), y: 500 * Math.random()},
       });
-    }, 500);
+    }, 1500);
   }
 
   stopMovement() {
@@ -85,27 +73,16 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <React.StrictMode>
         <DndProvider backend={this.setup}>
           <button
             onMouseDown={this.startDrag} onMouseUp={this.stopDrag}
             onTouchStart={this.startDrag} onTouchEnd={this.stopDrag}>
             {this.state.isDragging ? 'Stop' : 'Start'} Drag
           </button>
-          <Preview generator={(props) => { return generatePreview(props, 0, 'with generator/function'); }} />
-          <Preview>
-            {(props) => { return generatePreview(props, 1, 'with children/function'); }}
-          </Preview>
-          <Preview>
-            <PreviewComponent />
-          </Preview>
-          <Preview>
-            <PreviewContext.Consumer>
-              {(props) => { return generatePreview(props, 3, 'with children/context/function'); }}
-            </PreviewContext.Consumer>
-          </Preview>
+          <Components title="Components" col={0} />
         </DndProvider>
-      </div>
+      </React.StrictMode>
     );
   }
 }
