@@ -1,10 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
-
-import { PreviewsContext } from './DndProvider';
+import { DndContext } from 'react-dnd';
 
 const useObservePreviews = () => {
   const [enabled, setEnabled] = useState(false);
-  const previews = useContext(PreviewsContext);
+  const dndContext = useContext(DndContext);
 
   useEffect(() => {
     const observer = {
@@ -13,11 +12,12 @@ const useObservePreviews = () => {
       },
     };
 
+    const previews = dndContext.dragDropManager.getBackend().previews;
     previews.register(observer);
     return () => {
       previews.unregister(observer);
     };
-  }, [previews, setEnabled]);
+  }, [dndContext, setEnabled]);
 
   return enabled;
 };

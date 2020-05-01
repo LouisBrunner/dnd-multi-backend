@@ -1,23 +1,18 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DndProvider as ReactDndProvider } from 'react-dnd';
-import MultiBackend, { PreviewManager, PreviewList } from 'dnd-multi-backend';
+import MultiBackend from 'dnd-multi-backend';
 
-export const PreviewsContext = React.createContext(PreviewManager);
 export const PreviewPortalContext = React.createContext(null);
 
-export const DndProvider = ({options, ...props}) => {
-  const [context] = useState(() => ({previews: new PreviewList()}));
-  const newOptions = Object.assign({}, options, {previews: context.previews});
+export const DndProvider = (props) => {
   const previewPortal = useRef();
 
   return (
-    <PreviewsContext.Provider value={context.previews}>
-      <PreviewPortalContext.Provider value={previewPortal.current}>
-        <ReactDndProvider backend={MultiBackend} options={newOptions} {...props} context={context} />
-        <div ref={previewPortal} />
-      </PreviewPortalContext.Provider>
-    </PreviewsContext.Provider>
+    <PreviewPortalContext.Provider value={previewPortal.current}>
+      <ReactDndProvider backend={MultiBackend} {...props} />
+      <div ref={previewPortal} />
+    </PreviewPortalContext.Provider>
   );
 };
 

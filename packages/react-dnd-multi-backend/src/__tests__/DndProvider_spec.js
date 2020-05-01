@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { mount } from 'enzyme';
 
-import { PreviewManager, PreviewList } from 'dnd-multi-backend';
-import { DndProvider, PreviewsContext, PreviewPortalContext } from '../DndProvider';
+import { DndProvider, PreviewPortalContext } from '../DndProvider';
 
 describe('DndProvider component', () => {
   const createComponent = (child) => {
@@ -15,10 +14,6 @@ describe('DndProvider component', () => {
 
   test('contexts have sensible defaults', () => {
     const Child = () => {
-      const previews = useContext(PreviewsContext);
-      expect(previews).toBe(PreviewManager);
-      expect(previews).toBeInstanceOf(PreviewList);
-
       const portal = useContext(PreviewPortalContext);
       expect(portal).toBeNull();
 
@@ -31,9 +26,6 @@ describe('DndProvider component', () => {
     let first = true;
 
     const Child = () => {
-      const previews = useContext(PreviewsContext);
-      expect(previews).toBeInstanceOf(PreviewList);
-
       const portal = useContext(PreviewPortalContext);
       if (first) {
         expect(portal).toBeUndefined();

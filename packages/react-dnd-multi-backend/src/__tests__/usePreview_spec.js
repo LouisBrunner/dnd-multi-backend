@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 
 import { usePreview } from '../usePreview';
-import { PreviewManager, PreviewList } from 'dnd-multi-backend';
+import { PreviewList } from 'dnd-multi-backend';
 import { wrapInTestContext } from 'react-dnd-test-utils';
-import { PreviewsContext } from '../DndProvider';
+import { DndContext } from 'react-dnd';
 
 jest.mock('react-dnd-preview', () => {
   return {
@@ -13,11 +13,13 @@ jest.mock('react-dnd-preview', () => {
   };
 });
 
-const setupTest = (createComponent, lazyList) => {
+describe('usePreview component', () => {
   let list;
 
   beforeEach(() => {
-    list = lazyList();
+    list = new PreviewList();
+    jest.spyOn(list, 'register');
+    jest.spyOn(list, 'unregister');
   });
 
   const getLastRegister = () => {
@@ -25,6 +27,9 @@ const setupTest = (createComponent, lazyList) => {
   };
 
   const Preview = ({children}) => { // eslint-disable-line react/prop-types
+    const backend = useContext(DndContext).dragDropManager.getBackend();
+    backend.previews = list;
+
     const { display } = usePreview();
     if (!display) {
       return null;
@@ -34,13 +39,13 @@ const setupTest = (createComponent, lazyList) => {
 
   const Wrapped = wrapInTestContext(Preview);
 
-  const create = (children) => {
-    return createComponent(<Wrapped>{children}</Wrapped>);
+  const createComponent = (children) => {
+    return mount(<Wrapped>{children}</Wrapped>);
   };
 
   test('registers with the backend', () => {
     expect(list.register).not.toBeCalled();
-    const component = create();
+    const component = createComponent();
     const matcher = expect.objectContaining({backendChanged: expect.any(Function)});
     expect(list.register).toBeCalledWith(matcher);
     expect(list.unregister).not.toBeCalled();
@@ -49,12 +54,12 @@ const setupTest = (createComponent, lazyList) => {
   });
 
   test('is empty (no preview)', () => {
-    const component = create();
+    const component = createComponent();
     expect(component.find(Preview).html()).toBeNull();
   });
 
   test('is not empty (preview)', () => {
-    const component = create(<div>abc</div>);
+    const component = createComponent(<div>abc</div>);
     expect(component.find(Preview).html()).toBeNull();
 
     act(() => {
@@ -72,47 +77,5 @@ const setupTest = (createComponent, lazyList) => {
     });
     component.update();
     expect(component.find(Preview).html()).toBeNull();
-  });
-
-  return getLastRegister;
-};
-
-describe('usePreview component', () => {
-  describe('using global context', () => {
-    beforeEach(() => {
-      jest.spyOn(PreviewManager, 'register');
-      jest.spyOn(PreviewManager, 'unregister');
-    });
-
-    afterEach(() => {
-      PreviewManager.register.mockRestore();
-      PreviewManager.unregister.mockRestore();
-    });
-
-    const createComponent = (child) => {
-      return mount(child);
-    };
-
-    setupTest(createComponent, () => PreviewManager);
-  });
-
-  describe('using previews context', () => {
-    let list;
-
-    beforeEach(() => {
-      list = new PreviewList();
-      jest.spyOn(list, 'register');
-      jest.spyOn(list, 'unregister');
-    });
-
-    const createComponent = (child) => {
-      return mount(
-        <PreviewsContext.Provider value={list}>
-          {child}
-        </PreviewsContext.Provider>
-      );
-    };
-
-    setupTest(createComponent, () => list);
   });
 });

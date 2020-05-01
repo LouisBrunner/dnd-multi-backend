@@ -22,5 +22,3 @@ class PreviewList {
 }
 
 export { PreviewList };
-
-export const PreviewManager = new PreviewList();

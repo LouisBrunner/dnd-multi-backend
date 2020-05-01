@@ -1,4 +1,4 @@
-import { PreviewManager } from './PreviewList';
+import { PreviewList } from './PreviewList';
 
 export default class {
   constructor(manager, context, sourceOptions) {
@@ -13,17 +13,7 @@ export default class {
 
     this.current = 0;
 
-    if (!options.previews) {
-      // TODO: start deprecating `PreviewManager`
-      // console.warn(
-      //   `Deprecation notice: you are using 'MultiBackend' without specifying the 'previews' option
-      //   (which enable/disable previews components based on the selected backend).
-      //   The global 'PreviewList' will be used but this behavior might change in the future.
-      //   Consider switching to 'DndProvider' from 'react-dnd-multi-backend' (if using React)
-      //   or explicitely disable this warning with 'previews: null'`);
-      options.previews = PreviewManager;
-    }
-    this.previews = options.previews;
+    this.previews = new PreviewList();
 
     this.backends = [];
     options.backends.forEach((backend) => {

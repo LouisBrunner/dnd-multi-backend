@@ -1,7 +1,6 @@
 import createTransition from '../createTransition';
 
 import MultiBackend from '../MultiBackend';
-import { PreviewManager } from '../index';
 
 describe('MultiBackend class', () => {
   let _defaultContext;
@@ -239,16 +238,14 @@ describe('MultiBackend class', () => {
 
 
   describe('backendSwitcher function', () => {
-    beforeEach(() => {
-      jest.spyOn(PreviewManager, 'backendChanged');
-    });
-
-    afterEach(() => {
-      PreviewManager.backendChanged.mockRestore();
-    });
+    const createBackendWithSpy = (...args) => {
+      const backend = createBackend(...args);
+      const spy = jest.spyOn(backend.previews, 'backendChanged');
+      return [backend, spy];
+    };
 
     test('does nothing', () => {
-      const backend = createBackend();
+      const [backend] = createBackendWithSpy();
       expect(backend.current).toBe(0);
 
       const fakeEvent = {
@@ -267,7 +264,7 @@ describe('MultiBackend class', () => {
     });
 
     test('switches backend and re-calls the event handlers', () => {
-      const backend = createBackend();
+      const [backend, spy] = createBackendWithSpy();
       expect(backend.current).toBe(0);
 
       const fakeEvent = {
@@ -287,9 +284,9 @@ describe('MultiBackend class', () => {
 
       jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
       jest.spyOn(backend.backends[1].instance, 'setup').mockImplementation(() => {});
-      expect(PreviewManager.backendChanged).not.toHaveBeenCalled();
+      expect(spy).not.toHaveBeenCalled();
       backend.backendSwitcher(fakeEvent);
-      expect(PreviewManager.backendChanged).toHaveBeenCalledWith(backend);
+      expect(spy).toHaveBeenCalledWith(backend);
       expect(backend.backends[0].instance.teardown).toHaveBeenCalledTimes(1);
       expect(backend.backends[1].instance.setup).toHaveBeenCalledTimes(1);
 
@@ -308,7 +305,7 @@ describe('MultiBackend class', () => {
     });
 
     test('switches backend and does not re-call event handlers if skipDispatchOnTransition', () => {
-      const backend = createBackend(_pipelineWithSkipDispatch);
+      const [backend, spy] = createBackendWithSpy(_pipelineWithSkipDispatch);
       expect(backend.current).toBe(0);
 
       const fakeEvent = {
@@ -328,9 +325,9 @@ describe('MultiBackend class', () => {
 
       jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
       jest.spyOn(backend.backends[1].instance, 'setup').mockImplementation(() => {});
-      expect(PreviewManager.backendChanged).not.toHaveBeenCalled();
+      expect(spy).not.toHaveBeenCalled();
       backend.backendSwitcher(fakeEvent);
-      expect(PreviewManager.backendChanged).toHaveBeenCalledWith(backend);
+      expect(spy).toHaveBeenCalledWith(backend);
       expect(backend.backends[0].instance.teardown).toHaveBeenCalledTimes(1);
       expect(backend.backends[1].instance.setup).toHaveBeenCalledTimes(1);
 

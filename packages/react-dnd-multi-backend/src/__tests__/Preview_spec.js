@@ -1,122 +1,91 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 
 import { Preview, PreviewContext } from '../Preview';
-import { PreviewManager, PreviewList } from 'dnd-multi-backend';
+import { PreviewList } from 'dnd-multi-backend';
 import { wrapInTestContext } from 'react-dnd-test-utils';
-import { PreviewPortalContext, PreviewsContext } from '../DndProvider';
+import { DndContext } from 'react-dnd';
+import { PreviewPortalContext } from '../DndProvider';
 
-const setupTest = (create, lazyList) => {
+describe('Preview component', () => {
   let list;
 
   beforeEach(() => {
-    list = lazyList();
+    list = new PreviewList();
+    jest.spyOn(list, 'register');
+    jest.spyOn(list, 'unregister');
   });
 
-  const getLastRegister = () => {
-    return list.register.mock.calls[list.register.mock.calls.length - 1][0];
-  };
-
-  test('registers with the backend', () => {
-    expect(list.register).not.toBeCalled();
-    const component = create();
-    const matcher = expect.objectContaining({backendChanged: expect.any(Function)});
-    expect(list.register).toBeCalledWith(matcher);
-    expect(list.unregister).not.toBeCalled();
-    component.unmount();
-    expect(list.unregister).toBeCalledWith(matcher);
-  });
-
-  test('is empty (no preview)', () => {
-    const component = create();
-    expect(component.find(Preview).html()).toBeNull();
-  });
-
-  test('is not empty (preview)', () => {
-    const component = create({
-      generator: () => { // eslint-disable-line react/display-name
-        return <div>abc</div>;
-      },
-    });
-    expect(component.find(Preview).html()).toBeNull();
-
-    act(() => {
-      getLastRegister().backendChanged({
-        previewEnabled: () => true,
-      });
-    });
-    component.update();
-    expect(component.find(Preview).html()).not.toBeNull();
-
-    act(() => {
-      getLastRegister().backendChanged({
-        previewEnabled: () => false,
-      });
-    });
-    component.update();
-    expect(component.find(Preview).html()).toBeNull();
-  });
-
-  return getLastRegister;
-};
-
-describe('Preview component', () => {
   test('exports a context', () => {
     expect(Preview.Context).toBe(PreviewContext);
   });
 
-  describe('using global context', () => {
-    beforeEach(() => {
-      jest.spyOn(PreviewManager, 'register');
-      jest.spyOn(PreviewManager, 'unregister');
-    });
-
-    afterEach(() => {
-      PreviewManager.register.mockRestore();
-      PreviewManager.unregister.mockRestore();
-    });
-
-    const createComponent = ({generator = jest.fn()} = {}) => {
-      const Wrapped = wrapInTestContext(Preview);
-      return mount(<Wrapped generator={generator} />);
+  const setupTest = (create) => {
+    const getLastRegister = () => {
+      return list.register.mock.calls[list.register.mock.calls.length - 1][0];
     };
 
-    setupTest(createComponent, () => PreviewManager);
+    test('registers with the backend', () => {
+      expect(list.register).not.toBeCalled();
+      const component = create();
+      const matcher = expect.objectContaining({backendChanged: expect.any(Function)});
+      expect(list.register).toBeCalledWith(matcher);
+      expect(list.unregister).not.toBeCalled();
+      component.unmount();
+      expect(list.unregister).toBeCalledWith(matcher);
+    });
+
+    test('is empty (no preview)', () => {
+      const component = create();
+      expect(component.find(Preview).html()).toBeNull();
+    });
+
+    test('is not empty (preview)', () => {
+      const component = create({
+        generator: () => { // eslint-disable-line react/display-name
+          return <div>abc</div>;
+        },
+      });
+      expect(component.find(Preview).html()).toBeNull();
+
+      act(() => {
+        getLastRegister().backendChanged({
+          previewEnabled: () => true,
+        });
+      });
+      component.update();
+      expect(component.find(Preview).html()).not.toBeNull();
+
+      act(() => {
+        getLastRegister().backendChanged({
+          previewEnabled: () => false,
+        });
+      });
+      component.update();
+      expect(component.find(Preview).html()).toBeNull();
+    });
+
+    return getLastRegister;
+  };
+
+  const Wrapped = wrapInTestContext((props) => {
+    const backend = useContext(DndContext).dragDropManager.getBackend();
+    backend.previews = list;
+
+    return <Preview {...props} />;
   });
 
   describe('using previews context', () => {
-    let list;
-
-    beforeEach(() => {
-      list = new PreviewList();
-      jest.spyOn(list, 'register');
-      jest.spyOn(list, 'unregister');
-    });
-
     const createComponent = ({generator = jest.fn()} = {}) => {
-      const Wrapped = wrapInTestContext(Preview);
-      return mount(
-        <PreviewsContext.Provider value={list}>
-          <Wrapped generator={generator} />
-        </PreviewsContext.Provider>
-      );
+      return mount(<Wrapped generator={generator} />);
     };
 
     setupTest(createComponent, () => list);
   });
 
   describe('using previews and portal context', () => {
-    let list;
-
-    beforeEach(() => {
-      list = new PreviewList();
-      jest.spyOn(list, 'register');
-      jest.spyOn(list, 'unregister');
-    });
-
     const createComponent = ({generator = jest.fn()} = {}) => {
-      const Wrapped = wrapInTestContext(Preview);
       const Component = class Root extends React.Component {
         constructor(props) {
           super(props);
@@ -127,9 +96,7 @@ describe('Preview component', () => {
           return (
             <>
               <PreviewPortalContext.Provider value={this.ref.current}>
-                <PreviewsContext.Provider value={list}>
-                  <Wrapped generator={generator} />
-                </PreviewsContext.Provider>
+                <Wrapped generator={generator} />
               </PreviewPortalContext.Provider>
               <div ref={this.ref} />
             </>
