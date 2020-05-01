@@ -176,6 +176,24 @@ Both of them receive the same data formatted the same way, an object containing 
 
 Note that this component will only be showed while using a backend flagged with `preview: true` (see [Create a custom pipeline](#create-a-custom-pipeline)) which is the case for the Touch backend in the default `HTML5toTouch` pipeline.
 
+#### Context-based
+
+```js
+  import MultiBackend, { usePreview } from 'react-dnd-multi-backend';
+  ...
+  const MyPreview = () => {
+    const {display, itemType, item, style} = usePreview();
+    if (!display) {
+      return null;
+    }
+    // render your preview
+  };
+  ...
+  <Preview>
+    <MyPreview />
+  </Preview>
+```
+
 #### Function-based
 
 ```js

@@ -10,8 +10,8 @@ export const generatePreview = ({itemType, item, style}, {row, col, title, metho
       height: '50px',
       top: `${row * 60}px`,
       left: `${col * 100}px`,
-      whiteSpace: 'nowrap' }
-    }>
+      whiteSpace: 'nowrap',
+    }}>
       {title}
       <br />
       Generated {itemType}

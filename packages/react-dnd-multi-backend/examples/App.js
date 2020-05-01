@@ -1,13 +1,58 @@
 import React, { useContext, useRef, useState } from 'react';
 import { DndProvider as ReactDndProvider } from 'react-dnd';
-import MultiBackend, { DndProvider, Preview } from '../src';
+import MultiBackend, { DndProvider, PreviewContext, usePreview, Preview } from '../src';
 import HTML5toTouch from '../src/HTML5toTouch';
 import Card from './Card';
 import Basket from './Basket';
 
-const GeneratePreview = ({text}) => { // eslint-disable-line react/prop-types
-  const {style, item} = useContext(Preview.Context);
-  return <div style={{...style, backgroundColor: item.color, width: '50px', height: '50px'}}>Generated {text}</div>;
+const generatePreview = (row, text, item, style) => {
+  return <div style={{
+    ...style,
+    top: `${row * 60}px`,
+    backgroundColor: item.color,
+    width: '50px',
+    height: '50px',
+    whiteSpace: 'nowrap',
+  }}>Generated {text}</div>;
+};
+
+const ContextPreview = ({text}) => { // eslint-disable-line react/prop-types
+  const {style, item} = useContext(PreviewContext);
+  return generatePreview(0, `${text} with Context`, item, style);
+};
+
+const HookPreview = ({text}) => { // eslint-disable-line react/prop-types
+  const {display, style, item} = usePreview();
+  if (!display) {
+    return null;
+  }
+  return generatePreview(1, `${text} with Hook`, item, style);
+};
+
+const ComponentPreview = ({text}) => { // eslint-disable-line react/prop-types
+  return (
+    <Preview generator={({item, style}) => {
+      return generatePreview(2, `${text} with Component`, item, style);
+    }} />
+  );
+};
+
+const getContent = (title, ref) => {
+  return (
+    <>
+      <h1>{title} API</h1>
+      <Card color="#cc2211" />
+      <Card color="#22cc11" />
+      <Card color="#2211cc" />
+      <Basket logs={ref} />
+      <Preview>
+        <ContextPreview text={title} />
+      </Preview>
+      <HookPreview text={title} />
+      <ComponentPreview text={title} />
+      <div ref={ref} />
+    </>
+  );
 };
 
 const App = () => {
@@ -18,29 +63,13 @@ const App = () => {
 
   const oldAPI = (
     <ReactDndProvider backend={MultiBackend} options={HTML5toTouch}>
-      <h1>Old API</h1>
-      <Card color="#cc2211" />
-      <Card color="#22cc11" />
-      <Card color="#2211cc" />
-      <Basket logs={refOld} />
-      <Preview>
-        <GeneratePreview text="old" />
-      </Preview>
-      <div ref={refOld} />
+      {getContent('Old', refOld)}
     </ReactDndProvider>
   );
 
   const newAPI = (
     <DndProvider options={HTML5toTouch}>
-      <h1>New API</h1>
-      <Card color="#cc2211" />
-      <Card color="#22cc11" />
-      <Card color="#2211cc" />
-      <Basket logs={refNew} />
-      <Preview>
-        <GeneratePreview text="new" />
-      </Preview>
-      <div ref={refNew} />
+      {getContent('New', refNew)}
     </DndProvider>
   );
 

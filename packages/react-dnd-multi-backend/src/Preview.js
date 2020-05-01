@@ -1,26 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import DnDPreview, { Context as PreviewContext } from 'react-dnd-preview';
-import { PreviewsContext, PreviewPortalContext } from './DndProvider';
+
+import { useObservePreviews } from './commonPreview';
+import { PreviewPortalContext } from './DndProvider';
 
 const Preview = (props) => {
-  const [enabled, setEnabled] = useState(false);
-  const previews = useContext(PreviewsContext);
+  const enabled = useObservePreviews();
   const portal = useContext(PreviewPortalContext);
-
-  useEffect(() => {
-    const observer = {
-      backendChanged: (backend) => {
-        setEnabled(backend.previewEnabled());
-      },
-    };
-
-    previews.register(observer);
-    return () => {
-      previews.unregister(observer);
-    };
-  }, [previews, setEnabled]);
-
   if (!enabled) {
     return null;
   }

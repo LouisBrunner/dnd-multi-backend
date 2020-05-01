@@ -4,6 +4,7 @@ import MultiBackend from '../MultiBackend';
 
 import { HTML5DragTransition, TouchTransition, MouseTransition } from '../Transitions';
 import createTransition from '../createTransition';
+import { PreviewList, PreviewManager } from '../PreviewList';
 
 
 describe('ReactDnDMultiBackend module', () => {
@@ -21,5 +22,7 @@ describe('ReactDnDMultiBackend module', () => {
     expect(Module.TouchTransition).toBe(TouchTransition);
     expect(Module.MouseTransition).toBe(MouseTransition);
     expect(Module.createTransition).toBe(createTransition);
+    expect(Module.PreviewList).toBe(PreviewList);
+    expect(Module.PreviewManager).toBe(PreviewManager);
   });
 });
