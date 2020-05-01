@@ -1,9 +1,14 @@
 import React, { useContext, useRef, useState } from 'react';
 import { DndProvider as ReactDndProvider } from 'react-dnd';
+
 import MultiBackend, { DndProvider, PreviewContext, usePreview, Preview } from '../src';
 import HTML5toTouch from '../src/HTML5toTouch';
+
 import Card from './Card';
 import Basket from './Basket';
+
+import MultiCard from './MultiCard';
+import MultiBasket from './MultiBasket';
 
 const generatePreview = (row, text, item, style) => {
   return <div style={{
@@ -46,13 +51,20 @@ const getContent = (title, ref) => {
       <Card color="#2211cc" />
       <Basket logs={ref} />
 
+      <br />
+
+      <MultiCard color="#33ff77" />
+      <MultiBasket logs={ref} />
+
+      <br />
+
+      <div ref={ref} />
+
       <Preview>
         <ContextPreview text={title} />
       </Preview>
       <HookPreview text={title} />
       <ComponentPreview text={title} />
-
-      <div ref={ref} />
     </>
   );
 };

@@ -6,10 +6,12 @@ import { TouchTransition, MouseTransition } from 'dnd-multi-backend';
 export default {
   backends: [
     {
+      id: 'html5',
       backend: HTML5Backend,
       transition: MouseTransition,
     },
     {
+      id: 'touch',
       backend: TouchBackend,
       options: {enableMouseEvents: true},
       preview: true,

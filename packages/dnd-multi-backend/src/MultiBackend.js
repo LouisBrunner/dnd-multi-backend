@@ -11,30 +11,65 @@ export default class {
       );
     }
 
-    this.current = 0;
+    this.current = null;
 
     this.previews = new PreviewList();
 
-    this.backends = [];
+    this.backends = {};
+    this.backendsList = [];
     options.backends.forEach((backend) => {
-      if (!backend.backend) {
-        throw new Error(`You must specify a 'backend' property in your Backend entry: ${backend}`);
+      const backendRecord = this.createBackend(manager, context, backend);
+      if (this.current === null) {
+        this.current = backendRecord.id;
       }
-      const transition = backend.transition;
-      if (transition && !transition._isMBTransition) {
-        throw new Error(
-          `You must specify a valid 'transition' property (either undefined or the return of 'createTransition') in your Backend entry: ${backend}`
-        );
-      }
-      this.backends.push({
-        instance: backend.backend(manager, context, backend.options),
-        preview: (backend.preview || false),
-        transition,
-        skipDispatchOnTransition: Boolean(backend.skipDispatchOnTransition),
-      });
+      this.backends[backendRecord.id] = backendRecord;
+      this.backendsList.push(backendRecord);
     });
 
     this.nodes = {};
+  }
+
+  createBackend(manager, context, backend) {
+    if (!backend.backend) {
+      throw new Error(`You must specify a 'backend' property in your Backend entry: ${backend}`);
+    }
+    const transition = backend.transition;
+    if (transition && !transition._isMBTransition) {
+      throw new Error(
+        `You must specify a valid 'transition' property (either undefined or the return of 'createTransition') in your Backend entry: ${backend}`
+      );
+    }
+
+    const instance = backend.backend(manager, context, backend.options);
+
+    let id = backend.id;
+    // Try to infer an `id` if one doesn't exist
+    if (!backend.id && instance && instance.constructor) {
+      id = instance.constructor.name;
+      console.warn( // eslint-disable-line no-console
+        `Deprecation notice: You are using a pipeline which doesn't include backends' 'id'.
+        This might be unsupported in the future, please specify 'id' explicitely for every backend.`
+      );
+    }
+    if (!id) {
+      throw new Error(
+        `You must specify an 'id' property in your Backend entry: ${Object.stringify(backend)}
+        see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-5xx`
+      );
+    }
+    if (this.backends[id]) {
+      throw new Error(
+        `You must specify a unique 'id' property in your Backend entry:
+        ${Object.stringify(backend)} (conflicts with: ${Object.stringify(this.backends[id])})`);
+    }
+
+    return {
+      id: backend.id,
+      instance,
+      preview: (backend.preview || false),
+      transition,
+      skipDispatchOnTransition: Boolean(backend.skipDispatchOnTransition),
+    };
   }
 
   // DnD Backend API
@@ -78,7 +113,7 @@ export default class {
 
   // Multi Backend Listeners
   addEventListeners = (target) => {
-    this.backends.forEach((backend) => {
+    this.backendsList.forEach((backend) => {
       if (backend.transition) {
         target.addEventListener(backend.transition.event, this.backendSwitcher, true);
       }
@@ -86,7 +121,7 @@ export default class {
   }
 
   removeEventListeners = (target) => {
-    this.backends.forEach((backend) => {
+    this.backendsList.forEach((backend) => {
       if (backend.transition) {
         target.removeEventListener(backend.transition.event, this.backendSwitcher, true);
       }
@@ -97,13 +132,11 @@ export default class {
   backendSwitcher = (event) => {
     const oldBackend = this.current;
 
-    let i = 0;
-    this.backends.some((backend) => {
-      if (i !== this.current && backend.transition && backend.transition.check(event)) {
-        this.current = i;
+    this.backendsList.some((backend) => {
+      if (backend.id !== this.current && backend.transition && backend.transition.check(event)) {
+        this.current = backend.id;
         return true;
       }
-      i += 1;
       return false;
     });
 

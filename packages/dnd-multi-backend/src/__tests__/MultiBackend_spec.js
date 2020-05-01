@@ -24,12 +24,12 @@ describe('MultiBackend class', () => {
     const backend2ctr = jest.fn(() => { return backend2; });
     _defaultContext = {qrt: Math.random()};
     _defaultPipeline = {backends: [
-      {backend: backend1ctr},
-      {backend: backend2ctr, options: {abc: 123}, preview: true, transition},
+      {id: 'back1', backend: backend1ctr},
+      {id: 'back2', backend: backend2ctr, options: {abc: 123}, preview: true, transition},
     ]};
     _pipelineWithSkipDispatch = {backends: [
-      {backend: backend1ctr},
-      {backend: backend2ctr, options: {abc: 123}, preview: true, transition, skipDispatchOnTransition: true },
+      {id: 'back1', backend: backend1ctr},
+      {id: 'back2', backend: backend2ctr, options: {abc: 123}, preview: true, transition, skipDispatchOnTransition: true },
     ]};
   });
 
@@ -42,6 +42,15 @@ describe('MultiBackend class', () => {
   };
 
   describe('constructor', () => {
+    let warn;
+    beforeEach(() => {
+      warn = jest.spyOn(console, 'warn').mockImplementation();
+    });
+
+    afterEach(() => {
+      warn.mockRestore();
+    });
+
     test('fails if no backend are specified', () => {
       const pipeline = {backends: []};
       expect(() => { createBackend(pipeline); }).toThrowError(Error);
@@ -62,26 +71,47 @@ describe('MultiBackend class', () => {
       expect(() => { createBackend(pipeline); }).toThrowError(Error);
     });
 
+    test('fails if a backend lacks an `id` property and one cannot be infered', () => {
+      const pipeline = {backends: [{backend: () => {}}]};
+      expect(() => { createBackend(pipeline); }).toThrowError(Error);
+    });
+
+    test('fails if a backend has a duplicate `id` property', () => {
+      const pipeline = {backends: [
+        {id: 'abc', backend: () => {}},
+        {id: 'abc', backend: () => {}},
+      ]};
+      expect(() => { createBackend(pipeline); }).toThrowError(Error);
+    });
+
+    test('warns if a backend lacks an `id` property but one can be infered', () => {
+      const pipeline = {backends: [{backend: () => ({})}]};
+      expect(() => { createBackend(pipeline); }).not.toThrow();
+      expect(warn).toHaveBeenCalled();
+    });
+
     test('constructs correctly', () => {
       const pipeline = _defaultPipeline;
       const manager = {secret: Math.random()};
       const backend = createBackend(pipeline, manager);
 
-      expect(backend.current).toBe(0);
+      expect(backend.current).toBe('back1');
       expect(backend.nodes).toEqual({});
-      expect(backend.backends).toHaveLength(2);
+      expect(backend.backends).toHaveProperty('back1');
+      expect(backend.backends).toHaveProperty('back2');
+      expect(backend.backendsList).toHaveLength(2);
 
       expect(pipeline.backends[0].backend).toHaveBeenCalledTimes(1);
       expect(pipeline.backends[0].backend).toBeCalledWith(manager, _defaultContext, undefined);
-      expect(backend.backends[0].instance).toBe(pipeline.backends[0].backend());
-      expect(backend.backends[0].preview).toBe(false);
-      expect(backend.backends[0].transition).toBeUndefined();
+      expect(backend.backends.back1.instance).toBe(pipeline.backends[0].backend());
+      expect(backend.backends.back1.preview).toBe(false);
+      expect(backend.backends.back1.transition).toBeUndefined();
 
       expect(pipeline.backends[1].backend).toHaveBeenCalledTimes(1);
       expect(pipeline.backends[1].backend).toBeCalledWith(manager, _defaultContext, pipeline.backends[1].options);
-      expect(backend.backends[1].instance).toBe(pipeline.backends[1].backend());
-      expect(backend.backends[1].preview).toBe(true);
-      expect(backend.backends[1].transition).toBe(pipeline.backends[1].transition);
+      expect(backend.backends.back2.instance).toBe(pipeline.backends[1].backend());
+      expect(backend.backends.back2.preview).toBe(true);
+      expect(backend.backends.back2.transition).toBe(pipeline.backends[1].transition);
     });
   });
 
@@ -102,14 +132,14 @@ describe('MultiBackend class', () => {
       const backend = createBackend();
       jest.spyOn(backend, 'addEventListeners').mockImplementation(() => {});
       jest.spyOn(backend, 'removeEventListeners').mockImplementation(() => {});
-      jest.spyOn(backend.backends[0].instance, 'setup').mockImplementation(() => {});
-      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'teardown').mockImplementation(() => {});
       backend.setup();
       expect(backend.addEventListeners).toHaveBeenCalledTimes(1);
 
       const backend2 = createBackend();
       jest.spyOn(backend2, 'addEventListeners').mockImplementation(() => {});
-      jest.spyOn(backend2.backends[0].instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend2.backends.back1.instance, 'setup').mockImplementation(() => {});
       expect(() => { backend2.setup(); }).toThrowError(Error);
       expect(backend2.addEventListeners).not.toBeCalled();
 
@@ -120,11 +150,11 @@ describe('MultiBackend class', () => {
       const backend = createBackend();
       jest.spyOn(backend, 'addEventListeners').mockImplementation(() => {});
       jest.spyOn(backend, 'removeEventListeners').mockImplementation(() => {});
-      jest.spyOn(backend.backends[0].instance, 'setup').mockImplementation(() => {});
-      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'teardown').mockImplementation(() => {});
       backend.setup();
       expect(backend.addEventListeners).toHaveBeenCalledTimes(1);
-      expect(backend.backends[0].instance.setup).toHaveBeenCalledTimes(1);
+      expect(backend.backends.back1.instance.setup).toHaveBeenCalledTimes(1);
       backend.teardown();
     });
   });
@@ -145,21 +175,21 @@ describe('MultiBackend class', () => {
       const backend = createBackend();
       jest.spyOn(backend, 'addEventListeners').mockImplementation(() => {});
       jest.spyOn(backend, 'removeEventListeners').mockImplementation(() => {});
-      jest.spyOn(backend.backends[0].instance, 'setup').mockImplementation(() => {});
-      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'teardown').mockImplementation(() => {});
       backend.setup();
       expect(backend.addEventListeners).toHaveBeenCalledTimes(1);
       backend.teardown();
       expect(backend.removeEventListeners).toHaveBeenCalledTimes(1);
-      expect(backend.backends[0].instance.teardown).toHaveBeenCalledTimes(1);
+      expect(backend.backends.back1.instance.teardown).toHaveBeenCalledTimes(1);
     });
 
     test('can recreate a second backend', () => {
       const backend = createBackend();
       jest.spyOn(backend, 'addEventListeners').mockImplementation(() => {});
       jest.spyOn(backend, 'removeEventListeners').mockImplementation(() => {});
-      jest.spyOn(backend.backends[0].instance, 'setup').mockImplementation(() => {});
-      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'teardown').mockImplementation(() => {});
       backend.setup();
       expect(backend.addEventListeners).toHaveBeenCalledTimes(1);
       backend.teardown();
@@ -167,8 +197,8 @@ describe('MultiBackend class', () => {
       const backend2 = createBackend();
       jest.spyOn(backend2, 'addEventListeners').mockImplementation(() => {});
       jest.spyOn(backend2, 'removeEventListeners').mockImplementation(() => {});
-      jest.spyOn(backend2.backends[0].instance, 'setup').mockImplementation(() => {});
-      jest.spyOn(backend2.backends[0].instance, 'teardown').mockImplementation(() => {});
+      jest.spyOn(backend2.backends.back1.instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend2.backends.back1.instance, 'teardown').mockImplementation(() => {});
       backend2.setup();
       expect(backend2.addEventListeners).toHaveBeenCalledTimes(1);
       backend2.teardown();
@@ -211,7 +241,7 @@ describe('MultiBackend class', () => {
     test('returns the current backend preview attribute', () => {
       const backend = createBackend();
       expect(backend.previewEnabled()).toBe(false);
-      backend.current = 1;
+      backend.current = 'back2';
       expect(backend.previewEnabled()).toBe(true);
     });
   });
@@ -246,7 +276,7 @@ describe('MultiBackend class', () => {
 
     test('does nothing', () => {
       const [backend] = createBackendWithSpy();
-      expect(backend.current).toBe(0);
+      expect(backend.current).toBe('back1');
 
       const fakeEvent = {
         constructor: MouseEvent.constructor,
@@ -258,14 +288,14 @@ describe('MultiBackend class', () => {
       };
 
       backend.backendSwitcher(fakeEvent);
-      expect(backend.current).toBe(0);
+      expect(backend.current).toBe('back1');
 
       expect(fakeEvent.target.dispatchEvent).not.toHaveBeenCalled();
     });
 
     test('switches backend and re-calls the event handlers', () => {
       const [backend, spy] = createBackendWithSpy();
-      expect(backend.current).toBe(0);
+      expect(backend.current).toBe('back1');
 
       const fakeEvent = {
         constructor: TouchEvent.constructor,
@@ -282,15 +312,15 @@ describe('MultiBackend class', () => {
       jest.spyOn(backend, 'callBackend').mockReturnValue(fakeHandler);
       backend.nodes['123'] = fakeNode;
 
-      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
-      jest.spyOn(backend.backends[1].instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'teardown').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back2.instance, 'setup').mockImplementation(() => {});
       expect(spy).not.toHaveBeenCalled();
       backend.backendSwitcher(fakeEvent);
       expect(spy).toHaveBeenCalledWith(backend);
-      expect(backend.backends[0].instance.teardown).toHaveBeenCalledTimes(1);
-      expect(backend.backends[1].instance.setup).toHaveBeenCalledTimes(1);
+      expect(backend.backends.back1.instance.teardown).toHaveBeenCalledTimes(1);
+      expect(backend.backends.back2.instance.setup).toHaveBeenCalledTimes(1);
 
-      expect(backend.current).toBe(1);
+      expect(backend.current).toBe('back2');
 
       expect(fakeEvent.target.dispatchEvent).toHaveBeenCalledTimes(1);
       expect(fakeEvent.target.dispatchEvent.mock.calls[0]).toHaveLength(1);
@@ -306,7 +336,7 @@ describe('MultiBackend class', () => {
 
     test('switches backend and does not re-call event handlers if skipDispatchOnTransition', () => {
       const [backend, spy] = createBackendWithSpy(_pipelineWithSkipDispatch);
-      expect(backend.current).toBe(0);
+      expect(backend.current).toBe('back1');
 
       const fakeEvent = {
         constructor: TouchEvent.constructor,
@@ -323,15 +353,15 @@ describe('MultiBackend class', () => {
       jest.spyOn(backend, 'callBackend').mockReturnValue(fakeHandler);
       backend.nodes['123'] = fakeNode;
 
-      jest.spyOn(backend.backends[0].instance, 'teardown').mockImplementation(() => {});
-      jest.spyOn(backend.backends[1].instance, 'setup').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'teardown').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back2.instance, 'setup').mockImplementation(() => {});
       expect(spy).not.toHaveBeenCalled();
       backend.backendSwitcher(fakeEvent);
       expect(spy).toHaveBeenCalledWith(backend);
-      expect(backend.backends[0].instance.teardown).toHaveBeenCalledTimes(1);
-      expect(backend.backends[1].instance.setup).toHaveBeenCalledTimes(1);
+      expect(backend.backends.back1.instance.teardown).toHaveBeenCalledTimes(1);
+      expect(backend.backends.back2.instance.setup).toHaveBeenCalledTimes(1);
 
-      expect(backend.current).toBe(1);
+      expect(backend.current).toBe('back2');
 
       expect(fakeEvent.target.dispatchEvent).not.toHaveBeenCalled();
 
@@ -345,19 +375,19 @@ describe('MultiBackend class', () => {
   describe('callBackend function', () => {
     test('calls the current backend with the specified arguments', () => {
       const backend = createBackend();
-      jest.spyOn(backend.backends[0].instance, 'connectDragSource').mockImplementation(() => {});
-      jest.spyOn(backend.backends[1].instance, 'connectDragSource').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back1.instance, 'connectDragSource').mockImplementation(() => {});
+      jest.spyOn(backend.backends.back2.instance, 'connectDragSource').mockImplementation(() => {});
 
       backend.callBackend('connectDragSource', [3, 2, 1]);
-      expect(backend.backends[0].instance.connectDragSource).toHaveBeenCalledTimes(1);
-      expect(backend.backends[0].instance.connectDragSource).toBeCalledWith(3, 2, 1);
-      expect(backend.backends[1].instance.connectDragSource).not.toBeCalled();
+      expect(backend.backends.back1.instance.connectDragSource).toHaveBeenCalledTimes(1);
+      expect(backend.backends.back1.instance.connectDragSource).toBeCalledWith(3, 2, 1);
+      expect(backend.backends.back2.instance.connectDragSource).not.toBeCalled();
 
-      backend.current = 1;
+      backend.current = 'back2';
       backend.callBackend('connectDragSource', [3, 2, 1]);
-      expect(backend.backends[0].instance.connectDragSource).toHaveBeenCalledTimes(1);
-      expect(backend.backends[1].instance.connectDragSource).toHaveBeenCalledTimes(1);
-      expect(backend.backends[1].instance.connectDragSource).toBeCalledWith(3, 2, 1);
+      expect(backend.backends.back1.instance.connectDragSource).toHaveBeenCalledTimes(1);
+      expect(backend.backends.back2.instance.connectDragSource).toHaveBeenCalledTimes(1);
+      expect(backend.backends.back2.instance.connectDragSource).toBeCalledWith(3, 2, 1);
     });
   });
 

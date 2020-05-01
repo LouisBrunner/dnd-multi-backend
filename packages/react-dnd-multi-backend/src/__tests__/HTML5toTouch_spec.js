@@ -8,11 +8,13 @@ describe('HTML5toTouch pipeline', () => {
     expect(HTML5toTouch.backends).toHaveLength(2);
 
     expect(HTML5toTouch.backends[0]).toBeInstanceOf(Object);
+    expect(HTML5toTouch.backends[0].id).not.toBeUndefined();
     expect(HTML5toTouch.backends[0].backend).not.toBeUndefined();
     expect(HTML5toTouch.backends[0].preview).toBeUndefined();
     expect(HTML5toTouch.backends[0].transition).toBe(MouseTransition);
 
     expect(HTML5toTouch.backends[1]).toBeInstanceOf(Object);
+    expect(HTML5toTouch.backends[1].id).not.toBeUndefined();
     expect(HTML5toTouch.backends[1].backend).not.toBeUndefined();
     expect(HTML5toTouch.backends[1].options).toBeInstanceOf(Object);
     expect(HTML5toTouch.backends[1].preview).toBe(true);

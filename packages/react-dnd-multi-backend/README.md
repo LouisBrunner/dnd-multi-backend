@@ -100,9 +100,11 @@ import MultiBackend, { TouchTransition } from 'react-dnd-multi-backend';
 const HTML5toTouch = {
   backends: [
     {
+      id: 'html5',
       backend: HTML5Backend
     },
     {
+      id: 'touch',
       backend: TouchBackend({enableMouseEvents: true}), // Note that you can call your backends with options
       preview: true,
       transition: TouchTransition
@@ -163,6 +165,85 @@ const CustomHTML5toTouch = {
 **WARNING:** if you enable `skipDispatchOnTransition`, the backend transition will happen as expected, but the new backend may not handle the first event!
 
 In this example, the first `touchstart` event would trigger the `TouchBackend` to replace the `HTML5Backend`—but the user would have to start a new touch event for the `TouchBackend` to register a drag.
+
+
+### Hooks
+
+The library provides a set of hooks to replace `useDrag` and `useDrop`.
+
+#### `useMultiDrag`
+
+It replaces `useDrag` and takes the same arguments but returns an array of:
+
+ - `Index 0`: the return of `useDrag`
+ - `Index 1`: an object containing a different value for each backend (the key being the backend `id`)
+   - `backend.id`:
+     - `Index 0`: A connector function for the drag source. This must be attached to the draggable portion of the DOM (`Index 1` in `useDrag`'s return)
+     - `Index 1`: A connector function for the drag preview. This may be attached to the preview portion of the DOM (`Index 2` in `useDrag`'s return)
+
+Example:
+```js
+import { useMultiDrag } from 'react-dnd-multi-backend';
+
+const MultiCard = (props) => {
+  const [[dragProps], {html5: [html5Drag], touch: [touchDrag]}] = useMultiDrag({
+    item: {type: 'card', color: props.color},
+    collect: (monitor) => {
+      return {
+        isDragging: monitor.isDragging(),
+      };
+    },
+  });
+
+  const containerStyle = {opacity: dragProps.isDragging ? 0.5 : 1};
+  const dragStyle = {backgroundColor: props.color};
+  return (
+    <div className="multi-square-container" style={containerStyle}>
+      <div className="multi-square" style={dragStyle} ref={html5Drag}>HTML5</div>
+      <div className="multi-square" style={dragStyle} ref={touchDrag}>Touch</div>
+    </div>
+  );
+};
+```
+
+#### `useMultiDrop`
+
+It replaces `useDrop` and takes the same arguments but returns an array of:
+
+ - `Index 0`: the return of `useDrop`
+ - `Index 1`: an object containing a different value for each backend (the key being the backend `id`)
+   - `backend.id`:
+     - `Index 0`: A connector function for the drop target. This must be attached to the drop-target portion of the DOM (`Index 1` in `useDrop`'s return)
+
+Example:
+```js
+import { useMultiDrop } from 'react-dnd-multi-backend';
+
+const MultiBasket = ({logs}) => {
+  const [[dropProps], {html5: [html5Drop], touch: [touchDrop]}] = useMultiDrop({
+    accept: 'card',
+    drop: (item) => {
+      const message = `Dropped: ${item.color}`;
+      logs.current.innerHTML += `${message}<br />`;
+    },
+    collect: (monitor) => {
+      return {
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+      };
+    },
+  });
+
+  const containerStyle = {border: '1px dashed black'};
+  const dropStyle = {backgroundColor: (dropProps.isOver && dropProps.canDrop) ? '#f3f3f3' : '#bbbbbb'};
+  return (
+    <div className="multi-square-container" style={containerStyle}>
+      <div className="multi-square" style={dropStyle} ref={html5Drop}>HTML5</div>
+      <div className="multi-square" style={dropStyle} ref={touchDrop}>Touch</div>
+    </div>
+  );
+};
+```
 
 
 ### Preview
@@ -270,7 +351,9 @@ Starting with `5.1.0`, `react-dnd-multi-backend` will export a new `DndProvider`
  - No longer relying on global values, allowing better encapsulation of the backend and previews
  - `Preview` will be mounted with `DndProvider` using a `React.createPortal`, thus you don't need to worry about mounting your `Preview` at the top of the tree for the absolute positioning to work correctly
 
-Note that this isn't a breaking change, you can continue using the library as before.
+Moreover, every backend in a pipeline will now need a new property called `id` and the library will warn if it isn't specified. The `MultiBackend` will try to guess it if possible, but that might fail and you will need to define them explicitly.
+
+Note that these aren't breaking changes, you can continue using the library as before.
 
 
 ## License

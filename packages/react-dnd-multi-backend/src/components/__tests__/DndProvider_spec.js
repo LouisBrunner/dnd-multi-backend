@@ -6,7 +6,7 @@ import { DndProvider, PreviewPortalContext } from '../DndProvider';
 describe('DndProvider component', () => {
   const createComponent = (child) => {
     return mount(
-      <DndProvider options={{backends: [{backend: () => {}}]}}>
+      <DndProvider options={{backends: [{id: 'abc', backend: () => {}}]}}>
         {child}
       </DndProvider>
     );

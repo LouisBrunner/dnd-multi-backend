@@ -5,6 +5,8 @@
 This project is a Drag'n'Drop backend compatible with [DnD Core](https://github.com/react-dnd/react-dnd/tree/master/packages/dnd-core).
 It enables your application to use different DnD backends depending on the situation. This package is completely frontend-agnostic, you can refer to [this page](https://github.com/LouisBrunner/dnd-multi-backend) for frontend-specific packages. This means if your front-end is not yet supported, you'll have to roll out your own.
 
+See the [migration section](#migrating) for instructions when switching from `5.0.x`.
+
 ## Installation
 
 ```sh
@@ -56,10 +58,12 @@ class HTML5Backend {
 const pipeline = {
   backends: [
     {
+      id: 'html5',
       backend: HTML5Backend,
       transition: MouseTransition,
     },
     {
+      id: 'touch',
       backend: TouchBackend,
       preview: true,
       transition: TouchTransition,
@@ -110,6 +114,12 @@ dstP.appendChild(dstTxt);
 document.body.appendChild(dstP);
 manager.getBackend().connectDropTarget(dstId, dstP);
 ```
+
+## Migrating
+
+### Migrating from 5.0.x
+
+Starting with `5.1.0`, every backend in a pipeline will now need a new property called `id` and the library will warn if it isn't specified. The `MultiBackend` will try to guess it if possible, but that might fail and you will need to define them explicitly.
 
 ## License
 

@@ -7,10 +7,12 @@ import { DragSource, DropTarget } from './DnD';
 const pipeline = {
   backends: [
     {
+      id: 'html5',
       backend: HTML5Backend,
       transition: MouseTransition,
     },
     {
+      id: 'touch',
       backend: TouchBackend,
       preview: true,
       transition: TouchTransition,
