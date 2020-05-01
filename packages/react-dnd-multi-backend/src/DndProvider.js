@@ -7,14 +7,14 @@ export const PreviewsContext = React.createContext(PreviewManager);
 export const PreviewPortalContext = React.createContext(null);
 
 export const DndProvider = ({options, ...props}) => {
-  const [previews] = useState(() => new PreviewList());
-  const newOptions = Object.assign({}, options, {previews});
+  const [context] = useState(() => ({previews: new PreviewList()}));
+  const newOptions = Object.assign({}, options, {previews: context.previews});
   const previewPortal = useRef();
 
   return (
-    <PreviewsContext.Provider value={previews}>
+    <PreviewsContext.Provider value={context.previews}>
       <PreviewPortalContext.Provider value={previewPortal.current}>
-        <ReactDndProvider backend={MultiBackend} options={newOptions} {...props} />
+        <ReactDndProvider backend={MultiBackend} options={newOptions} {...props} context={context} />
         <div ref={previewPortal} />
       </PreviewPortalContext.Provider>
     </PreviewsContext.Provider>
