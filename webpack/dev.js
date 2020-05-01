@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
-const examplesConfig = require('./examples.js');
+const examplesConfig = require('./examples');
 
 const resolveAlias = {};
 for (const pkg of ['dnd-multi-backend', 'react-dnd-multi-backend', 'react-dnd-preview']) {

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 
@@ -12,7 +12,7 @@ const setupTest = (create, lazyList) => {
 
   beforeEach(() => {
     list = lazyList();
-  })
+  });
 
   const getLastRegister = () => {
     return list.register.mock.calls[list.register.mock.calls.length - 1][0];
@@ -59,7 +59,7 @@ const setupTest = (create, lazyList) => {
   });
 
   return getLastRegister;
-}
+};
 
 describe('Preview component', () => {
   test('exports a context', () => {
@@ -117,7 +117,7 @@ describe('Preview component', () => {
 
     const createComponent = ({generator = jest.fn()} = {}) => {
       const Wrapped = wrapInTestContext(Preview);
-      const Component = class extends React.Component {
+      const Component = class Root extends React.Component {
         constructor(props) {
           super(props);
           this.ref = React.createRef();
@@ -145,7 +145,7 @@ describe('Preview component', () => {
 
     test('portal is in detached div', () => {
       const component = createComponent({
-        generator: () => {
+        generator: () => { // eslint-disable-line react/display-name
           return <span>123</span>;
         },
       });

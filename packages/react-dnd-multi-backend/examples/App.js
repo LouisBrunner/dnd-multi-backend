@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { DndProvider as ReactDndProvider } from 'react-dnd';
-import MultiBackend, { DndProvider, Preview } from '../src/index.js';
-import HTML5toTouch from '../src/HTML5toTouch.js';
+import MultiBackend, { DndProvider, Preview } from '../src';
+import HTML5toTouch from '../src/HTML5toTouch';
 import Card from './Card';
 import Basket from './Basket';
 

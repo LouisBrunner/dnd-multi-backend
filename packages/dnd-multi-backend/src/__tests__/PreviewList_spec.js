@@ -6,7 +6,7 @@ const createPreview = () => {
 
 describe('PreviewManager class', () => {
   test('does nothing when empty', () => {
-    PreviewManager.backendChanged(123);
+    expect(() => PreviewManager.backendChanged(123)).not.toThrow();
   });
 
   test('notifies registered previews', () => {
@@ -42,7 +42,7 @@ describe('PreviewList class', () => {
   });
 
   test('does nothing when empty', () => {
-    list.backendChanged(123);
+    expect(() => list.backendChanged(123)).not.toThrow();
   });
 
   test('notifies registered previews', () => {

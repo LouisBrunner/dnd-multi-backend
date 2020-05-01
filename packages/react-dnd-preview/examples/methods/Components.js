@@ -1,5 +1,5 @@
 import React from 'react';
-import { Preview, Context } from '../../src/index.js';
+import { Preview, Context } from '../../src';
 import { WithPropFunction, WithChildFunction, WithChildComponent, WithChildFunctionContext } from './common';
 
 export const Components = ({title, col}) => ( // eslint-disable-line react/prop-types

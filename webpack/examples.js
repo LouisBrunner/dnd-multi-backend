@@ -1,5 +1,5 @@
 const webpackMerge = require('webpack-merge');
-const commonConfig = require('./core.js');
+const commonConfig = require('./core');
 
 module.exports = webpackMerge(commonConfig(), {
   entry: {

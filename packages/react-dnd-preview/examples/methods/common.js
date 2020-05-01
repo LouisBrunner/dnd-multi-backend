@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Context } from '../../src/index.js';
+import { Context } from '../../src';
 
 const generatePreview = ({itemType, item, style}, {row, col, title, method}) => { // eslint-disable-line react/prop-types
   return (
