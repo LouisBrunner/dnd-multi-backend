@@ -1,6 +1,6 @@
 import { usePreview as usePreviewDnd } from 'react-dnd-preview';
 
-import { useObservePreviews } from './commonPreview';
+import { useObservePreviews } from '../common';
 
 const usePreview = () => {
   const enabled = useObservePreviews();

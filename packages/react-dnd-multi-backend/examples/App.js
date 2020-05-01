@@ -45,11 +45,13 @@ const getContent = (title, ref) => {
       <Card color="#22cc11" />
       <Card color="#2211cc" />
       <Basket logs={ref} />
+
       <Preview>
         <ContextPreview text={title} />
       </Preview>
       <HookPreview text={title} />
       <ComponentPreview text={title} />
+
       <div ref={ref} />
     </>
   );
