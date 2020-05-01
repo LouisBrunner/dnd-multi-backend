@@ -3,6 +3,7 @@ import { DndProvider } from 'react-dnd';
 import { FakeSource, FakeTarget } from './Fakes';
 import TestBackend from 'react-dnd-test-backend';
 import { Components } from './methods/Components';
+import { Hooks } from './methods/Hooks';
 
 export default class App extends Component {
   constructor(props) {
@@ -81,6 +82,7 @@ export default class App extends Component {
             {this.state.isDragging ? 'Stop' : 'Start'} Drag
           </button>
           <Components title="Components" col={0} />
+          <Hooks title="Hooks" col={1} />
         </DndProvider>
       </React.StrictMode>
     );

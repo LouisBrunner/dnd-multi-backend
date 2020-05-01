@@ -1,32 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDragLayer } from 'react-dnd';
+import { usePreview } from './usePreview';
 import { Context } from './Context';
 
-const getStyle = (currentOffset) => {
-  const transform = `translate(${currentOffset.x}px, ${currentOffset.y}px)`;
-  return {pointerEvents: 'none', position: 'fixed', top: 0, left: 0, transform, WebkitTransform: transform};
-};
-
 const Preview = (props) => {
-  const collectedProps = useDragLayer((monitor) => {
-    return {
-      currentOffset: monitor.getSourceClientOffset(),
-      isDragging: monitor.isDragging(),
-      itemType: monitor.getItemType(),
-      item: monitor.getItem(),
-    };
-  });
+  const {display, ...data} = usePreview();
 
-  if (!collectedProps.isDragging || collectedProps.currentOffset === null) {
+  if (!display) {
     return null;
   }
-
-  const data = {
-    itemType: collectedProps.itemType,
-    item: collectedProps.item,
-    style: getStyle(collectedProps.currentOffset),
-  };
 
   let child;
   if (props.children && (typeof props.children === 'function')) {

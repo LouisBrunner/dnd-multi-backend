@@ -27,6 +27,29 @@ The function needs to return something that React can render (React component, `
 
 See also the [examples](examples/) for more information.
 
+### Hook-based
+
+```js
+  import { usePreview } from 'react-dnd-preview';
+
+  const MyPreview = () => {
+    const {display, itemType, item, style} = usePreview();
+    if (!display) {
+      return null;
+    }
+    return <div class="item-list__item" style={style}>{itemType}</div>;
+  };
+
+  const App = () => {
+    return (
+      <DndProvider backend={MyBackend}>
+        <ItemList />
+        <MyPreview />
+      </DndProvider>
+    );
+  };
+```
+
 ### Function-based
 
 ```js
