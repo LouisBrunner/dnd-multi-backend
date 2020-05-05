@@ -18,7 +18,7 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "dependencies": {
-    "dnd-multi-backend": "^5.0.2",
+    "dnd-multi-backend": "^5.1.0",
     "prop-types": "^15.7.2",
     "react-dnd-preview": "^5.1.0"
   },
