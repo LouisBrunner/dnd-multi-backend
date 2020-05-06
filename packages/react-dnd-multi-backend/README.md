@@ -47,7 +47,10 @@ Note that if you include this file, you will have to add `react-dnd-html5-backen
 
 ```js
 import { DndProvider } from 'react-dnd-multi-backend';
-import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch'; // or any other pipeline
+// Use `esm` or `cjs` depending on your build system
+import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
+import HTML5toTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch';
+// or any other pipeline
 ...
 const App = () => {
   return (
