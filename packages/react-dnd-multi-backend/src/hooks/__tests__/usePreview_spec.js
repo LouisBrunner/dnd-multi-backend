@@ -15,8 +15,10 @@ jest.mock('react-dnd-preview', () => {
 
 describe('usePreview component', () => {
   let list;
+  let previewEnabled;
 
   beforeEach(() => {
+    previewEnabled = jest.fn();
     list = new PreviewList();
     jest.spyOn(list, 'register');
     jest.spyOn(list, 'unregister');
@@ -29,6 +31,7 @@ describe('usePreview component', () => {
   const Preview = ({children}) => { // eslint-disable-line react/prop-types
     const backend = useContext(DndContext).dragDropManager.getBackend();
     backend.previews = list;
+    backend.previewEnabled = previewEnabled;
 
     const { display } = usePreview();
     if (!display) {
@@ -44,6 +47,7 @@ describe('usePreview component', () => {
   };
 
   test('registers with the backend', () => {
+    previewEnabled.mockReturnValue(false);
     expect(list.register).not.toBeCalled();
     const component = createComponent();
     const matcher = expect.objectContaining({backendChanged: expect.any(Function)});
@@ -53,29 +57,64 @@ describe('usePreview component', () => {
     expect(list.unregister).toBeCalledWith(matcher);
   });
 
-  test('is empty (no preview)', () => {
-    const component = createComponent();
-    expect(component.find(Preview).html()).toBeNull();
-  });
+  describe('it renders correctly', () => {
+    const testRender = ({init, hasContent}) => {
+      const content = hasContent ? <div>abc</div> : null;
+      previewEnabled.mockReturnValue(init);
 
-  test('is not empty (preview)', () => {
-    const component = createComponent(<div>abc</div>);
-    expect(component.find(Preview).html()).toBeNull();
+      const component = createComponent(content);
 
-    act(() => {
-      getLastRegister().backendChanged({
-        previewEnabled: () => true,
+      const expectNull = () => {
+        expect(component.find(Preview).html()).toBeNull();
+      };
+
+      const expectNotNull = () => {
+        if (hasContent) {
+          expect(component.find(Preview).html()).not.toBeNull();
+        } else {
+          expectNull();
+        }
+      };
+
+      if (init) {
+        expectNotNull();
+      } else {
+        expectNull();
+      }
+
+      previewEnabled.mockReturnValue(true);
+      act(() => {
+        getLastRegister().backendChanged({previewEnabled});
       });
-    });
-    component.update();
-    expect(component.find(Preview).html()).not.toBeNull();
+      component.update();
+      expectNotNull();
 
-    act(() => {
-      getLastRegister().backendChanged({
-        previewEnabled: () => false,
+      // No notification, no change
+      previewEnabled.mockReturnValue(false);
+      component.update();
+      expectNotNull();
+
+      act(() => {
+        getLastRegister().backendChanged({previewEnabled});
       });
+      component.update();
+      expectNull();
+    };
+
+    test('empty & not showing at first', () => {
+      testRender({init: false, hasContent: false});
     });
-    component.update();
-    expect(component.find(Preview).html()).toBeNull();
+
+    test('empty & showing at first', () => {
+      testRender({init: true, hasContent: false});
+    });
+
+    test('not empty & not showing at first', () => {
+      testRender({init: false, hasContent: true});
+    });
+
+    test('not empty & showing at first', () => {
+      testRender({init: true, hasContent: true});
+    });
   });
 });
