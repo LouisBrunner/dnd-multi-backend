@@ -177,6 +177,8 @@
     "spaced-comment": ["error"],
     "template-tag-spacing": ["error"],
 
+    "jest/expect-expect": ["error", {"assertFunctionNames": ["expect", "test*"]}],
+
     "no-sync": ["error"],
     "no-process-exit": ["error"],
     "no-process-env": ["error"]

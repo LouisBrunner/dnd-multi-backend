@@ -6,16 +6,19 @@ const useObservePreviews = () => {
   const dndContext = useContext(DndContext);
 
   useEffect(() => {
+    const backend = dndContext.dragDropManager.getBackend();
+
     const observer = {
-      backendChanged: (backend) => {
-        setEnabled(backend.previewEnabled());
+      backendChanged: (cbackend) => {
+        setEnabled(cbackend.previewEnabled());
       },
     };
 
-    const previews = dndContext.dragDropManager.getBackend().previews;
-    previews.register(observer);
+    setEnabled(backend.previewEnabled());
+
+    backend.previews.register(observer);
     return () => {
-      previews.unregister(observer);
+      backend.previews.unregister(observer);
     };
   }, [dndContext, setEnabled]);
 
