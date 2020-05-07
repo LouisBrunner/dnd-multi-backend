@@ -8,7 +8,6 @@ const usePreview = () => {
   if (!enabled) {
     return {display: false};
   }
-
   return result;
 };
 

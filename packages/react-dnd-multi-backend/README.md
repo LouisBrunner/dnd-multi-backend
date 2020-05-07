@@ -189,7 +189,7 @@ Example:
 import { useMultiDrag } from 'react-dnd-multi-backend';
 
 const MultiCard = (props) => {
-  const [[dragProps], {html5: [html5Drag], touch: [touchDrag]}] = useMultiDrag({
+  const [[dragProps], {html5: [_html5Props, html5Drag], touch: [_touchProps, touchDrag]}] = useMultiDrag({
     item: {type: 'card', color: props.color},
     collect: (monitor) => {
       return {
