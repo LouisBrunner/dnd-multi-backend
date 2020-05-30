@@ -21,6 +21,6 @@
   },
   "peerDependencies": {
     "react": "^16.13.1",
-    "react-dnd": "^10.0.2"
+    "react-dnd": "^11.1.3"
   }
 }
