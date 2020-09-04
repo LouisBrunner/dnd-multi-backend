@@ -8,7 +8,7 @@ const getStyle = (currentOffset) => {
 const usePreview = () => {
   const collectedProps = useDragLayer((monitor) => {
     return {
-      currentOffset: monitor.getSourceClientOffset(),
+      currentOffset: monitor.getClientOffset(),
       isDragging: monitor.isDragging(),
       itemType: monitor.getItemType(),
       item: monitor.getItem(),
