@@ -3,6 +3,8 @@ import { useDragLayer } from 'react-dnd';
 const getStyle = (currentOffset) => {
   const transform = `translate(${currentOffset.x}px, ${currentOffset.y}px)`;
   return {pointerEvents: 'none', position: 'fixed', top: 0, left: 0, transform, WebkitTransform: transform};
+};
+
 const calculatePointerPosition = (monitor) => {
   if (!monitor.getClientOffset() || !monitor.getInitialSourceClientOffset()) {
     return null;
