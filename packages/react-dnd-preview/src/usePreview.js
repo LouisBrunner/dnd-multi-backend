@@ -30,6 +30,7 @@ const usePreview = () => {
       isDragging: monitor.isDragging(),
       itemType: monitor.getItemType(),
       item: monitor.getItem(),
+      monitor,
     };
   });
 
@@ -42,6 +43,7 @@ const usePreview = () => {
     itemType: collectedProps.itemType,
     item: collectedProps.item,
     style: getStyle(collectedProps.currentOffset),
+    monitor: collectedProps.monitor,
   };
 };
 
