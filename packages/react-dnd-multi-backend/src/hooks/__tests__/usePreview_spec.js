@@ -28,7 +28,7 @@ describe('usePreview component', () => {
     return list.register.mock.calls[list.register.mock.calls.length - 1][0];
   };
 
-  const Preview = ({children}) => { // eslint-disable-line react/prop-types
+  const Preview = React.forwardRef(({children}, _ref) => { // eslint-disable-line react/prop-types
     const backend = useContext(DndContext).dragDropManager.getBackend();
     backend.previews = list;
     backend.previewEnabled = previewEnabled;
@@ -38,7 +38,9 @@ describe('usePreview component', () => {
       return null;
     }
     return children;
-  };
+  });
+
+  Preview.displayName = 'Preview';
 
   const Wrapped = wrapInTestContext(Preview);
 

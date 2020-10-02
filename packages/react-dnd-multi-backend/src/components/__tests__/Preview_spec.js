@@ -100,13 +100,17 @@ describe('Preview component', () => {
     return getLastRegister;
   };
 
-  const Wrapped = wrapInTestContext((props) => {
+  const PreviewFC = React.forwardRef((props, _ref) => {
     const backend = useContext(DndContext).dragDropManager.getBackend();
     backend.previews = list;
     backend.previewEnabled = previewEnabled;
 
     return <Preview {...props} />;
   });
+
+  PreviewFC.displayName = 'PreviewFC';
+
+  const Wrapped = wrapInTestContext(PreviewFC);
 
   describe('using previews context', () => {
     const createComponent = ({generator = jest.fn()} = {}) => {

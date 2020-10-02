@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DndProvider } from 'react-dnd';
 import { FakeSource, FakeTarget } from './Fakes';
-import TestBackend from 'react-dnd-test-backend';
+import { TestBackend } from 'react-dnd-test-backend';
 import { Components } from './methods/Components';
 import { Hooks } from './methods/Hooks';
 
@@ -14,7 +14,7 @@ export default class App extends Component {
   }
 
   componentWillUnmount() {
-    this.StopDrag();
+    this.stopDrag();
   }
 
   setup = (manager) => {

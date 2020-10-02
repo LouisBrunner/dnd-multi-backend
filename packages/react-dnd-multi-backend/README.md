@@ -251,16 +251,19 @@ const MultiBasket = ({logs}) => {
 
 ### Preview
 
-The `Preview` class is usable in two different ways: function-based and context-based.
-Both of them receive the same data formatted the same way, an object containing 3 properties:
+The `Preview` class is usable in different ways: hook-based, function-based and context-based.
+All of them receive the same data formatted the same way, an object containing the following properties:
 
+ - `display`: only with `usePreview`, boolean indicating if you should render your preview
  - `itemType`: the type of the item (`monitor.getItemType()`)
  - `item`: the item (`monitor.getItem()`)
  - `style`: an object representing the style (used for positioning), it should be passed to the `style` property of your preview component
+ - `ref`: a reference which can be passed to the final component that will use `style`, it will allow `Preview` to position the previewed component correctly (closer to what HTML5 DnD can do)
+ - `monitor`: the actual [`DragLayerMonitor`](https://react-dnd.github.io/react-dnd/docs/api/drag-layer-monitor) from `react-dnd`
 
 Note that this component will only be showed while using a backend flagged with `preview: true` (see [Create a custom pipeline](#create-a-custom-pipeline)) which is the case for the Touch backend in the default `HTML5toTouch` pipeline.
 
-#### Context-based
+#### Hook-based
 
 ```js
   import MultiBackend, { usePreview } from 'react-dnd-multi-backend';
