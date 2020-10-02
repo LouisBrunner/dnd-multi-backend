@@ -29,9 +29,9 @@ export const WithChildFunction = ({col, title}) => {
 };
 
 export const WithChildComponent = ({col, title}) => {
-  return generatePreview(useContext(Context), {row: 2, col, title, method: 'with child component (using context'});
+  return generatePreview(useContext(Context), {row: 2, col, title, method: 'with child component (using context)'});
 };
 
 export const WithChildFunctionContext = ({col, title}) => {
-  return (props) => generatePreview(props, {row: 3, col, title, method: 'with child function (using context'});
+  return (props) => generatePreview(props, {row: 3, col, title, method: 'with child function (using context)'});
 };

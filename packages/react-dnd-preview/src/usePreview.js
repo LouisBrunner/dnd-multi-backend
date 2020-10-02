@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useDragLayer } from 'react-dnd';
 
 const getStyle = (currentOffset) => {
@@ -12,21 +13,49 @@ const getStyle = (currentOffset) => {
   };
 };
 
-const calculatePointerPosition = (monitor) => {
-  if (!monitor.getClientOffset() || !monitor.getInitialSourceClientOffset()) {
-    return null;
-  }
+// Reminder:
+// getInitialClientOffset: clientX/clientY when drag started
+// getInitialSourceClientOffset: parent top/left bounding box when drag started
+// getClientOffset: current clientX/clientY
+// getSourceClientOffset: difference between parent top/left and current clientX/clientY
+//  = (getClientOffset + getInitialSourceClientOffset) - getInitialClientOffset
+// getDifferenceFromInitialOffset: difference between clientX/clientY when drag started and current one
 
+const subtract = (a, b) => {
   return {
-    x: monitor.getClientOffset().x - (monitor.getInitialClientOffset().x - monitor.getInitialSourceClientOffset().x),
-    y: monitor.getClientOffset().y - (monitor.getInitialClientOffset().y - monitor.getInitialSourceClientOffset().y),
+    x: a.x - b.x,
+    y: a.y - b.y,
   };
 };
 
+const calculateParentOffset = (monitor) => {
+  if (!monitor.getInitialClientOffset() || !monitor.getInitialSourceClientOffset()) {
+    return {x: 0, y: 0};
+  }
+  return subtract(monitor.getInitialClientOffset(), monitor.getInitialSourceClientOffset());
+};
+
+const calculatePointerPosition = (monitor, childRef) => {
+  if (!monitor.getClientOffset()) {
+    return null;
+  }
+
+  // If we don't have a reference to a valid child, use the default offset:
+  // current cursor - initial parent/drag source offset
+  if (!childRef.current || !childRef.current.getBoundingClientRect) {
+    return subtract(monitor.getClientOffset(), calculateParentOffset(monitor));
+  }
+
+  const bb = childRef.current.getBoundingClientRect();
+  const middle = {x: bb.width / 2, y: bb.height / 2};
+  return subtract(monitor.getClientOffset(), middle);
+};
+
 const usePreview = () => {
+  const child = useRef();
   const collectedProps = useDragLayer((monitor) => {
     return {
-      currentOffset: calculatePointerPosition(monitor),
+      currentOffset: calculatePointerPosition(monitor, child),
       isDragging: monitor.isDragging(),
       itemType: monitor.getItemType(),
       item: monitor.getItem(),
@@ -35,7 +64,7 @@ const usePreview = () => {
   });
 
   if (!collectedProps.isDragging || collectedProps.currentOffset === null) {
-    return { display: false };
+    return {display: false};
   }
 
   return {
@@ -44,6 +73,7 @@ const usePreview = () => {
     item: collectedProps.item,
     style: getStyle(collectedProps.currentOffset),
     monitor: collectedProps.monitor,
+    ref: child,
   };
 };
 

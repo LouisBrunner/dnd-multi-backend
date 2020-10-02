@@ -127,7 +127,7 @@
     "func-call-spacing": ["error"],
     "func-name-matching": ["error"],
     "func-names": ["error", "as-needed"],
-    "id-length": ["error", {"min": 1, "max": 25, "exceptions": ["$", "_", "i", "j", "x", "y", "z"]}],
+    "id-length": ["error", {"min": 1, "max": 25, "exceptions": ["$", "_", "i", "j", "x", "y", "z", "getInitialSourceClientOffset"]}],
     "indent": ["error", 2],
     "jsx-quotes": ["error"],
     "key-spacing": ["error"],

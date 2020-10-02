@@ -18,7 +18,7 @@
     "test:ci": "CI=yes npm run test",
     "start": "webpack-dev-server --config webpack/dev.js",
     "prepare": "npm run clean && npm run lint && npm run build && npm run test",
-    "postinstall": "lerna bootstrap"
+    "postinstall": "lerna bootstrap --hoist"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
