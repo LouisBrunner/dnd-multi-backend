@@ -29,7 +29,7 @@ describe('MultiBackend class', () => {
     ]};
     _pipelineWithSkipDispatch = {backends: [
       {id: 'back1', backend: backend1ctr},
-      {id: 'back2', backend: backend2ctr, options: {abc: 123}, preview: true, transition, skipDispatchOnTransition: true },
+      {id: 'back2', backend: backend2ctr, options: {abc: 123}, preview: true, transition, skipDispatchOnTransition: true},
     ]};
   });
 
@@ -252,7 +252,7 @@ describe('MultiBackend class', () => {
       const fakeWindow = {addEventListener: jest.fn()};
       backend.addEventListeners(fakeWindow);
       expect(fakeWindow.addEventListener).toHaveBeenCalledTimes(1);
-      expect(fakeWindow.addEventListener).toBeCalledWith('touchstart', expect.any(Function), true);
+      expect(fakeWindow.addEventListener).toBeCalledWith('touchstart', expect.any(Function));
     });
   });
 
@@ -262,7 +262,7 @@ describe('MultiBackend class', () => {
       const fakeWindow = {removeEventListener: jest.fn()};
       backend.removeEventListeners(fakeWindow);
       expect(fakeWindow.removeEventListener).toHaveBeenCalledTimes(1);
-      expect(fakeWindow.removeEventListener).toBeCalledWith('touchstart', expect.any(Function), true);
+      expect(fakeWindow.removeEventListener).toBeCalledWith('touchstart', expect.any(Function));
     });
   });
 
