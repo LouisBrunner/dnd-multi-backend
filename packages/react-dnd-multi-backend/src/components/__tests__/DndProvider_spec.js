@@ -23,20 +23,17 @@ describe('DndProvider component', () => {
   });
 
   test('can access both contexts', () => {
-    let first = true;
-
+    const spy = jest.fn();
     const Child = () => {
       const portal = useContext(PreviewPortalContext);
-      if (first) {
-        expect(portal).toBeUndefined();
-      } else {
-        expect(portal).toBeInstanceOf(HTMLElement);
-      }
-      first = true;
-
+      spy(portal);
       return null;
     };
     const component = createComponent(<Child />);
+    component.setProps();
     component.update();
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenNthCalledWith(1, undefined);
+    expect(spy).toHaveBeenNthCalledWith(2, expect.any(HTMLElement));
   });
 });
