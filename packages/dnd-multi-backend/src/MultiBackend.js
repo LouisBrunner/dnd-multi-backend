@@ -115,7 +115,7 @@ export default class {
   addEventListeners = (target) => {
     this.backendsList.forEach((backend) => {
       if (backend.transition) {
-        target.addEventListener(backend.transition.event, this.backendSwitcher, true);
+        target.addEventListener(backend.transition.event, this.backendSwitcher);
       }
     });
   }
@@ -123,7 +123,7 @@ export default class {
   removeEventListeners = (target) => {
     this.backendsList.forEach((backend) => {
       if (backend.transition) {
-        target.removeEventListener(backend.transition.event, this.backendSwitcher, true);
+        target.removeEventListener(backend.transition.event, this.backendSwitcher);
       }
     });
   }
