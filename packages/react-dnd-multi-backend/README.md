@@ -104,15 +104,17 @@ const HTML5toTouch = {
   backends: [
     {
       id: 'html5',
-      backend: HTML5Backend
+      backend: HTML5Backend,
+      transition: MouseTransition,
     },
     {
       id: 'touch',
-      backend: TouchBackend({enableMouseEvents: true}), // Note that you can call your backends with options
+      backend: TouchBackend,
+      options: {enableMouseEvents: true}, // Note that you can call your backends with options
       preview: true,
-      transition: TouchTransition
-    }
-  ]
+      transition: TouchTransition,
+    },
+  ],
 };
 ...
 const App = () => {
