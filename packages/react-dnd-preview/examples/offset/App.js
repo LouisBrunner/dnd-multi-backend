@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { useDrag, DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { usePreview } from '../../src';
 
-export const ShapeRaw = ({style, size, color, children}, ref) => { // eslint-disable-line react/prop-types
+export const ShapeRaw = ({style, size, color, children}, ref) => {
   return (
     <div ref={ref} style={{
       ...style,
@@ -14,6 +15,13 @@ export const ShapeRaw = ({style, size, color, children}, ref) => { // eslint-dis
       {children}
     </div>
   );
+};
+
+ShapeRaw.propTypes = {
+  style: PropTypes.object,
+  size: PropTypes.number,
+  color: PropTypes.string,
+  children: PropTypes.any,
 };
 
 const Shape = React.forwardRef(ShapeRaw);
@@ -32,7 +40,7 @@ class Kinds {
   static CustomSourceClient = 'custom_source_client';
 }
 
-export const Preview = ({kind, text}) => { // eslint-disable-line react/prop-types
+export const Preview = ({kind, text}) => {
   const {display, style, ref, monitor} = usePreview();
   if (!display) {
     return null;
@@ -63,6 +71,11 @@ export const Preview = ({kind, text}) => { // eslint-disable-line react/prop-typ
   }
 
   return <Shape ref={finalRef} style={finalStyle} size={50} color="red">{text}</Shape>;
+};
+
+Preview.propTypes = {
+  kind: PropTypes.string,
+  text: PropTypes.string,
 };
 
 export default class App extends Component {

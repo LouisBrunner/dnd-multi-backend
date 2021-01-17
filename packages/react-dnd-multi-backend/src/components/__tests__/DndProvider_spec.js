@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { mount } from 'enzyme';
+import React, {useContext} from 'react';
+import {render} from '@testing-library/react';
 
 import { DndProvider, PreviewPortalContext } from '../DndProvider';
 
 describe('DndProvider component', () => {
   const createComponent = (child) => {
-    return mount(
+    return render(
       <DndProvider options={{backends: [{id: 'abc', backend: () => {}}]}}>
         {child}
       </DndProvider>
@@ -16,10 +16,9 @@ describe('DndProvider component', () => {
     const Child = () => {
       const portal = useContext(PreviewPortalContext);
       expect(portal).toBeNull();
-
       return null;
     };
-    mount(<Child />);
+    render(<Child />);
   });
 
   test('can access both contexts', () => {
@@ -29,9 +28,7 @@ describe('DndProvider component', () => {
       spy(portal);
       return null;
     };
-    const component = createComponent(<Child />);
-    component.setProps();
-    component.update();
+    createComponent(<Child />);
     expect(spy).toHaveBeenCalledTimes(2);
     expect(spy).toHaveBeenNthCalledWith(1, undefined);
     expect(spy).toHaveBeenNthCalledWith(2, expect.any(HTMLElement));

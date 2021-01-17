@@ -10,7 +10,7 @@ const WithHook = (props) => {
   return generatePreview(preview, props);
 };
 
-export const Hooks = (props) => ( // eslint-disable-line react/prop-types
+export const Hooks = (props) => (
   <>
     <WithHook row={0} method="with hook" {...props} />
   </>

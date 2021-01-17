@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Preview, Context } from '../../src';
 import { WithPropFunction, WithChildFunction, WithChildComponent, WithChildFunctionContext } from './common';
 
-export const Components = ({title, col}) => ( // eslint-disable-line react/prop-types
+export const Components = ({title, col}) => (
   <>
     <Preview generator={WithPropFunction({title, col})} />
 
@@ -21,3 +22,8 @@ export const Components = ({title, col}) => ( // eslint-disable-line react/prop-
     </Preview>
   </>
 );
+
+Components.propTypes = {
+  title: PropTypes.string,
+  col: PropTypes.number,
+};

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
-import DnDPreview, { Context as PreviewContext } from 'react-dnd-preview';
+import { Preview as DnDPreview, Context as PreviewContext } from 'react-dnd-preview';
 
 import { useObservePreviews } from '../common';
 import { PreviewPortalContext } from './DndProvider';

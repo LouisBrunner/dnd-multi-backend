@@ -11,9 +11,10 @@ module.exports = {
   projects: [
     {
       displayName: 'test',
-      verbose: true,
 
-      setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
+      setupFilesAfterEnv: [
+        '@testing-library/jest-dom',
+      ],
 
       moduleNameMapper: {
         '^dnd-multi-backend$': '<rootDir>/packages/dnd-multi-backend/src',

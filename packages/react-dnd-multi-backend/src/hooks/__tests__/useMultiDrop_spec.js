@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import {render} from '@testing-library/react';
 
 import { useMultiDrop } from '../useMultiDrop';
 import { DndProvider } from '../../';
@@ -7,7 +7,7 @@ import { DndProvider } from '../../';
 describe('useMultiDrop component', () => {
   const _defaultPipeline = {
     backends: [
-      {id: 'first', backend: () => ({setup: () => {}})},
+      {id: 'first', backend: () => ({setup: () => {}, teardown: () => {}})},
       {id: 'second', backend: () => ({})},
     ],
   };
@@ -30,7 +30,7 @@ describe('useMultiDrop component', () => {
   };
 
   const createComponent = (options = _defaultPipeline) => {
-    return mount(<DndProvider options={options}><MultiAction /></DndProvider>);
+    return render(<DndProvider options={options}><MultiAction /></DndProvider>);
   };
 
   test('it works', () => {

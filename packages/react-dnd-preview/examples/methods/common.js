@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Context } from '../../src';
 
-export const generatePreview = ({itemType, item, style}, {row, col, title, method}) => { // eslint-disable-line react/prop-types
+export const generatePreview = ({itemType, item, style}, {row, col, title, method}) => {
   return (
     <div style={{
       ...style,
-      backgroundColor: item.color, // eslint-disable-line react/prop-types
+      backgroundColor: item.color,
       width: '50px',
       height: '50px',
       top: `${row * 60}px`,

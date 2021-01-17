@@ -298,6 +298,7 @@ describe('MultiBackend class', () => {
       expect(backend.current).toBe('back1');
 
       const fakeEvent = {
+        // eslint-disable-next-line compat/compat
         constructor: TouchEvent.constructor,
         type: 'touchstart',
         cancelable: true,
@@ -339,6 +340,7 @@ describe('MultiBackend class', () => {
       expect(backend.current).toBe('back1');
 
       const fakeEvent = {
+        // eslint-disable-next-line compat/compat
         constructor: TouchEvent.constructor,
         type: 'touchstart',
         cancelable: true,

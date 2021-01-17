@@ -1,12 +1,8 @@
 # OS files
 .DS_Store
 
-# Input
-/src
-
 # Webpack
 /webpack
-webpack.config.js
 
 # Output
 /examples
@@ -16,12 +12,11 @@ node_modules
 npm-debug.log
 
 # Config
-.babelrc
+.babel.config.json
 .eslint*
-.mocha.opts
-.nycrc
+.jest.config.js
 .github
+lerna.json
 
 # Code coverage
-.nyc_output
 coverage

@@ -1,6 +1,6 @@
 import React from 'react';
 import {usePreview} from '../usePreview';
-import {mount} from 'enzyme';
+import {render} from '@testing-library/react';
 
 let mockUseDragLayerMonitor;
 jest.mock('react-dnd', () => {
@@ -23,12 +23,11 @@ describe('usePreview hook', () => {
       called = true;
       return null;
     };
-    const comp = mount(<Component />);
+    const {rerender: rerenderFn} = render(<Component />);
     expect(called).toBe(true);
     if (rerender) {
       called = false;
-      comp.setProps(); // Force re-render
-      comp.update();
+      rerenderFn(<Component />);
       expect(called).toBe(true);
     }
   };

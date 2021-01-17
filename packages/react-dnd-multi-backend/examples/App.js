@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { DndProvider as ReactDndProvider } from 'react-dnd';
 
 import MultiBackend, { DndProvider, PreviewContext, usePreview, Preview } from '../src';
@@ -21,12 +22,12 @@ const generatePreview = (row, text, item, style) => {
   }}>Generated {text}</div>;
 };
 
-const ContextPreview = ({text}) => { // eslint-disable-line react/prop-types
+const ContextPreview = ({text}) => {
   const {style, item} = useContext(PreviewContext);
   return generatePreview(0, `${text} with Context`, item, style);
 };
 
-const HookPreview = ({text}) => { // eslint-disable-line react/prop-types
+const HookPreview = ({text}) => {
   const {display, style, item} = usePreview();
   if (!display) {
     return null;
@@ -34,12 +35,16 @@ const HookPreview = ({text}) => { // eslint-disable-line react/prop-types
   return generatePreview(1, `${text} with Hook`, item, style);
 };
 
-const ComponentPreview = ({text}) => { // eslint-disable-line react/prop-types
+const ComponentPreview = ({text}) => {
   return (
     <Preview generator={({item, style}) => {
       return generatePreview(2, `${text} with Component`, item, style);
     }} />
   );
+};
+
+ComponentPreview.propTypes = {
+  text: PropTypes.string,
 };
 
 const getContent = (title, ref) => {

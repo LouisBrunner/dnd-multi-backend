@@ -1,35 +1,64 @@
 {
   "env": {
     "browser": true,
-    "node": true,
-    "jest": true
+    "es2020": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:jest/recommended"
+    "plugin:jest/recommended",
+    "plugin:testing-library/recommended",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended"
   ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 2020,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
     }
   },
   "plugins": [
+    "@babel",
     "react",
-    "jest"
+    "jest",
+    "compat",
+    "testing-library",
+    "jest-dom"
   ],
   "settings": {
     "react": {
-        "version": "detect"
+      "version": "detect"
     }
   },
+  "overrides": [
+    {
+      "files": [
+        "*_spec.*",
+        "*.test.*"
+      ],
+      "env": {
+        "jest": true,
+        "node": true,
+        "es2020": true
+      }
+    },
+    {
+      "files": [
+        "webpack/*",
+        "babel.config.esm.js",
+        "jest.config.js"
+      ],
+      "env": {
+        "node": true
+      }
+    }
+  ],
   "rules": {
+    "compat/compat": "error",
+
     "no-await-in-loop": ["error"],
-    "no-compare-neg-zero": ["error"],
-    "no-prototype-builtins": ["error"],
     "no-template-curly-in-string": ["error"],
 
     "array-callback-return": ["error"],
@@ -38,30 +67,17 @@
     "curly": ["error"],
     "default-case": ["error"],
     "dot-location": ["error", "property"],
-    "dot-notation": ["error"],
-    "eqeqeq": ["error"],
-    "guard-for-in": ["error"],
-    "no-alert": ["error"],
-    "no-caller": ["error"],
-    "no-case-declarations": ["error"],
-    "no-else-return": ["error"],
     "no-eq-null": ["error"],
     "no-eval": ["error"],
     "no-extend-native": ["error"],
-    "no-extra-bind": ["error"],
     "no-floating-decimal": ["error"],
     "no-implicit-coercion": ["error"],
     "no-implicit-globals": ["error"],
     "no-implied-eval": ["error"],
-    "no-iterator": ["error"],
     "no-labels": ["error"],
     "no-lone-blocks": ["error"],
     "no-loop-func": ["error"],
     "no-multi-spaces": ["error"],
-    "no-multi-str": ["error"],
-    "no-new": ["error"],
-    "no-new-func": ["error"],
-    "no-new-wrappers": ["error"],
     "no-octal-escape": ["error"],
     "no-param-reassign": ["error"],
     "no-proto": ["error"],
@@ -75,18 +91,14 @@
     "no-unused-expressions": ["error"],
     "no-useless-call": ["error"],
     "no-useless-concat": ["error"],
-    "no-useless-escape": ["error"],
     "no-useless-return": ["error"],
     "no-void": ["error"],
-    "no-with": ["error"],
     "prefer-promise-reject-errors": ["error"],
     "require-await": ["error"],
     "wrap-iife": ["error", "inside"],
     "yoda": ["error"],
 
-    "no-catch-shadow": ["error"],
     "no-shadow": ["error"],
-    "no-shadow-restricted-names": ["error"],
     "no-undef-init": ["error"],
     "no-unused-vars": [
       "error",
@@ -118,7 +130,13 @@
     "array-bracket-spacing": ["error"],
     "block-spacing": ["error"],
     "brace-style": ["error", "1tbs", {"allowSingleLine": true}],
-    "comma-dangle": ["error", "always-multiline"],
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "ignore"
+    }],
     "comma-spacing": ["error"],
     "comma-style": ["error"],
     "computed-property-spacing": ["error"],

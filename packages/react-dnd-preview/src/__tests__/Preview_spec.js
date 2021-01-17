@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { mount } from 'enzyme';
+import React, {useContext} from 'react';
+import {render, screen} from '@testing-library/react';
 
 import { Context } from '../Context';
 
@@ -9,18 +9,18 @@ import { Preview } from '../Preview';
 
 describe('Preview subcomponent', () => {
   const createComponent = (props) => {
-    return mount(<Preview {...props} />);
+    return render(<Preview {...props} />);
   };
 
-  const generator = ({itemType, item, style}) => { // eslint-disable-line react/prop-types
-    return <div style={style}>{item.coucou}: {itemType}</div>; // eslint-disable-line react/prop-types
+  const generator = ({itemType, item, style}) => {
+    return <div style={style}>{item.coucou}: {itemType}</div>;
   };
 
   const setupTest = (props) => {
     test('is null when DnD is not in progress', () => {
       require('../usePreview').__setMockReturn(false);
-      const component = createComponent(props);
-      expect(component.find(Preview).html()).toBeNull();
+      createComponent(props);
+      expect(screen.queryByText('dauphin: toto')).not.toBeInTheDocument();
     });
 
     test('is valid when DnD is in progress', () => {
@@ -33,18 +33,26 @@ describe('Preview subcomponent', () => {
         item: {coucou: 'dauphin'},
         itemType: 'toto',
       });
-      const component = createComponent(props);
-
-      expect(component.html()).not.toBeNull();
-      const div = component.find('div');
-      expect(div).toExist();
-      expect(div).toHaveText('dauphin: toto');
-      expect(div).toHaveStyle('pointerEvents', 'none');
-      expect(div).toHaveStyle('position', 'fixed');
-      expect(div).toHaveStyle('top', 0);
-      expect(div).toHaveStyle('left', 0);
-      expect(div).toHaveStyle('transform', 'translate(1000px, 2000px)');
-      expect(div).toHaveStyle('WebkitTransform', 'translate(1000px, 2000px)');
+      createComponent(props);
+      const node = screen.queryByText('dauphin: toto');
+      expect(node).toBeInTheDocument();
+      // FIXME: toHaveStyle ignores pointer-events and WebkitTransform
+      // expect(node).toHaveStyle({
+      //   pointerEvents: 'none',
+      //   position: 'fixed',
+      //   top: 0,
+      //   left: 0,
+      //   transform: 'translate(1000px, 2000px)',
+      //   WebkitTransform: 'translate(1000px, 2000px)',
+      // });
+      // eslint-disable-next-line jest-dom/prefer-to-have-style
+      expect(node).toHaveAttribute('style', [
+        'pointer-events: none',
+        'position: fixed',
+        'top: 0px',
+        'left: 0px',
+        'transform: translate(1000px, 2000px);',
+      ].join('; '));
     });
   };
 

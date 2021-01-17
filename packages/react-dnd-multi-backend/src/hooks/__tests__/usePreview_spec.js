@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { act } from 'react-dom/test-utils';
-import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
+import {render, screen, act} from '@testing-library/react';
 
 import { usePreview } from '../usePreview';
 import { PreviewList } from 'dnd-multi-backend';
@@ -28,7 +28,7 @@ describe('usePreview component', () => {
     return list.register.mock.calls[list.register.mock.calls.length - 1][0];
   };
 
-  const Preview = React.forwardRef(({children}, _ref) => { // eslint-disable-line react/prop-types
+  const Preview = React.forwardRef(({children}, _ref) => {
     const backend = useContext(DndContext).dragDropManager.getBackend();
     backend.previews = list;
     backend.previewEnabled = previewEnabled;
@@ -41,21 +41,24 @@ describe('usePreview component', () => {
   });
 
   Preview.displayName = 'Preview';
+  Preview.propTypes = {
+    children: PropTypes.any,
+  };
 
   const Wrapped = wrapInTestContext(Preview);
 
   const createComponent = (children) => {
-    return mount(<Wrapped>{children}</Wrapped>);
+    return render(<Wrapped>{children}</Wrapped>);
   };
 
   test('registers with the backend', () => {
     previewEnabled.mockReturnValue(false);
     expect(list.register).not.toBeCalled();
-    const component = createComponent();
+    const {unmount} = createComponent();
     const matcher = expect.objectContaining({backendChanged: expect.any(Function)});
     expect(list.register).toBeCalledWith(matcher);
     expect(list.unregister).not.toBeCalled();
-    component.unmount();
+    unmount();
     expect(list.unregister).toBeCalledWith(matcher);
   });
 
@@ -64,15 +67,15 @@ describe('usePreview component', () => {
       const content = hasContent ? <div>abc</div> : null;
       previewEnabled.mockReturnValue(init);
 
-      const component = createComponent(content);
+      createComponent(content);
 
       const expectNull = () => {
-        expect(component.find(Preview).html()).toBeNull();
+        expect(screen.queryByText('abc')).not.toBeInTheDocument();
       };
 
       const expectNotNull = () => {
         if (hasContent) {
-          expect(component.find(Preview).html()).not.toBeNull();
+          expect(screen.queryByText('abc')).toBeInTheDocument();
         } else {
           expectNull();
         }
@@ -84,22 +87,21 @@ describe('usePreview component', () => {
         expectNull();
       }
 
-      previewEnabled.mockReturnValue(true);
       act(() => {
+        previewEnabled.mockReturnValue(true);
         getLastRegister().backendChanged({previewEnabled});
       });
-      component.update();
       expectNotNull();
 
       // No notification, no change
-      previewEnabled.mockReturnValue(false);
-      component.update();
+      act(() => {
+        previewEnabled.mockReturnValue(false);
+      });
       expectNotNull();
 
       act(() => {
         getLastRegister().backendChanged({previewEnabled});
       });
-      component.update();
       expectNull();
     };
 

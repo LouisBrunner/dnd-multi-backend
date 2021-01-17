@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 class DnDBackend {
   constructor(manager, label, startEvents, hoverEvents, stopEvents, {draggable = false} = {}) {
     this.manager = manager;
@@ -11,14 +13,14 @@ class DnDBackend {
   }
 
   setup() {
-    console.log(`${this.label}: setup`); // eslint-disable-line
+    console.log(`${this.label}: setup`);
     for (const event of this.stopEvents) {
       window.addEventListener(event, this.drop);
     }
   }
 
   teardown() {
-    console.log(`${this.label}: teardown`); // eslint-disable-line
+    console.log(`${this.label}: teardown`);
     for (const event of this.stopEvents) {
       window.removeEventListener(event, this.drop);
     }
@@ -27,18 +29,18 @@ class DnDBackend {
   connectDragSource(sourceId, node, _options) {
     const drag = () => {
       if (this.manager.getMonitor().isDragging()) {
-        console.log(`${this.label}: end drag`); // eslint-disable-line
+        console.log(`${this.label}: end drag`);
         this.actions.endDrag();
       }
 
-      console.log(`${this.label}: drag`); // eslint-disable-line
+      console.log(`${this.label}: drag`);
       this.actions.beginDrag([sourceId], {
         clientOffset: this.getXY(node),
         getSourceClientOffset: (_id) => { return this.getXY(node); },
       });
     };
 
-    console.log(`${this.label}: add drag source`); // eslint-disable-line
+    console.log(`${this.label}: add drag source`);
     if (this.draggable) {
       node.setAttribute('draggable', true);
     }
@@ -47,7 +49,7 @@ class DnDBackend {
     }
 
     return () => {
-      console.log(`${this.label}: remove drag source`); // eslint-disable-line
+      console.log(`${this.label}: remove drag source`);
       for (const event of this.startEvents) {
         window.removeEventListener(event, drag);
       }
@@ -67,7 +69,7 @@ class DnDBackend {
         return;
       }
 
-      console.log(`${this.label}: hover`); // eslint-disable-line
+      console.log(`${this.label}: hover`);
       this.actions.hover([targetId], {
         clientOffset: this.getXY(node),
       });
@@ -76,13 +78,13 @@ class DnDBackend {
       }
     };
 
-    console.log(`${this.label}: add drop target`); // eslint-disable-line
+    console.log(`${this.label}: add drop target`);
     for (const event of this.hoverEvents) {
       window.addEventListener(event, hover);
     }
 
     return () => {
-      console.log(`${this.label}: remove drop target`); // eslint-disable-line
+      console.log(`${this.label}: remove drop target`);
       for (const event of this.hoverEvents) {
         window.removeEventListener(event, hover);
       }
@@ -90,7 +92,7 @@ class DnDBackend {
   }
 
   drop = () => {
-    console.log(`${this.label}: drop`); // eslint-disable-line
+    console.log(`${this.label}: drop`);
     this.actions.drop();
     this.actions.endDrag();
   }

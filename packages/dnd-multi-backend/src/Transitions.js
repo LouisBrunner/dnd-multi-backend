@@ -1,7 +1,7 @@
 import createTransition from './createTransition';
 
 export const TouchTransition = createTransition('touchstart', (event) => {
-  return event.touches != null; // eslint-disable-line no-eq-null, eqeqeq
+  return event.touches !== null && event.touches !== undefined;
 });
 
 export const HTML5DragTransition = createTransition('dragstart', (event) => {
