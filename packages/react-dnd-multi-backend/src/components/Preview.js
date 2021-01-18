@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import { Preview as DnDPreview, Context as PreviewContext } from 'react-dnd-preview';
 
-import { useObservePreviews } from '../common';
+import {useObservePreviews} from '../useObservePreviews';
 import { PreviewPortalContext } from './DndProvider';
 
-const Preview = (props) => {
+export const Preview = (props) => {
   const enabled = useObservePreviews();
   const portal = useContext(PreviewPortalContext);
   if (!enabled) {
@@ -22,4 +22,4 @@ const Preview = (props) => {
 Preview.Context = PreviewContext;
 Preview.propTypes = DnDPreview.propTypes;
 
-export { Preview, PreviewContext };
+export { PreviewContext };

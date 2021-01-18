@@ -1,3 +1,5 @@
+const {defaults} = require('jest-config');
+
 module.exports = {
   notify: true,
   notifyMode: 'failure-success',
@@ -5,7 +7,8 @@ module.exports = {
   collectCoverage: true,
   coverageReporters: process.env.CI ? ['lcov'] : ['text', 'text-summary', 'html'], // eslint-disable-line no-process-env
   collectCoverageFrom: [
-    'packages/*/src/**/*.js',
+    'packages/*/src/**/*.{js,jsx,ts,tsx}',
+    '!**/__fixtures__/**/*',
   ],
 
   projects: [
@@ -26,11 +29,15 @@ module.exports = {
         '^react-dnd-test-backend$': 'react-dnd-test-backend/dist/cjs',
         '^react-dnd-test-utils$': 'react-dnd-test-utils/dist/cjs',
       },
+
+      moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],
     },
     {
       displayName: 'lint',
       runner: 'jest-runner-eslint',
-      testMatch: ['<rootDir>/**/*.js'],
+      testRegex: [
+        '/.*\\.[jt]sx?$',
+      ],
     },
   ],
 };

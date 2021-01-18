@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 import {render, screen, act} from '@testing-library/react';
 
 import { usePreview } from '../usePreview';
-import { PreviewList } from 'dnd-multi-backend';
+import { PreviewListImpl } from '../../../../dnd-multi-backend/src/PreviewListImpl';
 import { wrapInTestContext } from 'react-dnd-test-utils';
 import { DndContext } from 'react-dnd';
 
-jest.mock('react-dnd-preview', () => {
-  return {
-    usePreview: () => ({display: true}),
-  };
-});
+// jest.mock('react-dnd-preview');
 
 describe('usePreview component', () => {
   let list;
@@ -19,7 +15,7 @@ describe('usePreview component', () => {
 
   beforeEach(() => {
     previewEnabled = jest.fn();
-    list = new PreviewList();
+    list = new PreviewListImpl();
     jest.spyOn(list, 'register');
     jest.spyOn(list, 'unregister');
   });

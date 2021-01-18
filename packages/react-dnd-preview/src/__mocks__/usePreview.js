@@ -1,10 +1,27 @@
 let mockReturn;
-const __setMockReturn = (display, rest = {}) => {
+
+export const __setMockReturn = (display, rest = {}) => {
   mockReturn = {display, ...rest};
 };
 
-const fakeUsePreview = () => {
+export const usePreview = () => {
   return mockReturn;
 };
 
-export { fakeUsePreview as usePreview, __setMockReturn };
+// type usePreviewProps = {
+
+// }
+
+// type usePreviewState = {
+
+// }
+
+// let mockReturn: usePreviewState
+
+// export const __setMockReturn = (display: boolean, rest: Exclude<usePreviewProps, 'display'> = {}): void => {
+//   mockReturn = {display, ...rest}
+// }
+
+// export const fakeUsePreview = (): usePreviewState => {
+//   return mockReturn
+// }

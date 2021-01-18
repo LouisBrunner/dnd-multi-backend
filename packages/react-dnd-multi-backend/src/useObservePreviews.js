@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { DndContext } from 'react-dnd';
 
-const useObservePreviews = () => {
+export const useObservePreviews = () => {
   const [enabled, setEnabled] = useState(false);
   const dndContext = useContext(DndContext);
 
@@ -24,5 +24,3 @@ const useObservePreviews = () => {
 
   return enabled;
 };
-
-export { useObservePreviews };

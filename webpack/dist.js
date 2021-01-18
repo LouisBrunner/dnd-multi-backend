@@ -3,10 +3,10 @@ const commonConfig = require('./core');
 
 module.exports = merge(commonConfig, {
   entry: {
-    'dnd-multi-backend': './packages/dnd-multi-backend/src/index.js',
+    'dnd-multi-backend': './packages/dnd-multi-backend/src/index.ts',
     'react-dnd-multi-backend': './packages/react-dnd-multi-backend/src/index.js',
     HTML5toTouch: './packages/react-dnd-multi-backend/src/HTML5toTouch.js',
-    'react-dnd-preview': './packages/react-dnd-preview/src/index.js',
+    'react-dnd-preview': './packages/react-dnd-preview/src/index.ts',
   },
   output: {
     path: `${__dirname}/..`,

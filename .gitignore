@@ -6,8 +6,8 @@ node_modules
 *-debug.log
 
 # Code coverage
-/.nyc_output
 /coverage
 
 # Output
+/build
 packages/*/dist

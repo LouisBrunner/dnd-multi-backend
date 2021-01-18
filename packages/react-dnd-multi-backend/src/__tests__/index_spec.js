@@ -2,20 +2,12 @@ import * as Module from '../index';
 
 import { Preview, PreviewContext } from '../components/Preview';
 import { useMultiDrag, useMultiDrop, usePreview } from '../hooks';
-import MultiBackend, { HTML5DragTransition, TouchTransition, MouseTransition, createTransition } from 'dnd-multi-backend';
+import { MultiBackend, HTML5DragTransition, TouchTransition, MouseTransition, createTransition } from 'dnd-multi-backend';
 
 
-describe('ReactDnDMultiBackend module', () => {
-  test('exports a function to create MultiBackend', () => {
-    expect(Module.default).toBeInstanceOf(Function);
-
-    const fakeManager = {getMonitor: jest.fn(), getActions: jest.fn(), getRegistry: jest.fn(), getContext: jest.fn()};
-    expect(Module.default(fakeManager, {}, {backends: [{id: 'abc', backend: () => {}}]})).toBeInstanceOf(Object);
-    expect(() => { Module.default(fakeManager, {}); }).toThrowError(Error);
-  });
-
-  test('exports utils components', () => {
-    expect(Module.default).toBe(MultiBackend);
+describe('react-dnd-multi-backend module', () => {
+  test('exports correctly', () => {
+    expect(Module.MultiBackend).toBe(MultiBackend);
 
     expect(Module.Preview).toBe(Preview);
     expect(Module.PreviewContext).toBe(PreviewContext);

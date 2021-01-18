@@ -53,6 +53,48 @@
       "env": {
         "node": true
       }
+    },
+    {
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:jest/recommended",
+        "plugin:testing-library/recommended",
+        "plugin:testing-library/react",
+        "plugin:jest-dom/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "rules": {
+        "semi": ["error", "never"],
+        "no-use-before-define": ["off"],
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "@typescript-eslint/no-empty-function": "off",
+        "arrow-body-style": ["error", "always"],
+        "no-useless-constructor": "off",
+        "@typescript-eslint/no-useless-constructor": "error",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "varsIgnorePattern": "^_",
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "default-case": "off",
+        "@typescript-eslint/switch-exhaustiveness-check": "error",
+        "react/react-in-jsx-scope": ["off"]
+      }
     }
   ],
   "rules": {
@@ -102,7 +144,7 @@
     "no-undef-init": ["error"],
     "no-unused-vars": [
       "error",
-      {"varsIgnorePattern": "^_$", "argsIgnorePattern": "^_"}
+      {"varsIgnorePattern": "^_", "argsIgnorePattern": "^_"}
     ],
     "no-use-before-define": ["error"],
 
@@ -192,7 +234,6 @@
     "space-in-parens": ["error", "never"],
     "space-infix-ops": ["error"],
     "space-unary-ops": ["error", {"words": true, "nonwords": false}],
-    "spaced-comment": ["error"],
     "template-tag-spacing": ["error"],
 
     "jest/expect-expect": ["error", {"assertFunctionNames": ["expect", "test*"]}],

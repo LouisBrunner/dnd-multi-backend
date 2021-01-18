@@ -1,11 +1,10 @@
 import React, {useContext} from 'react';
 import {render, screen} from '@testing-library/react';
 
-import { Context } from '../Context';
+import {Context} from '../Context';
+import {Preview} from '../Preview';
 
 jest.mock('../usePreview');
-
-import { Preview } from '../Preview';
 
 describe('Preview subcomponent', () => {
   const createComponent = (props) => {
@@ -27,8 +26,11 @@ describe('Preview subcomponent', () => {
       require('../usePreview').__setMockReturn(true, {
         style: {
           pointerEvents: 'none',
-          position: 'fixed', top: 0, left: 0,
-          transform: 'translate(1000px, 2000px)', WebkitTransform: 'translate(1000px, 2000px)',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          transform: 'translate(1000px, 2000px)',
+          WebkitTransform: 'translate(1000px, 2000px)',
         },
         item: {coucou: 'dauphin'},
         itemType: 'toto',

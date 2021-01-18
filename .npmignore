@@ -5,6 +5,7 @@
 /webpack
 
 # Output
+/build
 /examples
 
 # npm

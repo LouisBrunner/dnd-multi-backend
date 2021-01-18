@@ -51,7 +51,7 @@ const calculatePointerPosition = (monitor, childRef) => {
   return subtract(monitor.getClientOffset(), middle);
 };
 
-const usePreview = () => {
+export const usePreview = () => {
   const child = useRef();
   const collectedProps = useDragLayer((monitor) => {
     return {
@@ -76,5 +76,3 @@ const usePreview = () => {
     ref: child,
   };
 };
-
-export { usePreview };

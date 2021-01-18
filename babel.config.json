@@ -6,6 +6,7 @@
         "modules": "commonjs"
       }
     ],
+    "@babel/preset-typescript",
     "@babel/preset-react"
   ],
   "plugins": [

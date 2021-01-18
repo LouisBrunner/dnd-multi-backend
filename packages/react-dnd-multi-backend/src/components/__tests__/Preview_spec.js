@@ -3,20 +3,12 @@ import PropTypes from 'prop-types';
 import {render, screen, act} from '@testing-library/react';
 
 import { Preview, PreviewContext } from '../Preview';
-import { PreviewList } from 'dnd-multi-backend';
+import { PreviewListImpl } from '../../../../dnd-multi-backend/src/PreviewListImpl';
 import { wrapInTestContext } from 'react-dnd-test-utils';
 import { DndContext } from 'react-dnd';
 import { PreviewPortalContext } from '../DndProvider';
 
-jest.mock('react-dnd-preview', () => {
-  const exports = jest.requireActual('react-dnd-preview');
-  return {
-    ...exports,
-    Preview: ({generator}) => {
-      return generator();
-    },
-  };
-});
+// jest.mock('react-dnd-preview');
 
 describe('Preview component', () => {
   let list;
@@ -43,7 +35,7 @@ describe('Preview component', () => {
 
   beforeEach(() => {
     previewEnabled = jest.fn();
-    list = new PreviewList();
+    list = new PreviewListImpl();
     jest.spyOn(list, 'register');
     jest.spyOn(list, 'unregister');
   });

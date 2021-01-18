@@ -2,18 +2,9 @@ import React from 'react';
 import {usePreview} from '../usePreview';
 import {render} from '@testing-library/react';
 
-let mockUseDragLayerMonitor;
-jest.mock('react-dnd', () => {
-  return {
-    useDragLayer: (collect) => {
-      return collect(mockUseDragLayerMonitor);
-    },
-  };
-});
-
 describe('usePreview hook', () => {
   beforeEach(() => {
-    mockUseDragLayerMonitor = null;
+    require('react-dnd').__setMockMonitor(null);
   });
 
   const testHook = (useTests, {rerender = false} = {}) => {
@@ -33,14 +24,14 @@ describe('usePreview hook', () => {
   };
 
   test('return false when DnD is not in progress (neither dragging or offset)', () => {
-    mockUseDragLayerMonitor = {
+    require('react-dnd').__setMockMonitor({
       isDragging() { return false; },
       getItemType() { return null; },
       getItem() { return null; },
       getClientOffset() { return null; },
       getInitialClientOffset() { return null; },
       getInitialSourceClientOffset() { return null; },
-    };
+    });
     testHook(() => {
       const {display} = usePreview();
       expect(display).toBe(false);
@@ -48,14 +39,14 @@ describe('usePreview hook', () => {
   });
 
   test('return false when DnD is not in progress (no dragging)', () => {
-    mockUseDragLayerMonitor = {
+    require('react-dnd').__setMockMonitor({
       isDragging() { return false; },
       getItemType() { return null; },
       getItem() { return null; },
       getClientOffset() { return {}; },
       getInitialClientOffset() { return null; },
       getInitialSourceClientOffset() { return null; },
-    };
+    });
     testHook(() => {
       const {display} = usePreview();
       expect(display).toBe(false);
@@ -63,14 +54,14 @@ describe('usePreview hook', () => {
   });
 
   test('return false when DnD is not in progress (no offset)', () => {
-    mockUseDragLayerMonitor = {
+    require('react-dnd').__setMockMonitor({
       isDragging() { return true; },
       getItemType() { return null; },
       getItem() { return null; },
       getClientOffset() { return null; },
       getInitialClientOffset() { return null; },
       getInitialSourceClientOffset() { return null; },
-    };
+    });
     testHook(() => {
       const {display} = usePreview();
       expect(display).toBe(false);
@@ -78,18 +69,17 @@ describe('usePreview hook', () => {
   });
 
   test('return true and data when DnD is in progress', () => {
-    mockUseDragLayerMonitor = {
+    require('react-dnd').__setMockMonitor({
       isDragging() { return true; },
       getItemType() { return 'no'; },
       getItem() { return {bluh: 'fake'}; },
       getClientOffset() { return {x: 1, y: 2}; },
       getInitialClientOffset() { return null; },
       getInitialSourceClientOffset() { return null; },
-    };
+    });
     testHook(() => {
-      const {display, monitor, ref, ...rest} = usePreview();
+      const {display, monitor: _monitor, ref, ...rest} = usePreview();
       expect(display).toBe(true);
-      expect(monitor).toBe(mockUseDragLayerMonitor);
       expect(ref).not.toBeNull();
       expect(rest).toEqual({
         item: {bluh: 'fake'},
@@ -107,18 +97,17 @@ describe('usePreview hook', () => {
   });
 
   test('return true and data when DnD is in progress (with parent offset)', () => {
-    mockUseDragLayerMonitor = {
+    require('react-dnd').__setMockMonitor({
       isDragging() { return true; },
       getItemType() { return 'no'; },
       getItem() { return {bluh: 'fake'}; },
       getClientOffset() { return {x: 1, y: 2}; },
       getInitialClientOffset() { return {x: 1, y: 2}; },
       getInitialSourceClientOffset() { return {x: 0, y: 1}; },
-    };
+    });
     testHook(() => {
-      const {display, monitor, ref, ...rest} = usePreview();
+      const {display, monitor: _monitor, ref, ...rest} = usePreview();
       expect(display).toBe(true);
-      expect(monitor).toBe(mockUseDragLayerMonitor);
       expect(ref).not.toBeNull();
       expect(rest).toEqual({
         item: {bluh: 'fake'},
@@ -136,19 +125,18 @@ describe('usePreview hook', () => {
   });
 
   test('return true and data when DnD is in progress (with ref)', () => {
-    mockUseDragLayerMonitor = {
+    require('react-dnd').__setMockMonitor({
       isDragging() { return true; },
       getItemType() { return 'no'; },
       getItem() { return {bluh: 'fake'}; },
       getClientOffset() { return {x: 1, y: 2}; },
       getInitialClientOffset() { return {x: 1, y: 2}; },
       getInitialSourceClientOffset() { return null; },
-    };
+    });
     const spy = jest.fn();
     testHook(() => {
-      const {display, monitor, ref, ...rest} = usePreview();
+      const {display, monitor: _monitor, ref, ...rest} = usePreview();
       expect(display).toBe(true);
-      expect(monitor).toBe(mockUseDragLayerMonitor);
       expect(ref).not.toBeNull();
       spy(rest);
       ref.current = {
@@ -185,19 +173,18 @@ describe('usePreview hook', () => {
   });
 
   test('return true and data when DnD is in progress (with ref and parent offset)', () => {
-    mockUseDragLayerMonitor = {
+    require('react-dnd').__setMockMonitor({
       isDragging() { return true; },
       getItemType() { return 'no'; },
       getItem() { return {bluh: 'fake'}; },
       getClientOffset() { return {x: 1, y: 2}; },
       getInitialClientOffset() { return {x: 1, y: 2}; },
       getInitialSourceClientOffset() { return {x: 0, y: 1}; },
-    };
+    });
     const spy = jest.fn();
     testHook(() => {
-      const {display, monitor, ref, ...rest} = usePreview();
+      const {display, monitor: _monitor, ref, ...rest} = usePreview();
       expect(display).toBe(true);
-      expect(monitor).toBe(mockUseDragLayerMonitor);
       expect(ref).not.toBeNull();
       spy(rest);
       ref.current = {

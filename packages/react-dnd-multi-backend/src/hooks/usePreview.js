@@ -1,8 +1,8 @@
 import { usePreview as usePreviewDnd } from 'react-dnd-preview';
 
-import { useObservePreviews } from '../common';
+import { useObservePreviews } from '../useObservePreviews';
 
-const usePreview = () => {
+export const usePreview = () => {
   const enabled = useObservePreviews();
   const result = usePreviewDnd();
   if (!enabled) {
@@ -10,5 +10,3 @@ const usePreview = () => {
   }
   return result;
 };
-
-export { usePreview };

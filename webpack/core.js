@@ -6,7 +6,19 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader'],
+        use: [
+          {loader: 'babel-loader'},
+          {loader: 'eslint-loader'},
+        ],
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        enforce: 'pre',
+        use: [
+          {loader: 'ts-loader'},
+          {loader: 'eslint-loader'},
+        ],
       },
     ],
   },

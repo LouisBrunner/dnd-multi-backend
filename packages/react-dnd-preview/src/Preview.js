@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { usePreview } from './usePreview';
 import { Context } from './Context';
 
-const Preview = (props) => {
+export const Preview = (props) => {
   const {display, ...data} = usePreview();
 
   if (!display) {
@@ -28,5 +28,3 @@ Preview.propTypes = {
     PropTypes.func,
   ]),
 };
-
-export { Preview };

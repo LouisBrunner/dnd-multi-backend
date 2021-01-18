@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { DndProvider as ReactDndProvider } from 'react-dnd';
-import MultiBackend from 'dnd-multi-backend';
+import { MultiBackend } from 'dnd-multi-backend';
 
 export const PreviewPortalContext = React.createContext(null);
 
