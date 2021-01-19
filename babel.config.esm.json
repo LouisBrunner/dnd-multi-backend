@@ -1,0 +1,13 @@
+{
+  "extends": "./babel.config.build.json",
+  "overrides": [{
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "modules": false
+        }
+      ]
+    ]
+  }]
+}

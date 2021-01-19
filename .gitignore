@@ -9,5 +9,4 @@ node_modules
 /coverage
 
 # Output
-/build
 packages/*/dist

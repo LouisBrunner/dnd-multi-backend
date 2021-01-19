@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true
+  },
+  "exclude": [
+    "**/__fixtures__/**/*",
+    "**/__tests__/**/*",
+    "**/__mocks__/**/*"
+  ]
+}

@@ -1,38 +1,32 @@
 {
   "compilerOptions": {
     "baseUrl": "packages/*/src/",
-    "outDir": "build",
     "target": "es2020",
+    "module": "esnext",
+    "moduleResolution": "node",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": false,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
     "strict": true,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react",
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "preserveConstEnums": true,
-    "sourceMap": true,
-    "removeComments": true,
-    "noImplicitAny": true
+    "preserveConstEnums": true
   },
   "include": [
     "__mocks__/**/*.ts",
-    "packages/*/src/**/*.ts",
-    "packages/*/src/**/*.tsx"
+    "packages/*/src/**/*.ts*",
   ],
   "exclude": [
-    "build",
     "node_modules"
   ]
 }
