@@ -5,6 +5,7 @@
     "emitDeclarationOnly": true
   },
   "exclude": [
+    "node_modules",
     "**/__fixtures__/**/*",
     "**/__tests__/**/*",
     "**/__mocks__/**/*"

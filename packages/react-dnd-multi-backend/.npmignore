@@ -1,8 +1,10 @@
 # Input
 examples
+__fixtures__
 __mocks__
 __tests__
 src
+tsconfig.json
 
 # npm
 node_modules
