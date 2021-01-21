@@ -13,18 +13,18 @@ export type BackendEntry = {
   skipDispatchOnTransition: boolean,
 }
 
-export interface MultiBackend extends Backend {
+export interface MultiBackendSwitcher extends Backend {
   backendsList(): BackendEntry[]
   previewsList(): PreviewList
   previewEnabled(): boolean
 }
 
 export interface PreviewListener {
-  backendChanged(backend: MultiBackend): void
+  backendChanged(backend: MultiBackendSwitcher): void
 }
 
 export interface PreviewList {
   register(listener: PreviewListener): void
   unregister(listener: PreviewListener): void
-  backendChanged(backend: MultiBackend): void
+  backendChanged(backend: MultiBackendSwitcher): void
 }

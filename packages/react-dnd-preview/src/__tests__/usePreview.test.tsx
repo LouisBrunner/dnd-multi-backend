@@ -1,13 +1,19 @@
 import React from 'react'
-import {usePreview} from '../usePreview'
+import {usePreview, usePreviewStateFull} from '../usePreview'
 import {render} from '@testing-library/react'
+import {DragLayerMonitor} from 'react-dnd'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const {__setMockMonitor} = require('react-dnd') as {
+  __setMockMonitor: (monitor: DragLayerMonitor) => void
+}
 
 describe('usePreview hook', () => {
   beforeEach(() => {
-    require('react-dnd').__setMockMonitor(null)
+    __setMockMonitor(null)
   })
 
-  const testHook = (useTests, {rerender = false} = {}) => {
+  const testHook = (useTests: () => void, {rerender = false} = {}) => {
     let called = false
     const Component = () => {
       useTests()
@@ -24,7 +30,7 @@ describe('usePreview hook', () => {
   }
 
   test('return false when DnD is not in progress (neither dragging or offset)', () => {
-    require('react-dnd').__setMockMonitor({
+    __setMockMonitor({
       isDragging() { return false },
       getItemType() { return null },
       getItem() { return null },
@@ -39,7 +45,7 @@ describe('usePreview hook', () => {
   })
 
   test('return false when DnD is not in progress (no dragging)', () => {
-    require('react-dnd').__setMockMonitor({
+    __setMockMonitor({
       isDragging() { return false },
       getItemType() { return null },
       getItem() { return null },
@@ -54,7 +60,7 @@ describe('usePreview hook', () => {
   })
 
   test('return false when DnD is not in progress (no offset)', () => {
-    require('react-dnd').__setMockMonitor({
+    __setMockMonitor({
       isDragging() { return true },
       getItemType() { return null },
       getItem() { return null },
@@ -69,7 +75,7 @@ describe('usePreview hook', () => {
   })
 
   test('return true and data when DnD is in progress', () => {
-    require('react-dnd').__setMockMonitor({
+    __setMockMonitor({
       isDragging() { return true },
       getItemType() { return 'no' },
       getItem() { return {bluh: 'fake'} },
@@ -97,7 +103,7 @@ describe('usePreview hook', () => {
   })
 
   test('return true and data when DnD is in progress (with parent offset)', () => {
-    require('react-dnd').__setMockMonitor({
+    __setMockMonitor({
       isDragging() { return true },
       getItemType() { return 'no' },
       getItem() { return {bluh: 'fake'} },
@@ -125,7 +131,7 @@ describe('usePreview hook', () => {
   })
 
   test('return true and data when DnD is in progress (with ref)', () => {
-    require('react-dnd').__setMockMonitor({
+    __setMockMonitor({
       isDragging() { return true },
       getItemType() { return 'no' },
       getItem() { return {bluh: 'fake'} },
@@ -135,7 +141,7 @@ describe('usePreview hook', () => {
     })
     const spy = jest.fn()
     testHook(() => {
-      const {display, monitor: _monitor, ref, ...rest} = usePreview()
+      const {display, ref, monitor: _monitor, ...rest} = usePreview() as usePreviewStateFull
       expect(display).toBe(true)
       expect(ref).not.toBeNull()
       spy(rest)
@@ -173,7 +179,7 @@ describe('usePreview hook', () => {
   })
 
   test('return true and data when DnD is in progress (with ref and parent offset)', () => {
-    require('react-dnd').__setMockMonitor({
+    __setMockMonitor({
       isDragging() { return true },
       getItemType() { return 'no' },
       getItem() { return {bluh: 'fake'} },
@@ -183,7 +189,7 @@ describe('usePreview hook', () => {
     })
     const spy = jest.fn()
     testHook(() => {
-      const {display, monitor: _monitor, ref, ...rest} = usePreview()
+      const {display, monitor: _monitor, ref, ...rest} = usePreview() as usePreviewStateFull
       expect(display).toBe(true)
       expect(ref).not.toBeNull()
       spy(rest)

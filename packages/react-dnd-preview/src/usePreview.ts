@@ -64,10 +64,10 @@ export type usePreviewState = {
   display: false
 } | usePreviewStateFull
 
-export type usePreviewStateFull = {
+export type usePreviewStateFull = ({
   display: true,
   ref: MutableRefObject<Element | undefined>,
-} & GeneratorProps
+} & GeneratorProps)
 
 export type GeneratorProps = {
   itemType: Identifier | null,

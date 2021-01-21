@@ -6,6 +6,6 @@ export const __setMockReturn = (state: usePreviewState): void => {
   mockReturn = state
 }
 
-export const fakeUsePreview = (): usePreviewState => {
+export const usePreview = (): usePreviewState => {
   return mockReturn
 }

@@ -1,6 +1,6 @@
-import { Preview } from './Preview'
-
+export { Preview } from './Preview'
+export type { PreviewProps, PreviewGenerator } from './Preview'
 export { usePreview } from './usePreview'
+export type { usePreviewState } from './usePreview'
 export { Context } from './Context'
-export { Preview }
-export default Preview
+export type { PreviewState } from './Context'

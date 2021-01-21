@@ -6,7 +6,6 @@ import { usePreview } from '../usePreview'
 
 describe('react-dnd-preview module', () => {
   test('exports correctly', () => {
-    expect(Module.default).toBe(Preview)
     expect(Module.Preview).toBe(Preview)
     expect(Module.Context).toBe(Context)
     expect(Module.usePreview).toBe(usePreview)

@@ -1,5 +1,5 @@
 import {DragDropManager, BackendFactory, Unsubscribe} from 'dnd-core'
-import {BackendEntry, MultiBackend, PreviewList, Transition } from './types'
+import {BackendEntry, MultiBackendSwitcher, PreviewList, Transition } from './types'
 import { PreviewListImpl } from './PreviewListImpl'
 
 type DnDNode = {
@@ -27,7 +27,7 @@ export type MultiBackendOptions = {
   backends: MultiBackendPipeline,
 }
 
-export class MultiBackendImpl implements MultiBackend {
+export class MultiBackendImpl implements MultiBackendSwitcher {
   /*private*/ static /*#*/isSetUp = false
 
   /*private*/ #current: string

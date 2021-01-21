@@ -10,7 +10,7 @@
     "common:babel": "lerna exec -- babel src --extensions .js,.ts,.tsx --delete-dir-on-start --out-dir",
     "common:webpack": "webpack --mode production",
     "common:types": "lerna exec -- tsc -p ./tsconfig.json --declarationDir",
-    "build:types": "npm run common:types -- dist/esm && npm run common:types -- dist/cjs",
+    "build:types": "npm run common:types -- dist/cjs && npm run common:types -- dist/esm",
     "build:esm": "npm run common:babel -- dist/esm --config-file ../../babel.config.esm.json",
     "build:cjs": "npm run common:babel -- dist/cjs --config-file ../../babel.config.cjs.json",
     "build:umd": "npm run common:webpack -- --config webpack/dist.js",
@@ -23,7 +23,7 @@
     "test:watch": "npm run test -- --watch",
     "test:ci": "CI=yes npm run test",
     "start": "webpack serve --config webpack/dev.js",
-    "prepare": "npm run clean && npm run lint && npm run build && npm run test",
+    "prepare": "npm run clean && npm run build && npm run lint && npm run test",
     "postinstall": "lerna bootstrap --hoist"
   },
   "devDependencies": {
@@ -39,6 +39,7 @@
     "@octokit/core": "^3.2.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
+    "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "acorn": "^8.0.4",
     "babel-core": "^7.0.0-bridge.0",

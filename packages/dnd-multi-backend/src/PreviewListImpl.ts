@@ -1,4 +1,4 @@
-import {MultiBackend, PreviewList, PreviewListener} from './types'
+import {MultiBackendSwitcher, PreviewList, PreviewListener} from './types'
 
 export class PreviewListImpl implements PreviewList {
   /*private*/ #previews: PreviewListener[]
@@ -18,7 +18,7 @@ export class PreviewListImpl implements PreviewList {
     }
   }
 
-  backendChanged = (backend: MultiBackend): void => {
+  backendChanged = (backend: MultiBackendSwitcher): void => {
     for (const preview of this.#previews) {
       preview.backendChanged(backend)
     }

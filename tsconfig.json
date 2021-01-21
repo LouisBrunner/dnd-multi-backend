@@ -28,5 +28,9 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "paths": {
+    "dnd-multi-backend": ["packages/dnd-multi-backend/src"],
+    "react-dnd-preview": ["packages/react-dnd-preview/src"]
+  }
 }
