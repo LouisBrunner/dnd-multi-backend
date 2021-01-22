@@ -12,12 +12,34 @@ const MultiCard = (props) => {
     },
   });
 
-  const html5DragStyle = {backgroundColor: props.color, opacity: html5Props.isDragging ? 0.5 : 1};
-  const touchDragStyle = {backgroundColor: props.color, opacity: touchProps.isDragging ? 0.5 : 1};
+  const containerStyle = {
+    display: 'inline-block',
+    margin: '10px',
+  };
+  const html5DragStyle = {
+    backgroundColor: props.color,
+    opacity: html5Props.isDragging ? 0.5 : 1,
+    display: 'inline-block',
+    margin: '5px',
+    width: '90px',
+    height: '90px',
+    textAlign: 'center',
+    userSelect: 'none',
+  };
+  const touchDragStyle = {
+    backgroundColor: props.color,
+    opacity: touchProps.isDragging ? 0.5 : 1,
+    display: 'inline-block',
+    margin: '5px',
+    width: '90px',
+    height: '90px',
+    textAlign: 'center',
+    userSelect: 'none',
+  };
   return (
-    <div className="multi-square-container">
-      <div className="multi-square" style={html5DragStyle} ref={html5Drag}>HTML5</div>
-      <div className="multi-square" style={touchDragStyle} ref={touchDrag}>Touch</div>
+    <div style={containerStyle}>
+      <div style={html5DragStyle} ref={html5Drag}>HTML5</div>
+      <div style={touchDragStyle} ref={touchDrag}>Touch</div>
     </div>
   );
 };

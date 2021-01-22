@@ -1,4 +1,5 @@
 const glob = require('glob');
+const path = require('path');
 
 module.exports = {
   module: {
@@ -16,7 +17,8 @@ module.exports = {
         exclude: /node_modules/,
         enforce: 'pre',
         use: [
-          {loader: 'ts-loader'},
+          {loader: 'babel-loader'},
+          {loader: 'ts-loader', options: {configFile: path.join(__dirname, '..', 'tsconfig.json')}},
           {loader: 'eslint-loader'},
         ],
       },
@@ -24,5 +26,6 @@ module.exports = {
   },
   resolve: {
     modules: ['.', './node_modules'].concat(glob.sync('packages/*/node_modules')),
+    extensions: ['.wasm', '.tsx', '.ts', '.mjs', '.js', '.json'],
   },
 };

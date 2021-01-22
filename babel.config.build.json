@@ -2,7 +2,6 @@
   "extends": "./babel.config.json",
   "ignore": [
     "**/__tests__/*",
-    "**/__mocks__/*",
-    "**/__fixtures__/*"
+    "**/__mocks__/*"
   ]
 }

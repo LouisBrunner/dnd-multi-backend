@@ -1,6 +1,12 @@
+import { DOMWindow } from 'jsdom'
 import {DragDropManager} from 'dnd-core'
 import {MultiBackendContext, MultiBackendImpl, MultiBackendOptions} from '../MultiBackendImpl'
-import {TestBackends, TestPipeline, TestPipelineWithSkip} from '../__fixtures__/pipeline'
+import {TestBackends, TestPipeline, TestPipelineWithSkip} from '@mocks/pipeline'
+
+const globalNode = {
+  ...global,
+  window: window as unknown as DOMWindow | undefined,
+}
 
 describe('MultiBackendImpl class', () => {
   let _defaultManager: DragDropManager
@@ -99,8 +105,8 @@ describe('MultiBackendImpl class', () => {
     test('does nothing if it has no window', () => {
       const spyAdd = jest.spyOn(window, 'addEventListener')
 
-      const oldWindow = window
-      delete global.window
+      const oldWindow = globalNode.window
+      delete globalNode.window
 
       const backend = createBackend()
       backend.setup()
@@ -110,7 +116,7 @@ describe('MultiBackendImpl class', () => {
 
       backend.teardown()
 
-      global.window = oldWindow
+      globalNode.window = oldWindow
 
       spyAdd.mockRestore()
     })
@@ -155,8 +161,8 @@ describe('MultiBackendImpl class', () => {
     test('does nothing if it has no window', () => {
       const spyRemove = jest.spyOn(window, 'removeEventListener')
 
-      const oldWindow = window
-      delete global.window
+      const oldWindow = globalNode.window
+      delete globalNode.window
 
       const backend = createBackend()
       backend.setup()
@@ -164,7 +170,7 @@ describe('MultiBackendImpl class', () => {
       expect(spyRemove).not.toHaveBeenCalled()
       expect(TestBackends[0].teardown).not.toHaveBeenCalled()
 
-      global.window = oldWindow
+      globalNode.window = oldWindow
 
       spyRemove.mockRestore()
     })

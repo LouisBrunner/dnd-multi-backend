@@ -19,9 +19,16 @@ const Basket = ({logs}) => {
 
   const isOver = collectedProps.isOver;
   const canDrop = collectedProps.canDrop;
-  const style = {backgroundColor: (isOver && canDrop) ? '#f3f3f3' : '#cccccc', border: '1px dashed black'};
+  const style = {
+    backgroundColor: (isOver && canDrop) ? '#f3f3f3' : '#cccccc',
+    border: '1px dashed black',
+    display: 'inline-block',
+    width: '100px',
+    height: '100px',
+    margin: '10px',
+  };
 
-  return <div className="square" style={style} ref={drop} />;
+  return <div style={style} ref={drop} />;
 };
 
 Basket.propTypes = {

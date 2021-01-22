@@ -1,6 +1,5 @@
 import {Backend} from 'dnd-core'
-import {createTransition} from '../createTransition'
-import {MultiBackendOptions} from '../MultiBackendImpl'
+import {createTransition, MultiBackendOptions} from 'dnd-multi-backend'
 
 const createBackend = () => {
   return {

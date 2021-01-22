@@ -203,9 +203,9 @@ const MultiCard = (props) => {
   const containerStyle = {opacity: dragProps.isDragging ? 0.5 : 1};
   const dragStyle = {backgroundColor: props.color};
   return (
-    <div className="multi-square-container" style={containerStyle}>
-      <div className="multi-square" style={dragStyle} ref={html5Drag}>HTML5</div>
-      <div className="multi-square" style={dragStyle} ref={touchDrag}>Touch</div>
+    <div style={containerStyle}>
+      <div style={dragStyle} ref={html5Drag}>HTML5</div>
+      <div style={dragStyle} ref={touchDrag}>Touch</div>
     </div>
   );
 };
@@ -242,9 +242,9 @@ const MultiBasket = ({logs}) => {
   const containerStyle = {border: '1px dashed black'};
   const dropStyle = {backgroundColor: (dropProps.isOver && dropProps.canDrop) ? '#f3f3f3' : '#bbbbbb'};
   return (
-    <div className="multi-square-container" style={containerStyle}>
-      <div className="multi-square" style={dropStyle} ref={html5Drop}>HTML5</div>
-      <div className="multi-square" style={dropStyle} ref={touchDrop}>Touch</div>
+    <div style={containerStyle}>
+      <div style={dropStyle} ref={html5Drop}>HTML5</div>
+      <div style={dropStyle} ref={touchDrop}>Touch</div>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import {render, screen, act} from '@testing-library/react'
 
 import { Preview, PreviewContext } from '../Preview'
-import { PreviewListImpl } from 'dnd-multi-backend/src/PreviewListImpl'
+import { MockPreviewList, MockedPreviewList, MockMultiBackend } from '@mocks/mocks'
 import { wrapInTestContext } from 'react-dnd-test-utils'
 import { DndContext } from 'react-dnd'
 import {MultiBackendSwitcher} from 'dnd-multi-backend'
@@ -14,7 +14,7 @@ type TestProps = {
 }
 
 describe('Preview component', () => {
-  let list: jest.Mocked<PreviewListImpl>
+  let list: MockedPreviewList
   let previewEnabled: jest.Mock<boolean>
 
   const Simple = () => {
@@ -40,9 +40,7 @@ describe('Preview component', () => {
 
   beforeEach(() => {
     previewEnabled = jest.fn() as jest.Mock<boolean>
-    list = new PreviewListImpl()
-    jest.spyOn(list, 'register')
-    jest.spyOn(list, 'unregister')
+    list = MockPreviewList()
   })
 
   test('exports a context', () => {
@@ -65,6 +63,10 @@ describe('Preview component', () => {
 
     describe('it renders correctly', () => {
       const testRender = ({init}) => {
+        const backend = {
+          ...MockMultiBackend(),
+          previewEnabled,
+        }
         previewEnabled.mockReturnValue(init)
 
         createComponent({generator: Simple})
@@ -85,7 +87,7 @@ describe('Preview component', () => {
 
         previewEnabled.mockReturnValue(true)
         act(() => {
-          getLastRegister().backendChanged({previewEnabled})
+          getLastRegister().backendChanged(backend)
         })
         expectNotNull()
 
@@ -96,7 +98,7 @@ describe('Preview component', () => {
         expectNotNull()
 
         act(() => {
-          getLastRegister().backendChanged({previewEnabled})
+          getLastRegister().backendChanged(backend)
         })
         expectNull()
       }
@@ -129,9 +131,8 @@ describe('Preview component', () => {
       render(<Component generator={Simple} />)
       act(() => {
         getLastRegister().backendChanged({
-          previewEnabled: () => {
-            return true
-          },
+          ...MockMultiBackend(),
+          previewEnabled: () => { return true },
         })
       })
       expect(screen.queryByText('abc')).toBeInTheDocument()

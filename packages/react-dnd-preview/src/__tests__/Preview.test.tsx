@@ -4,6 +4,7 @@ import {render, screen} from '@testing-library/react'
 import {Context, PreviewState} from '../Context'
 import {Preview, PreviewProps} from '../Preview'
 import {usePreviewState} from '../usePreview'
+import {MockDragMonitor} from '@mocks/mocks'
 
 jest.mock('../usePreview')
 
@@ -14,7 +15,7 @@ type GeneratorProps = Omit<PreviewState, 'item'> & {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const mockedUsePreview = require('../usePreview') as {
+const {__setMockReturn} = require('../usePreview') as {
   __setMockReturn: (state: usePreviewState) => void,
 }
 
@@ -29,13 +30,13 @@ describe('Preview subcomponent', () => {
 
   const setupTest = (props: PreviewProps): void => {
     test('is null when DnD is not in progress', () => {
-      mockedUsePreview.__setMockReturn({display: false})
+      __setMockReturn({display: false})
       createComponent(props)
       expect(screen.queryByText('dauphin: toto')).not.toBeInTheDocument()
     })
 
     test('is valid when DnD is in progress', () => {
-      mockedUsePreview.__setMockReturn({
+      __setMockReturn({
         display: true,
         style: {
           pointerEvents: 'none',
@@ -47,8 +48,8 @@ describe('Preview subcomponent', () => {
         },
         item: {coucou: 'dauphin'},
         itemType: 'toto',
-        monitor: undefined,
-        ref: undefined,
+        monitor: MockDragMonitor(),
+        ref: {current: undefined},
       })
       createComponent(props)
       const node = screen.queryByText('dauphin: toto')

@@ -12,9 +12,16 @@ const Card = (props) => {
     },
   });
   const isDragging = collectedProps.isDragging;
-  const style = {backgroundColor: props.color, opacity: isDragging ? 0.5 : 1};
+  const style = {
+    backgroundColor: props.color,
+    opacity: isDragging ? 0.5 : 1,
+    display: 'inline-block',
+    width: '100px',
+    height: '100px',
+    margin: '10px',
+  };
 
-  return <div className="square" style={style} ref={drag} />;
+  return <div style={style} ref={drag} />;
 };
 
 Card.propTypes = {

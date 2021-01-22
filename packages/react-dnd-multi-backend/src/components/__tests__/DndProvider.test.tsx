@@ -1,6 +1,6 @@
 import React, {ReactNode, useContext} from 'react'
 import {render} from '@testing-library/react'
-import {TestPipeline} from 'dnd-multi-backend/src/__fixtures__/pipeline'
+import {TestPipeline} from '@mocks/pipeline'
 
 import { DndProvider, PreviewPortalContext } from '../DndProvider'
 

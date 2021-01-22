@@ -1,5 +1,23 @@
-export { HTML5DragTransition, TouchTransition, MouseTransition } from './transitions'
-export { createTransition } from './createTransition'
 export { MultiFactory as MultiBackend } from './MultiFactory'
-export type { MultiBackendOptions } from './MultiBackendImpl'
-export type { MultiBackendSwitcher } from './types'
+
+export { createTransition } from './createTransition'
+export {
+  HTML5DragTransition,
+  TouchTransition,
+  MouseTransition,
+} from './transitions'
+
+export type {
+  MultiBackendOptions,
+  MultiBackendPipeline,
+  MultiBackendPipelineStep,
+  MultiBackendContext,
+} from './MultiBackendImpl'
+
+export type {
+  MultiBackendSwitcher,
+  PreviewList,
+  PreviewListener,
+  BackendEntry,
+  Transition,
+} from './types'

@@ -2,7 +2,7 @@ import React, { ReactElement, useContext } from 'react'
 import {render, screen, act} from '@testing-library/react'
 
 import { usePreview } from '../usePreview'
-import { PreviewListImpl } from 'dnd-multi-backend/src/PreviewListImpl'
+import { MockPreviewList, MockedPreviewList, MockMultiBackend } from '@mocks/mocks'
 import { wrapInTestContext } from 'react-dnd-test-utils'
 import { DndContext } from 'react-dnd'
 import {MultiBackendSwitcher} from 'dnd-multi-backend'
@@ -12,14 +12,12 @@ type TestProps = {
 }
 
 describe('usePreview component', () => {
-  let list: jest.Mocked<PreviewListImpl>
+  let list: MockedPreviewList
   let previewEnabled: jest.Mock<boolean>
 
   beforeEach(() => {
     previewEnabled = jest.fn() as jest.Mock<boolean>
-    list = new PreviewListImpl()
-    jest.spyOn(list, 'register')
-    jest.spyOn(list, 'unregister')
+    list = MockPreviewList()
   })
 
   const getLastRegister = () => {
@@ -60,6 +58,10 @@ describe('usePreview component', () => {
   describe('it renders correctly', () => {
     const testRender = ({init, hasContent}) => {
       const content = hasContent ? <div>abc</div> : null
+      const backend = {
+        ...MockMultiBackend(),
+        previewEnabled,
+      }
       previewEnabled.mockReturnValue(init)
 
       createComponent(content)
@@ -84,7 +86,7 @@ describe('usePreview component', () => {
 
       act(() => {
         previewEnabled.mockReturnValue(true)
-        getLastRegister().backendChanged({previewEnabled})
+        getLastRegister().backendChanged(backend)
       })
       expectNotNull()
 
@@ -95,7 +97,7 @@ describe('usePreview component', () => {
       expectNotNull()
 
       act(() => {
-        getLastRegister().backendChanged({previewEnabled})
+        getLastRegister().backendChanged(backend)
       })
       expectNull()
     }

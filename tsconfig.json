@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "packages/*/src/",
+    "baseUrl": ".",
     "target": "es2020",
     "module": "esnext",
     "moduleResolution": "node",
@@ -20,7 +20,12 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "preserveConstEnums": true
+    "preserveConstEnums": true,
+    "paths": {
+      "@mocks/*": ["__mocks__/*"],
+      "dnd-multi-backend": ["packages/dnd-multi-backend/src"],
+      "react-dnd-preview": ["packages/react-dnd-preview/src"]
+    }
   },
   "include": [
     "__mocks__/**/*.ts",
@@ -29,8 +34,4 @@
   "exclude": [
     "node_modules"
   ],
-  "paths": {
-    "dnd-multi-backend": ["packages/dnd-multi-backend/src"],
-    "react-dnd-preview": ["packages/react-dnd-preview/src"]
-  }
 }

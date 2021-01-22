@@ -1,12 +1,12 @@
 import {DragDropManager} from 'dnd-core'
-import {MultiBackend, PreviewList} from '../types'
+import {MultiBackendSwitcher, PreviewList} from '../types'
 import { PreviewListImpl } from '../PreviewListImpl'
 import {MultiBackendImpl} from '../MultiBackendImpl'
-import {TestPipeline} from '../__fixtures__/pipeline'
+import {TestPipeline} from '@mocks/pipeline'
 
 describe('PreviewListImpl class', () => {
   let list: PreviewList
-  let mb: MultiBackend
+  let mb: MultiBackendSwitcher
 
   beforeEach(() => {
     list = new PreviewListImpl()

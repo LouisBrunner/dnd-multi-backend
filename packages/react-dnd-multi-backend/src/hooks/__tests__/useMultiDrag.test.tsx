@@ -1,6 +1,6 @@
 import React from 'react'
 import {render} from '@testing-library/react'
-import {TestPipeline} from 'dnd-multi-backend/src/__fixtures__/pipeline'
+import {TestPipeline} from '@mocks/pipeline'
 
 import { useMultiDrag, useMultiDragState } from '../useMultiDrag'
 import { DndProvider } from '../..'
