@@ -1,4 +1,4 @@
-import { HTML5toTouch } from '../HTML5toTouch'
+import { HTML5toTouch } from '../index'
 import { TouchTransition, MouseTransition } from 'dnd-multi-backend'
 
 describe('HTML5toTouch pipeline', () => {

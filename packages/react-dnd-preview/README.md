@@ -113,7 +113,7 @@ Starting with `5.0.0`, `react-dnd-preview` will start passing its arguments pack
 
 ## License
 
-MIT, Copyright (c) 2016-2020 Louis Brunner
+MIT, Copyright (c) 2016-2021 Louis Brunner
 
 
 

@@ -366,7 +366,7 @@ Note that these aren't breaking changes, you can continue using the library as b
 
 ## License
 
-MIT, Copyright (c) 2016-2020 Louis Brunner
+MIT, Copyright (c) 2016-2021 Louis Brunner
 
 
 

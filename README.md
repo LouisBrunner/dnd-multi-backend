@@ -28,7 +28,7 @@ Thanks to the [React DnD HTML5 Backend](https://github.com/react-dnd/react-dnd) 
 
 ## License
 
-MIT, Copyright (c) 2016-2020 Louis Brunner
+MIT, Copyright (c) 2016-2021 Louis Brunner
 
 
 

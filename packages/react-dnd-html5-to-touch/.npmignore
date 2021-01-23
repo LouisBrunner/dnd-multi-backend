@@ -1,0 +1,10 @@
+# Input
+examples
+__mocks__
+__tests__
+src
+tsconfig.json
+
+# npm
+node_modules
+npm-debug.log

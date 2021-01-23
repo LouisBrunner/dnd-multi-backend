@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { DndProvider as ReactDndProvider } from 'react-dnd';
 
 import { MultiBackend, DndProvider, PreviewContext, usePreview, Preview } from '../src';
-import { HTML5toTouch } from '../src/HTML5toTouch';
+import { HTML5toTouch } from 'react-dnd-html5-to-touch';
 
 import Card from './Card';
 import Basket from './Basket';
