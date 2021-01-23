@@ -10,3 +10,7 @@ node_modules
 
 # Output
 packages/*/dist
+webpack-stats.json
+
+# IDE
+.vscode

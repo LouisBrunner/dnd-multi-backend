@@ -20,6 +20,7 @@ module.exports = {
       ],
 
       moduleNameMapper: {
+        '^@mocks/(.*)$': '<rootDir>/__mocks__/$1',
         '^dnd-multi-backend$': '<rootDir>/packages/dnd-multi-backend/src',
         '^react-dnd-preview$': '<rootDir>/packages/react-dnd-preview/src',
         '^dnd-core$': 'dnd-core/dist/cjs',

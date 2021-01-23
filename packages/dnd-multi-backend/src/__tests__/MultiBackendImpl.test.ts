@@ -3,9 +3,8 @@ import {DragDropManager} from 'dnd-core'
 import {MultiBackendContext, MultiBackendImpl, MultiBackendOptions} from '../MultiBackendImpl'
 import {TestBackends, TestPipeline, TestPipelineWithSkip} from '@mocks/pipeline'
 
-const globalNode = {
-  ...global,
-  window: window as unknown as DOMWindow | undefined,
+const globalNode = global as unknown as {
+  window: DOMWindow | undefined,
 }
 
 describe('MultiBackendImpl class', () => {

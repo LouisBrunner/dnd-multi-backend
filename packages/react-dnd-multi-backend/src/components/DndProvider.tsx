@@ -1,12 +1,17 @@
 import React, {useState, createContext, ReactNode} from 'react'
-import { DndProvider as ReactDndProvider, DndProviderProps as ReactDndProviderProps } from 'react-dnd'
+import { DragDropManager } from 'dnd-core'
+import { DndProvider as ReactDndProvider } from 'react-dnd'
 import { MultiBackend, MultiBackendOptions } from 'dnd-multi-backend'
 
 export const PreviewPortalContext = createContext<Element | null>(null)
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type DndProviderProps = Omit<ReactDndProviderProps<any, MultiBackendOptions>, 'backend'> & {
+export type DndProviderProps = {
+  manager: DragDropManager;
+} | {
+  context?: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  options: MultiBackendOptions,
   children?: ReactNode,
+  debugMode?: boolean,
 }
 
 export const DndProvider = (props: DndProviderProps): JSX.Element => {

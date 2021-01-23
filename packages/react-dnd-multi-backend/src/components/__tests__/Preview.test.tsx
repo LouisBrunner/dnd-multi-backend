@@ -26,7 +26,7 @@ describe('Preview component', () => {
   }
 
   const PreviewFC = React.forwardRef((props: TestProps, _ref) => {
-    const backend = useContext(DndContext).dragDropManager.getBackend() as MultiBackendSwitcher
+    const backend = useContext(DndContext).dragDropManager?.getBackend() as MultiBackendSwitcher
     backend.previewsList = () => {
       return list
     }
@@ -36,7 +36,7 @@ describe('Preview component', () => {
 
   PreviewFC.displayName = 'PreviewFC'
 
-  const Wrapped = wrapInTestContext(PreviewFC) as React.Component<TestProps>
+  const Wrapped = wrapInTestContext(PreviewFC) as React.ComponentType<TestProps>
 
   beforeEach(() => {
     previewEnabled = jest.fn() as jest.Mock<boolean>
@@ -62,7 +62,7 @@ describe('Preview component', () => {
     })
 
     describe('it renders correctly', () => {
-      const testRender = ({init}) => {
+      const testRender = ({init}: {init: boolean}) => {
         const backend = {
           ...MockMultiBackend(),
           previewEnabled,

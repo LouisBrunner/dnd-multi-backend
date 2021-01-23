@@ -20,9 +20,12 @@ module.exports = merge(commonConfig, {
     libraryTarget: 'umd',
     library: '[name]',
   },
-  externals: {
-    // Use external version of React and ReactDnD
-    react: 'React',
-    'react-dnd': 'ReactDnD',
-  },
+  externals: [
+    {
+      // Use external version of React and ReactDnD
+      react: 'React',
+      'react-dom': 'ReactDOM',
+      'react-dnd': 'ReactDnD',
+    },
+  ],
 });

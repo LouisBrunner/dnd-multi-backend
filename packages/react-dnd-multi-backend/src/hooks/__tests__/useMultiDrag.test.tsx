@@ -1,5 +1,6 @@
 import React from 'react'
 import {render} from '@testing-library/react'
+import { renderHook } from '@testing-library/react-hooks'
 import {TestPipeline} from '@mocks/pipeline'
 
 import { useMultiDrag, useMultiDragState } from '../useMultiDrag'
@@ -26,6 +27,11 @@ describe('useMultiDrag component', () => {
   const createComponent = (options = TestPipeline) => {
     return render(<DndProvider options={options}><MultiAction /></DndProvider>)
   }
+
+  test('fails without a context', () => {
+    const {result} = renderHook(MultiAction)
+    expect(result.error).toEqual(expect.any(Error))
+  })
 
   test('it works', () => {
     createComponent()

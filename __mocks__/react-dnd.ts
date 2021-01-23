@@ -11,4 +11,7 @@ export const useDragLayer = <CollectedProps>(collect: (monitor: DragLayerMonitor
   return collect(mockMonitor)
 }
 
-module.exports = dnd
+export const DndProvider = dnd.DndProvider
+export const useDrag = dnd.useDrag
+export const useDrop = dnd.useDrop
+export const DndContext = dnd.DndContext

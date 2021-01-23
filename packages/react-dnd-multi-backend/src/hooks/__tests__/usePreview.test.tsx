@@ -8,7 +8,7 @@ import { DndContext } from 'react-dnd'
 import {MultiBackendSwitcher} from 'dnd-multi-backend'
 
 type TestProps = {
-  children?: ReactElement,
+  children: ReactElement | null,
 }
 
 describe('usePreview component', () => {
@@ -25,7 +25,7 @@ describe('usePreview component', () => {
   }
 
   const PreviewFC = React.forwardRef((props: TestProps, _ref) => {
-    const backend = useContext(DndContext).dragDropManager.getBackend() as MultiBackendSwitcher
+    const backend = useContext(DndContext).dragDropManager?.getBackend() as MultiBackendSwitcher
     backend.previewsList = () => {
       return list
     }
@@ -39,9 +39,9 @@ describe('usePreview component', () => {
 
   PreviewFC.displayName = 'PreviewFC'
 
-  const Wrapped = wrapInTestContext(PreviewFC) as React.Component<TestProps>
+  const Wrapped = wrapInTestContext(PreviewFC) as React.ComponentType<TestProps>
 
-  const createComponent = (children?: ReactElement) => {
+  const createComponent = ({children}: TestProps = {children: null}) => {
     return render(<Wrapped>{children}</Wrapped>)
   }
 
@@ -56,7 +56,7 @@ describe('usePreview component', () => {
   })
 
   describe('it renders correctly', () => {
-    const testRender = ({init, hasContent}) => {
+    const testRender = ({init, hasContent}: {init: boolean, hasContent: boolean}) => {
       const content = hasContent ? <div>abc</div> : null
       const backend = {
         ...MockMultiBackend(),
@@ -64,7 +64,7 @@ describe('usePreview component', () => {
       }
       previewEnabled.mockReturnValue(init)
 
-      createComponent(content)
+      createComponent({children: content})
 
       const expectNull = () => {
         expect(screen.queryByText('abc')).not.toBeInTheDocument()

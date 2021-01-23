@@ -18,11 +18,15 @@ const useForBackend = <Spec, Res>(spec: Spec, fn: Fn<Spec, Res>, manager: DragDr
 }
 
 export const useMultiCommon = <Spec, Res>(spec: Spec, fn: Fn<Spec, Res>): [Res, Record<string, Res>] => {
-  const result = fn(spec)
   const dndContext = useContext<DndContextType>(DndContext)
+  const dndBackend = dndContext?.dragDropManager?.getBackend()
+  if (dndBackend === undefined) {
+    throw new Error('could not find backend, make sure you are using a <DndProvider />')
+  }
 
+  const result = fn(spec)
   const multiResult: Record<string, Res> = {}
-  const backends = (dndContext?.dragDropManager?.getBackend() as MultiBackendSwitcher).backendsList()
+  const backends = (dndBackend as MultiBackendSwitcher).backendsList()
   for (const backend of backends) {
     multiResult[backend.id] = useForBackend(spec, fn, dndContext.dragDropManager as DragDropManagerImpl, backend.instance)
   }

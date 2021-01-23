@@ -84,7 +84,11 @@ describe('Preview subcomponent', () => {
 
   describe('using component child', () => {
     const Child = () => {
-      return generator(useContext(Context))
+      const props = useContext(Context)
+      if (props === undefined) {
+        return null
+      }
+      return generator(props)
     }
 
     setupTest({
@@ -96,7 +100,12 @@ describe('Preview subcomponent', () => {
     setupTest({
       children: (
         <Context.Consumer>
-          {generator}
+          {(props?: GeneratorProps) => {
+            if (props === undefined) {
+              return null
+            }
+            return generator(props)
+          }}
         </Context.Consumer>
       ),
     })

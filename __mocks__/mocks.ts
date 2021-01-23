@@ -9,12 +9,17 @@ export const MockDragMonitor = (): jest.Mocked<DragLayerMonitor> => {
     getClientOffset: jest.fn(() => { return null }),
     getInitialClientOffset: jest.fn(() => { return null }),
     getInitialSourceClientOffset: jest.fn(() => { return null }),
+    // eslint-disable-next-line id-length
     getDifferenceFromInitialOffset: jest.fn(() => { return null }),
     getSourceClientOffset: jest.fn(() => { return null }),
   }
 }
 
-export type MockedPreviewList = jest.Mocked<PreviewList>
+type OmitThisParameters<T> = {
+  [P in keyof T]: OmitThisParameter<T[P]>;
+}
+
+export type MockedPreviewList = OmitThisParameters<jest.Mocked<PreviewList>>
 
 export const MockPreviewList = (): MockedPreviewList => {
   return {

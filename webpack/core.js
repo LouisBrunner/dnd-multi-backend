@@ -18,7 +18,9 @@ module.exports = {
         enforce: 'pre',
         use: [
           {loader: 'babel-loader'},
-          {loader: 'ts-loader', options: {configFile: path.join(__dirname, '..', 'tsconfig.json')}},
+          {loader: 'ts-loader', options: {
+            configFile: path.join(__dirname, '..', 'tsconfig.webpack.json'),
+          }},
           {loader: 'eslint-loader'},
         ],
       },
