@@ -1,5 +1,5 @@
 import { createDragDropManager } from 'dnd-core';
-import MultiBackend, { MouseTransition, TouchTransition } from '../src';
+import { MultiBackend, MouseTransition, TouchTransition } from '../src';
 import { HTML5Backend, TouchBackend } from './Backends';
 import { DragSource, DropTarget } from './DnD';
 

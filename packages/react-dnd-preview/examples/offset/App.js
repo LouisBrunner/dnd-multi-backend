@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDrag, DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { usePreview } from '../../src';
 
-export const ShapeRaw = ({style, size, color, children}, ref) => {
+const Shape = React.forwardRef(({style, size, color, children}, ref) => {
   return (
     <div ref={ref} style={{
       ...style,
@@ -15,16 +15,16 @@ export const ShapeRaw = ({style, size, color, children}, ref) => {
       {children}
     </div>
   );
-};
+});
 
-ShapeRaw.propTypes = {
+Shape.displayName = 'Shape';
+
+Shape.propTypes = {
   style: PropTypes.object,
   size: PropTypes.number,
   color: PropTypes.string,
   children: PropTypes.any,
 };
-
-const Shape = React.forwardRef(ShapeRaw);
 
 export const Draggable = () => {
   const [_, drag] = useDrag({
@@ -78,18 +78,28 @@ Preview.propTypes = {
   text: PropTypes.string,
 };
 
-export default class App extends Component {
-  render() {
-    return (
-      <React.StrictMode>
-        <DndProvider backend={TouchBackend} options={{enableMouseEvents: true}}>
-          <Draggable />
-          <Preview text="default" kind={Kinds.Default} />
-          <Preview text="with ref" kind={Kinds.Ref} />
-          <Preview text="custom ClientOffset" kind={Kinds.CustomClient} />
-          <Preview text="custom SourceClientOffset" kind={Kinds.CustomSourceClient} />
-        </DndProvider>
-      </React.StrictMode>
-    );
-  }
-}
+export const App = () => {
+  const [debug, setDebug] = useState(false);
+
+  return (
+    <React.StrictMode>
+      <div>
+        <input type="checkbox" value={debug} onChange={(e) => {
+          setDebug(e.target.checked);
+        }} id="debug_mode" />
+        <label htmlFor="debug_mode">Debug mode</label>
+      </div>
+      <DndProvider backend={TouchBackend} options={{enableMouseEvents: true}}>
+        <Draggable />
+        <Preview text="default" kind={Kinds.Default} />
+        <Preview text="with ref" kind={Kinds.Ref} />
+        {debug ? (
+          <>
+            <Preview text="custom ClientOffset" kind={Kinds.CustomClient} />
+            <Preview text="custom SourceClientOffset" kind={Kinds.CustomSourceClient} />
+          </>
+        ) : null}
+      </DndProvider>
+    </React.StrictMode>
+  );
+};
