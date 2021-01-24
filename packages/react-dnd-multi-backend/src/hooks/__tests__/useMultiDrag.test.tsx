@@ -1,16 +1,12 @@
-import React from 'react'
-import {render} from '@testing-library/react'
+import React, {ReactNode} from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 import {TestPipeline} from '@mocks/pipeline'
-
-import { useMultiDrag, useMultiDragState } from '../useMultiDrag'
+import { useMultiDrag } from '../useMultiDrag'
 import { DndProvider } from '../..'
 
 describe('useMultiDrag component', () => {
-  let _result: useMultiDragState<unknown>
-
   const MultiAction = () => {
-    const result = useMultiDrag({
+    return useMultiDrag({
       item: {type: 'card'},
       collect: (monitor) => {
         return {
@@ -18,14 +14,6 @@ describe('useMultiDrag component', () => {
         }
       },
     })
-
-    _result = result
-
-    return null
-  }
-
-  const createComponent = (options = TestPipeline) => {
-    return render(<DndProvider options={options}><MultiAction /></DndProvider>)
   }
 
   test('fails without a context', () => {
@@ -34,9 +22,10 @@ describe('useMultiDrag component', () => {
   })
 
   test('it works', () => {
-    createComponent()
+    const wrapper = ({children}: {children?: ReactNode}) => { return <DndProvider options={TestPipeline}>{children}</DndProvider> }
+    const {result} = renderHook(MultiAction, {wrapper})
 
-    const [props, backends] = _result
+    const [props, backends] = result.current
     expect(props).toHaveLength(3)
     expect(props[0]).toHaveProperty('isDragging', false)
     expect(backends).toHaveProperty('back1')

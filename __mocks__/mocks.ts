@@ -29,7 +29,9 @@ export const MockPreviewList = (): MockedPreviewList => {
   }
 }
 
-export const MockMultiBackend = (): jest.Mocked<MultiBackendSwitcher> => {
+export type MockedMultiBackend = jest.Mocked<MultiBackendSwitcher>
+
+export const MockMultiBackend = (): MockedMultiBackend => {
   return {
     backendsList: jest.fn(),
     previewsList: jest.fn(),

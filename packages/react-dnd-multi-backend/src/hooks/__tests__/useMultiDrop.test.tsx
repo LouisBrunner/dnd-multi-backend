@@ -1,16 +1,13 @@
-import React from 'react'
-import {render} from '@testing-library/react'
+import React, {ReactNode} from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 import {TestPipeline} from '@mocks/pipeline'
 
-import { useMultiDrop, useMultiDropState } from '../useMultiDrop'
+import { useMultiDrop } from '../useMultiDrop'
 import { DndProvider } from '../..'
 
 describe('useMultiDrop component', () => {
-  let _result: useMultiDropState<unknown>
-
   const MultiAction = () => {
-    const result = useMultiDrop({
+    return useMultiDrop({
       accept: 'card',
       collect: (monitor) => {
         return {
@@ -19,14 +16,6 @@ describe('useMultiDrop component', () => {
         }
       },
     })
-
-    _result = result
-
-    return null
-  }
-
-  const createComponent = (options = TestPipeline) => {
-    return render(<DndProvider options={options}><MultiAction /></DndProvider>)
   }
 
   test('fails without a context', () => {
@@ -35,9 +24,10 @@ describe('useMultiDrop component', () => {
   })
 
   test('it works', () => {
-    createComponent()
+    const wrapper = ({children}: {children?: ReactNode}) => { return <DndProvider options={TestPipeline}>{children}</DndProvider> }
+    const {result} = renderHook(MultiAction, {wrapper})
 
-    const [props, backends] = _result
+    const [props, backends] = result.current
     expect(props).toHaveLength(2)
     expect(props[0]).toHaveProperty('isOver', false)
     expect(props[0]).toHaveProperty('canDrop', false)
