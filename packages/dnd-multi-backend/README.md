@@ -5,12 +5,12 @@
 This project is a Drag'n'Drop backend compatible with [DnD Core](https://github.com/react-dnd/react-dnd/tree/master/packages/dnd-core).
 It enables your application to use different DnD backends depending on the situation. This package is completely frontend-agnostic, you can refer to [this page](https://github.com/LouisBrunner/dnd-multi-backend) for frontend-specific packages. This means if your front-end is not yet supported, you'll have to roll out your own.
 
-See the [migration section](#migrating) for instructions when switching from `5.0.x`.
+See the [migration section](#migrating) for instructions when switching from `5.0.x` or `6.x.x`.
 
 ## Installation
 
 ```sh
-npm install dnd-multi-backend
+npm install -S dnd-multi-backend
 ```
 
 ## Usage & Example
@@ -22,13 +22,13 @@ You should only use this package if your framework is not in the supported list:
 In this case, you will need to write a [custom pipeline](../react-dnd-multi-backend#create-a-custom-pipeline) including as many `dnd-core` backends as you wish. See also the [examples](examples/) for more information.
 
 ```js
-import { createDragDropManager } from 'dnd-core';
-import MultiBackend from 'dnd-multi-backend';
+import { createDragDropManager } from 'dnd-core'
+import { MultiBackend } from 'dnd-multi-backend'
 
 // Define the backend and pipeline
 class HTML5Backend {
   constructor(manager) {
-    this.manager = manager;
+    this.manager = manager
   }
 
   setup() {}
@@ -37,19 +37,19 @@ class HTML5Backend {
   connectDragSource(sourceId, node, options) {
     ...
 
-    return () => {};
+    return () => {}
   }
 
   connectDragPreview(previewId, node, options) {
     ...
 
-    return () => {};
+    return () => {}
   }
 
   connectDropTarget(targetId, node, options) {
     ...
 
-    return () => {};
+    return () => {}
   }
 }
 
@@ -69,11 +69,11 @@ const pipeline = {
       transition: TouchTransition,
     },
   ],
-};
+}
 
 // Setup the manager
-const manager = createDragDropManager(MultiBackend, {}, pipeline);
-const registry = manager.getRegistry();
+const manager = createDragDropManager(MultiBackend, {}, pipeline)
+const registry = manager.getRegistry()
 
 // Setup your DnD logic
 class Source {
@@ -94,28 +94,42 @@ class Target {
 }
 
 // Define the DnD logic on the manager
-const Item = 'item';
-const src = new Source();
-const dst = new Target();
+const Item = 'item'
+const src = new Source()
+const dst = new Target()
 
-const srcId = registry.addSource(Item, src);
-const dstId = registry.addTarget(Item, dst);
+const srcId = registry.addSource(Item, src)
+const dstId = registry.addTarget(Item, dst)
 
 // Link the DOM with the logic
-const srcP = document.createElement('p');
-const srcTxt = document.createTextNode('Source');
-srcP.appendChild(srcTxt);
-document.body.appendChild(srcP);
-manager.getBackend().connectDragSource(srcId, srcP);
+const srcP = document.createElement('p')
+const srcTxt = document.createTextNode('Source')
+srcP.appendChild(srcTxt)
+document.body.appendChild(srcP)
+manager.getBackend().connectDragSource(srcId, srcP)
 
-const dstP = document.createElement('p');
-const dstTxt = document.createTextNode('Target');
-dstP.appendChild(dstTxt);
-document.body.appendChild(dstP);
-manager.getBackend().connectDropTarget(dstId, dstP);
+const dstP = document.createElement('p')
+const dstTxt = document.createTextNode('Target')
+dstP.appendChild(dstTxt)
+document.body.appendChild(dstP)
+manager.getBackend().connectDropTarget(dstId, dstP)
 ```
 
 ## Migrating
+
+### Migrating from 6.x.x
+
+Starting with `7.0.0`, `dnd-multi-backend` doesn't have a default export anymore.
+
+Previously:
+```js
+import MultiBackend from 'dnd-multi-backend'
+```
+
+Now:
+```js
+import { MultiBackend } from 'dnd-multi-backend'
+```
 
 ### Migrating from 5.0.x
 

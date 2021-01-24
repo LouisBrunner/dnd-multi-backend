@@ -50,7 +50,7 @@ You can see an example [here](examples/).
 
 ### Migrating from 6.x.x and earlier
 
-`HTML5toTouch` used to be provided as part of `react-dnd-multi-backend` which made importing different builds (commonjs vs esm) more difficult. It also used the default default export.
+`HTML5toTouch` used to be provided as part of `react-dnd-multi-backend` which made importing different builds (commonjs vs esm) more difficult. It also used to be a default export.
 
 Previously:
 ```js

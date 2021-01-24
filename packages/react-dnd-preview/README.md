@@ -4,12 +4,12 @@
 
 This project is a React component compatible with [React DnD](https://github.com/react-dnd/react-dnd) that can be used to emulate a Drag'n'Drop "ghost" when a Backend system doesn't have one (e.g. `react-dnd-touch-backend`).
 
-See the [migration section](#migrating) for instructions when switching from `4.x.x`.
+See the [migration section](#migrating) for instructions when switching from `4.x.x` or `6.x.x`.
 
 ## Installation
 
 ```sh
-npm install react-dnd-preview
+npm install -S react-dnd-preview
 ```
 
 ## Usage & Example
@@ -33,79 +33,90 @@ See also the [examples](examples/) for more information.
 ### Hook-based
 
 ```js
-  import { usePreview } from 'react-dnd-preview';
+import { usePreview } from 'react-dnd-preview'
 
-  const MyPreview = () => {
-    const {display, itemType, item, style} = usePreview();
-    if (!display) {
-      return null;
-    }
-    return <div class="item-list__item" style={style}>{itemType}</div>;
-  };
+const MyPreview = () => {
+  const {display, itemType, item, style} = usePreview()
+  if (!display) {
+    return null
+  }
+  return <div class="item-list__item" style={style}>{itemType}</div>
+}
 
-  const App = () => {
-    return (
-      <DndProvider backend={MyBackend}>
-        <ItemList />
-        <MyPreview />
-      </DndProvider>
-    );
-  };
+const App = () => {
+  return (
+    <DndProvider backend={MyBackend}>
+      <ItemList />
+      <MyPreview />
+    </DndProvider>
+  )
+}
 ```
 
 ### Function-based
 
 ```js
-  import Preview from 'react-dnd-preview';
+import { Preview } from 'react-dnd-preview'
 
-  const generatePreview = ({itemType, item, style}) => {
-    return <div class="item-list__item" style={style}>{itemType}</div>;
-  };
+const generatePreview = ({itemType, item, style}) => {
+  return <div class="item-list__item" style={style}>{itemType}</div>
+}
 
-  class App extends React.Component {
-    ...
-
-    render() {
-      return (
-        <DndProvider backend={MyBackend}>
-          <ItemList />
-          <Preview generator={generatePreview} />
-          // or
-          <Preview>{generatePreview}</Preview>
-        </DndProvider>
-      );
-    }
+class App extends React.Component {
+  render() {
+    return (
+      <DndProvider backend={MyBackend}>
+        <ItemList />
+        <Preview generator={generatePreview} />
+        // or
+        <Preview>{generatePreview}</Preview>
+      </DndProvider>
+    )
   }
+}
 ```
 
 ### Context-based
 
 ```js
-  import Preview, { Context } from 'react-dnd-preview';
+import { Preview, Context } from 'react-dnd-preview'
 
-  const MyPreview = () => {
-    const {itemType, item, style} = useContext(Preview.Component);
-    return <div class="item-list__item" style={style}>{itemType}</div>;
-  };
+const MyPreview = () => {
+  const {itemType, item, style} = useContext(Preview.Component)
+  return <div class="item-list__item" style={style}>{itemType}</div>
+}
 
-  const App = () => {
-    return (
-      <DndProvider backend={MyBackend}>
-        <ItemList />
-        <Preview>
-          <MyPreview />
-          // or
-          <Context.Consumer>
-            {({itemType, item, style}) => <div class="item-list__item" style={style}>{itemType}</div>}
-          </Context.Consumer>
-        </Preview>
-      </DndProvider>
-    );
-  };
+const App = () => {
+  return (
+    <DndProvider backend={MyBackend}>
+      <ItemList />
+      <Preview>
+        <MyPreview />
+        // or
+        <Context.Consumer>
+          {({itemType, item, style}) => <div class="item-list__item" style={style}>{itemType}</div>}
+        </Context.Consumer>
+      </Preview>
+    </DndProvider>
+  )
+}
 ```
 
-
 ## Migrating
+
+### Migrating from 6.x.x
+
+Starting with `7.0.0`, `react-dnd-preview` doesn't have a default export anymore.
+
+Previously:
+```js
+import Preview from 'react-dnd-preview'
+```
+
+Now:
+```js
+import { Preview } from 'react-dnd-preview'
+```
 
 ### Migrating from 4.x.x
 
