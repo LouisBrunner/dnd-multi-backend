@@ -50,7 +50,7 @@ ComponentPreview.propTypes = {
 const getContent = (title, ref) => {
   return (
     <>
-      <h1>{title} API</h1>
+      <h2>{title} API</h2>
       <Card color="#cc2211" />
       <Card color="#22cc11" />
       <Card color="#2211cc" />

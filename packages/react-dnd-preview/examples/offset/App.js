@@ -55,12 +55,12 @@ export const App = () => {
 
   return (
     <React.StrictMode>
-      <div>
+      <p>
         <input type="checkbox" value={debug} onChange={(e) => {
           setDebug(e.target.checked);
         }} id="debug_mode" />
         <label htmlFor="debug_mode">Debug mode</label>
-      </div>
+      </p>
       <DndProvider backend={TouchBackend} options={{enableMouseEvents: true}}>
         <Draggable />
         <Preview text="default" kind={Kinds.Default} />

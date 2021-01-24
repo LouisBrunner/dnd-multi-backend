@@ -28,7 +28,7 @@ export type MultiBackendOptions = {
 }
 
 export class MultiBackendImpl implements MultiBackendSwitcher {
-  /*private*/ static /*#*/isSetUp = false
+  private static /*#*/isSetUp = false
 
   /*private*/ #current: string
   /*private*/ #previews: PreviewList
