@@ -5,7 +5,7 @@ module.exports = merge(commonConfig, {
   entry: {
     DnDMultiBackend: './packages/dnd-multi-backend/src/index.ts',
     ReactDnDMultiBackend: './packages/react-dnd-multi-backend/src/index.ts',
-    HTML5toTouch: './packages/react-dnd-html5-to-touch/src/index.ts',
+    HTML5toTouch: './packages/react-dnd-multi-html5-to-touch/src/index.ts',
     ReactDnDPreview: './packages/react-dnd-preview/src/index.ts',
   },
   output: {
@@ -17,7 +17,7 @@ module.exports = merge(commonConfig, {
       } else if (chunk.name === 'ReactDnDMultiBackend') {
         dir = 'react-dnd-multi-backend';
       } else if (chunk.name === 'HTML5toTouch') {
-        dir = 'react-dnd-html5-to-touch';
+        dir = 'react-dnd-multi-html5-to-touch';
       } else if (chunk.name === 'ReactDnDPreview') {
         dir = 'react-dnd-preview';
       }
@@ -35,7 +35,7 @@ module.exports = merge(commonConfig, {
     },
     // eslint-disable-next-line require-await, space-before-function-paren
     async ({context, request}) => {
-      if (/\/react-dnd-html5-to-touch\//.test(context) && /^dnd-multi-backend$/.test(request)) {
+      if (/\/react-dnd-multi-html5-to-touch\//.test(context) && /^dnd-multi-backend$/.test(request)) {
         return 'DnDMultiBackend';
       }
       return undefined;

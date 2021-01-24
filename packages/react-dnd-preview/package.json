@@ -19,5 +19,6 @@
   "peerDependencies": {
     "react": "^16.14.0",
     "react-dnd": "^11.1.3"
-  }
+  },
+  "gitHead": "80ee78a4b23b07386a8034bd40532d595d622138"
 }

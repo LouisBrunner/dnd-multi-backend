@@ -15,5 +15,6 @@
     "multi"
   ],
   "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js"
+  "module": "dist/esm/index.js",
+  "gitHead": "80ee78a4b23b07386a8034bd40532d595d622138"
 }

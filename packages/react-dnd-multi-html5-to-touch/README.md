@@ -14,14 +14,14 @@ See the [migration section](#migrating) for instructions when switching from `6.
 ### NPM Installation
 
 ```sh
-npm install -S react-dnd-html5-to-touch
+npm install -S react-dnd-multi-html5-to-touch
 ```
 
-You can then import the pipeline using `import { HTML5toTouch } from 'react-dnd-html5-to-touch'`.
+You can then import the pipeline using `import { HTML5toTouch } from 'react-dnd-multi-html5-to-touch'`.
 
 ### Browser Installation
 
-Use the minified UMD build in the `dist` folder: https://www.jsdelivr.com/package/npm/react-dnd-html5-to-touch?path=dist%2Fumd.
+Use the minified UMD build in the `dist` folder: https://www.jsdelivr.com/package/npm/react-dnd-multi-html5-to-touch?path=dist%2Fumd.
 
 `HTML5toTouch.min.js` exports a global `window.HTML5toTouch` when imported as a `<script>` tag and expects `window.React` and `window.ReactDnD` to be provided.
 
@@ -31,7 +31,7 @@ This package should be used with [`react-dnd-multi-backend`](../react-dnd-multi-
 
 ```js
 import { DndProvider } from 'react-dnd-multi-backend'
-import { HTML5toTouch } from 'react-dnd-html5-to-touch'
+import { HTML5toTouch } from 'react-dnd-multi-html5-to-touch'
 
 const App = () => {
   return (
@@ -61,7 +61,7 @@ import HTML5toTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch'
 
 Now:
 ```js
-import { HTML5toTouch } from 'react-dnd-html5-to-touch'
+import { HTML5toTouch } from 'react-dnd-multi-html5-to-touch'
 ```
 
 ## License
@@ -69,9 +69,9 @@ import { HTML5toTouch } from 'react-dnd-html5-to-touch'
 MIT, Copyright (c) 2021 Louis Brunner
 
 
-[npm-image]: https://img.shields.io/npm/v/react-dnd-html5-to-touch.svg
-[npm-url]: https://npmjs.org/package/react-dnd-html5-to-touch
-[deps-image]: https://david-dm.org/louisbrunner/react-dnd-html5-to-touch/status.svg
-[deps-url]: https://david-dm.org/louisbrunner/react-dnd-html5-to-touch
-[deps-dev-image]: https://david-dm.org/louisbrunner/react-dnd-html5-to-touch/dev-status.svg
-[deps-dev-url]: https://david-dm.org/louisbrunner/react-dnd-html5-to-touch?type=dev
+[npm-image]: https://img.shields.io/npm/v/react-dnd-multi-html5-to-touch.svg
+[npm-url]: https://npmjs.org/package/react-dnd-multi-html5-to-touch
+[deps-image]: https://david-dm.org/louisbrunner/react-dnd-multi-html5-to-touch/status.svg
+[deps-url]: https://david-dm.org/louisbrunner/react-dnd-multi-html5-to-touch
+[deps-dev-image]: https://david-dm.org/louisbrunner/react-dnd-multi-html5-to-touch/dev-status.svg
+[deps-dev-url]: https://david-dm.org/louisbrunner/react-dnd-multi-html5-to-touch?type=dev

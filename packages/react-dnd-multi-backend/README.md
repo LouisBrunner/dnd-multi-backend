@@ -4,9 +4,9 @@
 
 This project is a Drag'n'Drop backend compatible with [React DnD](https://github.com/react-dnd/react-dnd).
 It enables your application to use different DnD backends depending on the situation.
-You can either generate your own backend pipeline or use the default one (see [`react-dnd-html5-to-touch`](../react-dnd-html5-to-touch)).
+You can either generate your own backend pipeline or use the default one (see [`react-dnd-multi-html5-to-touch`](../react-dnd-multi-html5-to-touch)).
 
-[`react-dnd-html5-to-touch`](../react-dnd-html5-to-touch) starts by using the [React DnD HTML5 Backend](https://react-dnd.github.io/react-dnd/docs/backends/html5), but switches to the [React DnD Touch Backend](https://react-dnd.github.io/react-dnd/docs/backends/touch) if a touch event is triggered.
+[`react-dnd-multi-html5-to-touch`](../react-dnd-multi-html5-to-touch) starts by using the [React DnD HTML5 Backend](https://react-dnd.github.io/react-dnd/docs/backends/html5), but switches to the [React DnD Touch Backend](https://react-dnd.github.io/react-dnd/docs/backends/touch) if a touch event is triggered.
 You application can smoothly use the nice HTML5 compatible backend and fallback on the Touch one on mobile devices!
 
 Moreover, because some backends don't support preview, a `Preview` component has been added to make it easier to mock the Drag'n'Drop "ghost".
@@ -31,10 +31,10 @@ Use the minified UMD build in the `dist` folder: https://www.jsdelivr.com/packag
 
 ### Backends pipeline
 
-In order to use [`react-dnd-html5-to-touch`](../react-dnd-html5-to-touch), you will now need to install it separately:
+In order to use [`react-dnd-multi-html5-to-touch`](../react-dnd-multi-html5-to-touch), you will now need to install it separately:
 
 ```sh
-npm install -S react-dnd-html5-to-touch
+npm install -S react-dnd-multi-html5-to-touch
 ```
 
 ## Usage
@@ -43,11 +43,11 @@ npm install -S react-dnd-html5-to-touch
 
 You can use the `DndProvider` component the same way you do the one from `react-dnd` ([docs](https://react-dnd.github.io/react-dnd/docs/api/dnd-provider) for more information), at the difference that you don't need to specify `backend` as a prop, it is implied to be `MultiBackend`.
 
-You must pass a 'pipeline' to use as argument. [`react-dnd-html5-to-touch`](../react-dnd-html5-to-touch) is provided as another package but you can also write your own.
+You must pass a 'pipeline' to use as argument. [`react-dnd-multi-html5-to-touch`](../react-dnd-multi-html5-to-touch) is provided as another package but you can also write your own.
 
 ```js
 import { DndProvider } from 'react-dnd-multi-backend'
-import { HTML5toTouch } from 'react-dnd-html5-to-touch' // or any other pipeline
+import { HTML5toTouch } from 'react-dnd-multi-html5-to-touch' // or any other pipeline
 
 const App = () => {
   return (
@@ -62,12 +62,12 @@ const App = () => {
 
 You can plug this backend in the `DragDropContext` the same way you do for any backend (e.g. `ReactDnDHTML5Backend`), you can see [the docs](https://react-dnd.github.io/react-dnd/docs/backends/html5) for more information.
 
-You must pass a 'pipeline' to use as argument. [`react-dnd-html5-to-touch`](../react-dnd-html5-to-touch) is provided as another package but you can also write your own.
+You must pass a 'pipeline' to use as argument. [`react-dnd-multi-html5-to-touch`](../react-dnd-multi-html5-to-touch) is provided as another package but you can also write your own.
 
 ```js
 import { DndProvider } from 'react-dnd'
 import { MultiBackend } from 'react-dnd-multi-backend'
-import { HTML5toTouch } from 'react-dnd-html5-to-touch' // or any other pipeline
+import { HTML5toTouch } from 'react-dnd-multi-html5-to-touch' // or any other pipeline
 
 const App = () => {
   return (
@@ -92,7 +92,7 @@ But other options are available:
  - `transition`: optional, an object returned by the `createTransition` function
  - `skipDispatchOnTransition`: optional, a boolean indicating transition events should not be dispatched to new backend, defaults to `false`. See [note below](#note-on-skipdispatchontransition) for details and use cases.)
 
-Here is the `react-dnd-html5-to-touch` pipeline's code as an example:
+Here is the `react-dnd-multi-html5-to-touch` pipeline's code as an example:
 ```js
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { TouchBackend } from 'react-dnd-touch-backend'
@@ -270,7 +270,7 @@ All of them receive the same data formatted the same way, an object containing t
  - `ref`: a reference which can be passed to the final component that will use `style`, it will allow `Preview` to position the previewed component correctly (closer to what HTML5 DnD can do)
  - `monitor`: the actual [`DragLayerMonitor`](https://react-dnd.github.io/react-dnd/docs/api/drag-layer-monitor) from `react-dnd`
 
-Note that this component will only be showed while using a backend flagged with `preview: true` (see [Create a custom pipeline](#create-a-custom-pipeline)) which is the case for the Touch backend in the `react-dnd-html5-to-touch` pipeline.
+Note that this component will only be showed while using a backend flagged with `preview: true` (see [Create a custom pipeline](#create-a-custom-pipeline)) which is the case for the Touch backend in the `react-dnd-multi-html5-to-touch` pipeline.
 
 #### Hook-based
 
@@ -347,7 +347,7 @@ You can see an example [here](examples/).
 
 ### Migrating from 6.x.x
 
-Starting with `7.0.0`, `HTML5toTouch` will not be provided through this package anymore but through its own: [`react-dnd-html5-to-touch`](../react-dnd-html5-to-touch/). It also doesn't have a default export anymore.
+Starting with `7.0.0`, `HTML5toTouch` will not be provided through this package anymore but through its own: [`react-dnd-multi-html5-to-touch`](../react-dnd-multi-html5-to-touch/). It also doesn't have a default export anymore.
 
 Previously:
 ```js
@@ -360,7 +360,7 @@ import HTML5toTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch'
 Now:
 ```js
 import { MultiBackend } from 'react-dnd-multi-backend'
-import { HTML5toTouch } from 'react-dnd-html5-to-touch'
+import { HTML5toTouch } from 'react-dnd-multi-html5-to-touch'
 ```
 
 ### Migrating from 5.0.x
