@@ -1,6 +1,6 @@
 import { createContext } from 'react'
-import {usePreviewStateFull} from './usePreview'
+import {usePreviewStateDisplay} from './usePreview'
 
-export type PreviewState = Omit<usePreviewStateFull, 'display'>
+export type PreviewState = Omit<usePreviewStateDisplay, 'display'>
 
 export const Context = createContext<PreviewState | undefined>(undefined)
