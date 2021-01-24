@@ -39,9 +39,6 @@ const dstId = registry.addTarget(Item, dst);
 manager.getBackend().connectDropTarget(dstId, dst.node());
 
 // Link to the DOM
-const explain = document.createElement('p');
-explain.innerHTML = 'Check your browser dev console for more details';
-document.body.appendChild(explain);
 document.body.appendChild(src.node());
 document.body.appendChild(dst.node());
 document.getElementById('placeholder').remove();

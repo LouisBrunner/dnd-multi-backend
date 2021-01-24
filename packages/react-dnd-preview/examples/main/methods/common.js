@@ -1,13 +1,11 @@
 import React, { useContext } from 'react';
-import { Context } from '../../src';
+import { Context } from '../../../src';
+import { Shape } from '../../shared';
 
 export const generatePreview = ({itemType, item, style}, {row, col, title, method}) => {
   return (
-    <div style={{
+    <Shape color={item.color} size={50} style={{
       ...style,
-      backgroundColor: item.color,
-      width: '50px',
-      height: '50px',
       top: `${row * 60}px`,
       left: `${col * 100}px`,
       whiteSpace: 'nowrap',
@@ -17,7 +15,7 @@ export const generatePreview = ({itemType, item, style}, {row, col, title, metho
       Generated {itemType}
       <br />
       {method}
-    </div>
+    </Shape>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePreview } from '../../src';
+import { usePreview } from '../../../src';
 import { generatePreview } from './common';
 
 const WithHook = (props) => {

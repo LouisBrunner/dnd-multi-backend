@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Preview, Context } from '../../src';
+import { Preview, Context } from '../../../src';
 import { WithPropFunction, WithChildFunction, WithChildComponent, WithChildFunctionContext } from './common';
 
 export const Components = ({title, col}) => (

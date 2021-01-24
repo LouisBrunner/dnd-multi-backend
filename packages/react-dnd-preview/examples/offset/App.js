@@ -1,37 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDrag, DndProvider } from 'react-dnd';
+import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { usePreview } from '../../src';
-
-const Shape = React.forwardRef(({style, size, color, children}, ref) => {
-  return (
-    <div ref={ref} style={{
-      ...style,
-      backgroundColor: color,
-      width: `${size}px`,
-      height: `${size}px`,
-    }}>
-      {children}
-    </div>
-  );
-});
-
-Shape.displayName = 'Shape';
-
-Shape.propTypes = {
-  style: PropTypes.object,
-  size: PropTypes.number,
-  color: PropTypes.string,
-  children: PropTypes.any,
-};
-
-export const Draggable = () => {
-  const [_, drag] = useDrag({
-    item: {type: 'thing'},
-  });
-  return <Shape ref={drag} style={{}} size={100} color="blue" />;
-};
+import { Draggable, Shape } from '../shared';
 
 class Kinds {
   static Default = 'default';
