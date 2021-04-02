@@ -24,7 +24,8 @@
     "paths": {
       "@mocks/*": ["__mocks__/*"],
       "dnd-multi-backend": ["packages/dnd-multi-backend/src"],
-      "react-dnd-preview": ["packages/react-dnd-preview/src"]
+      "react-dnd-preview": ["packages/react-dnd-preview/src"],
+      "rdndmb-html5-to-touch": ["packages/rdndmb-html5-to-touch/src"]
     },
     "skipLibCheck": true
   },

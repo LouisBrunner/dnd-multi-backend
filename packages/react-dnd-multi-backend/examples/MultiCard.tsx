@@ -1,22 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useMultiDrag } from '../src';
+import React, {CSSProperties} from 'react'
+import {useMultiDrag} from '../src'
+import {DragContent} from './common'
 
-const MultiCard = (props) => {
-  const [_, {html5: [html5Props, html5Drag], touch: [touchProps, touchDrag]}] = useMultiDrag({
+export const MultiCard = (props: {color: string}): JSX.Element => {
+  const [_, {html5: [html5Props, html5Drag], touch: [touchProps, touchDrag]}] = useMultiDrag<DragContent, void, {isDragging: boolean}>({
     item: {type: 'card', color: props.color},
     collect: (monitor) => {
       return {
         isDragging: monitor.isDragging(),
-      };
+      }
     },
-  });
+  })
 
-  const containerStyle = {
+  const containerStyle: CSSProperties = {
     display: 'inline-block',
     margin: '10px',
-  };
-  const html5DragStyle = {
+  }
+  const html5DragStyle: CSSProperties = {
     backgroundColor: props.color,
     opacity: html5Props.isDragging ? 0.5 : 1,
     display: 'inline-block',
@@ -25,8 +25,8 @@ const MultiCard = (props) => {
     height: '90px',
     textAlign: 'center',
     userSelect: 'none',
-  };
-  const touchDragStyle = {
+  }
+  const touchDragStyle: CSSProperties = {
     backgroundColor: props.color,
     opacity: touchProps.isDragging ? 0.5 : 1,
     display: 'inline-block',
@@ -35,17 +35,11 @@ const MultiCard = (props) => {
     height: '90px',
     textAlign: 'center',
     userSelect: 'none',
-  };
+  }
   return (
     <div style={containerStyle}>
       <div style={html5DragStyle} ref={html5Drag}>HTML5</div>
       <div style={touchDragStyle} ref={touchDrag}>Touch</div>
     </div>
-  );
-};
-
-MultiCard.propTypes = {
-  color: PropTypes.string.isRequired,
-};
-
-export default MultiCard;
+  )
+}
