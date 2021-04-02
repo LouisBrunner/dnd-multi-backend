@@ -1,6 +1,6 @@
 {
   "name": "react-dnd-multi-backend",
-  "version": "7.0.0-alpha.1",
+  "version": "7.0.0-alpha.2",
   "description": "Multi Backend system compatible with React DnD",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
   "license": "MIT",
@@ -18,8 +18,8 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "dependencies": {
-    "dnd-multi-backend": "^7.0.0-alpha.1",
-    "react-dnd-preview": "^7.0.0-alpha.1"
+    "dnd-multi-backend": "^7.0.0-alpha.2",
+    "react-dnd-preview": "^7.0.0-alpha.2"
   },
   "peerDependencies": {
     "react": "^17.0.2",
