@@ -4,7 +4,8 @@ import { useDrag } from 'react-dnd';
 
 const Card = (props) => {
   const [collectedProps, drag] = useDrag({
-    item: {type: 'card', color: props.color},
+    type: 'card',
+    item: {color: props.color},
     collect: (monitor) => {
       return {
         isDragging: monitor.isDragging(),

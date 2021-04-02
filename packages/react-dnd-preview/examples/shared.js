@@ -26,8 +26,8 @@ Shape.propTypes = {
 
 export const Draggable = () => {
   const [_, drag] = useDrag({
+    type: 'thing',
     item: {
-      type: 'thing',
       color: '#eedd00',
     },
   });

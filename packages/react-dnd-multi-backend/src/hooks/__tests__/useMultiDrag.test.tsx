@@ -7,7 +7,8 @@ import { DndProvider } from '../..'
 describe('useMultiDrag component', () => {
   const MultiAction = () => {
     return useMultiDrag({
-      item: {type: 'card'},
+      type: 'card',
+      item: {},
       collect: (monitor) => {
         return {
           isDragging: monitor.isDragging(),
