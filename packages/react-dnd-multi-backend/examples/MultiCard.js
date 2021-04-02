@@ -4,8 +4,7 @@ import { useMultiDrag } from '../src';
 
 const MultiCard = (props) => {
   const [_, {html5: [html5Props, html5Drag], touch: [touchProps, touchDrag]}] = useMultiDrag({
-    type: 'card',
-    item: {color: props.color},
+    item: {type: 'card', color: props.color},
     collect: (monitor) => {
       return {
         isDragging: monitor.isDragging(),

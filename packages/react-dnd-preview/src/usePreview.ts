@@ -1,5 +1,5 @@
 import { CSSProperties, RefCallback, RefObject, useRef } from 'react'
-import { DragLayerMonitor, DragSourceHookSpec, useDragLayer } from 'react-dnd'
+import { DragLayerMonitor, DragObjectWithType, DragSourceHookSpec, useDragLayer } from 'react-dnd'
 import { calculatePointerPosition, Point } from './offsets'
 
 const getStyle = (currentOffset: Point): CSSProperties => {
@@ -14,25 +14,25 @@ const getStyle = (currentOffset: Point): CSSProperties => {
   }
 }
 
-export type usePreviewState<T = unknown, El extends Element = Element> =
+export type usePreviewState<T extends DragObjectWithType = DragObjectWithType, El extends Element = Element> =
  {display: false}
  | usePreviewStateFull<T, El>
 
-export type usePreviewStateFull<T = unknown, El extends Element = Element> = {
+export type usePreviewStateFull<T extends DragObjectWithType = DragObjectWithType, El extends Element = Element> = {
   display: true,
 } & usePreviewStateContent<T, El>
 
-type DragSpec<T> = DragSourceHookSpec<T, unknown, unknown>
+type DragSpec<T extends DragObjectWithType> = DragSourceHookSpec<T, unknown, unknown>
 
-export type usePreviewStateContent<T = unknown, El extends Element = Element> = {
+export type usePreviewStateContent<T extends DragObjectWithType = DragObjectWithType, El extends Element = Element> = {
   ref: RefCallback<El> | RefObject<El>,
-  itemType: DragSpec<T>['type'] | null,
+  itemType: DragSpec<T>['item']['type'] | null,
   item: T,
   style: CSSProperties,
   monitor: DragLayerMonitor,
 }
 
-export const usePreview = <T = unknown, El extends Element = Element>(): usePreviewState<T, El> => {
+export const usePreview = <T extends DragObjectWithType = DragObjectWithType, El extends Element = Element>(): usePreviewState<T, El> => {
   const child = useRef<El>(null)
   const collectedProps = useDragLayer((monitor: DragLayerMonitor) => {
     return {
