@@ -4,7 +4,7 @@ import { MockDragMonitor } from '@mocks/mocks'
 const preview = jest.createMockFromModule<Record<string, unknown>>('react-dnd-preview')
 
 const state: PreviewState = {
-  ref: {current: undefined},
+  ref: {current: null},
   itemType: 'abc',
   item: 'abc',
   style: {},

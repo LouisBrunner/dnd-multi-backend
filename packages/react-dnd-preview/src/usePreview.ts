@@ -1,6 +1,5 @@
-import { CSSProperties, MutableRefObject, useRef } from 'react'
-import { Identifier } from 'dnd-core'
-import { DragLayerMonitor, useDragLayer } from 'react-dnd'
+import { CSSProperties, RefCallback, RefObject, useRef } from 'react'
+import { DragLayerMonitor, DragSourceHookSpec, useDragLayer } from 'react-dnd'
 import { calculatePointerPosition, Point } from './offsets'
 
 const getStyle = (currentOffset: Point): CSSProperties => {
@@ -15,34 +14,32 @@ const getStyle = (currentOffset: Point): CSSProperties => {
   }
 }
 
-export type usePreviewState =
- usePreviewStateEmpty
- | usePreviewStateDisplay
+export type usePreviewState<T = unknown, El extends Element = Element> =
+ {display: false}
+ | usePreviewStateFull<T, El>
 
-export type usePreviewStateEmpty = {
-  display: false,
-}
-
-export type usePreviewStateDisplay = ({
+export type usePreviewStateFull<T = unknown, El extends Element = Element> = {
   display: true,
-  ref: MutableRefObject<Element | undefined>,
-} & GeneratorProps)
+} & usePreviewStateContent<T, El>
 
-export type GeneratorProps = {
-  itemType: Identifier | null,
-  item: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+type DragSpec<T> = DragSourceHookSpec<T, unknown, unknown>
+
+export type usePreviewStateContent<T = unknown, El extends Element = Element> = {
+  ref: RefCallback<El> | RefObject<El>,
+  itemType: DragSpec<T>['type'] | null,
+  item: T,
   style: CSSProperties,
   monitor: DragLayerMonitor,
 }
 
-export const usePreview = (): usePreviewState => {
-  const child = useRef<Element | undefined>(undefined)
+export const usePreview = <T = unknown, El extends Element = Element>(): usePreviewState<T, El> => {
+  const child = useRef<El>(null)
   const collectedProps = useDragLayer((monitor: DragLayerMonitor) => {
     return {
       currentOffset: calculatePointerPosition(monitor, child),
       isDragging: monitor.isDragging(),
       itemType: monitor.getItemType(),
-      item: monitor.getItem() as unknown,
+      item: monitor.getItem() as T,
       monitor,
     }
   })

@@ -5,8 +5,8 @@ module.exports = merge(commonConfig, {
   entry: {
     'dnd-multi-backend': './packages/dnd-multi-backend/examples/index.js',
     'react-dnd-multi-backend': './packages/react-dnd-multi-backend/examples/index.js',
-    'react-dnd-preview_main': './packages/react-dnd-preview/examples/main/index.js',
-    'react-dnd-preview_offset': './packages/react-dnd-preview/examples/offset/index.js',
+    'react-dnd-preview_main': './packages/react-dnd-preview/examples/main/index.tsx',
+    'react-dnd-preview_offset': './packages/react-dnd-preview/examples/offset/index.tsx',
   },
   output: {
     path: `${__dirname}/../examples`,

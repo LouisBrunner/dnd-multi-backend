@@ -2,16 +2,16 @@ import React, {ReactChildren, ReactNode} from 'react'
 import { usePreview } from './usePreview'
 import { Context, PreviewState } from './Context'
 
-export type PreviewGenerator = (state: PreviewState) => JSX.Element
+export type PreviewGenerator<T = unknown, El extends Element = Element> = (state: PreviewState<T, El>) => JSX.Element
 
-export type PreviewProps = {
-  children: PreviewGenerator | ReactChildren | ReactNode
+export type PreviewProps<T = unknown, El extends Element = Element> = {
+  children: PreviewGenerator<T, El> | ReactChildren | ReactNode
 } | {
-  generator: PreviewGenerator,
+  generator: PreviewGenerator<T, El>,
 }
 
-export const Preview = (props: PreviewProps): JSX.Element | null => {
-  const result = usePreview()
+export const Preview = <T extends unknown = unknown, El extends Element = Element>(props: PreviewProps<T, El>): JSX.Element | null => {
+  const result = usePreview<T, El>()
 
   if (!result.display) {
     return null
@@ -20,7 +20,7 @@ export const Preview = (props: PreviewProps): JSX.Element | null => {
 
   let child
   if ('children' in props && (typeof props.children === 'function')) {
-    child = (props.children as PreviewGenerator)(data)
+    child = (props.children as PreviewGenerator<T, El>)(data)
   } else if ('children' in props) {
     child = props.children
   } else {

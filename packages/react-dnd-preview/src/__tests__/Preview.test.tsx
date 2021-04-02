@@ -8,11 +8,11 @@ import {MockDragMonitor} from '@mocks/mocks'
 
 jest.mock('../usePreview')
 
-type GeneratorProps = Omit<PreviewState, 'item'> & {
-  item: {
-    coucou: string,
-  }
+type DragContent = {
+  coucou: string,
 }
+
+type GeneratorProps = PreviewState<DragContent>
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const {__setMockReturn} = require('../usePreview') as {
@@ -20,7 +20,7 @@ const {__setMockReturn} = require('../usePreview') as {
 }
 
 describe('Preview subcomponent', () => {
-  const createComponent = (props: PreviewProps) => {
+  const createComponent = (props: PreviewProps<DragContent>) => {
     return render(<Preview {...props} />)
   }
 
@@ -28,7 +28,7 @@ describe('Preview subcomponent', () => {
     return <div style={style}>{item.coucou}: {itemType}</div>
   }
 
-  const setupTest = (props: PreviewProps): void => {
+  const setupTest = (props: PreviewProps<DragContent>): void => {
     test('is null when DnD is not in progress', () => {
       __setMockReturn({display: false})
       createComponent(props)
@@ -49,7 +49,7 @@ describe('Preview subcomponent', () => {
         item: {coucou: 'dauphin'},
         itemType: 'toto',
         monitor: MockDragMonitor(),
-        ref: {current: undefined},
+        ref: {current: null},
       })
       createComponent(props)
       const node = screen.queryByText('dauphin: toto')
@@ -88,7 +88,8 @@ describe('Preview subcomponent', () => {
       if (props === undefined) {
         return null
       }
-      return generator(props)
+      // FIXME: gross
+      return generator(props as GeneratorProps)
     }
 
     setupTest({
@@ -100,11 +101,11 @@ describe('Preview subcomponent', () => {
     setupTest({
       children: (
         <Context.Consumer>
-          {(props?: GeneratorProps) => {
+          {(props?: PreviewState) => {
             if (props === undefined) {
               return null
             }
-            return generator(props)
+            return generator(props as GeneratorProps)
           }}
         </Context.Consumer>
       ),

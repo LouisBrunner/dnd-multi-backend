@@ -1,7 +1,8 @@
-import {usePreview, usePreviewStateDisplay} from '../usePreview'
+import {usePreview, usePreviewStateFull} from '../usePreview'
 import { renderHook, act } from '@testing-library/react-hooks'
 import {MockDragMonitor} from '@mocks/mocks'
 import {__setMockMonitor} from '@mocks/react-dnd'
+import {MutableRefObject} from 'react'
 
 describe('usePreview hook', () => {
   beforeEach(() => {
@@ -40,7 +41,7 @@ describe('usePreview hook', () => {
       getItem() { return {bluh: 'fake'} },
       getClientOffset() { return {x: 1, y: 2} },
     })
-    const {result} = renderHook(() => { return usePreview() as usePreviewStateDisplay })
+    const {result} = renderHook(() => { return usePreview() as usePreviewStateFull })
     const {current: {display, monitor: _monitor, ref, ...rest}} = result
     expect(display).toBe(true)
     expect(ref).not.toBeNull()
@@ -68,7 +69,7 @@ describe('usePreview hook', () => {
       getInitialClientOffset() { return {x: 1, y: 2} },
       getInitialSourceClientOffset() { return {x: 0, y: 1} },
     })
-    const {result} = renderHook(() => { return usePreview() as usePreviewStateDisplay })
+    const {result} = renderHook(() => { return usePreview() as usePreviewStateFull })
     const {current: {display, monitor: _monitor, ref, ...rest}} = result
     expect(display).toBe(true)
     expect(ref).not.toBeNull()
@@ -95,7 +96,7 @@ describe('usePreview hook', () => {
       getClientOffset() { return {x: 1, y: 2} },
       getInitialClientOffset() { return {x: 1, y: 2} },
     })
-    const {result, rerender} = renderHook(() => { return usePreview() as usePreviewStateDisplay })
+    const {result, rerender} = renderHook(() => { return usePreview() as usePreviewStateFull })
     const {current: {display, monitor: _monitor, ref, ...rest}} = result
     expect(display).toBe(true)
     expect(ref).not.toBeNull()
@@ -112,7 +113,8 @@ describe('usePreview hook', () => {
       },
     })
     act(() => {
-      ref.current = {
+      // FIXME: not great...
+      (ref as MutableRefObject<HTMLDivElement>).current = {
         ...document.createElement('div'),
         getBoundingClientRect() {
           return {
@@ -149,7 +151,7 @@ describe('usePreview hook', () => {
       getInitialClientOffset() { return {x: 1, y: 2} },
       getInitialSourceClientOffset() { return {x: 0, y: 1} },
     })
-    const {result, rerender} = renderHook(() => { return usePreview() as usePreviewStateDisplay })
+    const {result, rerender} = renderHook(() => { return usePreview() as usePreviewStateFull })
     const {current: {display, monitor: _monitor, ref, ...rest}} = result
     expect(display).toBe(true)
     expect(ref).not.toBeNull()
@@ -166,7 +168,8 @@ describe('usePreview hook', () => {
       },
     })
     act(() => {
-      ref.current = {
+      // FIXME: not great...
+      (ref as MutableRefObject<HTMLDivElement>).current = {
         ...document.createElement('div'),
         getBoundingClientRect() {
           return {

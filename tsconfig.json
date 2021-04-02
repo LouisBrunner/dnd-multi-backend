@@ -30,6 +30,7 @@
   },
   "include": [
     "__mocks__/**/*.ts",
+    "packages/*/examples/**/*.ts*",
     "packages/*/src/**/*.ts*"
   ],
   "exclude": [

@@ -1,4 +1,4 @@
-import { MutableRefObject } from 'react'
+import { RefObject } from 'react'
 import { DragLayerMonitor } from 'react-dnd'
 
 // Reminder:
@@ -30,7 +30,7 @@ const calculateParentOffset = (monitor: DragLayerMonitor): Point => {
   return subtract(client, source)
 }
 
-export const calculatePointerPosition = (monitor: DragLayerMonitor, childRef: MutableRefObject<Element | undefined>): Point | null => {
+export const calculatePointerPosition = (monitor: DragLayerMonitor, childRef: RefObject<Element>): Point | null => {
   const offset = monitor.getClientOffset()
   if (offset === null) {
     return null
