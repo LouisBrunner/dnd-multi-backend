@@ -8,7 +8,7 @@ describe('useMultiDrag component', () => {
   const MultiAction = () => {
     return useMultiDrag({
       item: {
-        type: 'card'
+        type: 'card',
       },
       collect: (monitor) => {
         return {

@@ -9,6 +9,7 @@ import {MockDragMonitor} from '@mocks/mocks'
 jest.mock('../usePreview')
 
 type DragContent = {
+  type: string,
   coucou: string,
 }
 
@@ -16,7 +17,7 @@ type GeneratorProps = PreviewState<DragContent>
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const {__setMockReturn} = require('../usePreview') as {
-  __setMockReturn: (state: usePreviewState) => void,
+  __setMockReturn: (state: usePreviewState<DragContent>) => void,
 }
 
 describe('Preview subcomponent', () => {
@@ -46,7 +47,7 @@ describe('Preview subcomponent', () => {
           transform: 'translate(1000px, 2000px)',
           WebkitTransform: 'translate(1000px, 2000px)',
         },
-        item: {coucou: 'dauphin'},
+        item: {type: 'toto', coucou: 'dauphin'},
         itemType: 'toto',
         monitor: MockDragMonitor(),
         ref: {current: null},

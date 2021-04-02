@@ -1,4 +1,4 @@
-import React, {CSSProperties, forwardRef, ReactNode, RefCallback} from 'react'
+import React, {CSSProperties, forwardRef, ReactNode} from 'react'
 import { useDrag } from 'react-dnd'
 
 export type DragContent = {
