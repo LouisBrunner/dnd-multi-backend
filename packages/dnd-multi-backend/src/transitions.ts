@@ -12,3 +12,8 @@ export const HTML5DragTransition = createTransition('dragstart', (event) => {
 export const MouseTransition = createTransition('mousedown', (event) => {
   return event.type.indexOf('touch') === -1 && event.type.indexOf('mouse') !== -1
 })
+
+export const PointerTransition = createTransition('pointerdown', (rawEvent: Event) => {
+  const event = rawEvent as PointerEvent
+  return event.pointerType == 'mouse'
+})

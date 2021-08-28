@@ -1,6 +1,53 @@
 /* eslint-disable compat/compat */
 
-import {HTML5DragTransition, TouchTransition, MouseTransition} from '../transitions'
+// FIXME: jsdom still doesn't support pointer events...
+class PointerEventFake extends MouseEvent {
+  readonly height: number;
+  readonly isPrimary: boolean;
+  readonly pointerId: number;
+  readonly pointerType: string;
+  readonly pressure: number;
+  readonly tangentialPressure: number;
+  readonly tiltX: number;
+  readonly tiltY: number;
+  readonly twist: number;
+  readonly width: number;
+
+  private coalescedEvents: PointerEvent[];
+  private predictedEvents: PointerEvent[];
+
+  // eslint-disable-next-line complexity
+  constructor(type: string, props?: PointerEventInit) {
+    super(type, props)
+
+    const rprops = props ?? {}
+
+    this.height = rprops.height ?? 1
+    this.isPrimary = rprops.isPrimary ?? false
+    this.pointerId = rprops.pointerId ?? 1
+    this.pointerType = rprops.pointerType ?? 'mouse'
+    this.pressure = rprops.pressure ?? 0.5
+    this.tangentialPressure = rprops.tangentialPressure ?? 0
+    this.tiltX = rprops.tiltX ?? 0
+    this.tiltY = rprops.tiltY ?? 0
+    this.twist = rprops.twist ?? 0
+    this.width = rprops.width ?? 1
+
+    this.coalescedEvents = rprops.coalescedEvents ?? []
+    this.predictedEvents = rprops.predictedEvents ?? []
+  }
+
+  getCoalescedEvents(): PointerEvent[] {
+    return this.coalescedEvents
+  }
+
+  getPredictedEvents(): PointerEvent[] {
+    return this.predictedEvents
+  }
+}
+global.PointerEvent = PointerEventFake
+
+import {HTML5DragTransition, TouchTransition, MouseTransition, PointerTransition} from '../transitions'
 
 describe('Transitions collection', () => {
   const fakeDragEvent = (type: string): Event => {
@@ -35,6 +82,17 @@ describe('Transitions collection', () => {
       expect(MouseTransition.check(new TouchEvent('touchstart'))).toBe(false)
       expect(MouseTransition.check(fakeDragEvent('dragenter'))).toBe(false)
       expect(MouseTransition.check(new MouseEvent('mousemove'))).toBe(true)
+    })
+  })
+
+  describe('PointerTransition', () => {
+    test('calls createTransition correctly', () => {
+      expect(PointerTransition.event).toBe('pointerdown')
+
+      expect(PointerTransition.check(new TouchEvent('touchstart'))).toBe(false)
+      expect(PointerTransition.check(fakeDragEvent('dragenter'))).toBe(false)
+      expect(PointerTransition.check(new MouseEvent('mousemove'))).toBe(false)
+      expect(PointerTransition.check(new PointerEvent('pointerdown', {pointerType: 'mouse'}))).toBe(true)
     })
   })
 })

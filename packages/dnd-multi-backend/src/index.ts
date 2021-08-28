@@ -5,6 +5,7 @@ export {
   HTML5DragTransition,
   TouchTransition,
   MouseTransition,
+  PointerTransition,
 } from './transitions'
 
 export type {
