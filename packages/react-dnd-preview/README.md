@@ -40,7 +40,7 @@ const MyPreview = () => {
   if (!display) {
     return null
   }
-  return <div class="item-list__item" style={style}>{itemType}</div>
+  return <div className="item-list__item" style={style}>{itemType}</div>
 }
 
 const App = () => {
@@ -59,7 +59,7 @@ const App = () => {
 import { Preview } from 'react-dnd-preview'
 
 const generatePreview = ({itemType, item, style}) => {
-  return <div class="item-list__item" style={style}>{itemType}</div>
+  return <div className="item-list__item" style={style}>{itemType}</div>
 }
 
 class App extends React.Component {
@@ -83,7 +83,7 @@ import { Preview, Context } from 'react-dnd-preview'
 
 const MyPreview = () => {
   const {itemType, item, style} = useContext(Preview.Component)
-  return <div class="item-list__item" style={style}>{itemType}</div>
+  return <div className="item-list__item" style={style}>{itemType}</div>
 }
 
 const App = () => {
@@ -94,7 +94,7 @@ const App = () => {
         <MyPreview />
         // or
         <Context.Consumer>
-          {({itemType, item, style}) => <div class="item-list__item" style={style}>{itemType}</div>}
+          {({itemType, item, style}) => <div className="item-list__item" style={style}>{itemType}</div>}
         </Context.Consumer>
       </Preview>
     </DndProvider>
