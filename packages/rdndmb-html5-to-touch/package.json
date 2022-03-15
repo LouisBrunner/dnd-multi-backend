@@ -1,6 +1,7 @@
 {
   "name": "rdndmb-html5-to-touch",
   "version": "7.0.0-alpha.4",
+  "sideEffects": false,
   "description": "Multi Backend pipeline for react-dnd-multi-backend (HTML5 <-> Touch)",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
   "license": "MIT",
