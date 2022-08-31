@@ -18,7 +18,7 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "peerDependencies": {
-    "react": "^16.14.0 || ^17.0.2",
+    "react": "^16.14.0 || ^17.0.2 || ^18.0.0",
     "react-dnd": "^13.1.1"
   },
   "gitHead": "d3329f143a5b4544ca30416e0b04a397e738f046"

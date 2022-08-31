@@ -1,12 +1,12 @@
-import React, {ReactChildren, ReactNode} from 'react'
-import { usePreview } from './usePreview'
-import { Context, PreviewState } from './Context'
+import React, {ReactNode} from 'react'
+import {usePreview} from './usePreview'
+import {Context, PreviewState} from './Context'
 import {DragObjectWithType} from 'react-dnd'
 
 export type PreviewGenerator<T extends DragObjectWithType = DragObjectWithType, El extends Element = Element> = (state: PreviewState<T, El>) => JSX.Element
 
 export type PreviewProps<T extends DragObjectWithType = DragObjectWithType, El extends Element = Element> = {
-  children: PreviewGenerator<T, El> | ReactChildren | ReactNode
+  children: PreviewGenerator<T, El> | ReactNode
 } | {
   generator: PreviewGenerator<T, El>,
 }
@@ -20,10 +20,12 @@ export const Preview = <T extends DragObjectWithType = DragObjectWithType, El ex
   const {display: _display, ...data} = result
 
   let child
-  if ('children' in props && (typeof props.children === 'function')) {
-    child = (props.children as PreviewGenerator<T, El>)(data)
-  } else if ('children' in props) {
-    child = props.children
+  if ('children' in props) {
+    if (typeof props.children === 'function') {
+      child = (props.children as PreviewGenerator<T, El>)(data)
+    } else {
+      child = props.children
+    }
   } else {
     child = props.generator(data)
   }
