@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const { merge } = require('webpack-merge');
+const {merge} = require('webpack-merge');
 const examplesConfig = require('./examples');
 
 module.exports = merge(examplesConfig, {
@@ -8,7 +8,9 @@ module.exports = merge(examplesConfig, {
   mode: 'development',
   devServer: {
     port: 4001,
-    contentBase: path.join(__dirname, '..', 'examples'),
+    static: {
+      directory: path.join(__dirname, '..', 'examples'),
+    },
     hot: true,
   },
   plugins: [
