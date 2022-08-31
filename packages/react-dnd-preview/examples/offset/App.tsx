@@ -1,8 +1,8 @@
-import React, { CSSProperties, useState } from 'react'
-import { DndProvider } from 'react-dnd'
-import { TouchBackend } from 'react-dnd-touch-backend'
-import { usePreview } from '../../src'
-import { Draggable, Shape, DragContent } from '../shared'
+import React, {CSSProperties, useState} from 'react'
+import {DndProvider} from 'react-dnd'
+import {TouchBackend} from 'react-dnd-touch-backend'
+import {usePreview} from '../../src'
+import {Draggable, Shape, DragContent} from '../shared'
 
 type Kinds = 'default' | 'ref' | 'custom_client' | 'custom_source_client'
 

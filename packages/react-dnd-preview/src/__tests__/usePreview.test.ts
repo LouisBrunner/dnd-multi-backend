@@ -52,8 +52,8 @@ describe('usePreview hook', () => {
         position: 'fixed',
         left: 0,
         top: 0,
-        WebkitTransform: 'translate(1px, 2px)',
-        transform: 'translate(1px, 2px)',
+        WebkitTransform: 'translate(1.0px, 2.0px)',
+        transform: 'translate(1.0px, 2.0px)',
       },
     })
   })
@@ -79,8 +79,8 @@ describe('usePreview hook', () => {
         position: 'fixed',
         left: 0,
         top: 0,
-        WebkitTransform: 'translate(0px, 1px)',
-        transform: 'translate(0px, 1px)',
+        WebkitTransform: 'translate(0.0px, 1.0px)',
+        transform: 'translate(0.0px, 1.0px)',
       },
     })
   })
@@ -105,8 +105,8 @@ describe('usePreview hook', () => {
         position: 'fixed',
         left: 0,
         top: 0,
-        WebkitTransform: 'translate(1px, 2px)',
-        transform: 'translate(1px, 2px)',
+        WebkitTransform: 'translate(1.0px, 2.0px)',
+        transform: 'translate(1.0px, 2.0px)',
       },
     })
     act(() => {
@@ -132,8 +132,8 @@ describe('usePreview hook', () => {
         position: 'fixed',
         left: 0,
         top: 0,
-        WebkitTransform: 'translate(-49px, -33px)',
-        transform: 'translate(-49px, -33px)',
+        WebkitTransform: 'translate(-49.0px, -33.0px)',
+        transform: 'translate(-49.0px, -33.0px)',
       },
     })
   })
@@ -159,8 +159,8 @@ describe('usePreview hook', () => {
         position: 'fixed',
         left: 0,
         top: 0,
-        WebkitTransform: 'translate(0px, 1px)',
-        transform: 'translate(0px, 1px)',
+        WebkitTransform: 'translate(0.0px, 1.0px)',
+        transform: 'translate(0.0px, 1.0px)',
       },
     })
     act(() => {
@@ -186,8 +186,8 @@ describe('usePreview hook', () => {
         position: 'fixed',
         left: 0,
         top: 0,
-        WebkitTransform: 'translate(-49px, -33px)',
-        transform: 'translate(-49px, -33px)',
+        WebkitTransform: 'translate(-49.0px, -33.0px)',
+        transform: 'translate(-49.0px, -33.0px)',
       },
     })
   })

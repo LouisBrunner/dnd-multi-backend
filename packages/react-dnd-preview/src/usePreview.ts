@@ -4,7 +4,7 @@ import {Identifier} from 'dnd-core'
 import {calculatePointerPosition, Point} from './offsets'
 
 const getStyle = (currentOffset: Point): CSSProperties => {
-  const transform = `translate(${currentOffset.x}px, ${currentOffset.y}px)`
+  const transform = `translate(${currentOffset.x.toFixed(1)}px, ${currentOffset.y.toFixed(1)}px)`
   return {
     pointerEvents: 'none',
     position: 'fixed',
@@ -19,9 +19,9 @@ export type usePreviewState<T = unknown, El extends Element = Element> =
   {display: false}
   | usePreviewStateFull<T, El>
 
-export type usePreviewStateFull<T = unknown, El extends Element = Element> = {
-  display: true,
-} & usePreviewStateContent<T, El>
+export type usePreviewStateFull<T = unknown, El extends Element = Element> =
+  {display: true}
+  & usePreviewStateContent<T, El>
 
 export type usePreviewStateContent<T = unknown, El extends Element = Element> = {
   ref: RefCallback<El> | RefObject<El>,
