@@ -24,7 +24,7 @@ describe('useMultiDrag component', () => {
   })
 
   test('it works', () => {
-    const wrapper = ({children}: {children?: ReactNode}) => { return <DndProvider options={TestPipeline}>{children}</DndProvider> }
+    const wrapper = ({children}: {children?: ReactNode}) => {return <DndProvider options={TestPipeline}>{children}</DndProvider>}
     const {result} = renderHook(MultiAction, {wrapper})
 
     const [props, backends] = result.current

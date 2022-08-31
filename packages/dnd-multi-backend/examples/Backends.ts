@@ -1,5 +1,5 @@
 /* eslint-disable no-console, @typescript-eslint/no-explicit-any */
-import {DragDropManager, DragDropActions, BackendFactory, Backend, Unsubscribe} from 'dnd-core'
+import {DragDropManager, DragDropActions, BackendFactory, Backend, Unsubscribe, Identifier} from 'dnd-core'
 
 type Options = {
   draggable?: boolean,
@@ -38,7 +38,7 @@ class DnDBackend implements Backend {
     }
   }
 
-  connectDragSource(sourceId: any, nodeRaw?: any, _options?: any): Unsubscribe {
+  connectDragSource(sourceId: Identifier, nodeRaw?: any, _options?: any): Unsubscribe {
     const node = nodeRaw as Element
 
     const drag = () => {
@@ -76,10 +76,14 @@ class DnDBackend implements Backend {
   }
 
   connectDragPreview(_sourceId: any, _node?: any, _options?: any): Unsubscribe {
-    return () => {}
+    return () => { }
   }
 
-  connectDropTarget(targetId: any, node?: any, _options?: any): Unsubscribe {
+  connectDropTarget(targetId: Identifier, node?: Element, _options?: any): Unsubscribe {
+    if (node === undefined) {
+      return () => { }
+    }
+
     const hover = (e: Event) => {
       if (!this.#manager.getMonitor().isDragging()) {
         return
@@ -118,7 +122,7 @@ class DnDBackend implements Backend {
   }
 
   #getXY = (node: Element): {x: number, y: number} => {
-    const { top: x, left: y } = node.getBoundingClientRect()
+    const {top: x, left: y} = node.getBoundingClientRect()
     return {x, y}
   }
 }

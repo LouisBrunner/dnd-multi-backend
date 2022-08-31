@@ -1,7 +1,7 @@
-import {BackendFactory} from 'dnd-core'
+import {DragDropManager, BackendFactory} from 'dnd-core'
 import {MultiBackendSwitcher} from './types'
-import {MultiBackendImpl} from './MultiBackendImpl'
+import {MultiBackendContext, MultiBackendImpl, MultiBackendOptions} from './MultiBackendImpl'
 
-export const MultiFactory: BackendFactory = (manager, context, options): MultiBackendSwitcher => {
+export const MultiFactory: BackendFactory = (manager: DragDropManager, context: MultiBackendContext, options: MultiBackendOptions): MultiBackendSwitcher => {
   return new MultiBackendImpl(manager, context, options)
 }

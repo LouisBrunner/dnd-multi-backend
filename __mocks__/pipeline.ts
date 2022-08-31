@@ -32,7 +32,7 @@ export const TestPipeline: MultiBackendOptions = {
       }),
       options: {abc: 123},
       preview: true,
-      transition: createTransition('touchstart', jest.fn((event) => { return event.type === 'touchstart' })),
+      transition: createTransition('touchstart', jest.fn((event) => {return event.type === 'touchstart'})),
     },
   ],
 }

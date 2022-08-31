@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import {render, screen, act} from '@testing-library/react'
-import { Preview, PreviewContext } from '../Preview'
-import { MockPreviewList, MockedPreviewList, MockedMultiBackend, MockMultiBackend } from '@mocks/mocks'
-import { DndContext, DndContextType } from 'react-dnd'
-import { PreviewPortalContext } from '../DndProvider'
+import {Preview, PreviewContext} from '../Preview'
+import {MockPreviewList, MockedPreviewList, MockedMultiBackend, MockMultiBackend} from '@mocks/mocks'
+import {DndContext, DndContextType} from 'react-dnd'
+import {PreviewPortalContext} from '../DndProvider'
 import {PreviewGenerator} from 'react-dnd-preview'
 
 type TestProps = {
@@ -54,12 +54,12 @@ describe('Preview component', () => {
     }
 
     test('registers with the backend', () => {
-      expect(list.register).not.toBeCalled()
+      expect(list.register).not.toHaveBeenCalled()
       const {unmount} = createComponent({generator: jest.fn()})
-      expect(list.register).toBeCalled()
-      expect(list.unregister).not.toBeCalled()
+      expect(list.register).toHaveBeenCalled()
+      expect(list.unregister).not.toHaveBeenCalled()
       unmount()
-      expect(list.unregister).toBeCalled()
+      expect(list.unregister).toHaveBeenCalled()
     })
 
     describe('it renders correctly', () => {
@@ -73,7 +73,7 @@ describe('Preview component', () => {
         }
 
         const expectNotNull = () => {
-          expect(screen.queryByText('abc')).toBeInTheDocument()
+          expect(screen.getByText('abc')).toBeInTheDocument()
         }
 
         if (init) {
@@ -132,7 +132,7 @@ describe('Preview component', () => {
         backend.previewEnabled.mockReturnValue(true)
         getLastRegister().backendChanged(backend)
       })
-      expect(screen.queryByText('abc')).toBeInTheDocument()
+      expect(screen.getByText('abc')).toBeInTheDocument()
     })
   })
 })

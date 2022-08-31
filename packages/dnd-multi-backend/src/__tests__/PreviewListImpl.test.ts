@@ -18,7 +18,7 @@ describe('PreviewListImpl class', () => {
   }
 
   test('does nothing when empty', () => {
-    expect(() => { list.backendChanged(mb) }).not.toThrow()
+    expect(() => {list.backendChanged(mb)}).not.toThrow()
   })
 
   test('notifies registered previews', () => {

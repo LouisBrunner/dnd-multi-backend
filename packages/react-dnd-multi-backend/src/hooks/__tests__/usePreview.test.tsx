@@ -1,8 +1,8 @@
 import React, {ReactNode} from 'react'
-import { renderHook, act } from '@testing-library/react-hooks'
-import { usePreview } from '../usePreview'
-import { MockPreviewList, MockedPreviewList, MockMultiBackend, MockedMultiBackend } from '@mocks/mocks'
-import { DndContext, DndContextType } from 'react-dnd'
+import {renderHook, act} from '@testing-library/react-hooks'
+import {usePreview} from '../usePreview'
+import {MockPreviewList, MockedPreviewList, MockMultiBackend, MockedMultiBackend} from '@mocks/mocks'
+import {DndContext, DndContextType} from 'react-dnd'
 
 describe('usePreview component', () => {
   let list: MockedPreviewList
@@ -31,18 +31,18 @@ describe('usePreview component', () => {
   }
 
   const createComponent = () => {
-    const wrapper = ({children}: {children?: ReactNode}) => { return <DndContext.Provider value={context}>{children}</DndContext.Provider> }
-    return renderHook(() => { return usePreview() }, {wrapper})
+    const wrapper = ({children}: {children?: ReactNode}) => {return <DndContext.Provider value={context}>{children}</DndContext.Provider>}
+    return renderHook(() => {return usePreview()}, {wrapper})
   }
 
   test('registers with the backend', () => {
     backend.previewEnabled.mockReturnValue(false)
-    expect(list.register).not.toBeCalled()
+    expect(list.register).not.toHaveBeenCalled()
     const {unmount} = createComponent()
-    expect(list.register).toBeCalled()
-    expect(list.unregister).not.toBeCalled()
+    expect(list.register).toHaveBeenCalled()
+    expect(list.unregister).not.toHaveBeenCalled()
     unmount()
-    expect(list.unregister).toBeCalled()
+    expect(list.unregister).toHaveBeenCalled()
   })
 
   describe('it renders correctly', () => {

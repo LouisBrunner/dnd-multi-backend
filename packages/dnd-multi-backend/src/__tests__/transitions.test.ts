@@ -2,19 +2,19 @@
 
 // FIXME: jsdom still doesn't support pointer events...
 class PointerEventFake extends MouseEvent {
-  readonly height: number;
-  readonly isPrimary: boolean;
-  readonly pointerId: number;
-  readonly pointerType: string;
-  readonly pressure: number;
-  readonly tangentialPressure: number;
-  readonly tiltX: number;
-  readonly tiltY: number;
-  readonly twist: number;
-  readonly width: number;
+  readonly height: number
+  readonly isPrimary: boolean
+  readonly pointerId: number
+  readonly pointerType: string
+  readonly pressure: number
+  readonly tangentialPressure: number
+  readonly tiltX: number
+  readonly tiltY: number
+  readonly twist: number
+  readonly width: number
 
-  private coalescedEvents: PointerEvent[];
-  private predictedEvents: PointerEvent[];
+  private coalescedEvents: PointerEvent[]
+  private predictedEvents: PointerEvent[]
 
   // eslint-disable-next-line complexity
   constructor(type: string, props?: PointerEventInit) {

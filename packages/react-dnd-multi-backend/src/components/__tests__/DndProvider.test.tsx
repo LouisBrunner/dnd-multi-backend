@@ -2,7 +2,7 @@ import React, {ReactNode, useContext} from 'react'
 import {render} from '@testing-library/react'
 import {TestPipeline} from '@mocks/pipeline'
 
-import { DndProvider, PreviewPortalContext } from '../DndProvider'
+import {DndProvider, PreviewPortalContext} from '../DndProvider'
 
 describe('DndProvider component', () => {
   const createComponent = (child: ReactNode, element?: Element) => {
@@ -41,10 +41,7 @@ describe('DndProvider component', () => {
         <span id="portal" />
       </div
     `
-    let portal: Element | null | undefined = document.getElementById('portal')
-    if (portal === null) {
-      portal = undefined
-    }
+    const portal = document.getElementById('portal')! // eslint-disable-line testing-library/no-node-access
     const spy = jest.fn()
 
     const Child = () => {

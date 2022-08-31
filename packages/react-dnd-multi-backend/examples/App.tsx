@@ -95,7 +95,7 @@ export const App = (): JSX.Element => {
   return (
     <React.StrictMode>
       <div>
-        <input id="api_selector" type="checkbox" checked={useNew} onChange={(e) => { setAPI(e.target.checked) }} />
+        <input id="api_selector" type="checkbox" checked={useNew} onChange={(e) => {setAPI(e.target.checked)}} />
         <label htmlFor="api_selector">Use New API</label>
       </div>
       {useNew ? newAPI : oldAPI}

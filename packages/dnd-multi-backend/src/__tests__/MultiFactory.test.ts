@@ -13,6 +13,6 @@ describe('MultiFactory function', () => {
       dispatch: jest.fn(),
     }
     expect(MultiFactory(fakeManager, {}, TestPipeline)).toBeInstanceOf(MultiBackendImpl)
-    expect(() => { MultiFactory(fakeManager, {}) }).toThrowError(Error)
+    expect(() => {MultiFactory(fakeManager, {})}).toThrow(Error)
   })
 })

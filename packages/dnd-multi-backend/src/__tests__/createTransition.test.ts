@@ -1,4 +1,4 @@
-import { createTransition } from '../createTransition'
+import {createTransition} from '../createTransition'
 
 describe('createTransition function', () => {
   test('creates a valid transition', () => {
@@ -10,9 +10,9 @@ describe('createTransition function', () => {
     expect(transition.event).toBe(eventName)
 
     const fakeEvent = document.createEvent('Event')
-    expect(func).not.toBeCalled()
+    expect(func).not.toHaveBeenCalled()
     transition.check(fakeEvent)
     expect(func).toHaveBeenCalledTimes(1)
-    expect(func).toBeCalledWith(fakeEvent)
+    expect(func).toHaveBeenCalledWith(fakeEvent)
   })
 })

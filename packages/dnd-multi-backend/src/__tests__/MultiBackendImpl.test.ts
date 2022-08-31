@@ -1,4 +1,4 @@
-import { DOMWindow } from 'jsdom'
+import {DOMWindow} from 'jsdom'
 import {DragDropManager} from 'dnd-core'
 import {MultiBackendContext, MultiBackendImpl, MultiBackendOptions} from '../MultiBackendImpl'
 import {TestBackends, TestPipeline, TestPipelineWithSkip} from '@mocks/pipeline'
@@ -50,40 +50,42 @@ describe('MultiBackendImpl class', () => {
 
     test('fails if no backend are specified', () => {
       const pipeline = {backends: []}
-      expect(() => { createBackend(pipeline as unknown as MultiBackendOptions) }).toThrowError(Error)
+      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
     })
 
     test('fails if no backend are specified (prototype trick)', () => {
       const pipeline = Object.create({backends: []}) as Record<string, unknown>
-      expect(() => { createBackend(pipeline as unknown as MultiBackendOptions) }).toThrowError(Error)
+      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
     })
 
     test('fails if a backend lacks the `backend` property', () => {
       const pipeline = {backends: [{}]}
-      expect(() => { createBackend(pipeline as unknown as MultiBackendOptions) }).toThrowError(Error)
+      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
     })
 
     test('fails if a backend specifies an invalid `transition` property', () => {
-      const pipeline = {backends: [{backend: () => {}, transition: {}}]}
-      expect(() => { createBackend(pipeline as unknown as MultiBackendOptions) }).toThrowError(Error)
+      const pipeline = {backends: [{backend: () => { }, transition: {}}]}
+      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
     })
 
     test('fails if a backend lacks an `id` property and one cannot be infered', () => {
-      const pipeline = {backends: [{backend: () => {}}]}
-      expect(() => { createBackend(pipeline as unknown as MultiBackendOptions) }).toThrowError(Error)
+      const pipeline = {backends: [{backend: () => { }}]}
+      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
     })
 
     test('fails if a backend has a duplicate `id` property', () => {
-      const pipeline = {backends: [
-        {id: 'abc', backend: () => {}},
-        {id: 'abc', backend: () => {}},
-      ]}
-      expect(() => { createBackend(pipeline as unknown as MultiBackendOptions) }).toThrowError(Error)
+      const pipeline = {
+        backends: [
+          {id: 'abc', backend: () => { }},
+          {id: 'abc', backend: () => { }},
+        ],
+      }
+      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
     })
 
     test('warns if a backend lacks an `id` property but one can be infered', () => {
-      const pipeline = {backends: [{backend: () => { return {} }}]}
-      expect(() => { createBackend(pipeline as unknown as MultiBackendOptions) }).not.toThrow()
+      const pipeline = {backends: [{backend: () => {return {}}}]}
+      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).not.toThrow()
       expect(warn).toHaveBeenCalled()
     })
 
@@ -92,10 +94,10 @@ describe('MultiBackendImpl class', () => {
       createBackend(pipeline)
 
       expect(pipeline.backends[0].backend).toHaveBeenCalledTimes(1)
-      expect(pipeline.backends[0].backend).toBeCalledWith(_defaultManager, _defaultContext, undefined)
+      expect(pipeline.backends[0].backend).toHaveBeenCalledWith(_defaultManager, _defaultContext, undefined)
 
       expect(pipeline.backends[1].backend).toHaveBeenCalledTimes(1)
-      expect(pipeline.backends[1].backend).toBeCalledWith(_defaultManager, _defaultContext, pipeline.backends[1].options)
+      expect(pipeline.backends[1].backend).toHaveBeenCalledWith(_defaultManager, _defaultContext, pipeline.backends[1].options)
     })
   })
 
@@ -109,7 +111,7 @@ describe('MultiBackendImpl class', () => {
 
       const backend = createBackend()
       backend.setup()
-      expect(() => { backend.setup() }).not.toThrow()
+      expect(() => {backend.setup()}).not.toThrow()
       expect(spyAdd).not.toHaveBeenCalled()
       expect(TestBackends[0].setup).not.toHaveBeenCalled()
 
@@ -134,7 +136,7 @@ describe('MultiBackendImpl class', () => {
 
       const backend2 = createBackend()
       expect(TestBackends[0].setup).not.toHaveBeenCalled()
-      expect(() => { backend2.setup() }).toThrowError(Error)
+      expect(() => {backend2.setup()}).toThrow(Error)
       expect(TestBackends[0].setup).not.toHaveBeenCalled()
       expect(spyAdd).not.toHaveBeenCalled()
 

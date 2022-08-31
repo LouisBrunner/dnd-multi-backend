@@ -15,6 +15,8 @@ module.exports = {
     {
       displayName: 'test',
 
+      testEnvironment: 'jsdom',
+
       setupFilesAfterEnv: [
         '@testing-library/jest-dom',
       ],
