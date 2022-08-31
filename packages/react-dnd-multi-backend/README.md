@@ -197,7 +197,8 @@ import { useMultiDrag } from 'react-dnd-multi-backend'
 
 const MultiCard = (props) => {
   const [[dragProps], {html5: [html5Props, html5Drag], touch: [touchProps, touchDrag]}] = useMultiDrag({
-    item: {type: 'card', color: props.color},
+    type: 'card',
+    item: {color: props.color},
     collect: (monitor) => {
       return {
         isDragging: monitor.isDragging(),

@@ -1,16 +1,14 @@
 import type {usePreviewState, PreviewProps, PreviewState} from 'react-dnd-preview'
-import { MockDragMonitor } from '@mocks/mocks'
+import {MockDragMonitor} from '@mocks/mocks'
 
 const preview = jest.createMockFromModule<Record<string, unknown>>('react-dnd-preview')
 
 const state: PreviewState = {
   ref: {current: null},
   itemType: 'abc',
-  item: {
-    type: 'abc',
-  },
+  item: {},
   style: {},
-  monitor: MockDragMonitor(),
+  monitor: MockDragMonitor<unknown>(null),
 }
 
 const Preview = (props: PreviewProps): JSX.Element | null => {

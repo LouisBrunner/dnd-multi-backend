@@ -9,7 +9,6 @@ import {MockDragMonitor} from '@mocks/mocks'
 jest.mock('../usePreview')
 
 type DragContent = {
-  type: string,
   coucou: string,
 }
 
@@ -47,9 +46,9 @@ describe('Preview subcomponent', () => {
           transform: 'translate(1000px, 2000px)',
           WebkitTransform: 'translate(1000px, 2000px)',
         },
-        item: {type: 'toto', coucou: 'dauphin'},
+        item: {coucou: 'dauphin'},
         itemType: 'toto',
-        monitor: MockDragMonitor(),
+        monitor: MockDragMonitor<{coucou: string}>({coucou: 'dauphin'}),
         ref: {current: null},
       })
       createComponent(props)

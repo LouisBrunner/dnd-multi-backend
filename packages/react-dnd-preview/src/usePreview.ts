@@ -1,6 +1,7 @@
-import { CSSProperties, RefCallback, RefObject, useRef } from 'react'
-import { DragLayerMonitor, DragObjectWithType, DragSourceHookSpec, useDragLayer } from 'react-dnd'
-import { calculatePointerPosition, Point } from './offsets'
+import {CSSProperties, RefCallback, RefObject, useRef} from 'react'
+import {DragLayerMonitor, useDragLayer} from 'react-dnd'
+import {Identifier} from 'dnd-core'
+import {calculatePointerPosition, Point} from './offsets'
 
 const getStyle = (currentOffset: Point): CSSProperties => {
   const transform = `translate(${currentOffset.x}px, ${currentOffset.y}px)`
@@ -14,32 +15,30 @@ const getStyle = (currentOffset: Point): CSSProperties => {
   }
 }
 
-export type usePreviewState<T extends DragObjectWithType = DragObjectWithType, El extends Element = Element> =
- {display: false}
- | usePreviewStateFull<T, El>
+export type usePreviewState<T = unknown, El extends Element = Element> =
+  {display: false}
+  | usePreviewStateFull<T, El>
 
-export type usePreviewStateFull<T extends DragObjectWithType = DragObjectWithType, El extends Element = Element> = {
+export type usePreviewStateFull<T = unknown, El extends Element = Element> = {
   display: true,
 } & usePreviewStateContent<T, El>
 
-type DragSpec<T extends DragObjectWithType> = DragSourceHookSpec<T, unknown, unknown>
-
-export type usePreviewStateContent<T extends DragObjectWithType = DragObjectWithType, El extends Element = Element> = {
+export type usePreviewStateContent<T = unknown, El extends Element = Element> = {
   ref: RefCallback<El> | RefObject<El>,
-  itemType: DragSpec<T>['item']['type'] | null,
+  itemType: Identifier | null,
   item: T,
   style: CSSProperties,
   monitor: DragLayerMonitor,
 }
 
-export const usePreview = <T extends DragObjectWithType = DragObjectWithType, El extends Element = Element>(): usePreviewState<T, El> => {
+export const usePreview = <T = unknown, El extends Element = Element>(): usePreviewState<T, El> => {
   const child = useRef<El>(null)
-  const collectedProps = useDragLayer((monitor: DragLayerMonitor) => {
+  const collectedProps = useDragLayer((monitor: DragLayerMonitor<T>) => {
     return {
       currentOffset: calculatePointerPosition(monitor, child),
       isDragging: monitor.isDragging(),
       itemType: monitor.getItemType(),
-      item: monitor.getItem() as T,
+      item: monitor.getItem(),
       monitor,
     }
   })

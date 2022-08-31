@@ -1,23 +1,23 @@
 import {usePreview, usePreviewStateFull} from '../usePreview'
-import { renderHook, act } from '@testing-library/react-hooks'
+import {renderHook, act} from '@testing-library/react-hooks'
 import {MockDragMonitor} from '@mocks/mocks'
 import {__setMockMonitor} from '@mocks/react-dnd'
 import {MutableRefObject} from 'react'
 
 describe('usePreview hook', () => {
   beforeEach(() => {
-    __setMockMonitor(MockDragMonitor())
+    __setMockMonitor(MockDragMonitor<unknown>(null))
   })
 
   test('return false when DnD is not in progress (neither dragging or offset)', () => {
-    __setMockMonitor(MockDragMonitor())
+    __setMockMonitor(MockDragMonitor<unknown>(null))
     const {result: {current: {display}}} = renderHook(() => {return usePreview()})
     expect(display).toBe(false)
   })
 
   test('return false when DnD is not in progress (no dragging)', () => {
     __setMockMonitor({
-      ...MockDragMonitor(),
+      ...MockDragMonitor<unknown>(null),
       getClientOffset() {return {x: 1, y: 2}},
     })
     const {result: {current: {display}}} = renderHook(() => {return usePreview()})
@@ -26,7 +26,7 @@ describe('usePreview hook', () => {
 
   test('return false when DnD is not in progress (no offset)', () => {
     __setMockMonitor({
-      ...MockDragMonitor(),
+      ...MockDragMonitor<unknown>(null),
       isDragging() {return true},
     })
     const {result: {current: {display}}} = renderHook(() => {return usePreview()})
@@ -35,10 +35,9 @@ describe('usePreview hook', () => {
 
   test('return true and data when DnD is in progress', () => {
     __setMockMonitor({
-      ...MockDragMonitor(),
+      ...MockDragMonitor<{bluh: string}>({bluh: 'fake'}),
       isDragging() {return true},
       getItemType() {return 'no'},
-      getItem() {return {bluh: 'fake'}},
       getClientOffset() {return {x: 1, y: 2}},
     })
     const {result} = renderHook(() => {return usePreview() as usePreviewStateFull})
@@ -61,10 +60,9 @@ describe('usePreview hook', () => {
 
   test('return true and data when DnD is in progress (with parent offset)', () => {
     __setMockMonitor({
-      ...MockDragMonitor(),
+      ...MockDragMonitor<{bluh: string}>({bluh: 'fake'}),
       isDragging() {return true},
       getItemType() {return 'no'},
-      getItem() {return {bluh: 'fake'}},
       getClientOffset() {return {x: 1, y: 2}},
       getInitialClientOffset() {return {x: 1, y: 2}},
       getInitialSourceClientOffset() {return {x: 0, y: 1}},
@@ -89,10 +87,9 @@ describe('usePreview hook', () => {
 
   test('return true and data when DnD is in progress (with ref)', () => {
     __setMockMonitor({
-      ...MockDragMonitor(),
+      ...MockDragMonitor<{bluh: string}>({bluh: 'fake'}),
       isDragging() {return true},
       getItemType() {return 'no'},
-      getItem() {return {bluh: 'fake'}},
       getClientOffset() {return {x: 1, y: 2}},
       getInitialClientOffset() {return {x: 1, y: 2}},
     })
@@ -120,7 +117,7 @@ describe('usePreview hook', () => {
           return {
             width: 100, height: 70,
             x: 0, y: 0, bottom: 0, left: 0, right: 0, top: 0,
-            toJSON() {},
+            toJSON() { },
           }
         },
       }
@@ -143,10 +140,9 @@ describe('usePreview hook', () => {
 
   test('return true and data when DnD is in progress (with ref and parent offset)', () => {
     __setMockMonitor({
-      ...MockDragMonitor(),
+      ...MockDragMonitor<{bluh: string}>({bluh: 'fake'}),
       isDragging() {return true},
       getItemType() {return 'no'},
-      getItem() {return {bluh: 'fake'}},
       getClientOffset() {return {x: 1, y: 2}},
       getInitialClientOffset() {return {x: 1, y: 2}},
       getInitialSourceClientOffset() {return {x: 0, y: 1}},
@@ -175,7 +171,7 @@ describe('usePreview hook', () => {
           return {
             width: 100, height: 70,
             x: 0, y: 0, bottom: 0, left: 0, right: 0, top: 0,
-            toJSON() {},
+            toJSON() { },
           }
         },
       }

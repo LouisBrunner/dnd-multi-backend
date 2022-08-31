@@ -1,9 +1,10 @@
 import React, {CSSProperties} from 'react'
-import { useDrag } from 'react-dnd'
+import {useDrag} from 'react-dnd'
 
 export const Card = (props: {color: string}): JSX.Element => {
   const [collectedProps, drag] = useDrag({
-    item: {type: 'card', color: props.color},
+    type: 'card',
+    item: {color: props.color},
     collect: (monitor) => {
       return {
         isDragging: monitor.isDragging(),

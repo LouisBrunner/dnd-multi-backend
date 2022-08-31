@@ -1,5 +1,5 @@
 import React, {CSSProperties, forwardRef, ReactNode} from 'react'
-import { useDrag } from 'react-dnd'
+import {useDrag} from 'react-dnd'
 
 export type DragContent = {
   type: string,
@@ -32,8 +32,8 @@ Shape.displayName = 'Shape'
 
 export const Draggable = (): JSX.Element => {
   const [_, drag] = useDrag({
+    type: 'thing',
     item: {
-      type: 'thing',
       color: '#eedd00',
     },
   })

@@ -4,7 +4,8 @@ import {DragContent} from './common'
 
 export const MultiCard = (props: {color: string}): JSX.Element => {
   const [_, {html5: [html5Props, html5Drag], touch: [touchProps, touchDrag]}] = useMultiDrag<DragContent, void, {isDragging: boolean}>({
-    item: {type: 'card', color: props.color},
+    type: 'card',
+    item: {color: props.color},
     collect: (monitor) => {
       return {
         isDragging: monitor.isDragging(),

@@ -1,15 +1,14 @@
 import React, {ReactNode} from 'react'
-import { renderHook } from '@testing-library/react-hooks'
+import {renderHook} from '@testing-library/react-hooks'
 import {TestPipeline} from '@mocks/pipeline'
-import { useMultiDrag } from '../useMultiDrag'
-import { DndProvider } from '../..'
+import {useMultiDrag} from '../useMultiDrag'
+import {DndProvider} from '../..'
 
 describe('useMultiDrag component', () => {
   const MultiAction = () => {
     return useMultiDrag({
-      item: {
-        type: 'card',
-      },
+      type: 'card',
+      item: {},
       collect: (monitor) => {
         return {
           isDragging: monitor.isDragging(),

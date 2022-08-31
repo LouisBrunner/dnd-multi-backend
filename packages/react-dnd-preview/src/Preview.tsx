@@ -1,17 +1,16 @@
 import React, {ReactNode} from 'react'
 import {usePreview} from './usePreview'
 import {Context, PreviewState} from './Context'
-import {DragObjectWithType} from 'react-dnd'
 
-export type PreviewGenerator<T extends DragObjectWithType = DragObjectWithType, El extends Element = Element> = (state: PreviewState<T, El>) => JSX.Element
+export type PreviewGenerator<T = unknown, El extends Element = Element> = (state: PreviewState<T, El>) => JSX.Element
 
-export type PreviewProps<T extends DragObjectWithType = DragObjectWithType, El extends Element = Element> = {
+export type PreviewProps<T = unknown, El extends Element = Element> = {
   children: PreviewGenerator<T, El> | ReactNode
 } | {
   generator: PreviewGenerator<T, El>,
 }
 
-export const Preview = <T extends DragObjectWithType = DragObjectWithType, El extends Element = Element>(props: PreviewProps<T, El>): JSX.Element | null => {
+export const Preview = <T = unknown, El extends Element = Element>(props: PreviewProps<T, El>): JSX.Element | null => {
   const result = usePreview<T, El>()
 
   if (!result.display) {

@@ -1,11 +1,12 @@
 import type {DragLayerMonitor} from 'react-dnd'
 import type {MultiBackendSwitcher, PreviewList} from 'dnd-multi-backend'
 
-export const MockDragMonitor = (): jest.Mocked<DragLayerMonitor> => {
+export const MockDragMonitor = <DragObject = unknown>(item: DragObject): jest.Mocked<DragLayerMonitor<DragObject>> => {
   return {
     isDragging: jest.fn(() => {return false}),
     getItemType: jest.fn(() => {return null}),
-    getItem: jest.fn(() => {return null}),
+    // FIXME: why is it failing to get the type correct?
+    getItem: jest.fn(() => {return item}) as jest.MockInstance<DragObject, []> & (<T = DragObject>() => T),
     getClientOffset: jest.fn(() => {return null}),
     getInitialClientOffset: jest.fn(() => {return null}),
     getInitialSourceClientOffset: jest.fn(() => {return null}),
