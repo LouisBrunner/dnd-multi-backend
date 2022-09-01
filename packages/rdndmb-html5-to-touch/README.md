@@ -66,7 +66,7 @@ import { HTML5toTouch } from 'rdndmb-html5-to-touch'
 
 ## License
 
-MIT, Copyright (c) 2021 Louis Brunner
+MIT, Copyright (c) 2021-2022 Louis Brunner
 
 
 [npm-image]: https://img.shields.io/npm/v/rdndmb-html5-to-touch.svg

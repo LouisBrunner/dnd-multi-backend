@@ -15,12 +15,6 @@ This project also contains some helpers (available standalone or included in oth
 [Try them here!](https://louisbrunner.github.io/dnd-multi-backend/examples)
 
 
-## Improvements
-
- - Write documentation & examples for `dnd-multi-backend`
- - Write documentation & examples for `react-dnd-preview`
-
-
 ## Thanks
 
 Thanks to the [React DnD HTML5 Backend](https://github.com/react-dnd/react-dnd) maintainers which obviously greatly inspired this project.
@@ -28,7 +22,7 @@ Thanks to the [React DnD HTML5 Backend](https://github.com/react-dnd/react-dnd) 
 
 ## License
 
-MIT, Copyright (c) 2016-2021 Louis Brunner
+MIT, Copyright (c) 2016-2022 Louis Brunner
 
 
 

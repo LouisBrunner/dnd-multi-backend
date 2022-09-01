@@ -137,7 +137,7 @@ Starting with `5.1.0`, every backend in a pipeline will now need a new property 
 
 ## License
 
-MIT, Copyright (c) 2016-2021 Louis Brunner
+MIT, Copyright (c) 2016-2022 Louis Brunner
 
 
 

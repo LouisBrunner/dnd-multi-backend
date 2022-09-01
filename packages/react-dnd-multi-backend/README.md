@@ -406,7 +406,7 @@ var TouchOnly = { backends: [{ backend: TouchBackend, preview: true }] }
 
 ## License
 
-MIT, Copyright (c) 2016-2021 Louis Brunner
+MIT, Copyright (c) 2016-2022 Louis Brunner
 
 
 
