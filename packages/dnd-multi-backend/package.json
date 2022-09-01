@@ -15,7 +15,9 @@
     "backend",
     "multi"
   ],
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
   "gitHead": "d3329f143a5b4544ca30416e0b04a397e738f046"
 }

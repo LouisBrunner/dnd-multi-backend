@@ -15,19 +15,11 @@ See the [migration section](#migrating) for instructions when switching from `2.
 
 ## Installation
 
-### NPM Installation
-
 ```sh
 npm install -S react-dnd-multi-backend
 ```
 
 You can then import the backend using `import { MultiBackend } from 'react-dnd-multi-backend'`.
-
-### Browser Installation
-
-Use the minified UMD build in the `dist` folder: https://www.jsdelivr.com/package/npm/react-dnd-multi-backend?path=dist%2Fumd.
-
-`react-dnd-multi-backend.min.js` exports a global `window.ReactDnDMultiBackend` when imported as a `<script>` tag and expects `window.React` and `window.ReactDnD` to be provided.
 
 ### Backends pipeline
 
