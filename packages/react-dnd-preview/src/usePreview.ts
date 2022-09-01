@@ -1,4 +1,4 @@
-import {CSSProperties, RefCallback, RefObject, useRef} from 'react'
+import {CSSProperties, MutableRefObject, useRef} from 'react'
 import {DragLayerMonitor, useDragLayer} from 'react-dnd'
 import {Identifier} from 'dnd-core'
 import {calculatePointerPosition, Point} from './offsets'
@@ -24,7 +24,7 @@ export type usePreviewStateFull<T = unknown, El extends Element = Element> =
   & usePreviewStateContent<T, El>
 
 export type usePreviewStateContent<T = unknown, El extends Element = Element> = {
-  ref: RefCallback<El> | RefObject<El>,
+  ref: MutableRefObject<El | null>,
   itemType: Identifier | null,
   item: T,
   style: CSSProperties,
@@ -32,7 +32,7 @@ export type usePreviewStateContent<T = unknown, El extends Element = Element> = 
 }
 
 export const usePreview = <T = unknown, El extends Element = Element>(): usePreviewState<T, El> => {
-  const child = useRef<El>(null)
+  const child = useRef<El | null>(null)
   const collectedProps = useDragLayer((monitor: DragLayerMonitor<T>) => {
     return {
       currentOffset: calculatePointerPosition(monitor, child),
