@@ -17,7 +17,6 @@
     "react-dnd",
     "react-dnd-multi-backend"
   ],
-  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
