@@ -11,19 +11,11 @@ See the [migration section](#migrating) for instructions when switching from `6.
 
 ## Installation
 
-### NPM Installation
-
 ```sh
 npm install -S rdndmb-html5-to-touch
 ```
 
 You can then import the pipeline using `import { HTML5toTouch } from 'rdndmb-html5-to-touch'`.
-
-### Browser Installation
-
-Use the minified UMD build in the `dist` folder: https://www.jsdelivr.com/package/npm/rdndmb-html5-to-touch?path=dist%2Fumd.
-
-`HTML5toTouch.min.js` exports a global `window.HTML5toTouch` when imported as a `<script>` tag and expects `window.React` and `window.ReactDnD` to be provided.
 
 ## Usage
 

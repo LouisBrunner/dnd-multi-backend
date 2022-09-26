@@ -16,8 +16,10 @@
     "touch",
     "react-dnd"
   ],
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
   "dependencies": {
     "dnd-multi-backend": "^7.1.2",
     "react-dnd-preview": "^7.1.2"
