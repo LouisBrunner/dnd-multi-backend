@@ -12,7 +12,7 @@ node_modules
 npm-debug.log
 
 # Config
-.babel.config*.json
+.babel.config.json
 .eslint*
 .jest.config.js
 .github

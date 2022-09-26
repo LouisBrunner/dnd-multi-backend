@@ -8,6 +8,7 @@ module.exports = {
   coverageReporters: process.env.CI ? ['lcov'] : ['text', 'text-summary', 'html'], // eslint-disable-line no-process-env
   collectCoverageFrom: [
     'packages/*/src/**/*.{js,jsx,ts,tsx}',
+    '!**/__fixtures__/**/*',
   ],
 
   projects: [
@@ -20,7 +21,6 @@ module.exports = {
         '@testing-library/jest-dom',
       ],
 
-      transformIgnorePatterns: ['/node_modules/(?!(dnd-core|@?react-dnd.*)/)'],
       moduleNameMapper: {
         '^@mocks/(.*)$': '<rootDir>/__mocks__/$1',
         '^dnd-multi-backend$': '<rootDir>/packages/dnd-multi-backend/src',

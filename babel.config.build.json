@@ -1,17 +1,5 @@
 {
   "extends": "./babel.config.json",
-  "overrides": [
-    {
-      "presets": [
-        [
-          "@babel/preset-env",
-          {
-            "modules": false
-          }
-        ]
-      ]
-    }
-  ],
   "ignore": [
     "**/__tests__/*",
     "**/__mocks__/*"
