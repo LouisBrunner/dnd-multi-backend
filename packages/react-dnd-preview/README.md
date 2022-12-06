@@ -36,10 +36,11 @@ See also the [examples](examples/) for more information.
 import { usePreview } from 'react-dnd-preview'
 
 const MyPreview = () => {
-  const {display, itemType, item, style} = usePreview()
-  if (!display) {
+  const preview = usePreview()
+  if (!preview.display) {
     return null
   }
+  const {itemType, item, style} = preview;
   return <div className="item-list__item" style={style}>{itemType}</div>
 }
 

@@ -279,10 +279,11 @@ Note that this component will only be showed while using a backend flagged with 
 import { DndProvider, usePreview } from 'react-dnd-multi-backend'
 
 const MyPreview = () => {
-  const {display, itemType, item, style} = usePreview()
-  if (!display) {
+  const preview = usePreview()
+  if (!preview.display) {
     return null
   }
+  const {itemType, item, style} = preview;
   // render your preview
 }
 
