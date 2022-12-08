@@ -2,6 +2,10 @@ import {DragDropManager, BackendFactory, Unsubscribe} from 'dnd-core'
 import {BackendEntry, MultiBackendSwitcher, PreviewList, Transition } from './types'
 import { PreviewListImpl } from './PreviewListImpl'
 
+interface EventConstructor {
+  new(type: string, eventInitDict?: EventInit): Event;
+}
+
 type DnDNode = {
   func: ConnectFunction,
   args: [unknown, unknown?, unknown?],
@@ -195,8 +199,8 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
         return
       }
 
-      const Class = event.constructor as any;
-      let newEvent = new Class(event.type, event) as Event;
+      const Class = event.constructor as EventConstructor
+      const newEvent = new Class(event.type, event)
       event.target?.dispatchEvent(newEvent)
     }
   }
