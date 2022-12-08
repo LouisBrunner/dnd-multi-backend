@@ -195,13 +195,8 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
         return
       }
 
-      let newEvent = null
-      try {
-        newEvent = event.constructor(event.type, event) as Event
-      } catch (_e) {
-        newEvent = document.createEvent('Event')
-        newEvent.initEvent(event.type, event.bubbles, event.cancelable)
-      }
+      const Class = event.constructor as any;
+      let newEvent = new Class(event.type, event) as Event;
       event.target?.dispatchEvent(newEvent)
     }
   }
