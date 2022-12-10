@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14, 16, 18, latest]
+        node-version: [16, 18, latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -16,12 +16,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Check cache node_modules
-      uses: actions/cache@v1
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-node-${{ matrix.node-version }}-
+        cache: 'npm'
     - name: Install dependencies
       run: npm install
     - run: npm run test:ci
