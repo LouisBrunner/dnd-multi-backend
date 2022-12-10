@@ -63,7 +63,7 @@ describe('Preview component', () => {
     })
 
     describe('it renders correctly', () => {
-      const testRender = ({init}: {init: boolean}) => {
+      const testRender = async ({init}: {init: boolean}) => {
         backend.previewEnabled.mockReturnValue(init)
 
         createComponent({generator: Simple})
@@ -82,30 +82,30 @@ describe('Preview component', () => {
           expectNull()
         }
 
-        act(() => {
+        await act(() => {
           backend.previewEnabled.mockReturnValue(true)
           getLastRegister().backendChanged(backend)
         })
         expectNotNull()
 
         // No notification, no change
-        act(() => {
+        await act(() => {
           backend.previewEnabled.mockReturnValue(false)
         })
         expectNotNull()
 
-        act(() => {
+        await act(() => {
           getLastRegister().backendChanged(backend)
         })
         expectNull()
       }
 
-      test('not showing at first', () => {
-        testRender({init: false})
+      test('not showing at first', async () => {
+        await testRender({init: false})
       })
 
-      test('showing at first', () => {
-        testRender({init: true})
+      test('showing at first', async () => {
+        await testRender({init: true})
       })
     })
   })
@@ -126,9 +126,9 @@ describe('Preview component', () => {
       )
     }
 
-    test('portal is in detached div', () => {
+    test('portal is in detached div', async () => {
       render(<Component generator={Simple} />)
-      act(() => {
+      await act(() => {
         backend.previewEnabled.mockReturnValue(true)
         getLastRegister().backendChanged(backend)
       })

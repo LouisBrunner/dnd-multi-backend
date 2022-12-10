@@ -1,6 +1,6 @@
-const {defaults} = require('jest-config');
+import {defaults} from 'jest-config';
 
-module.exports = {
+export default {
   notify: true,
   notifyMode: 'failure-success',
 
@@ -8,7 +8,6 @@ module.exports = {
   coverageReporters: process.env.CI ? ['lcov'] : ['text', 'text-summary', 'html'], // eslint-disable-line no-process-env
   collectCoverageFrom: [
     'packages/*/src/**/*.{js,jsx,ts,tsx}',
-    '!**/__fixtures__/**/*',
   ],
 
   projects: [
@@ -21,10 +20,12 @@ module.exports = {
         '@testing-library/jest-dom',
       ],
 
+      transform: {
+        '^.+\\.[jt]sx?$': ['esbuild-jest', {sourcemap: true}],
+      },
+      transformIgnorePatterns: ['/node_modules/(?!(dnd-core|@?react-dnd.*)/)'],
       moduleNameMapper: {
         '^@mocks/(.*)$': '<rootDir>/__mocks__/$1',
-        '^dnd-multi-backend$': '<rootDir>/packages/dnd-multi-backend/src',
-        '^react-dnd-preview$': '<rootDir>/packages/react-dnd-preview/src',
       },
 
       moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],

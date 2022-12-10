@@ -11,16 +11,13 @@
     "plugin:testing-library/react",
     "plugin:jest-dom/recommended"
   ],
-  "parser": "@babel/eslint-parser",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
+    "project": "./tsconfig.json"
   },
   "plugins": [
-    "@babel",
     "react",
     "jest",
     "compat",
@@ -45,10 +42,12 @@
     },
     {
       "files": [
-        "webpack/*",
-        "babel.config.esm.js",
+        "esbuild/*",
         "jest.config.js"
       ],
+      "parserOptions": {
+        "project": null
+      },
       "env": {
         "node": true
       }
@@ -58,12 +57,6 @@
         "*.ts",
         "*.tsx"
       ],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": {
-        "ecmaVersion": 2020,
-        "sourceType": "module",
-        "project": "./tsconfig.json"
-      },
       "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
@@ -104,7 +97,12 @@
         "@typescript-eslint/switch-exhaustiveness-check": "error",
         "react/react-in-jsx-scope": [
           "off"
-        ]
+        ],
+        "space-before-function-paren": ["error", {
+          "anonymous": "never",
+          "named": "never",
+          "asyncArrow": "always"
+        }]
       }
     }
   ],

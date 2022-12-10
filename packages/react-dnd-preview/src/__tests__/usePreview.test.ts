@@ -1,5 +1,5 @@
 import {usePreview, usePreviewStateFull} from '../usePreview'
-import {renderHook, act} from '@testing-library/react-hooks'
+import {renderHook, act} from '@testing-library/react'
 import {MockDragMonitor} from '@mocks/mocks'
 import {__setMockMonitor} from '@mocks/react-dnd'
 import {MutableRefObject} from 'react'
@@ -85,7 +85,7 @@ describe('usePreview hook', () => {
     })
   })
 
-  test('return true and data when DnD is in progress (with ref)', () => {
+  test('return true and data when DnD is in progress (with ref)', async () => {
     __setMockMonitor({
       ...MockDragMonitor<{bluh: string}>({bluh: 'fake'}),
       isDragging() {return true},
@@ -109,7 +109,7 @@ describe('usePreview hook', () => {
         transform: 'translate(1.0px, 2.0px)',
       },
     })
-    act(() => {
+    await act(() => {
       // FIXME: not great...
       (ref as MutableRefObject<HTMLDivElement>).current = {
         ...document.createElement('div'),
@@ -138,7 +138,7 @@ describe('usePreview hook', () => {
     })
   })
 
-  test('return true and data when DnD is in progress (with ref and parent offset)', () => {
+  test('return true and data when DnD is in progress (with ref and parent offset)', async () => {
     __setMockMonitor({
       ...MockDragMonitor<{bluh: string}>({bluh: 'fake'}),
       isDragging() {return true},
@@ -163,7 +163,7 @@ describe('usePreview hook', () => {
         transform: 'translate(0.0px, 1.0px)',
       },
     })
-    act(() => {
+    await act(() => {
       // FIXME: not great...
       (ref as MutableRefObject<HTMLDivElement>).current = {
         ...document.createElement('div'),

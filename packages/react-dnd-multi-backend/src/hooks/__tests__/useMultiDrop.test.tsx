@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 import {TestPipeline} from '@mocks/pipeline'
 
 import { useMultiDrop } from '../useMultiDrop'
@@ -19,8 +19,14 @@ describe('useMultiDrop component', () => {
   }
 
   test('fails without a context', () => {
-    const {result} = renderHook(MultiAction)
-    expect(result.error).toEqual(expect.any(Error))
+    let err
+    try {
+      renderHook(MultiAction)
+    } catch (e) {
+      err = e
+    } finally {
+      expect(err).toEqual(expect.any(Error))
+    }
   })
 
   test('it works', () => {
