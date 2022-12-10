@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react'
-import {renderHook, act} from '@testing-library/react-hooks'
+import {renderHook, act} from '@testing-library/react'
 import {usePreview} from '../usePreview'
 import {MockPreviewList, MockedPreviewList, MockMultiBackend, MockedMultiBackend} from '@mocks/mocks'
 import {DndContext, DndContextType} from 'react-dnd'
@@ -46,7 +46,7 @@ describe('usePreview component', () => {
   })
 
   describe('it renders correctly', () => {
-    const testRender = ({init}: {init: boolean}) => {
+    const testRender = async ({init}: {init: boolean}) => {
       backend.previewEnabled.mockReturnValue(init)
 
       const {result} = createComponent()
@@ -65,30 +65,30 @@ describe('usePreview component', () => {
         expectNull()
       }
 
-      act(() => {
+      await act(() => {
         backend.previewEnabled.mockReturnValue(true)
         getLastRegister().backendChanged(backend)
       })
       expectNotNull()
 
       // No notification, no change
-      act(() => {
+      await act(() => {
         backend.previewEnabled.mockReturnValue(false)
       })
       expectNotNull()
 
-      act(() => {
+      await act(() => {
         getLastRegister().backendChanged(backend)
       })
       expectNull()
     }
 
-    test('not showing at first', () => {
-      testRender({init: false})
+    test('not showing at first', async () => {
+      await testRender({init: false})
     })
 
-    test('showing at first', () => {
-      testRender({init: true})
+    test('showing at first', async () => {
+      await testRender({init: true})
     })
   })
 })

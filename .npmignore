@@ -1,8 +1,8 @@
 # OS files
 .DS_Store
 
-# Webpack
-/webpack
+# esbuild
+/esbuild
 
 # Output
 /examples
@@ -12,7 +12,6 @@ node_modules
 npm-debug.log
 
 # Config
-.babel.config*.json
 .eslint*
 .jest.config.js
 .github

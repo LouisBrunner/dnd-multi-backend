@@ -1,4 +1,8 @@
-import React, {useContext} from 'react'
+// FIXME: esbuild-jest is struggling in this file because of jest.mock (I think), so we need:
+// - a special React import
+// - @babel/preset-typescript installed (and set in a tiny babel.config.json)
+import * as React from 'react'
+// import React, {useContext} from 'react'
 import {render, screen} from '@testing-library/react'
 
 import {Context, PreviewState} from '../Context'
@@ -84,7 +88,7 @@ describe('Preview subcomponent', () => {
 
   describe('using component child', () => {
     const Child = () => {
-      const props = useContext(Context)
+      const props = React.useContext(Context)
       if (props === undefined) {
         return null
       }
