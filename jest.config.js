@@ -21,7 +21,7 @@ export default {
       ],
 
       transform: {
-        '^.+\\.[jt]sx?$': 'esbuild-jest',
+        '^.+\\.[jt]sx?$': ['esbuild-jest', {sourcemap: true}],
       },
       transformIgnorePatterns: ['/node_modules/(?!(dnd-core|@?react-dnd.*)/)'],
       moduleNameMapper: {
