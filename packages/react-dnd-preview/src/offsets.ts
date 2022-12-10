@@ -24,9 +24,7 @@ const subtract = (a: Point, b: Point): Point => {
 const calculateParentOffset = (monitor: DragLayerMonitor): Point => {
   const client = monitor.getInitialClientOffset()
   const source = monitor.getInitialSourceClientOffset()
-  // TODO: why is client containing `undefined` values _sometimes_?
-  // more precisely, just after MultiBackend switched from HTML5 to Touch _for the first time_?
-  if (client === null || source === null || client.x === undefined || client.y === undefined) {
+  if (client === null || source === null) {
     return {x: 0, y: 0}
   }
   return subtract(client, source)
