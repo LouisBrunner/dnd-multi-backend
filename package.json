@@ -6,6 +6,9 @@
   "browserslist": [
     "defaults"
   ],
+   "engines" : {
+    "npm" : ">=7.0.0"
+  },
   "scripts": {
     "clean": "rm -rf packages/*/dist examples/*.js coverage",
     "build:types": "lerna exec -- tsc -p ./tsconfig.json --declarationDir dist",
