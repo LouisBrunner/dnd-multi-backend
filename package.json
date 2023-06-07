@@ -27,6 +27,7 @@
     "test:watch": "npm run test -- --watch",
     "test:ci": "CI=yes npm run test",
     "start": "node esbuild/dev.js",
+    "start:dev": "NODE_ENV=development npm run start",
     "prepare": "npm run clean && npm run build && npm run lint && npm run test"
   },
   "devDependencies": {
