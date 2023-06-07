@@ -1,9 +1,13 @@
 import esbuild from 'esbuild';
 import {examples} from './config.js';
 
-esbuild.serve({
+const context = await esbuild.context({
+  ...examples,
+  outdir: 'examples/',
+});
+
+const server = await context.serve({
   servedir: 'examples/',
   port: 4001,
-}, examples).then((server) => {
-  console.log(`Server available at http://${server.host}:${server.port}`);
 });
+console.log(`Server available at http://${server.host}:${server.port}`);

@@ -15,6 +15,10 @@
     "backend",
     "multi"
   ],
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/LouisBrunner"
+  },
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

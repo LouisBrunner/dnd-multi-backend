@@ -109,7 +109,7 @@ describe('usePreview hook', () => {
         transform: 'translate(1.0px, 2.0px)',
       },
     })
-    await act(() => {
+    await act<void>(() => {
       // FIXME: not great...
       (ref as MutableRefObject<HTMLDivElement>).current = {
         ...document.createElement('div'),
@@ -163,7 +163,7 @@ describe('usePreview hook', () => {
         transform: 'translate(0.0px, 1.0px)',
       },
     })
-    await act(() => {
+    await act<void>(() => {
       // FIXME: not great...
       (ref as MutableRefObject<HTMLDivElement>).current = {
         ...document.createElement('div'),

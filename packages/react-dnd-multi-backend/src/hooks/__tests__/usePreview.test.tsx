@@ -65,19 +65,19 @@ describe('usePreview component', () => {
         expectNull()
       }
 
-      await act(() => {
+      await act<void>(() => {
         backend.previewEnabled.mockReturnValue(true)
         getLastRegister().backendChanged(backend)
       })
       expectNotNull()
 
       // No notification, no change
-      await act(() => {
+      await act<void>(() => {
         backend.previewEnabled.mockReturnValue(false)
       })
       expectNotNull()
 
-      await act(() => {
+      await act<void>(() => {
         getLastRegister().backendChanged(backend)
       })
       expectNull()
