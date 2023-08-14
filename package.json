@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.21.5",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
     "@types/jsdom": "^21.1.1",
     "@types/react-dom": "^18.2.4",
