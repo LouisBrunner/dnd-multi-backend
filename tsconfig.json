@@ -28,16 +28,17 @@
       "dnd-multi-backend": [
         "packages/dnd-multi-backend/src"
       ],
-      "react-dnd-preview": [
-        "packages/react-dnd-preview/src"
-      ],
       "rdndmb-html5-to-touch": [
         "packages/rdndmb-html5-to-touch/src"
+      ],
+      "react-dnd-preview": [
+        "packages/react-dnd-preview/src"
       ]
     },
     "skipLibCheck": true
   },
   "include": [
+    ".jest-setup.ts",
     "__mocks__/**/*.ts",
     "packages/*/examples/**/*.ts*",
     "packages/*/src/**/*.ts*"
