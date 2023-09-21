@@ -1,4 +1,5 @@
 import esbuild from 'esbuild';
+import tsConfig from '../tsconfig.json' assert { type: 'json' };
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
 
 esbuild.build({
@@ -8,4 +9,5 @@ esbuild.build({
   outfile: 'dist/index.js',
   minify: true,
   plugins: [nodeExternalsPlugin()],
+  target: tsConfig.compilerOptions.target,
 });
