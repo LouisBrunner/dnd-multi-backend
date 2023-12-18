@@ -56,7 +56,7 @@ jobs:
       with:
         persist-credentials: false
     - name: Download examples build
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: Examples
         path: examples
