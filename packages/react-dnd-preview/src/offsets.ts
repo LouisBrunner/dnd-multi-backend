@@ -16,8 +16,8 @@ export type Point = {
 
 const subtract = (a: Point, b: Point): Point => {
   return {
-    x: a.x - b.x,
-    y: a.y - b.y,
+    x: Math.round(a.x - b.x),
+    y: Math.round(a.y - b.y),
   }
 }
 
