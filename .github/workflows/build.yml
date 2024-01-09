@@ -29,7 +29,8 @@ jobs:
         parallel: true
     - run: npm run build:examples
     - name: Upload examples build
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
+      if: ${{ matrix.node-version == 'latest' }}
       with:
         name: Examples
         path: examples
