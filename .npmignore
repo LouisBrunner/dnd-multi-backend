@@ -1,0 +1,21 @@
+# OS files
+.DS_Store
+
+# esbuild
+/esbuild
+
+# Output
+/examples
+
+# npm
+node_modules
+npm-debug.log
+
+# Config
+.eslint*
+.jest.config.js
+.github
+lerna.json
+
+# Code coverage
+coverage
