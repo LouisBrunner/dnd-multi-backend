@@ -29,7 +29,7 @@ describe('Preview subcomponent', () => {
   }
 
   const generator = ({itemType, item, style}: GeneratorProps) => {
-    return <div style={style}>{item.coucou}: {itemType}</div>
+    return <div style={style}>{item.coucou}: {itemType?.toString()}</div>
   }
 
   const setupTest = (props: PreviewProps<DragContent>): void => {

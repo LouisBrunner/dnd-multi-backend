@@ -21,7 +21,7 @@ export const generatePreview = ({itemType, item, style}: PreviewProps, {row, col
     }}>
       {title}
       <br />
-      Generated {itemType}
+      Generated {itemType?.toString()}
       <br />
       {method}
     </Shape>
