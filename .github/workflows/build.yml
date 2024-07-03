@@ -4,13 +4,13 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: Build (${{ matrix.node-version }})
+    name: Build (Node ${{ matrix.node-version }})
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [16, 18, 20, 22, latest]
+        node-version: [16, 18, 20]
 
     steps:
     - uses: actions/checkout@v4
