@@ -18,10 +18,10 @@ export const Preview = <T = unknown, El extends Element = Element>(props: Previe
   }
   const {display: _display, ...data} = result
 
-  let child
+  let child: ReactNode
   if ('children' in props) {
     if (typeof props.children === 'function') {
-      child = (props.children as PreviewGenerator<T, El>)(data)
+      child = props.children(data)
     } else {
       child = props.children
     }
