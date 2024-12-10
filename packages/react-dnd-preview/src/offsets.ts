@@ -14,10 +14,28 @@ export type Point = {
   y: number,
 }
 
+export type PreviewPlacement =
+    | 'center'
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left'
+    | 'right'
+
 const subtract = (a: Point, b: Point): Point => {
   return {
     x: a.x - b.x,
     y: a.y - b.y,
+  }
+}
+
+const add = (a: Point, b: Point): Point => {
+  return {
+    x: a.x + b.x,
+    y: a.y + b.y,
   }
 }
 
@@ -30,7 +48,42 @@ const calculateParentOffset = (monitor: DragLayerMonitor): Point => {
   return subtract(client, source)
 }
 
-export const calculatePointerPosition = (monitor: DragLayerMonitor, childRef: RefObject<Element>): Point | null => {
+const calculateXOffset = (placement: PreviewPlacement, bb: DOMRect): number => {
+  switch (placement) {
+  case 'left':
+  case 'top-start':
+  case 'bottom-start':
+    return 0
+  case 'right':
+  case 'top-end':
+  case 'bottom-end':
+    return bb.width
+  default:
+    return bb.width / 2
+  }
+}
+
+const calculateYOffset = (placement: PreviewPlacement, bb: DOMRect): number => {
+  switch (placement) {
+  case 'top':
+  case 'top-start':
+  case 'top-end':
+    return 0
+  case 'bottom':
+  case 'bottom-start':
+  case 'bottom-end':
+    return bb.height
+  default:
+    return bb.height / 2
+  }
+}
+
+export const calculatePointerPosition = (
+  monitor: DragLayerMonitor,
+  childRef: RefObject<Element>,
+  placement: PreviewPlacement = 'center',
+  padding: Point = { x: 0, y: 0 },
+): Point | null => {
   const offset = monitor.getClientOffset()
   if (offset === null) {
     return null
@@ -43,6 +96,7 @@ export const calculatePointerPosition = (monitor: DragLayerMonitor, childRef: Re
   }
 
   const bb = childRef.current.getBoundingClientRect()
-  const middle = {x: bb.width / 2, y: bb.height / 2}
-  return subtract(offset, middle)
+  const previewOffset = { x: calculateXOffset(placement, bb), y: calculateYOffset(placement, bb) }
+
+  return add(subtract(offset, previewOffset), padding)
 }

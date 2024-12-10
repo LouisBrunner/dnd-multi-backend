@@ -11,9 +11,9 @@ export type GenPreviewProps = {
   method: string,
 }
 
-export const generatePreview = ({itemType, item, style}: PreviewProps, {row, col, title, method}: GenPreviewProps): JSX.Element => {
+export const generatePreview = ({itemType, item, style, ref}: PreviewProps, {row, col, title, method}: GenPreviewProps): JSX.Element => {
   return (
-    <Shape color={item.color} size={50} style={{
+    <Shape color={item.color} size={50} ref={ref} style={{
       ...style,
       top: `${row * 60}px`,
       left: `${col * 100}px`,

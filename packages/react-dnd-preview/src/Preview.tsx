@@ -1,17 +1,24 @@
 import React, {ReactNode} from 'react'
 import {usePreview} from './usePreview'
 import {Context, PreviewState} from './Context'
+import {PreviewPlacement, Point} from './offsets'
 
 export type PreviewGenerator<T = unknown, El extends Element = Element> = (state: PreviewState<T, El>) => JSX.Element
 
-export type PreviewProps<T = unknown, El extends Element = Element> = {
+export type PreviewProps<T = unknown, El extends Element = Element> = ({
   children: PreviewGenerator<T, El> | ReactNode
 } | {
   generator: PreviewGenerator<T, El>,
+}) & {
+    placement?: PreviewPlacement,
+    padding?: Point,
 }
 
 export const Preview = <T = unknown, El extends Element = Element>(props: PreviewProps<T, El>): JSX.Element | null => {
-  const result = usePreview<T, El>()
+  const result = usePreview<T, El>({
+    placement: props.placement,
+    padding: props.padding,
+  })
 
   if (!result.display) {
     return null
