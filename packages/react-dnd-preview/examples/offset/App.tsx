@@ -15,7 +15,7 @@ type PreviewProps = {
 }
 
 export const Preview = ({kind, text, previewPlacement, padding}: PreviewProps): JSX.Element | null => {
-  const preview = usePreview<DragContent, HTMLDivElement>({previewPlacement, padding})
+  const preview = usePreview<DragContent, HTMLDivElement>({placement: previewPlacement, padding})
   if (!preview.display) {
     return null
   }

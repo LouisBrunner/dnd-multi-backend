@@ -32,7 +32,7 @@ export type usePreviewStateContent<T = unknown, El extends Element = Element> = 
 }
 
 export type usePreviewOptions = {
-  previewPlacement?: PreviewPlacement;
+  placement?: PreviewPlacement;
   padding?: Point;
 };
 
@@ -42,7 +42,7 @@ export const usePreview = <T = unknown, El extends Element = Element>(
   const child = useRef<El | null>(null)
   const collectedProps = useDragLayer((monitor: DragLayerMonitor<T>) => {
     return {
-      currentOffset: calculatePointerPosition(monitor, child, options?.previewPlacement, options?.padding),
+      currentOffset: calculatePointerPosition(monitor, child, options?.placement, options?.padding),
       isDragging: monitor.isDragging(),
       itemType: monitor.getItemType(),
       item: monitor.getItem(),
