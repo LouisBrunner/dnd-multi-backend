@@ -3,7 +3,7 @@ import {renderHook, act} from '@testing-library/react'
 import {MockDragMonitor} from '@mocks/mocks'
 import {__setMockMonitor} from '@mocks/react-dnd'
 import {MutableRefObject} from 'react'
-import {PreviewPlacement} from 'react-dnd-preview'
+import { PreviewPlacement } from '../offsets'
 
 describe('usePreview hook', () => {
   beforeEach(() => {

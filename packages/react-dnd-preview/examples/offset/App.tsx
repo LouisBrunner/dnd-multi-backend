@@ -10,12 +10,12 @@ type Kinds = 'default' | 'ref' | 'custom_client' | 'custom_source_client'
 type PreviewProps = {
   kind: Kinds,
   text: string,
-  previewPlacement?: PreviewPlacement,
+  placement?: PreviewPlacement,
   padding?: Point
 }
 
-export const Preview = ({kind, text, previewPlacement, padding}: PreviewProps): JSX.Element | null => {
-  const preview = usePreview<DragContent, HTMLDivElement>({placement: previewPlacement, padding})
+export const Preview = ({kind, text, placement, padding}: PreviewProps): JSX.Element | null => {
+  const preview = usePreview<DragContent, HTMLDivElement>({placement, padding})
   if (!preview.display) {
     return null
   }
@@ -101,7 +101,7 @@ export const App = (): JSX.Element => {
       <DndProvider backend={TouchBackend} options={{enableMouseEvents: true}}>
         <Draggable/>
         <Preview text="default" kind="default"/>
-        <Preview text="with ref" kind="ref" previewPlacement={previewPlacement} padding={{x: Number(paddingX), y: Number(paddingY)}}/>
+        <Preview text="with ref" kind="ref" placement={previewPlacement} padding={{x: Number(paddingX), y: Number(paddingY)}}/>
         {debug ? (
           <>
             <Preview text="custom ClientOffset" kind="custom_client"/>
