@@ -7,16 +7,7 @@
   "license": "MIT",
   "repository": "https://github.com/LouisBrunner/dnd-multi-backend/tree/master/packages/rdndmb-html5-to-touch",
   "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/rdndmb-html5-to-touch/",
-  "keywords": [
-    "react",
-    "dnd",
-    "drag",
-    "drop",
-    "html5",
-    "touch",
-    "react-dnd",
-    "react-dnd-multi-backend"
-  ],
+  "keywords": ["react", "dnd", "drag", "drop", "html5", "touch", "react-dnd", "react-dnd-multi-backend"],
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/LouisBrunner"
@@ -29,5 +20,6 @@
     "dnd-multi-backend": "^8.1.0",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1"
-  }
+  },
+  "gitHead": "2f9cf866a18c478f2bcce0735aa085d7f2186304"
 }

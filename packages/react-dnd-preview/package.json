@@ -7,14 +7,7 @@
   "license": "MIT",
   "repository": "https://github.com/LouisBrunner/dnd-multi-backend/tree/master/packages/react-dnd-preview",
   "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/react-dnd-preview/",
-  "keywords": [
-    "react",
-    "dnd",
-    "drag",
-    "drop",
-    "react-dnd",
-    "preview"
-  ],
+  "keywords": ["react", "dnd", "drag", "drop", "react-dnd", "preview"],
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/LouisBrunner"
@@ -27,5 +20,5 @@
     "react": "^16.14.0 || ^17.0.2 || ^18.0.0",
     "react-dnd": "^16.0.1"
   },
-  "gitHead": "d3329f143a5b4544ca30416e0b04a397e738f046"
+  "gitHead": "2f9cf866a18c478f2bcce0735aa085d7f2186304"
 }
