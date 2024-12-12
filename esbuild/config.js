@@ -7,4 +7,5 @@ export const examples = {
   },
   bundle: true,
   minify: true,
+  jsx: 'automatic',
 }
