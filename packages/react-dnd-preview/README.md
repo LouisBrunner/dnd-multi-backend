@@ -36,12 +36,12 @@ See also the [examples](examples/) for more information.
 import { usePreview } from 'react-dnd-preview'
 
 const MyPreview = () => {
-  const preview = usePreview()
+  const preview = usePreview({ placement: 'top', padding: {x: -20, y: 0 }})
   if (!preview.display) {
     return null
   }
-  const {itemType, item, style} = preview;
-  return <div className="item-list__item" style={style}>{itemType}</div>
+  const {itemType, item, style, ref} = preview;
+  return <div className="item-list__item" ref={ref} style={style}>{itemType}</div>
 }
 
 const App = () => {
