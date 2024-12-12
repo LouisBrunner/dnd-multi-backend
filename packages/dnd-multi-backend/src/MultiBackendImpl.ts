@@ -1,15 +1,15 @@
-import {DragDropManager, BackendFactory, Unsubscribe} from 'dnd-core'
-import {BackendEntry, MultiBackendSwitcher, PreviewList, Transition } from './types'
-import { PreviewListImpl } from './PreviewListImpl'
+import type {BackendFactory, DragDropManager, Unsubscribe} from 'dnd-core'
+import {PreviewListImpl} from './PreviewListImpl'
+import type {BackendEntry, MultiBackendSwitcher, PreviewList, Transition} from './types'
 
 interface EventConstructor {
-  new(type: string, eventInitDict?: EventInit): Event;
+  new (type: string, eventInitDict?: EventInit): Event
 }
 
 type DnDNode = {
-  func: ConnectFunction,
-  args: [unknown, unknown?, unknown?],
-  unsubscribe: Unsubscribe,
+  func: ConnectFunction
+  args: [unknown, unknown?, unknown?]
+  unsubscribe: Unsubscribe
 }
 
 type ConnectFunction = 'connectDragSource' | 'connectDragPreview' | 'connectDropTarget'
@@ -17,22 +17,22 @@ type ConnectFunction = 'connectDragSource' | 'connectDragPreview' | 'connectDrop
 export type MultiBackendContext = unknown
 
 export type MultiBackendPipelineStep = {
-  id: string,
-  backend: BackendFactory,
-  transition?: Transition,
-  preview?: boolean,
-  skipDispatchOnTransition?: boolean,
-  options?: unknown,
+  id: string
+  backend: BackendFactory
+  transition?: Transition
+  preview?: boolean
+  skipDispatchOnTransition?: boolean
+  options?: unknown
 }
 
 export type MultiBackendPipeline = MultiBackendPipelineStep[]
 
 export type MultiBackendOptions = {
-  backends: MultiBackendPipeline,
+  backends: MultiBackendPipeline
 }
 
 export class MultiBackendImpl implements MultiBackendSwitcher {
-  private static /*#*/isSetUp = false
+  private static /*#*/ isSetUp = false
 
   /*private*/ #current: string
   /*private*/ #previews: PreviewList
@@ -44,7 +44,7 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
     if (!options || !options.backends || options.backends.length < 1) {
       throw new Error(
         `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
-        see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-2xx`
+        see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-2xx`,
       )
     }
 
@@ -52,11 +52,11 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
 
     this.#backends = {}
     this.#backendsList = []
-    options.backends.forEach((backend: MultiBackendPipelineStep) => {
+    for (const backend of options.backends) {
       const backendRecord = this.#createBackend(manager, context, backend)
       this.#backends[backendRecord.id] = backendRecord
       this.#backendsList.push(backendRecord)
-    })
+    }
     this.#current = this.#backendsList[0].id
 
     this.#nodes = {}
@@ -78,18 +78,20 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
     if (!id) {
       throw new Error(
         `You must specify an 'id' property in your Backend entry: ${JSON.stringify(backend)}
-        see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-5xx`
+        see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-5xx`,
       )
-    } else if (inferName) {
-      console.warn( // eslint-disable-line no-console
+    }
+    if (inferName) {
+      console.warn(
         `Deprecation notice: You are using a pipeline which doesn't include backends' 'id'.
-        This might be unsupported in the future, please specify 'id' explicitely for every backend.`
+        This might be unsupported in the future, please specify 'id' explicitely for every backend.`,
       )
     }
     if (this.#backends[id]) {
       throw new Error(
         `You must specify a unique 'id' property in your Backend entry:
-        ${JSON.stringify(backend)} (conflicts with: ${JSON.stringify(this.#backends[id])})`)
+        ${JSON.stringify(backend)} (conflicts with: ${JSON.stringify(this.#backends[id])})`,
+      )
     }
 
     return {
@@ -156,19 +158,19 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
 
   // Multi Backend Listeners
   #addEventListeners = (target: EventTarget): void => {
-    this.#backendsList.forEach((backend) => {
+    for (const backend of this.#backendsList) {
       if (backend.transition) {
         target.addEventListener(backend.transition.event, this.#backendSwitcher)
       }
-    })
+    }
   }
 
   #removeEventListeners = (target: EventTarget): void => {
-    this.#backendsList.forEach((backend) => {
+    for (const backend of this.#backendsList) {
       if (backend.transition) {
         target.removeEventListener(backend.transition.event, this.#backendSwitcher)
       }
-    })
+    }
   }
 
   // Switching logic
@@ -185,11 +187,10 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
 
     if (this.#current !== oldBackend) {
       this.#backends[oldBackend].instance.teardown()
-      Object.keys(this.#nodes).forEach((id) => {
-        const node = this.#nodes[id]
+      for (const [_, node] of Object.entries(this.#nodes)) {
         node.unsubscribe()
         node.unsubscribe = this.#callBackend(node.func, ...node.args)
-      })
+      }
       this.#previews.backendChanged(this)
 
       const newBackend = this.#backends[this.#current]

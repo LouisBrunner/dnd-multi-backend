@@ -1,14 +1,14 @@
-import React, {useState} from 'react'
-import {render, screen, act} from '@testing-library/react'
-import {Preview, PreviewContext} from '../Preview'
-import {MockPreviewList, MockedPreviewList, MockedMultiBackend, MockMultiBackend} from '@mocks/mocks'
-import {DndContext, DndContextType} from 'react-dnd'
+import {MockMultiBackend, MockPreviewList, type MockedMultiBackend, type MockedPreviewList} from '@mocks/mocks'
+import {act, render, screen} from '@testing-library/react'
+import {useState} from 'react'
+import {DndContext, type DndContextType} from 'react-dnd'
+import type {PreviewGenerator} from 'react-dnd-preview'
 import {PreviewPortalContext} from '../DndProvider'
-import {PreviewGenerator} from 'react-dnd-preview'
+import {Preview, PreviewContext} from '../Preview'
 
 type TestProps = {
   generator: PreviewGenerator
-};
+}
 
 describe('Preview component', () => {
   let list: MockedPreviewList
@@ -49,7 +49,7 @@ describe('Preview component', () => {
       return render(
         <DndContext.Provider value={context}>
           <Preview generator={generator} />
-        </DndContext.Provider>
+        </DndContext.Provider>,
       )
     }
 

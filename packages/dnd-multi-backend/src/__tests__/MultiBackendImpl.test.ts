@@ -1,11 +1,6 @@
-import {DOMWindow} from 'jsdom'
-import {DragDropManager} from 'dnd-core'
-import {MultiBackendContext, MultiBackendImpl, MultiBackendOptions} from '../MultiBackendImpl'
 import {TestBackends, TestPipeline, TestPipelineWithSkip} from '@mocks/pipeline'
-
-const globalNode = global as unknown as {
-  window: DOMWindow | undefined,
-}
+import type {DragDropManager} from 'dnd-core'
+import {type MultiBackendContext, MultiBackendImpl, type MultiBackendOptions} from '../MultiBackendImpl'
 
 describe('MultiBackendImpl class', () => {
   let _defaultManager: DragDropManager
@@ -30,7 +25,6 @@ describe('MultiBackendImpl class', () => {
   const switchTouchBackend = (): void => {
     expect(TestBackends[0].teardown).not.toHaveBeenCalled()
     expect(TestBackends[1].setup).not.toHaveBeenCalled()
-    // eslint-disable-next-line compat/compat
     const event = new TouchEvent('touchstart', {bubbles: true, touches: []})
     window.dispatchEvent(event)
     expect(TestBackends[0].teardown).toHaveBeenCalled()
@@ -50,42 +44,64 @@ describe('MultiBackendImpl class', () => {
 
     test('fails if no backend are specified', () => {
       const pipeline = {backends: []}
-      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
+      expect(() => {
+        createBackend(pipeline as unknown as MultiBackendOptions)
+      }).toThrow(Error)
     })
 
     test('fails if no backend are specified (prototype trick)', () => {
       const pipeline = Object.create({backends: []}) as Record<string, unknown>
-      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
+      expect(() => {
+        createBackend(pipeline as unknown as MultiBackendOptions)
+      }).toThrow(Error)
     })
 
     test('fails if a backend lacks the `backend` property', () => {
       const pipeline = {backends: [{}]}
-      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
+      expect(() => {
+        createBackend(pipeline as unknown as MultiBackendOptions)
+      }).toThrow(Error)
     })
 
     test('fails if a backend specifies an invalid `transition` property', () => {
-      const pipeline = {backends: [{backend: () => { }, transition: {}}]}
-      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
+      const pipeline = {backends: [{backend: () => {}, transition: {}}]}
+      expect(() => {
+        createBackend(pipeline as unknown as MultiBackendOptions)
+      }).toThrow(Error)
     })
 
     test('fails if a backend lacks an `id` property and one cannot be infered', () => {
-      const pipeline = {backends: [{backend: () => { }}]}
-      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
+      const pipeline = {backends: [{backend: () => {}}]}
+      expect(() => {
+        createBackend(pipeline as unknown as MultiBackendOptions)
+      }).toThrow(Error)
     })
 
     test('fails if a backend has a duplicate `id` property', () => {
       const pipeline = {
         backends: [
-          {id: 'abc', backend: () => { }},
-          {id: 'abc', backend: () => { }},
+          {id: 'abc', backend: () => {}},
+          {id: 'abc', backend: () => {}},
         ],
       }
-      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).toThrow(Error)
+      expect(() => {
+        createBackend(pipeline as unknown as MultiBackendOptions)
+      }).toThrow(Error)
     })
 
     test('warns if a backend lacks an `id` property but one can be infered', () => {
-      const pipeline = {backends: [{backend: () => {return {}}}]}
-      expect(() => {createBackend(pipeline as unknown as MultiBackendOptions)}).not.toThrow()
+      const pipeline = {
+        backends: [
+          {
+            backend: () => {
+              return {}
+            },
+          },
+        ],
+      }
+      expect(() => {
+        createBackend(pipeline as unknown as MultiBackendOptions)
+      }).not.toThrow()
       expect(warn).toHaveBeenCalled()
     })
 
@@ -101,25 +117,25 @@ describe('MultiBackendImpl class', () => {
     })
   })
 
-
   describe('setup function', () => {
     test('does nothing if it has no window', () => {
+      const windowSpy = jest.spyOn(window, 'window', 'get')
       const spyAdd = jest.spyOn(window, 'addEventListener')
-
-      const oldWindow = globalNode.window
-      delete globalNode.window
+      // @ts-expect-error
+      windowSpy.mockImplementation(() => undefined)
 
       const backend = createBackend()
       backend.setup()
-      expect(() => {backend.setup()}).not.toThrow()
+      expect(() => {
+        backend.setup()
+      }).not.toThrow()
       expect(spyAdd).not.toHaveBeenCalled()
       expect(TestBackends[0].setup).not.toHaveBeenCalled()
 
       backend.teardown()
 
-      globalNode.window = oldWindow
-
       spyAdd.mockRestore()
+      windowSpy.mockRestore()
     })
 
     test('fails if a backend already exist', () => {
@@ -136,7 +152,9 @@ describe('MultiBackendImpl class', () => {
 
       const backend2 = createBackend()
       expect(TestBackends[0].setup).not.toHaveBeenCalled()
-      expect(() => {backend2.setup()}).toThrow(Error)
+      expect(() => {
+        backend2.setup()
+      }).toThrow(Error)
       expect(TestBackends[0].setup).not.toHaveBeenCalled()
       expect(spyAdd).not.toHaveBeenCalled()
 
@@ -160,10 +178,10 @@ describe('MultiBackendImpl class', () => {
 
   describe('teardown function', () => {
     test('does nothing if it has no window', () => {
+      const windowSpy = jest.spyOn(window, 'window', 'get')
       const spyRemove = jest.spyOn(window, 'removeEventListener')
-
-      const oldWindow = globalNode.window
-      delete globalNode.window
+      // @ts-expect-error
+      windowSpy.mockImplementation(() => undefined)
 
       const backend = createBackend()
       backend.setup()
@@ -171,9 +189,8 @@ describe('MultiBackendImpl class', () => {
       expect(spyRemove).not.toHaveBeenCalled()
       expect(TestBackends[0].teardown).not.toHaveBeenCalled()
 
-      globalNode.window = oldWindow
-
       spyRemove.mockRestore()
+      windowSpy.mockRestore()
     })
 
     test('cleans up the events and sub-backends', () => {
@@ -212,7 +229,6 @@ describe('MultiBackendImpl class', () => {
       spyRemove.mockRestore()
     })
   })
-
 
   describe('connectDragSource function', () => {
     test('pass data correctly', () => {
@@ -333,7 +349,6 @@ describe('MultiBackendImpl class', () => {
       backend.teardown()
     })
   })
-
 
   describe('profile function', () => {
     test('returns the profiling data', () => {

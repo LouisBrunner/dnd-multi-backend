@@ -1,6 +1,6 @@
-import React, {useContext} from 'react'
+import {useContext} from 'react'
+import {Preview as DnDPreview, Context as PreviewContext, type PreviewProps, type PreviewState} from 'react-dnd-preview'
 import {createPortal} from 'react-dom'
-import {Preview as DnDPreview, PreviewProps, Context as PreviewContext, PreviewState} from 'react-dnd-preview'
 
 import {useObservePreviews} from '../hooks/useObservePreviews'
 import {PreviewPortalContext} from './DndProvider'

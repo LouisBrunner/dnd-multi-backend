@@ -1,4 +1,3 @@
-import React from 'react'
 import { usePreview } from '../../../src'
 import {DragContent} from '../../shared'
 import { generatePreview, GenPreviewLiteProps, GenPreviewProps } from './common'

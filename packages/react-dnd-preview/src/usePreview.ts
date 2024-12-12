@@ -1,7 +1,7 @@
-import {CSSProperties, MutableRefObject, useRef} from 'react'
-import {DragLayerMonitor, useDragLayer} from 'react-dnd'
-import {Identifier} from 'dnd-core'
-import {calculatePointerPosition, Point, PreviewPlacement} from './offsets'
+import type {Identifier} from 'dnd-core'
+import {type CSSProperties, type MutableRefObject, useRef} from 'react'
+import {type DragLayerMonitor, useDragLayer} from 'react-dnd'
+import {type Point, type PreviewPlacement, calculatePointerPosition} from './offsets'
 
 const getStyle = (currentOffset: Point): CSSProperties => {
   const transform = `translate(${currentOffset.x.toFixed(1)}px, ${currentOffset.y.toFixed(1)}px)`
@@ -15,30 +15,24 @@ const getStyle = (currentOffset: Point): CSSProperties => {
   }
 }
 
-export type usePreviewState<T = unknown, El extends Element = Element> =
-  {display: false}
-  | usePreviewStateFull<T, El>
+export type usePreviewState<T = unknown, El extends Element = Element> = {display: false} | usePreviewStateFull<T, El>
 
-export type usePreviewStateFull<T = unknown, El extends Element = Element> =
-  {display: true}
-  & usePreviewStateContent<T, El>
+export type usePreviewStateFull<T = unknown, El extends Element = Element> = {display: true} & usePreviewStateContent<T, El>
 
 export type usePreviewStateContent<T = unknown, El extends Element = Element> = {
-  ref: MutableRefObject<El | null>,
-  itemType: Identifier | null,
-  item: T,
-  style: CSSProperties,
-  monitor: DragLayerMonitor,
+  ref: MutableRefObject<El | null>
+  itemType: Identifier | null
+  item: T
+  style: CSSProperties
+  monitor: DragLayerMonitor
 }
 
 export type usePreviewOptions = {
-  placement?: PreviewPlacement;
-  padding?: Point;
-};
+  placement?: PreviewPlacement
+  padding?: Point
+}
 
-export const usePreview = <T = unknown, El extends Element = Element>(
-  options?: usePreviewOptions,
-): usePreviewState<T, El> => {
+export const usePreview = <T = unknown, El extends Element = Element>(options?: usePreviewOptions): usePreviewState<T, El> => {
   const child = useRef<El | null>(null)
   const collectedProps = useDragLayer((monitor: DragLayerMonitor<T>) => {
     return {

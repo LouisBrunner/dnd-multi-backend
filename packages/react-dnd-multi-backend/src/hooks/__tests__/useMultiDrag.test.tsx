@@ -1,8 +1,8 @@
-import React, {ReactNode} from 'react'
-import {renderHook} from '@testing-library/react'
 import {TestPipeline} from '@mocks/pipeline'
-import {useMultiDrag} from '../useMultiDrag'
+import {renderHook} from '@testing-library/react'
+import type {ReactNode} from 'react'
 import {DndProvider} from '../..'
+import {useMultiDrag} from '../useMultiDrag'
 
 describe('useMultiDrag component', () => {
   const MultiAction = () => {
@@ -18,13 +18,13 @@ describe('useMultiDrag component', () => {
   }
 
   test('fails without a context', () => {
-    let err
+    let err: Error | undefined
     const spy = jest.spyOn(console, 'error')
     spy.mockImplementation(() => {})
     try {
       renderHook(MultiAction)
     } catch (e) {
-      err = e
+      err = e as Error
     } finally {
       spy.mockRestore()
       expect(err).toEqual(expect.any(Error))
@@ -32,7 +32,9 @@ describe('useMultiDrag component', () => {
   })
 
   test('it works', () => {
-    const wrapper = ({children}: {children?: ReactNode}) => {return <DndProvider options={TestPipeline}>{children}</DndProvider>}
+    const wrapper = ({children}: {children?: ReactNode}) => {
+      return <DndProvider options={TestPipeline}>{children}</DndProvider>
+    }
     const {result} = renderHook(MultiAction, {wrapper})
 
     const [props, backends] = result.current

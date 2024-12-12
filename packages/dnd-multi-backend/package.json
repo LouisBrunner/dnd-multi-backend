@@ -7,14 +7,7 @@
   "license": "MIT",
   "repository": "https://github.com/LouisBrunner/dnd-multi-backend/tree/master/packages/dnd-multi-backend",
   "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/dnd-multi-backend/",
-  "keywords": [
-    "agnostic",
-    "dnd",
-    "drag",
-    "drop",
-    "backend",
-    "multi"
-  ],
+  "keywords": ["agnostic", "dnd", "drag", "drop", "backend", "multi"],
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/LouisBrunner"

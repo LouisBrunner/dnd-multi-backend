@@ -1,8 +1,8 @@
 import * as Module from '../index'
 
-import { Preview } from '../Preview'
-import { Context } from '../Context'
-import { usePreview } from '../usePreview'
+import {Context} from '../Context'
+import {Preview} from '../Preview'
+import {usePreview} from '../usePreview'
 
 describe('react-dnd-preview module', () => {
   test('exports correctly', () => {

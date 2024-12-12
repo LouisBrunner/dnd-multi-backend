@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import {DragSource as IDragSource, DropTarget as IDropTarget, DragDropMonitor, Identifier} from 'dnd-core'
 
 type createElementProps = {

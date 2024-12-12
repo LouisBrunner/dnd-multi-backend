@@ -1,4 +1,3 @@
-import React from 'react'
 import { Preview, Context, PreviewState } from '../../../src'
 import {DragContent} from '../../shared'
 import { WithPropFunction, WithChildFunction, WithChildComponent, WithChildFunctionContext, GenPreviewLiteProps } from './common'

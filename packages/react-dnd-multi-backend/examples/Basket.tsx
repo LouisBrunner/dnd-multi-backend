@@ -1,4 +1,4 @@
-import React, {CSSProperties, RefObject} from 'react'
+import {CSSProperties, RefObject} from 'react'
 import { useDrop } from 'react-dnd'
 import {DragContent} from './common'
 

@@ -1,6 +1,6 @@
-export { MultiFactory as MultiBackend } from './MultiFactory'
+export {MultiFactory as MultiBackend} from './MultiFactory'
 
-export { createTransition } from './createTransition'
+export {createTransition} from './createTransition'
 export {
   HTML5DragTransition,
   TouchTransition,

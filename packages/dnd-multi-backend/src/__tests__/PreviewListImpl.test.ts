@@ -1,8 +1,8 @@
-import {DragDropManager} from 'dnd-core'
-import {MultiBackendSwitcher, PreviewList} from '../types'
-import { PreviewListImpl } from '../PreviewListImpl'
-import {MultiBackendImpl} from '../MultiBackendImpl'
 import {TestPipeline} from '@mocks/pipeline'
+import type {DragDropManager} from 'dnd-core'
+import {MultiBackendImpl} from '../MultiBackendImpl'
+import {PreviewListImpl} from '../PreviewListImpl'
+import type {MultiBackendSwitcher, PreviewList} from '../types'
 
 describe('PreviewListImpl class', () => {
   let list: PreviewList
@@ -18,7 +18,9 @@ describe('PreviewListImpl class', () => {
   }
 
   test('does nothing when empty', () => {
-    expect(() => {list.backendChanged(mb)}).not.toThrow()
+    expect(() => {
+      list.backendChanged(mb)
+    }).not.toThrow()
   })
 
   test('notifies registered previews', () => {
@@ -34,7 +36,8 @@ describe('PreviewListImpl class', () => {
   })
 
   test('stops notifying after unregistering', () => {
-    const preview1 = createPreview(), preview2 = createPreview()
+    const preview1 = createPreview()
+    const preview2 = createPreview()
     list.register(preview1)
     list.register(preview2)
     list.backendChanged(mb)

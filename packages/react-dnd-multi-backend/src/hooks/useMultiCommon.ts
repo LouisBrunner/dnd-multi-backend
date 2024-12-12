@@ -1,7 +1,7 @@
-import { useContext } from 'react'
-import { DragDropManager, Backend } from 'dnd-core'
-import { DndContext, DndContextType } from 'react-dnd'
-import { MultiBackendSwitcher } from 'dnd-multi-backend'
+import type {Backend, DragDropManager} from 'dnd-core'
+import type {MultiBackendSwitcher} from 'dnd-multi-backend'
+import {useContext} from 'react'
+import {DndContext, type DndContextType} from 'react-dnd'
 
 type Fn<Spec, Res> = (spec: Spec) => Res
 

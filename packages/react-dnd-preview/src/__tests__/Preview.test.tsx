@@ -1,26 +1,25 @@
+import {render, screen} from '@testing-library/react'
 // FIXME: esbuild-jest is struggling in this file because of jest.mock (I think), so we need:
 // - a special React import
 // - @babel/preset-typescript installed (and set in a tiny babel.config.json)
 import * as React from 'react'
-// import React, {useContext} from 'react'
-import {render, screen} from '@testing-library/react'
+import {useContext} from 'react'
 
-import {Context, PreviewState} from '../Context'
-import {Preview, PreviewProps} from '../Preview'
-import {usePreviewState} from '../usePreview'
 import {MockDragMonitor} from '@mocks/mocks'
+import {Context, type PreviewState} from '../Context'
+import {Preview, type PreviewProps} from '../Preview'
+import type {usePreviewState} from '../usePreview'
 
 jest.mock('../usePreview')
 
 type DragContent = {
-  coucou: string,
+  coucou: string
 }
 
 type GeneratorProps = PreviewState<DragContent>
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const {__setMockReturn} = require('../usePreview') as {
-  __setMockReturn: (state: usePreviewState<DragContent>) => void,
+  __setMockReturn: (state: usePreviewState<DragContent>) => void
 }
 
 describe('Preview subcomponent', () => {
@@ -29,7 +28,11 @@ describe('Preview subcomponent', () => {
   }
 
   const generator = ({itemType, item, style}: GeneratorProps) => {
-    return <div style={style}>{item.coucou}: {itemType?.toString()}</div>
+    return (
+      <div style={style}>
+        {item.coucou}: {itemType?.toString()}
+      </div>
+    )
   }
 
   const setupTest = (props: PreviewProps<DragContent>): void => {
@@ -67,14 +70,7 @@ describe('Preview subcomponent', () => {
       //   transform: 'translate(1000px, 2000px)',
       //   WebkitTransform: 'translate(1000px, 2000px)',
       // })
-      // eslint-disable-next-line jest-dom/prefer-to-have-style
-      expect(node).toHaveAttribute('style', [
-        'pointer-events: none',
-        'position: fixed',
-        'top: 0px',
-        'left: 0px',
-        'transform: translate(1000px, 2000px);',
-      ].join('; '))
+      expect(node).toHaveAttribute('style', ['pointer-events: none', 'position: fixed', 'top: 0px', 'left: 0px', 'transform: translate(1000px, 2000px);'].join('; '))
     })
   }
 
@@ -88,7 +84,7 @@ describe('Preview subcomponent', () => {
 
   describe('using component child', () => {
     const Child = () => {
-      const props = React.useContext(Context)
+      const props = useContext(Context)
       if (props === undefined) {
         return null
       }

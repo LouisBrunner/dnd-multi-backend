@@ -1,5 +1,3 @@
-/* eslint-disable compat/compat */
-
 // FIXME: jsdom still doesn't support pointer events...
 class PointerEventFake extends MouseEvent {
   readonly height: number
@@ -12,11 +10,12 @@ class PointerEventFake extends MouseEvent {
   readonly tiltY: number
   readonly twist: number
   readonly width: number
+  readonly altitudeAngle: number
+  readonly azimuthAngle: number
 
   private coalescedEvents: PointerEvent[]
   private predictedEvents: PointerEvent[]
 
-  // eslint-disable-next-line complexity
   constructor(type: string, props?: PointerEventInit) {
     super(type, props)
 
@@ -32,6 +31,8 @@ class PointerEventFake extends MouseEvent {
     this.tiltY = rprops.tiltY ?? 0
     this.twist = rprops.twist ?? 0
     this.width = rprops.width ?? 1
+    this.altitudeAngle = 0
+    this.azimuthAngle = 0
 
     this.coalescedEvents = rprops.coalescedEvents ?? []
     this.predictedEvents = rprops.predictedEvents ?? []
@@ -47,7 +48,7 @@ class PointerEventFake extends MouseEvent {
 }
 global.PointerEvent = PointerEventFake
 
-import {HTML5DragTransition, TouchTransition, MouseTransition, PointerTransition} from '../transitions'
+import {HTML5DragTransition, MouseTransition, PointerTransition, TouchTransition} from '../transitions'
 
 describe('Transitions collection', () => {
   const fakeDragEvent = (type: string): Event => {

@@ -4,9 +4,5 @@
     "declaration": true,
     "emitDeclarationOnly": true
   },
-  "exclude": [
-    "node_modules",
-    "**/__tests__/**/*",
-    "**/__mocks__/**/*"
-  ]
+  "exclude": ["node_modules", "**/__tests__/**/*", "**/__mocks__/**/*"]
 }

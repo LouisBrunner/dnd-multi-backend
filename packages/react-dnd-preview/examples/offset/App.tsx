@@ -1,4 +1,4 @@
-import React, {CSSProperties, useState} from 'react'
+import {CSSProperties, StrictMode, useState} from 'react'
 import {DndProvider} from 'react-dnd'
 import {TouchBackend} from 'react-dnd-touch-backend'
 import {usePreview, Point} from '../../src'
@@ -68,7 +68,7 @@ export const App = (): JSX.Element => {
   }
 
   return (
-    <React.StrictMode>
+    <StrictMode>
       <p>
         <label htmlFor="previewPlacement">Preview placement: </label>
         <select value={previewPlacement} id="previewPlacement" onChange={handlePlacementChange}>
@@ -109,6 +109,6 @@ export const App = (): JSX.Element => {
           </>
         ) : null}
       </DndProvider>
-    </React.StrictMode>
+    </StrictMode>
   )
 }

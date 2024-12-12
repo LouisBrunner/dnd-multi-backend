@@ -1,5 +1,5 @@
-import {Backend} from 'dnd-core'
-import {createTransition, MultiBackendOptions} from 'dnd-multi-backend'
+import type {Backend} from 'dnd-core'
+import {type MultiBackendOptions, createTransition} from 'dnd-multi-backend'
 
 const createBackend = () => {
   return {
@@ -12,10 +12,7 @@ const createBackend = () => {
   }
 }
 
-export const TestBackends = [
-  createBackend(),
-  createBackend(),
-]
+export const TestBackends = [createBackend(), createBackend()]
 
 export const TestPipeline: MultiBackendOptions = {
   backends: [
@@ -32,7 +29,12 @@ export const TestPipeline: MultiBackendOptions = {
       }),
       options: {abc: 123},
       preview: true,
-      transition: createTransition('touchstart', jest.fn((event) => {return event.type === 'touchstart'})),
+      transition: createTransition(
+        'touchstart',
+        jest.fn((event) => {
+          return event.type === 'touchstart'
+        }),
+      ),
     },
   ],
 }
