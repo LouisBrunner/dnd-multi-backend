@@ -6,7 +6,7 @@
   "browserslist": ["defaults"],
   "engines": {
     "npm": ">=7.0.0",
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "funding": {
     "type": "individual",
@@ -14,13 +14,14 @@
   },
   "scripts": {
     "clean": "rm -rf packages/*/dist examples/*.js coverage",
-    "build:types": "lerna exec -- tsc -p ./tsconfig.json --declarationDir dist",
-    "build:esm": "lerna exec -- node ../../esbuild/build.js",
+    "build:types": "node esbuild/run-all.js tsc -p ./tsconfig.json --declarationDir dist",
+    "build:esm": "node esbuild/run-all.js node ../../esbuild/build.js",
     "build:examples": "node esbuild/examples.js",
     "build:all": "npm run build && npm run build:examples",
     "build": "npm run build:esm && npm run build:types",
     "typecheck": "tsc --noEmit",
-    "format:fix": "npx @biomejs/biome format --write .",
+    "format:fix:internal": "npx @biomejs/biome format --write",
+    "format:fix": "npm run format:fix:internal -- .",
     "vet": "npm run typecheck && npx @biomejs/biome check",
     "vet:ci": "npm run typecheck && npx @biomejs/biome ci",
     "test": "jest --config jest.config.js",
@@ -28,6 +29,7 @@
     "test:ci": "CI=yes npm run test",
     "start": "node esbuild/dev.js",
     "start:dev": "NODE_ENV=development npm run start",
+    "publish": "npm run prepare && node esbuild/publish.js",
     "prepare": "npm run clean && npm run build && npm run vet && npm run test"
   },
   "devDependencies": {
@@ -43,7 +45,6 @@
     "esbuild-node-externals": "^1.15.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "lerna": "^6.6.2",
     "node-notifier": "^10.0.1",
     "react": "^18.3.1",
     "react-dnd": "^16.0.1",
