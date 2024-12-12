@@ -16,7 +16,6 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
-  "gitHead": "2f9cf866a18c478f2bcce0735aa085d7f2186304",
   "peerDependencies": {
     "dnd-core": "^16.0.1"
   }
