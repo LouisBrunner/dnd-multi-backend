@@ -1,6 +1,6 @@
 // Note: this is not a technically a esbuild-related script.
 
-import {readFileSync} from 'node:fs'
+import {readFileSync, writeFileSync} from 'node:fs'
 import semver from 'semver'
 import {executeCommand, getCommandOutput, getWorkspaces} from './common.js'
 
@@ -22,11 +22,20 @@ const main = async () => {
     process.exit(1)
   }
 
+  console.log('🔍 Checking we are on main')
+  const branch = getCommandOutput('git', 'branch', '--show-current')
+  if (branch !== 'main') {
+    console.error('❌ Please switch to main branch before publishing')
+    process.exit(1)
+  }
+
+  const pkgs = []
   const workspaces = getWorkspaces()
   const workspaceNames = workspaces.map((w) => w.name)
   for (const workspace of workspaces) {
     console.log(`✏️ Updating ${workspace.name} version to: ${ver}`)
-    const pkg = JSON.parse(readFileSync(`${workspace.location}/package.json`))
+    const pkgFile = `${workspace.location}/package.json`
+    const pkg = JSON.parse(readFileSync(pkgFile))
     pkg.version = ver
     for (const dep of Object.keys(pkg.dependencies ?? {})) {
       if (workspaceNames.includes(dep)) {
@@ -34,10 +43,13 @@ const main = async () => {
       }
     }
     console.log(`📝 Writing ${workspace.name} package.json`)
+    const content = JSON.stringify(pkg, null, 2)
+    writeFileSync(pkgFile, content)
+    pkgs.push(pkgFile)
   }
 
   console.log('✅ Make sure the package.json are formatted correctly')
-  executeCommand('npm', ['run', 'format:fix'])
+  executeCommand('npm', ['run', 'format:fix:internal', '--', ...pkgs])
 
   for (const workspace of workspaces) {
     console.log(`🔨 Publishing ${workspace.name}`)
