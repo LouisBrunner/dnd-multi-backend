@@ -5,7 +5,11 @@
   "description": "Multi Backend system compatible with DnD Core / React DnD",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
   "license": "MIT",
-  "repository": "https://github.com/LouisBrunner/dnd-multi-backend/tree/master/packages/dnd-multi-backend",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git",
+    "directory": "packages/dnd-multi-backend"
+  },
   "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/dnd-multi-backend/",
   "keywords": ["agnostic", "dnd", "drag", "drop", "backend", "multi"],
   "funding": {
