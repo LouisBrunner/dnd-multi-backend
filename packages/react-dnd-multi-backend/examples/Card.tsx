@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react'
+import {CSSProperties} from 'react'
 import {useDrag} from 'react-dnd'
 
 export const Card = (props: {color: string}): JSX.Element => {

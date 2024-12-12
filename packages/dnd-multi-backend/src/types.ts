@@ -1,16 +1,16 @@
-import {Backend} from 'dnd-core'
+import type {Backend} from 'dnd-core'
 
 export type Transition = {
-  event: string,
-  check: (e: Event) => boolean,
+  event: string
+  check: (e: Event) => boolean
 }
 
 export type BackendEntry = {
-  id: string,
-  instance: Backend,
-  preview: boolean,
-  transition?: Transition,
-  skipDispatchOnTransition: boolean,
+  id: string
+  instance: Backend
+  preview: boolean
+  transition?: Transition
+  skipDispatchOnTransition: boolean
 }
 
 export interface MultiBackendSwitcher extends Backend {

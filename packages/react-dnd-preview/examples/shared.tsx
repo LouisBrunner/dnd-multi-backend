@@ -1,4 +1,4 @@
-import React, {CSSProperties, forwardRef, ReactNode} from 'react'
+import {CSSProperties, forwardRef, ReactNode} from 'react'
 import {useDrag} from 'react-dnd'
 
 export type DragContent = {
@@ -13,8 +13,6 @@ export type ShapeProps = {
   children?: ReactNode
 }
 
-// FIXME: silly forwardRef stuff
-// eslint-disable-next-line react/prop-types
 export const Shape = forwardRef<HTMLDivElement, ShapeProps>(({style, size, color, children}, ref) => {
   return (
     <div ref={ref} style={{

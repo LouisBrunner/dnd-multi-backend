@@ -1,6 +1,6 @@
-import esbuild from 'esbuild';
-import { nodeExternalsPlugin } from 'esbuild-node-externals';
-import tsConfig from '../tsconfig.json' with { type: 'json' };
+import esbuild from 'esbuild'
+import {nodeExternalsPlugin} from 'esbuild-node-externals'
+import tsConfig from '../tsconfig.json' with {type: 'json'}
 
 esbuild.build({
   entryPoints: ['./src/index.ts'],
@@ -10,4 +10,4 @@ esbuild.build({
   minify: true,
   plugins: [nodeExternalsPlugin()],
   target: tsConfig.compilerOptions.target,
-});
+})

@@ -1,4 +1,4 @@
-import React, {CSSProperties, RefObject} from 'react'
+import {CSSProperties, RefObject} from 'react'
 import {useMultiDrop} from '../src'
 import {DragContent} from './common'
 

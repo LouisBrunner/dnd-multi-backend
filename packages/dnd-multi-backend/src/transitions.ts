@@ -1,4 +1,4 @@
-import { createTransition } from './createTransition'
+import {createTransition} from './createTransition'
 
 export const TouchTransition = createTransition('touchstart', (rawEvent: Event) => {
   const event = rawEvent as TouchEvent
@@ -15,5 +15,5 @@ export const MouseTransition = createTransition('mousedown', (event) => {
 
 export const PointerTransition = createTransition('pointerdown', (rawEvent: Event) => {
   const event = rawEvent as PointerEvent
-  return event.pointerType == 'mouse'
+  return event.pointerType === 'mouse'
 })

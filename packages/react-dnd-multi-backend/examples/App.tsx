@@ -1,4 +1,4 @@
-import React, { CSSProperties, RefObject, useContext, useRef, useState } from 'react'
+import { CSSProperties, RefObject, StrictMode, useContext, useRef, useState } from 'react'
 import { DndProvider as ReactDndProvider } from 'react-dnd'
 
 import { MultiBackend, DndProvider, PreviewContext, usePreview, Preview, PreviewState } from '../src'
@@ -93,12 +93,12 @@ export const App = (): JSX.Element => {
   )
 
   return (
-    <React.StrictMode>
+    <StrictMode>
       <div>
         <input id="api_selector" type="checkbox" checked={useNew} onChange={(e) => {setAPI(e.target.checked)}} />
         <label htmlFor="api_selector">Use New API</label>
       </div>
       {useNew ? newAPI : oldAPI}
-    </React.StrictMode>
+    </StrictMode>
   )
 }

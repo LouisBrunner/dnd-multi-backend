@@ -7,15 +7,7 @@
   "license": "MIT",
   "repository": "https://github.com/LouisBrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend",
   "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/react-dnd-multi-backend/",
-  "keywords": [
-    "react",
-    "dnd",
-    "drag",
-    "drop",
-    "html5",
-    "touch",
-    "react-dnd"
-  ],
+  "keywords": ["react", "dnd", "drag", "drop", "html5", "touch", "react-dnd"],
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/LouisBrunner"

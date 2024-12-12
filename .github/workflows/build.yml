@@ -21,8 +21,8 @@ jobs:
           cache: "npm"
       - name: Install dependencies
         run: npm install
+      - run: npm run vet:ci
       - run: npm run test:ci
-      - run: npm run lint
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:

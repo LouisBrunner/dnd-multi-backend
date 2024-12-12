@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from 'react'
-import { DndContext, DndContextType } from 'react-dnd'
-import { MultiBackendSwitcher } from 'dnd-multi-backend'
+import type {MultiBackendSwitcher} from 'dnd-multi-backend'
+import {useContext, useEffect, useState} from 'react'
+import {DndContext, type DndContextType} from 'react-dnd'
 
 export const useObservePreviews = (): boolean => {
   const [enabled, setEnabled] = useState<boolean>(false)

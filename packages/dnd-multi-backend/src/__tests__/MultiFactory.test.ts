@@ -1,7 +1,7 @@
-import {MultiFactory} from '../MultiFactory'
-import {MultiBackendImpl} from '../MultiBackendImpl'
-import type {DragDropManager} from 'dnd-core'
 import {TestPipeline} from '@mocks/pipeline'
+import type {DragDropManager} from 'dnd-core'
+import {MultiBackendImpl} from '../MultiBackendImpl'
+import {MultiFactory} from '../MultiFactory'
 
 describe('MultiFactory function', () => {
   test('exports a function to create a MultiBackend', () => {
@@ -13,6 +13,8 @@ describe('MultiFactory function', () => {
       dispatch: jest.fn(),
     }
     expect(MultiFactory(fakeManager, {}, TestPipeline)).toBeInstanceOf(MultiBackendImpl)
-    expect(() => {MultiFactory(fakeManager, {})}).toThrow(Error)
+    expect(() => {
+      MultiFactory(fakeManager, {})
+    }).toThrow(Error)
   })
 })

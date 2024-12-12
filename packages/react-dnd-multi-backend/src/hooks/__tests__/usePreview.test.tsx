@@ -1,8 +1,8 @@
-import React, {ReactNode} from 'react'
-import {renderHook, act} from '@testing-library/react'
+import {MockMultiBackend, MockPreviewList, type MockedMultiBackend, type MockedPreviewList} from '@mocks/mocks'
+import {act, renderHook} from '@testing-library/react'
+import type {ReactNode} from 'react'
+import {DndContext, type DndContextType} from 'react-dnd'
 import {usePreview} from '../usePreview'
-import {MockPreviewList, MockedPreviewList, MockMultiBackend, MockedMultiBackend} from '@mocks/mocks'
-import {DndContext, DndContextType} from 'react-dnd'
 
 describe('usePreview component', () => {
   let list: MockedPreviewList
@@ -31,8 +31,15 @@ describe('usePreview component', () => {
   }
 
   const createComponent = () => {
-    const wrapper = ({children}: {children?: ReactNode}) => {return <DndContext.Provider value={context}>{children}</DndContext.Provider>}
-    return renderHook(() => {return usePreview()}, {wrapper})
+    const wrapper = ({children}: {children?: ReactNode}) => {
+      return <DndContext.Provider value={context}>{children}</DndContext.Provider>
+    }
+    return renderHook(
+      () => {
+        return usePreview()
+      },
+      {wrapper},
+    )
   }
 
   test('registers with the backend', () => {

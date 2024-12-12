@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { createDragDropManager } from 'dnd-core'
 import { MultiBackend, MouseTransition, TouchTransition } from '../src'
 import { HTML5Backend, TouchBackend } from './Backends'

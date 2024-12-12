@@ -1,4 +1,4 @@
-import {MultiBackendSwitcher, PreviewList, PreviewListener} from './types'
+import type {MultiBackendSwitcher, PreviewList, PreviewListener} from './types'
 
 export class PreviewListImpl implements PreviewList {
   /*private*/ #previews: PreviewListener[]
@@ -12,9 +12,8 @@ export class PreviewListImpl implements PreviewList {
   }
 
   unregister = (preview: PreviewListener): void => {
-    let index
-    while ((index = this.#previews.indexOf(preview)) !== -1) {
-      this.#previews.splice(index, 1)
+    while (this.#previews.indexOf(preview) !== -1) {
+      this.#previews.splice(this.#previews.indexOf(preview), 1)
     }
   }
 

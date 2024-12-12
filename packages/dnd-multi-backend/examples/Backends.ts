@@ -1,4 +1,3 @@
-/* eslint-disable no-console, @typescript-eslint/no-explicit-any */
 import {DragDropManager, DragDropActions, BackendFactory, Backend, Unsubscribe, Identifier} from 'dnd-core'
 
 type Options = {

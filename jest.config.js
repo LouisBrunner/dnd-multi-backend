@@ -1,14 +1,12 @@
-import {defaults} from 'jest-config';
+import {defaults} from 'jest-config'
 
 export default {
   notify: true,
   notifyMode: 'failure-success',
 
   collectCoverage: true,
-  coverageReporters: process.env.CI ? ['lcov'] : ['text', 'text-summary', 'html'], // eslint-disable-line no-process-env
-  collectCoverageFrom: [
-    'packages/*/src/**/*.{js,jsx,ts,tsx}',
-  ],
+  coverageReporters: process.env.CI ? ['lcov'] : ['text', 'text-summary', 'html'],
+  collectCoverageFrom: ['packages/*/src/**/*.{js,jsx,ts,tsx}'],
 
   projects: [
     {
@@ -16,9 +14,7 @@ export default {
 
       testEnvironment: 'jsdom',
 
-      setupFilesAfterEnv: [
-        '<rootDir>/.jest-setup.ts',
-      ],
+      setupFilesAfterEnv: ['<rootDir>/.jest-setup.ts'],
 
       transform: {
         '^.+\\.[jt]sx?$': ['esbuild-jest', {sourcemap: true}],
@@ -30,12 +26,5 @@ export default {
 
       moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],
     },
-    {
-      displayName: 'lint',
-      runner: 'jest-runner-eslint',
-      testRegex: [
-        '/.*\\.[jt]sx?$',
-      ],
-    },
   ],
-};
+}

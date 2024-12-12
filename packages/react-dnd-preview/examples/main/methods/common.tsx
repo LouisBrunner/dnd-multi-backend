@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Context, PreviewState, usePreviewStateContent } from '../../../src'
 import { Shape, DragContent } from '../../shared'
 

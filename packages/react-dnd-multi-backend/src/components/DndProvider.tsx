@@ -1,15 +1,16 @@
-import React, {useState, createContext, ReactNode} from 'react'
-import { DndProvider as ReactDndProvider } from 'react-dnd'
-import { MultiBackend, MultiBackendOptions } from 'dnd-multi-backend'
+import {MultiBackend, type MultiBackendOptions} from 'dnd-multi-backend'
+import {type ReactNode, createContext, useState} from 'react'
+import {DndProvider as ReactDndProvider} from 'react-dnd'
 
 export const PreviewPortalContext = createContext<Element | null>(null)
 
 export type DndProviderProps = {
-  context?: any, // eslint-disable-line @typescript-eslint/no-explicit-any
-  options: MultiBackendOptions,
-  children?: ReactNode,
-  debugMode?: boolean,
-  portal?: Element,
+  // biome-ignore lint/suspicious/noExplicitAny: not sure why
+  context?: any
+  options: MultiBackendOptions
+  children?: ReactNode
+  debugMode?: boolean
+  portal?: Element
 }
 
 export const DndProvider = ({portal, ...props}: DndProviderProps): JSX.Element => {

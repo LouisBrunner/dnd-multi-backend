@@ -1,5 +1,5 @@
 import {createContext} from 'react'
-import {usePreviewStateContent} from './usePreview'
+import type {usePreviewStateContent} from './usePreview'
 
 export type PreviewState<T = unknown, El extends Element = Element> = usePreviewStateContent<T, El>
 

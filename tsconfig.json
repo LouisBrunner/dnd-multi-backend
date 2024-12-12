@@ -4,12 +4,8 @@
     "target": "es2020",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "jsx": "react",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "preserve",
     "strict": true,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
@@ -22,28 +18,13 @@
     "noUnusedParameters": true,
     "preserveConstEnums": true,
     "paths": {
-      "@mocks/*": [
-        "__mocks__/*"
-      ],
-      "dnd-multi-backend": [
-        "packages/dnd-multi-backend/src"
-      ],
-      "rdndmb-html5-to-touch": [
-        "packages/rdndmb-html5-to-touch/src"
-      ],
-      "react-dnd-preview": [
-        "packages/react-dnd-preview/src"
-      ]
+      "@mocks/*": ["__mocks__/*"],
+      "dnd-multi-backend": ["packages/dnd-multi-backend/src"],
+      "rdndmb-html5-to-touch": ["packages/rdndmb-html5-to-touch/src"],
+      "react-dnd-preview": ["packages/react-dnd-preview/src"]
     },
     "skipLibCheck": true
   },
-  "include": [
-    ".jest-setup.ts",
-    "__mocks__/**/*.ts",
-    "packages/*/examples/**/*.ts*",
-    "packages/*/src/**/*.ts*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": [".jest-setup.ts", "__mocks__/**/*.ts", "packages/*/examples/**/*.ts*", "packages/*/src/**/*.ts*"],
+  "exclude": ["node_modules"]
 }

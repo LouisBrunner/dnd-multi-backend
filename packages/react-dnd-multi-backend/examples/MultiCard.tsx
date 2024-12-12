@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react'
+import {CSSProperties} from 'react'
 import {useMultiDrag} from '../src'
 import {DragContent} from './common'
 

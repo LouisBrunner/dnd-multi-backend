@@ -1,6 +1,6 @@
-import React, {ReactNode, useContext} from 'react'
-import {render} from '@testing-library/react'
 import {TestPipeline} from '@mocks/pipeline'
+import {render} from '@testing-library/react'
+import {type ReactNode, useContext} from 'react'
 
 import {DndProvider, PreviewPortalContext} from '../DndProvider'
 
@@ -9,7 +9,7 @@ describe('DndProvider component', () => {
     return render(
       <DndProvider options={TestPipeline} portal={element}>
         {child}
-      </DndProvider>
+      </DndProvider>,
     )
   }
 
@@ -41,7 +41,11 @@ describe('DndProvider component', () => {
         <span id="portal" />
       </div
     `
-    const portal = document.getElementById('portal')! // eslint-disable-line testing-library/no-node-access
+    const portal = document.getElementById('portal')
+    expect(portal).not.toBeNull()
+    if (portal === null) {
+      return
+    }
     const spy = jest.fn()
 
     const Child = () => {

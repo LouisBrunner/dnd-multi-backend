@@ -1,4 +1,4 @@
-import {usePreview as usePreviewDnd, usePreviewState, usePreviewStateContent} from 'react-dnd-preview'
+import {usePreview as usePreviewDnd, type usePreviewState, type usePreviewStateContent} from 'react-dnd-preview'
 
 import {useObservePreviews} from './useObservePreviews'
 
