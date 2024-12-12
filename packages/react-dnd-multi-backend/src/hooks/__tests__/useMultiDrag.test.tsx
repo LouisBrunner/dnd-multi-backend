@@ -18,17 +18,10 @@ describe('useMultiDrag component', () => {
   }
 
   test('fails without a context', () => {
-    let err: Error | undefined
     const spy = jest.spyOn(console, 'error')
     spy.mockImplementation(() => {})
-    try {
-      renderHook(MultiAction)
-    } catch (e) {
-      err = e as Error
-    } finally {
-      spy.mockRestore()
-      expect(err).toEqual(expect.any(Error))
-    }
+    expect(() => renderHook(MultiAction)).toThrow()
+    spy.mockRestore()
   })
 
   test('it works', () => {

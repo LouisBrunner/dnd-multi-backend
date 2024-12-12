@@ -5,6 +5,18 @@ import type {MutableRefObject} from 'react'
 import type {PreviewPlacement} from '../offsets'
 import {usePreview, type usePreviewStateFull} from '../usePreview'
 
+const DraggingMonitor = {
+  isDragging() {
+    return true
+  },
+  getItemType() {
+    return 'no'
+  },
+  getClientOffset() {
+    return {x: 1, y: 2}
+  },
+}
+
 describe('usePreview hook', () => {
   beforeEach(() => {
     __setMockMonitor(MockDragMonitor<unknown>(null))
@@ -59,15 +71,7 @@ describe('usePreview hook', () => {
   test('return true and data when DnD is in progress', () => {
     __setMockMonitor({
       ...MockDragMonitor<{bluh: string}>({bluh: 'fake'}),
-      isDragging() {
-        return true
-      },
-      getItemType() {
-        return 'no'
-      },
-      getClientOffset() {
-        return {x: 1, y: 2}
-      },
+      ...DraggingMonitor,
     })
     const {result} = renderHook(() => {
       return usePreview() as usePreviewStateFull
@@ -94,15 +98,7 @@ describe('usePreview hook', () => {
   test('return true and data when DnD is in progress (with parent offset)', () => {
     __setMockMonitor({
       ...MockDragMonitor<{bluh: string}>({bluh: 'fake'}),
-      isDragging() {
-        return true
-      },
-      getItemType() {
-        return 'no'
-      },
-      getClientOffset() {
-        return {x: 1, y: 2}
-      },
+      ...DraggingMonitor,
       getInitialClientOffset() {
         return {x: 1, y: 2}
       },
@@ -135,15 +131,7 @@ describe('usePreview hook', () => {
   test('return true and data when DnD is in progress (with ref)', async () => {
     __setMockMonitor({
       ...MockDragMonitor<{bluh: string}>({bluh: 'fake'}),
-      isDragging() {
-        return true
-      },
-      getItemType() {
-        return 'no'
-      },
-      getClientOffset() {
-        return {x: 1, y: 2}
-      },
+      ...DraggingMonitor,
       getInitialClientOffset() {
         return {x: 1, y: 2}
       },
@@ -250,15 +238,7 @@ describe('usePreview hook', () => {
   test.each(cases)('return true and data when DnD is in progress (with ref, parent offset and placement $placement)', async ({placement, expectedTransform}) => {
     __setMockMonitor({
       ...MockDragMonitor<{bluh: string}>({bluh: 'fake'}),
-      isDragging() {
-        return true
-      },
-      getItemType() {
-        return 'no'
-      },
-      getClientOffset() {
-        return {x: 1, y: 2}
-      },
+      ...DraggingMonitor,
       getInitialClientOffset() {
         return {x: 1, y: 2}
       },
