@@ -24,7 +24,7 @@ const main = async () => {
 
   console.log('🔍 Checking we are on main')
   const branch = getCommandOutput('git', 'branch', '--show-current')
-  if (branch !== 'main') {
+  if (branch.trim() !== 'main') {
     console.error('❌ Please switch to main branch before publishing')
     process.exit(1)
   }
