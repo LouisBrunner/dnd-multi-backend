@@ -6,7 +6,7 @@
   "browserslist": ["defaults"],
   "engines": {
     "npm": ">=7.0.0",
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "funding": {
     "type": "individual",
