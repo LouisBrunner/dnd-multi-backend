@@ -10,32 +10,32 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16, 18, 20]
+        node-version: [18, 20, 22, 24]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install dependencies
-      run: npm install
-    - run: npm run test:ci
-    - run: npm run lint
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        flag-name: node-${{ matrix.node }}
-        parallel: true
-    - run: npm run build:examples
-    - name: Upload examples build
-      uses: actions/upload-artifact@v4
-      if: ${{ matrix.node-version == 'latest' }}
-      with:
-        name: Examples
-        path: examples
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Install dependencies
+        run: npm install
+      - run: npm run test:ci
+      - run: npm run lint
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: node-${{ matrix.node }}
+          parallel: true
+      - run: npm run build:examples
+      - name: Upload examples build
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.node-version == 'latest' }}
+        with:
+          name: Examples
+          path: examples
 
   finish:
     name: Coverage
@@ -44,11 +44,11 @@ jobs:
     needs: build
 
     steps:
-    - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        parallel-finished: true
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
 
   deploy:
     name: Deploy
@@ -58,19 +58,19 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-    - name: Download examples build
-      uses: actions/download-artifact@v4
-      with:
-        name: Examples
-        path: examples
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        enable_jekyll: true
-        publish_dir: ./
-        force_orphan: true
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Download examples build
+        uses: actions/download-artifact@v4
+        with:
+          name: Examples
+          path: examples
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          enable_jekyll: true
+          publish_dir: ./
+          force_orphan: true
