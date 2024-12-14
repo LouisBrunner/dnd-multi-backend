@@ -5,7 +5,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strict": true,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
