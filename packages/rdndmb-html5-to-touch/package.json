@@ -1,6 +1,6 @@
 {
   "name": "rdndmb-html5-to-touch",
-  "version": "8.1.1",
+  "version": "8.1.2",
   "sideEffects": false,
   "description": "Multi Backend pipeline for react-dnd-multi-backend (HTML5 <-> Touch)",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
@@ -21,7 +21,7 @@
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
   "dependencies": {
-    "dnd-multi-backend": "^8.1.1",
+    "dnd-multi-backend": "^8.1.2",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1"
   }
