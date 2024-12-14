@@ -2,7 +2,6 @@ import {render, screen} from '@testing-library/react'
 // FIXME: esbuild-jest is struggling in this file because of jest.mock (I think), so we need:
 // - a special React import
 // - @babel/preset-typescript installed (and set in a tiny babel.config.json)
-import * as React from 'react'
 import {useContext} from 'react'
 
 import {MockDragMonitor} from '@mocks/mocks'
