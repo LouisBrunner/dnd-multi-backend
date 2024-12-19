@@ -69,7 +69,7 @@ const calculateYOffset = (placement: PreviewPlacement, bb: DOMRect): number => {
   }
 }
 
-export const calculatePointerPosition = (monitor: DragLayerMonitor, childRef: RefObject<Element>, placement: PreviewPlacement = 'center', padding: Point = {x: 0, y: 0}): Point | null => {
+export const calculatePointerPosition = (monitor: DragLayerMonitor, childRef: RefObject<Element | null>, placement: PreviewPlacement = 'center', padding: Point = {x: 0, y: 0}): Point | null => {
   const offset = monitor.getClientOffset()
   if (offset === null) {
     return null

@@ -1,15 +1,15 @@
-import { Preview, Context, PreviewState } from '../../../src'
-import {DragContent} from '../../shared'
-import { WithPropFunction, WithChildFunction, WithChildComponent, WithChildFunctionContext, GenPreviewLiteProps } from './common'
+import {Context, Preview, type PreviewState} from '../../../src'
+import type {DragContent} from '../../shared'
+import {type GenPreviewLiteProps, WithChildComponent, WithChildFunction, WithChildFunctionContext, WithPropFunction} from './common'
+
+import type {JSX} from 'react'
 
 export const Components = ({title, col}: GenPreviewLiteProps): JSX.Element => {
   return (
     <>
       <Preview generator={WithPropFunction({title, col})} />
 
-      <Preview>
-        {WithChildFunction({title, col})}
-      </Preview>
+      <Preview>{WithChildFunction({title, col})}</Preview>
 
       <Preview>
         <WithChildComponent title={title} col={col} />

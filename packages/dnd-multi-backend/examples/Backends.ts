@@ -1,7 +1,7 @@
-import {DragDropManager, DragDropActions, BackendFactory, Backend, Unsubscribe, Identifier} from 'dnd-core'
+import type {Backend, BackendFactory, DragDropActions, DragDropManager, Identifier, Unsubscribe} from 'dnd-core'
 
 type Options = {
-  draggable?: boolean,
+  draggable?: boolean
 }
 
 class DnDBackend implements Backend {
@@ -37,6 +37,7 @@ class DnDBackend implements Backend {
     }
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: interface is like that
   connectDragSource(sourceId: Identifier, nodeRaw?: any, _options?: any): Unsubscribe {
     const node = nodeRaw as Element
 
@@ -49,7 +50,7 @@ class DnDBackend implements Backend {
       console.log(`${this.#label}: drag`)
       this.#actions.beginDrag([sourceId], {
         clientOffset: this.#getXY(node),
-        getSourceClientOffset: (_id: unknown): {x: number, y: number} => {
+        getSourceClientOffset: (_id: unknown): {x: number; y: number} => {
           return this.#getXY(node)
         },
       })
@@ -74,13 +75,15 @@ class DnDBackend implements Backend {
     }
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: interface is like that
   connectDragPreview(_sourceId: any, _node?: any, _options?: any): Unsubscribe {
-    return () => { }
+    return () => {}
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: interface is like that
   connectDropTarget(targetId: Identifier, node?: Element, _options?: any): Unsubscribe {
     if (node === undefined) {
-      return () => { }
+      return () => {}
     }
 
     const hover = (e: Event) => {
@@ -120,7 +123,7 @@ class DnDBackend implements Backend {
     this.#actions.endDrag()
   }
 
-  #getXY = (node: Element): {x: number, y: number} => {
+  #getXY = (node: Element): {x: number; y: number} => {
     const {top: x, left: y} = node.getBoundingClientRect()
     return {x, y}
   }

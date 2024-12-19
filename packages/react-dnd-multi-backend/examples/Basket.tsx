@@ -1,9 +1,9 @@
-import {CSSProperties, RefObject} from 'react'
-import { useDrop } from 'react-dnd'
-import {DragContent} from './common'
+import type {CSSProperties, JSX, RefObject} from 'react'
+import {useDrop} from 'react-dnd'
+import {type DragContent, useFixRDnDRef} from './common'
 
-export const Basket = ({logs}: {logs: RefObject<Element>}): JSX.Element => {
-  const [collectedProps, drop] = useDrop<DragContent, void, {isOver: boolean, canDrop: boolean}>({
+export const Basket = ({logs}: {logs: RefObject<Element | null>}): JSX.Element => {
+  const [collectedProps, drop] = useDrop<DragContent, void, {isOver: boolean; canDrop: boolean}>({
     accept: 'card',
     drop: (item) => {
       const message = `Dropped: ${item.color}`
@@ -22,7 +22,7 @@ export const Basket = ({logs}: {logs: RefObject<Element>}): JSX.Element => {
   const isOver = collectedProps.isOver
   const canDrop = collectedProps.canDrop
   const style: CSSProperties = {
-    backgroundColor: (isOver && canDrop) ? '#f3f3f3' : '#cccccc',
+    backgroundColor: isOver && canDrop ? '#f3f3f3' : '#cccccc',
     border: '1px dashed black',
     display: 'inline-block',
     width: '100px',
@@ -30,5 +30,6 @@ export const Basket = ({logs}: {logs: RefObject<Element>}): JSX.Element => {
     margin: '10px',
   }
 
-  return <div style={style} ref={drop} />
+  const dropRef = useFixRDnDRef(drop)
+  return <div style={style} ref={dropRef} />
 }

@@ -1,6 +1,8 @@
-import { usePreview } from '../../../src'
-import {DragContent} from '../../shared'
-import { generatePreview, GenPreviewLiteProps, GenPreviewProps } from './common'
+import {usePreview} from '../../../src'
+import type {DragContent} from '../../shared'
+import {type GenPreviewLiteProps, type GenPreviewProps, generatePreview} from './common'
+
+import type {JSX} from 'react'
 
 const WithHook = (props: GenPreviewProps): JSX.Element | null => {
   const preview = usePreview<DragContent, HTMLDivElement>()

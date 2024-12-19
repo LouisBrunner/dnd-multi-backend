@@ -1,5 +1,5 @@
 import {MultiBackend, type MultiBackendOptions} from 'dnd-multi-backend'
-import {type ReactNode, createContext, useState} from 'react'
+import {type JSX, type ReactNode, createContext, useState} from 'react'
 import {DndProvider as ReactDndProvider} from 'react-dnd'
 
 export const PreviewPortalContext = createContext<Element | null>(null)

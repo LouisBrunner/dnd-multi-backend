@@ -1,7 +1,7 @@
-import { createDragDropManager } from 'dnd-core'
-import { MultiBackend, MouseTransition, TouchTransition } from '../src'
-import { HTML5Backend, TouchBackend } from './Backends'
-import { DragSource, DropTarget } from './DnD'
+import {createDragDropManager} from 'dnd-core'
+import {MouseTransition, MultiBackend, TouchTransition} from '../src'
+import {HTML5Backend, TouchBackend} from './Backends'
+import {DragSource, DropTarget} from './DnD'
 
 // Setup pipeline
 const pipeline = {
@@ -26,10 +26,13 @@ const registry = manager.getRegistry()
 
 // Create logic
 const src = new DragSource({text: 'Source', color: 'red'})
-const dst = new DropTarget({text: 'Target', color: 'orange', onDrop: (itemRaw: any) => {
-  const item = itemRaw as {color: string}
-  console.log(`Dropped: ${item.color}`)
-}})
+const dst = new DropTarget<{color: string}>({
+  text: 'Target',
+  color: 'orange',
+  onDrop: (item) => {
+    console.log(`Dropped: ${item.color}`)
+  },
+})
 
 const Item = 'item'
 

@@ -1,5 +1,6 @@
-import {CSSProperties} from 'react'
+import type {CSSProperties, JSX} from 'react'
 import {useDrag} from 'react-dnd'
+import {useFixRDnDRef} from './common'
 
 export const Card = (props: {color: string}): JSX.Element => {
   const [collectedProps, drag] = useDrag({
@@ -21,5 +22,6 @@ export const Card = (props: {color: string}): JSX.Element => {
     margin: '10px',
   }
 
-  return <div style={style} ref={drag} />
+  const dragRef = useFixRDnDRef(drag)
+  return <div style={style} ref={dragRef} />
 }

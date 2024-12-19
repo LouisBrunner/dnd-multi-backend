@@ -24,6 +24,6 @@
     }
   },
   "files": {
-    "ignore": ["examples", "coverage", "packages/*/dist"]
+    "ignore": ["examples/*.js", "coverage", "packages/*/dist"]
   }
 }

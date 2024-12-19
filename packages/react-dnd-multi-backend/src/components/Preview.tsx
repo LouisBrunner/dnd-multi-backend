@@ -1,4 +1,4 @@
-import {useContext} from 'react'
+import {type JSX, useContext} from 'react'
 import {Preview as DnDPreview, Context as PreviewContext, type PreviewProps, type PreviewState} from 'react-dnd-preview'
 import {createPortal} from 'react-dom'
 
