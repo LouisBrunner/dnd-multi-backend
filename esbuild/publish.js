@@ -18,11 +18,11 @@ const main = async () => {
   console.log(`🚀 Publishing version: ${ver}${tag !== undefined ? ` with tag ${tag}` : ''}`)
 
   console.log('🔍 Checking if all changes are committed')
-  // const changes = getCommandOutput('git', 'status', '--porcelain')
-  // if (changes !== '') {
-  //   console.error('❌ Please commit all changes before publishing')
-  //   process.exit(1)
-  // }
+  const changes = getCommandOutput('git', 'status', '--porcelain')
+  if (changes !== '') {
+    console.error('❌ Please commit all changes before publishing')
+    process.exit(1)
+  }
 
   console.log('🔍 Checking we are on main')
   const branch = getCommandOutput('git', 'branch', '--show-current')
@@ -66,6 +66,7 @@ const main = async () => {
 
   console.log('↩️ Committing changes')
   executeCommand('git', ['commit', '-am', `release: v${ver}`])
+  executeCommand('git', ['push'])
 
   console.log('🏷️ Tagging')
   executeCommand('git', ['tag', `v${ver}`])
