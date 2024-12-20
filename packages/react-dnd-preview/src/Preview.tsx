@@ -1,4 +1,4 @@
-import type {ReactNode} from 'react'
+import type {JSX, ReactNode} from 'react'
 import {Context, type PreviewState} from './Context'
 import type {Point, PreviewPlacement} from './offsets'
 import {usePreview} from './usePreview'

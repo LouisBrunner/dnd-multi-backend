@@ -1,24 +1,29 @@
-import { useContext } from 'react'
-import { Context, PreviewState, usePreviewStateContent } from '../../../src'
-import { Shape, DragContent } from '../../shared'
+import {type JSX, useContext} from 'react'
+import {Context, type PreviewState, type usePreviewStateContent} from '../../../src'
+import {type DragContent, Shape} from '../../shared'
 
 export type PreviewProps = usePreviewStateContent<DragContent, HTMLDivElement>
 
 export type GenPreviewProps = {
-  row: number,
-  col: number,
-  title: string,
-  method: string,
+  row: number
+  col: number
+  title: string
+  method: string
 }
 
 export const generatePreview = ({itemType, item, style, ref}: PreviewProps, {row, col, title, method}: GenPreviewProps): JSX.Element => {
   return (
-    <Shape color={item.color} size={50} ref={ref} style={{
-      ...style,
-      top: `${row * 60}px`,
-      left: `${col * 100}px`,
-      whiteSpace: 'nowrap',
-    }}>
+    <Shape
+      color={item.color}
+      size={50}
+      ref={ref}
+      style={{
+        ...style,
+        top: `${row * 60}px`,
+        left: `${col * 100}px`,
+        whiteSpace: 'nowrap',
+      }}
+    >
       {title}
       <br />
       Generated {itemType?.toString()}

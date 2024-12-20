@@ -1,6 +1,8 @@
 import {MockDragMonitor} from '@mocks/mocks'
 import type {PreviewProps, PreviewState, usePreviewState} from 'react-dnd-preview'
 
+import type {JSX} from 'react'
+
 const preview = jest.createMockFromModule<Record<string, unknown>>('react-dnd-preview')
 
 const state: PreviewState = {

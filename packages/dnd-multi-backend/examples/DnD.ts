@@ -1,8 +1,8 @@
-import {DragSource as IDragSource, DropTarget as IDropTarget, DragDropMonitor, Identifier} from 'dnd-core'
+import type {DragDropMonitor, DragSource as IDragSource, DropTarget as IDropTarget, Identifier} from 'dnd-core'
 
 type createElementProps = {
-  text: string,
-  color: string,
+  text: string
+  color: string
 }
 
 const createElement = ({text, color}: createElementProps): Element => {
@@ -28,7 +28,8 @@ export class DragSource implements IDragSource {
 
   beginDrag(_monitor: DragDropMonitor, _targetId: Identifier): void {
     // FIXME: the interface is actually wrong
-    return {color: this.#color} as unknown as void
+    // biome-ignore lint/correctness/noVoidTypeReturn: interface is wrong
+    return {color: this.#color} as unknown as undefined
   }
 
   endDrag(_monitor: DragDropMonitor, _targetId: Identifier): void {}
@@ -42,11 +43,11 @@ export class DragSource implements IDragSource {
   }
 }
 
-export class DropTarget implements IDropTarget {
+export class DropTarget<T> implements IDropTarget {
   #node: Element
-  #onDrop?: (r: any) => void
+  #onDrop?: (r: T) => void
 
-  constructor({text, color, onDrop}: createElementProps & {onDrop?: (r: any) => void}) {
+  constructor({text, color, onDrop}: createElementProps & {onDrop?: (r: T) => void}) {
     this.#node = createElement({text, color})
     this.#onDrop = onDrop
   }
@@ -61,7 +62,7 @@ export class DropTarget implements IDropTarget {
 
   hover(_monitor: DragDropMonitor, _targetId: Identifier): void {}
 
-  drop(monitor: DragDropMonitor, _targetId: Identifier): any {
+  drop(monitor: DragDropMonitor, _targetId: Identifier): void {
     this.#onDrop?.(monitor.getItem())
   }
 }

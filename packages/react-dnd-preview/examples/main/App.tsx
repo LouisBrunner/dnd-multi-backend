@@ -1,9 +1,9 @@
-import { DndProvider } from 'react-dnd'
-import { Components } from './methods/Components'
-import { Hooks } from './methods/Hooks'
-import { TouchBackend } from 'react-dnd-touch-backend'
-import { Draggable } from '../shared'
-import { StrictMode } from 'react'
+import {type JSX, StrictMode} from 'react'
+import {DndProvider} from 'react-dnd'
+import {TouchBackend} from 'react-dnd-touch-backend'
+import {Draggable} from '../shared'
+import {Components} from './methods/Components'
+import {Hooks} from './methods/Hooks'
 
 export const App = (): JSX.Element => {
   return (

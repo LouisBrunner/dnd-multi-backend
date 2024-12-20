@@ -1,24 +1,30 @@
-import { CSSProperties, RefObject, StrictMode, useContext, useRef, useState } from 'react'
-import { DndProvider as ReactDndProvider } from 'react-dnd'
+import {type CSSProperties, type JSX, type RefObject, StrictMode, useContext, useRef, useState} from 'react'
+import {DndProvider as ReactDndProvider} from 'react-dnd'
 
-import { MultiBackend, DndProvider, PreviewContext, usePreview, Preview, PreviewState } from '../src'
-import { HTML5toTouch } from 'rdndmb-html5-to-touch'
+import {HTML5toTouch} from 'rdndmb-html5-to-touch'
+import {DndProvider, MultiBackend, Preview, PreviewContext, type PreviewState, usePreview} from '../src'
 
-import {Card} from './Card'
 import {Basket} from './Basket'
-import {MultiCard} from './MultiCard'
+import {Card} from './Card'
 import {MultiBasket} from './MultiBasket'
-import {DragContent} from './common'
+import {MultiCard} from './MultiCard'
+import type {DragContent} from './common'
 
-const Block = ({row, text, item, style}: {row: number, text: string, item: DragContent, style: CSSProperties}): JSX.Element => {
-  return <div style={{
-    ...style,
-    top: `${row * 60}px`,
-    backgroundColor: item.color,
-    width: '50px',
-    height: '50px',
-    whiteSpace: 'nowrap',
-  }}>Generated {text}</div>
+const Block = ({row, text, item, style}: {row: number; text: string; item: DragContent; style: CSSProperties}): JSX.Element => {
+  return (
+    <div
+      style={{
+        ...style,
+        top: `${row * 60}px`,
+        backgroundColor: item.color,
+        width: '50px',
+        height: '50px',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      Generated {text}
+    </div>
+  )
 }
 
 const ContextPreview = ({text}: {text: string}): JSX.Element => {
@@ -41,13 +47,15 @@ const HookPreview = ({text}: {text: string}): JSX.Element | null => {
 
 const ComponentPreview = ({text}: {text: string}): JSX.Element => {
   return (
-    <Preview generator={({item, style}: PreviewState<DragContent>): JSX.Element => {
-      return <Block row={2} text={`${text} with Component`} item={item} style={style} />
-    }} />
+    <Preview
+      generator={({item, style}: PreviewState<DragContent>): JSX.Element => {
+        return <Block row={2} text={`${text} with Component`} item={item} style={style} />
+      }}
+    />
   )
 }
 
-const Content = ({title, fref}: {title: string, fref: RefObject<HTMLDivElement>}) => {
+const Content = ({title, fref}: {title: string; fref: RefObject<HTMLDivElement | null>}) => {
   return (
     <>
       <h2>{title} API</h2>
@@ -95,7 +103,14 @@ export const App = (): JSX.Element => {
   return (
     <StrictMode>
       <div>
-        <input id="api_selector" type="checkbox" checked={useNew} onChange={(e) => {setAPI(e.target.checked)}} />
+        <input
+          id="api_selector"
+          type="checkbox"
+          checked={useNew}
+          onChange={(e) => {
+            setAPI(e.target.checked)
+          }}
+        />
         <label htmlFor="api_selector">Use New API</label>
       </div>
       {useNew ? newAPI : oldAPI}

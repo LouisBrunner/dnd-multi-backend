@@ -1,9 +1,15 @@
-import {CSSProperties, RefObject} from 'react'
+import type {CSSProperties, JSX, RefObject} from 'react'
 import {useMultiDrop} from '../src'
-import {DragContent} from './common'
+import {type DragContent, useFixRDnDRef} from './common'
 
-export const MultiBasket = ({logs}: {logs: RefObject<Element>}): JSX.Element => {
-  const [_, {html5: [html5Props, html5Drop], touch: [touchProps, touchDrop]}] = useMultiDrop<DragContent, void, {isOver: boolean, canDrop: boolean}>({
+export const MultiBasket = ({logs}: {logs: RefObject<Element | null>}): JSX.Element => {
+  const [
+    _,
+    {
+      html5: [html5Props, html5Drop],
+      touch: [touchProps, touchDrop],
+    },
+  ] = useMultiDrop<DragContent, void, {isOver: boolean; canDrop: boolean}>({
     accept: 'card',
     drop: (item) => {
       const message = `Dropped: ${item.color}`
@@ -26,7 +32,7 @@ export const MultiBasket = ({logs}: {logs: RefObject<Element>}): JSX.Element => 
     margin: '10px',
   }
   const html5DropStyle: CSSProperties = {
-    backgroundColor: (html5Props.isOver && html5Props.canDrop) ? '#f3f3f3' : '#bbbbbb',
+    backgroundColor: html5Props.isOver && html5Props.canDrop ? '#f3f3f3' : '#bbbbbb',
     display: 'inline-block',
     margin: '5px',
     width: '90px',
@@ -35,7 +41,7 @@ export const MultiBasket = ({logs}: {logs: RefObject<Element>}): JSX.Element => 
     userSelect: 'none',
   }
   const touchDropStyle: CSSProperties = {
-    backgroundColor: (touchProps.isOver && touchProps.canDrop) ? '#f3f3f3' : '#bbbbbb',
+    backgroundColor: touchProps.isOver && touchProps.canDrop ? '#f3f3f3' : '#bbbbbb',
     display: 'inline-block',
     margin: '5px',
     width: '90px',
@@ -43,10 +49,16 @@ export const MultiBasket = ({logs}: {logs: RefObject<Element>}): JSX.Element => 
     textAlign: 'center',
     userSelect: 'none',
   }
+  const html5DropRef = useFixRDnDRef(html5Drop)
+  const touchDropRef = useFixRDnDRef(touchDrop)
   return (
     <div style={containerStyle}>
-      <div style={html5DropStyle} ref={html5Drop}>HTML5</div>
-      <div style={touchDropStyle} ref={touchDrop}>Touch</div>
+      <div style={html5DropStyle} ref={html5DropRef}>
+        HTML5
+      </div>
+      <div style={touchDropStyle} ref={touchDropRef}>
+        Touch
+      </div>
     </div>
   )
 }

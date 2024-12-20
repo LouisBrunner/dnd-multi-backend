@@ -1,9 +1,15 @@
-import {CSSProperties} from 'react'
+import type {CSSProperties, JSX} from 'react'
 import {useMultiDrag} from '../src'
-import {DragContent} from './common'
+import {type DragContent, useFixRDnDRef} from './common'
 
 export const MultiCard = (props: {color: string}): JSX.Element => {
-  const [_, {html5: [html5Props, html5Drag], touch: [touchProps, touchDrag]}] = useMultiDrag<DragContent, void, {isDragging: boolean}>({
+  const [
+    _,
+    {
+      html5: [html5Props, html5Drag],
+      touch: [touchProps, touchDrag],
+    },
+  ] = useMultiDrag<DragContent, void, {isDragging: boolean}>({
     type: 'card',
     item: {color: props.color},
     collect: (monitor) => {
@@ -37,10 +43,16 @@ export const MultiCard = (props: {color: string}): JSX.Element => {
     textAlign: 'center',
     userSelect: 'none',
   }
+  const html5DragRef = useFixRDnDRef(html5Drag)
+  const touchDragRef = useFixRDnDRef(touchDrag)
   return (
     <div style={containerStyle}>
-      <div style={html5DragStyle} ref={html5Drag}>HTML5</div>
-      <div style={touchDragStyle} ref={touchDrag}>Touch</div>
+      <div style={html5DragStyle} ref={html5DragRef}>
+        HTML5
+      </div>
+      <div style={touchDragStyle} ref={touchDragRef}>
+        Touch
+      </div>
     </div>
   )
 }
