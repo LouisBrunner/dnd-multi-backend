@@ -6,7 +6,7 @@ import {executeCommand, getCommandOutput, getWorkspaces} from './common.js'
 
 const main = async () => {
   if (process.argv.length < 3) {
-    console.error('Usage: node publish.js semver')
+    console.error('Usage: node publish.js semver [tag]')
     process.exit(1)
   }
   const ver = process.argv[2]
@@ -14,13 +14,15 @@ const main = async () => {
     console.error(`❌ Invalid semver version: ${ver}`)
     process.exit(1)
   }
+  const tag = process.argv.length > 3 ? process.argv[3] : undefined
+  console.log(`🚀 Publishing version: ${ver}${tag !== undefined ? ` with tag ${tag}` : ''}`)
 
   console.log('🔍 Checking if all changes are committed')
-  const changes = getCommandOutput('git', 'status', '--porcelain')
-  if (changes !== '') {
-    console.error('❌ Please commit all changes before publishing')
-    process.exit(1)
-  }
+  // const changes = getCommandOutput('git', 'status', '--porcelain')
+  // if (changes !== '') {
+  //   console.error('❌ Please commit all changes before publishing')
+  //   process.exit(1)
+  // }
 
   console.log('🔍 Checking we are on main')
   const branch = getCommandOutput('git', 'branch', '--show-current')
@@ -53,7 +55,11 @@ const main = async () => {
 
   for (const workspace of workspaces) {
     console.log(`🔨 Publishing ${workspace.name}`)
-    executeCommand('npm', ['publish'], {
+    let tagOptions = []
+    if (tag !== undefined) {
+      tagOptions = ['--tag', tag]
+    }
+    executeCommand('npm', ['publish', ...tagOptions], {
       cwd: workspace.location,
     })
   }

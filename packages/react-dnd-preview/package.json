@@ -1,6 +1,6 @@
 {
   "name": "react-dnd-preview",
-  "version": "8.1.2",
+  "version": "9.0.0-rc0001",
   "sideEffects": false,
   "description": "Preview component for React DnD",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
