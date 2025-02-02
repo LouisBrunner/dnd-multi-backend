@@ -1,0 +1,27 @@
+{
+  "name": "react-dnd-preview",
+  "version": "9.0.0",
+  "sideEffects": false,
+  "description": "Preview component for React DnD",
+  "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git",
+    "directory": "packages/react-dnd-preview"
+  },
+  "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/react-dnd-preview/",
+  "keywords": ["react", "dnd", "drag", "drop", "react-dnd", "preview"],
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/LouisBrunner"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "peerDependencies": {
+    "react": "^16.14.0 || ^17.0.2 || ^18.0.0 || ^19.0.0",
+    "react-dnd": "^16.0.1"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "dnd-multi-backend",
+  "version": "9.0.0",
+  "sideEffects": false,
+  "description": "Multi Backend system compatible with DnD Core / React DnD",
+  "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git",
+    "directory": "packages/dnd-multi-backend"
+  },
+  "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/dnd-multi-backend/",
+  "keywords": ["agnostic", "dnd", "drag", "drop", "backend", "multi"],
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/LouisBrunner"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "peerDependencies": {
+    "dnd-core": "^16.0.1"
+  }
+}
