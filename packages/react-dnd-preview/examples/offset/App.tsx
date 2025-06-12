@@ -1,8 +1,7 @@
 import {type CSSProperties, type JSX, type Ref, StrictMode, useState} from 'react'
 import {DndProvider} from 'react-dnd'
 import {TouchBackend} from 'react-dnd-touch-backend'
-import {type Point, usePreview} from '../../src/index.js'
-import type {PreviewPlacement} from '../../src/index.js'
+import {type Point, type PreviewPlacement, usePreview} from '../../src/index.js'
 import {type DragContent, Draggable, Shape} from '../shared.js'
 
 type Kinds = 'default' | 'ref' | 'custom_client' | 'custom_source_client'
