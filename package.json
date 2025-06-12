@@ -19,7 +19,7 @@
     "build:examples": "node esbuild/examples.js",
     "build:all": "npm run build && npm run build:examples",
     "build": "npm run build:esm && npm run build:types",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "npm run typecheck -ws",
     "format:fix:internal": "npx @biomejs/biome format --write",
     "format:fix": "npm run format:fix:internal -- .",
     "vet": "npm run typecheck && npx @biomejs/biome check",

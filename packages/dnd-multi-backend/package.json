@@ -22,5 +22,8 @@
   "module": "dist/index.js",
   "peerDependencies": {
     "dnd-core": "^16.0.1"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
   }
 }

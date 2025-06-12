@@ -1,5 +1,5 @@
 import {type ConnectDragPreview, type ConnectDragSource, type DragSourceHookSpec, useDrag} from 'react-dnd'
-import {useMultiCommon} from './useMultiCommon'
+import {useMultiCommon} from './useMultiCommon.js'
 
 export type useMultiDragOneState<Props> = [Props, ConnectDragSource, ConnectDragPreview]
 

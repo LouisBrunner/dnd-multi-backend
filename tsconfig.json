@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es2020",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "react-jsx",
     "strict": true,
@@ -18,7 +18,7 @@
     "noUnusedParameters": true,
     "preserveConstEnums": true,
     "paths": {
-      "@mocks/*": ["__mocks__/*"],
+      "@mocks/*.ts": ["__mocks__"],
       "dnd-multi-backend": ["packages/dnd-multi-backend/src"],
       "rdndmb-html5-to-touch": ["packages/rdndmb-html5-to-touch/src"],
       "react-dnd-preview": ["packages/react-dnd-preview/src"]

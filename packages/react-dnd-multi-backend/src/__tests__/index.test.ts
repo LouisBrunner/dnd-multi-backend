@@ -1,9 +1,9 @@
-import * as Module from '../index'
+import * as Module from '../index.js'
 
 import {HTML5DragTransition, MouseTransition, MultiBackend, TouchTransition, createTransition} from 'dnd-multi-backend'
-import {DndProvider} from '../components/DndProvider'
-import {Preview, PreviewContext} from '../components/Preview'
-import {useMultiDrag, useMultiDrop, usePreview} from '../hooks'
+import {DndProvider} from '../components/DndProvider.js'
+import {Preview, PreviewContext} from '../components/Preview.js'
+import {useMultiDrag, useMultiDrop, usePreview} from '../hooks/index.js'
 
 describe('react-dnd-multi-backend module', () => {
   test('exports correctly', () => {

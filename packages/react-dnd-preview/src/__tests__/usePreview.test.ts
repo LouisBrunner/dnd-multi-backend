@@ -2,8 +2,8 @@ import {MockDragMonitor} from '@mocks/mocks'
 import {__setMockMonitor} from '@mocks/react-dnd'
 import {act, renderHook} from '@testing-library/react'
 import type {MutableRefObject} from 'react'
-import type {PreviewPlacement} from '../offsets'
-import {usePreview, type usePreviewStateFull} from '../usePreview'
+import type {PreviewPlacement} from '../offsets.js'
+import {usePreview, type usePreviewStateFull} from '../usePreview.js'
 
 const DraggingMonitor = {
   isDragging() {
