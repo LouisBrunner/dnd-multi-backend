@@ -1,4 +1,4 @@
-import {MockMultiBackend, MockPreviewList, type MockedMultiBackend, type MockedPreviewList} from '@mocks/mocks'
+import {MockMultiBackend, MockPreviewList, type MockedMultiBackend, type MockedPreviewList} from '@mocks/mocks.js'
 import {act, render, screen} from '@testing-library/react'
 import {type JSX, useState} from 'react'
 import {DndContext, type DndContextType} from 'react-dnd'

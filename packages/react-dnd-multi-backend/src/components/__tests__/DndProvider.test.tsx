@@ -1,4 +1,4 @@
-import {TestPipeline} from '@mocks/pipeline'
+import {TestPipeline} from '@mocks/pipeline.js'
 import {render} from '@testing-library/react'
 import {type ReactNode, useContext} from 'react'
 

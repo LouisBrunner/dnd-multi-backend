@@ -4,7 +4,7 @@ import {render, screen} from '@testing-library/react'
 // - @babel/preset-typescript installed (and set in a tiny babel.config.json)
 import {useContext} from 'react'
 
-import {MockDragMonitor} from '@mocks/mocks'
+import {MockDragMonitor} from '@mocks/mocks.js'
 import {Context, type PreviewState} from '../Context.js'
 import {Preview, type PreviewProps} from '../Preview.js'
 import type {usePreviewState} from '../usePreview.js'

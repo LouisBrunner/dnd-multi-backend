@@ -1,8 +1,8 @@
-import * as Module from '../index'
+import * as Module from '../index.js'
 
-import {MultiFactory} from '../MultiFactory'
-import {createTransition} from '../createTransition'
-import {HTML5DragTransition, MouseTransition, TouchTransition} from '../transitions'
+import {MultiFactory} from '../MultiFactory.js'
+import {createTransition} from '../createTransition.js'
+import {HTML5DragTransition, MouseTransition, TouchTransition} from '../transitions.js'
 
 describe('dnd-multi-backend module', () => {
   test('exports correctly', () => {

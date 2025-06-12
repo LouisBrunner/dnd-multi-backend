@@ -1,8 +1,8 @@
-import {TestPipeline} from '@mocks/pipeline'
+import {TestPipeline} from '@mocks/pipeline.js'
 import type {DragDropManager} from 'dnd-core'
-import {MultiBackendImpl} from '../MultiBackendImpl'
-import {PreviewListImpl} from '../PreviewListImpl'
-import type {MultiBackendSwitcher, PreviewList} from '../types'
+import {MultiBackendImpl} from '../MultiBackendImpl.js'
+import {PreviewListImpl} from '../PreviewListImpl.js'
+import type {MultiBackendSwitcher, PreviewList} from '../types.js'
 
 describe('PreviewListImpl class', () => {
   let list: PreviewList

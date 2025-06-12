@@ -1,5 +1,5 @@
-import {MockDragMonitor} from '@mocks/mocks'
-import {__setMockMonitor} from '@mocks/react-dnd'
+import {MockDragMonitor} from '@mocks/mocks.js'
+import {__setMockMonitor} from '@mocks/react-dnd.js'
 import {act, renderHook} from '@testing-library/react'
 import type {MutableRefObject} from 'react'
 import type {PreviewPlacement} from '../offsets.js'
