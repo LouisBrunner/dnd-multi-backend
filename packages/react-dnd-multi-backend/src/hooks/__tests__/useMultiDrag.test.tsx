@@ -1,8 +1,8 @@
-import {TestPipeline} from '@mocks/pipeline'
+import {TestPipeline} from '@mocks/pipeline.js'
 import {renderHook} from '@testing-library/react'
 import type {ReactNode} from 'react'
-import {DndProvider} from '../..'
-import {useMultiDrag} from '../useMultiDrag'
+import {DndProvider} from '../../index.js'
+import {useMultiDrag} from '../useMultiDrag.js'
 
 describe('useMultiDrag component', () => {
   const MultiAction = () => {

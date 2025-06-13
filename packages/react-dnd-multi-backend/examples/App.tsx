@@ -2,13 +2,13 @@ import {type CSSProperties, type JSX, type RefObject, StrictMode, useContext, us
 import {DndProvider as ReactDndProvider} from 'react-dnd'
 
 import {HTML5toTouch} from 'rdndmb-html5-to-touch'
-import {DndProvider, MultiBackend, Preview, PreviewContext, type PreviewState, usePreview} from '../src'
+import {DndProvider, MultiBackend, Preview, PreviewContext, type PreviewState, usePreview} from '../src/index.js'
 
-import {Basket} from './Basket'
-import {Card} from './Card'
-import {MultiBasket} from './MultiBasket'
-import {MultiCard} from './MultiCard'
-import type {DragContent} from './common'
+import {Basket} from './Basket.js'
+import {Card} from './Card.js'
+import {MultiBasket} from './MultiBasket.js'
+import {MultiCard} from './MultiCard.js'
+import type {DragContent} from './common.js'
 
 const Block = ({row, text, item, style}: {row: number; text: string; item: DragContent; style: CSSProperties}): JSX.Element => {
   return (

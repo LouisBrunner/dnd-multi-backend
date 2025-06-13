@@ -1,6 +1,6 @@
-import {usePreview} from '../../../src'
-import type {DragContent} from '../../shared'
-import {type GenPreviewLiteProps, type GenPreviewProps, generatePreview} from './common'
+import {usePreview} from '../../../src/index.js'
+import type {DragContent} from '../../shared.js'
+import {type GenPreviewLiteProps, type GenPreviewProps, generatePreview} from './common.js'
 
 import type {JSX} from 'react'
 

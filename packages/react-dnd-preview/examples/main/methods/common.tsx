@@ -1,6 +1,6 @@
 import {type JSX, useContext} from 'react'
-import {Context, type PreviewState, type usePreviewStateContent} from '../../../src'
-import {type DragContent, Shape} from '../../shared'
+import {Context, type PreviewState, type usePreviewStateContent} from '../../../src/index.js'
+import {type DragContent, Shape} from '../../shared.js'
 
 export type PreviewProps = usePreviewStateContent<DragContent, HTMLDivElement>
 

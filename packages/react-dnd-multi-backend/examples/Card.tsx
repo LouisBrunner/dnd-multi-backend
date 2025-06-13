@@ -1,6 +1,6 @@
 import type {CSSProperties, JSX} from 'react'
 import {useDrag} from 'react-dnd'
-import {useFixRDnDRef} from './common'
+import {useFixRDnDRef} from './common.js'
 
 export const Card = (props: {color: string}): JSX.Element => {
   const [collectedProps, drag] = useDrag({

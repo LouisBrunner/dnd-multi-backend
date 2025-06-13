@@ -1,4 +1,4 @@
-import {createTransition} from './createTransition'
+import {createTransition} from './createTransition.js'
 
 export const TouchTransition = createTransition('touchstart', (rawEvent: Event) => {
   const event = rawEvent as TouchEvent

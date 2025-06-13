@@ -1,4 +1,4 @@
-import {createTransition} from '../createTransition'
+import {createTransition} from '../createTransition.js'
 
 describe('createTransition function', () => {
   test('creates a valid transition', () => {

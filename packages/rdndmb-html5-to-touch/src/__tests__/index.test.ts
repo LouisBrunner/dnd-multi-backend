@@ -1,5 +1,5 @@
 import {PointerTransition, TouchTransition} from 'dnd-multi-backend'
-import {HTML5toTouch} from '../index'
+import {HTML5toTouch} from '../index.js'
 
 describe('HTML5toTouch pipeline', () => {
   test('has the HTML5 and Touch backends', () => {

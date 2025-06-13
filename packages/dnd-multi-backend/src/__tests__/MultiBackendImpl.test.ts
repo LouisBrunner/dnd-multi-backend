@@ -1,6 +1,6 @@
-import {TestBackends, TestPipeline, TestPipelineWithSkip} from '@mocks/pipeline'
+import {TestBackends, TestPipeline, TestPipelineWithSkip} from '@mocks/pipeline.js'
 import type {DragDropManager} from 'dnd-core'
-import {type MultiBackendContext, MultiBackendImpl, type MultiBackendOptions} from '../MultiBackendImpl'
+import {type MultiBackendContext, MultiBackendImpl, type MultiBackendOptions} from '../MultiBackendImpl.js'
 
 describe('MultiBackendImpl class', () => {
   let _defaultManager: DragDropManager

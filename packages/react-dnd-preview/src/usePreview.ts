@@ -1,7 +1,7 @@
 import type {Identifier} from 'dnd-core'
 import {type CSSProperties, type MutableRefObject, useRef} from 'react'
 import {type DragLayerMonitor, useDragLayer} from 'react-dnd'
-import {type Point, type PreviewPlacement, calculatePointerPosition} from './offsets'
+import {type Point, type PreviewPlacement, calculatePointerPosition} from './offsets.js'
 
 const getStyle = (currentOffset: Point): CSSProperties => {
   const transform = `translate(${currentOffset.x.toFixed(1)}px, ${currentOffset.y.toFixed(1)}px)`

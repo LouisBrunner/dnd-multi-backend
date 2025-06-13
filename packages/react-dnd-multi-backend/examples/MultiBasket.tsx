@@ -1,6 +1,6 @@
 import type {CSSProperties, JSX, RefObject} from 'react'
-import {useMultiDrop} from '../src'
-import {type DragContent, useFixRDnDRef} from './common'
+import {useMultiDrop} from '../src/index.js'
+import {type DragContent, useFixRDnDRef} from './common.js'
 
 export const MultiBasket = ({logs}: {logs: RefObject<Element | null>}): JSX.Element => {
   const [

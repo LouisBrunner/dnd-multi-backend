@@ -1,9 +1,9 @@
-import {TestPipeline} from '@mocks/pipeline'
+import {TestPipeline} from '@mocks/pipeline.js'
 import {renderHook} from '@testing-library/react'
 import type {ReactNode} from 'react'
 
-import {DndProvider} from '../..'
-import {useMultiDrop} from '../useMultiDrop'
+import {DndProvider} from '../../index.js'
+import {useMultiDrop} from '../useMultiDrop.js'
 
 describe('useMultiDrop component', () => {
   const MultiAction = () => {

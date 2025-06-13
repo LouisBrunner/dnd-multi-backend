@@ -21,7 +21,8 @@ export default {
       },
       transformIgnorePatterns: ['/node_modules/(?!(dnd-core|@?react-dnd.*)/)'],
       moduleNameMapper: {
-        '^@mocks/(.*)$': '<rootDir>/__mocks__/$1',
+        '^@mocks/(.*)\\.js$': '<rootDir>/__mocks__/$1',
+        '^(\\.{1,2}/.*)\\.js$': '$1',
       },
 
       moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],

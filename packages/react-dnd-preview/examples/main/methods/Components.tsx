@@ -1,6 +1,6 @@
-import {Context, Preview, type PreviewState} from '../../../src'
-import type {DragContent} from '../../shared'
-import {type GenPreviewLiteProps, WithChildComponent, WithChildFunction, WithChildFunctionContext, WithPropFunction} from './common'
+import {Context, Preview, type PreviewState} from '../../../src/index.js'
+import type {DragContent} from '../../shared.js'
+import {type GenPreviewLiteProps, WithChildComponent, WithChildFunction, WithChildFunctionContext, WithPropFunction} from './common.js'
 
 import type {JSX} from 'react'
 

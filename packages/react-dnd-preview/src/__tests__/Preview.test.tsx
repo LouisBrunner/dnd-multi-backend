@@ -4,10 +4,10 @@ import {render, screen} from '@testing-library/react'
 // - @babel/preset-typescript installed (and set in a tiny babel.config.json)
 import {useContext} from 'react'
 
-import {MockDragMonitor} from '@mocks/mocks'
-import {Context, type PreviewState} from '../Context'
-import {Preview, type PreviewProps} from '../Preview'
-import type {usePreviewState} from '../usePreview'
+import {MockDragMonitor} from '@mocks/mocks.js'
+import {Context, type PreviewState} from '../Context.js'
+import {Preview, type PreviewProps} from '../Preview.js'
+import type {usePreviewState} from '../usePreview.js'
 
 jest.mock('../usePreview')
 
