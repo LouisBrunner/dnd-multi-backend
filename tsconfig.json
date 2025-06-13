@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es2020",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "react-jsx",
     "strict": true,

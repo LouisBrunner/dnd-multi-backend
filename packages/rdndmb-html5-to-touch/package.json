@@ -24,8 +24,5 @@
     "dnd-multi-backend": "^9.0.0",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1"
-  },
-  "scripts": {
-    "typecheck": "tsc --noEmit"
   }
 }
