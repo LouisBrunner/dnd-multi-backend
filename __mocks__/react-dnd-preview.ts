@@ -1,4 +1,4 @@
-import {MockDragMonitor} from '@mocks/mocks'
+import {MockDragMonitor} from '@mocks/mocks.js'
 import type {PreviewProps, PreviewState, usePreviewState} from 'react-dnd-preview'
 
 import type {JSX} from 'react'

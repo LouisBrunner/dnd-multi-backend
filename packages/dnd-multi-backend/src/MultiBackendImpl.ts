@@ -1,6 +1,6 @@
 import type {BackendFactory, DragDropManager, Unsubscribe} from 'dnd-core'
-import {PreviewListImpl} from './PreviewListImpl'
-import type {BackendEntry, MultiBackendSwitcher, PreviewList, Transition} from './types'
+import {PreviewListImpl} from './PreviewListImpl.js'
+import type {BackendEntry, MultiBackendSwitcher, PreviewList, Transition} from './types.js'
 
 interface EventConstructor {
   new (type: string, eventInitDict?: EventInit): Event

@@ -1,8 +1,8 @@
-import {MockMultiBackend, MockPreviewList, type MockedMultiBackend, type MockedPreviewList} from '@mocks/mocks'
+import {MockMultiBackend, MockPreviewList, type MockedMultiBackend, type MockedPreviewList} from '@mocks/mocks.js'
 import {act, renderHook} from '@testing-library/react'
 import type {ReactNode} from 'react'
 import {DndContext, type DndContextType} from 'react-dnd'
-import {usePreview} from '../usePreview'
+import {usePreview} from '../usePreview.js'
 
 describe('usePreview component', () => {
   let list: MockedPreviewList

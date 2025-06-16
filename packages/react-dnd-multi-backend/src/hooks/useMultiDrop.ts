@@ -1,5 +1,5 @@
 import {type ConnectDropTarget, type DropTargetHookSpec, useDrop} from 'react-dnd'
-import {useMultiCommon} from './useMultiCommon'
+import {useMultiCommon} from './useMultiCommon.js'
 
 export type useMultiDropOneState<Props> = [Props, ConnectDropTarget]
 

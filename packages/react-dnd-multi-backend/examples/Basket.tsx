@@ -1,6 +1,6 @@
 import type {CSSProperties, JSX, RefObject} from 'react'
 import {useDrop} from 'react-dnd'
-import {type DragContent, useFixRDnDRef} from './common'
+import {type DragContent, useFixRDnDRef} from './common.js'
 
 export const Basket = ({logs}: {logs: RefObject<Element | null>}): JSX.Element => {
   const [collectedProps, drop] = useDrop<DragContent, void, {isOver: boolean; canDrop: boolean}>({

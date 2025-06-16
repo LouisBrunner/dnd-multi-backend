@@ -1,6 +1,6 @@
 import type {CSSProperties, JSX} from 'react'
-import {useMultiDrag} from '../src'
-import {type DragContent, useFixRDnDRef} from './common'
+import {useMultiDrag} from '../src/index.js'
+import {type DragContent, useFixRDnDRef} from './common.js'
 
 export const MultiCard = (props: {color: string}): JSX.Element => {
   const [

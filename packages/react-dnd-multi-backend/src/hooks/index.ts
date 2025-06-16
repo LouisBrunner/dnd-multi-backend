@@ -1,3 +1,3 @@
-export * from './useMultiDrag'
-export * from './useMultiDrop'
-export * from './usePreview'
+export * from './useMultiDrag.js'
+export * from './useMultiDrop.js'
+export * from './usePreview.js'

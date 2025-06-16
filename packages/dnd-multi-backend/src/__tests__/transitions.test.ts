@@ -48,7 +48,7 @@ class PointerEventFake extends MouseEvent {
 }
 global.PointerEvent = PointerEventFake
 
-import {HTML5DragTransition, MouseTransition, PointerTransition, TouchTransition} from '../transitions'
+import {HTML5DragTransition, MouseTransition, PointerTransition, TouchTransition} from '../transitions.js'
 
 describe('Transitions collection', () => {
   const fakeDragEvent = (type: string): Event => {

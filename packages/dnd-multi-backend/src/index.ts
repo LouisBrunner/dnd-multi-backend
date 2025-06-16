@@ -1,19 +1,19 @@
-export {MultiFactory as MultiBackend} from './MultiFactory'
+export {MultiFactory as MultiBackend} from './MultiFactory.js'
 
-export {createTransition} from './createTransition'
+export {createTransition} from './createTransition.js'
 export {
   HTML5DragTransition,
   TouchTransition,
   MouseTransition,
   PointerTransition,
-} from './transitions'
+} from './transitions.js'
 
 export type {
   MultiBackendOptions,
   MultiBackendPipeline,
   MultiBackendPipelineStep,
   MultiBackendContext,
-} from './MultiBackendImpl'
+} from './MultiBackendImpl.js'
 
 export type {
   MultiBackendSwitcher,
@@ -21,4 +21,4 @@ export type {
   PreviewListener,
   BackendEntry,
   Transition,
-} from './types'
+} from './types.js'

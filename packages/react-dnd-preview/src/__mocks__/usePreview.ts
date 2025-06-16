@@ -1,4 +1,4 @@
-import type {usePreviewState} from '../usePreview'
+import type {usePreviewState} from '../usePreview.js'
 
 let mockReturn: usePreviewState
 

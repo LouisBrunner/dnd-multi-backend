@@ -1,10 +1,10 @@
-import {MockMultiBackend, MockPreviewList, type MockedMultiBackend, type MockedPreviewList} from '@mocks/mocks'
+import {MockMultiBackend, MockPreviewList, type MockedMultiBackend, type MockedPreviewList} from '@mocks/mocks.js'
 import {act, render, screen} from '@testing-library/react'
 import {type JSX, useState} from 'react'
 import {DndContext, type DndContextType} from 'react-dnd'
 import type {PreviewGenerator} from 'react-dnd-preview'
-import {PreviewPortalContext} from '../DndProvider'
-import {Preview, PreviewContext} from '../Preview'
+import {PreviewPortalContext} from '../DndProvider.js'
+import {Preview, PreviewContext} from '../Preview.js'
 
 type TestProps = {
   generator: PreviewGenerator
