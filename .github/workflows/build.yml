@@ -13,7 +13,7 @@ jobs:
         node-version: [20, 22]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -59,11 +59,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
       - name: Download examples build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: Examples
           path: examples
