@@ -39,8 +39,8 @@
     "@testing-library/react": "^16.3.0",
     "@types/jest": "^29.5.14",
     "@types/jsdom": "^21.1.7",
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
+    "@types/react": "^19.1.17",
+    "@types/react-dom": "^19.1.11",
     "esbuild": "^0.25.5",
     "esbuild-jest": "^0.5.0",
     "esbuild-node-externals": "^1.18.0",
@@ -54,7 +54,7 @@
     "react-dnd-test-utils": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1",
     "react-dom": "^19.1.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "workspaces": ["./packages/*"]
 }
