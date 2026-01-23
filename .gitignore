@@ -1,0 +1,16 @@
+# OS files
+.DS_Store
+
+# npm
+node_modules
+*-debug.log
+
+# Code coverage
+/coverage
+
+# Output
+packages/*/dist
+webpack-stats.json
+
+# IDE
+.vscode
