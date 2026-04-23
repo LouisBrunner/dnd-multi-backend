@@ -45,7 +45,7 @@
     "esbuild-jest": "^0.5.0",
     "esbuild-node-externals": "^1.20.1",
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
+    "jest-environment-jsdom": "^30.3.0",
     "node-notifier": "^10.0.1",
     "react": "^19.2.4",
     "react-dnd": "^16.0.1",
