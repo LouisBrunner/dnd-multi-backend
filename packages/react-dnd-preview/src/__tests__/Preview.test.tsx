@@ -5,6 +5,7 @@ import {useContext} from 'react'
 import type {DragLayerMonitor} from 'react-dnd'
 import {Context, type PreviewState} from '../Context.js'
 import {Preview, type PreviewProps} from '../Preview.js'
+import * as realUsePreview from '../usePreview.js'
 import type {usePreviewState} from '../usePreview.js'
 
 type DragContent = {
@@ -14,12 +15,14 @@ type DragContent = {
 type GeneratorProps = PreviewState<DragContent>
 
 const __setMockReturn = (state: usePreviewState) => {
-  mock.module('../usePreview', () => ({
+  mock.module('../usePreview.js', () => ({
     usePreview: () => state,
   }))
 }
 
-afterAll(() => mock.restore())
+afterAll(() => {
+  mock.module('../usePreview.js', () => realUsePreview)
+})
 
 describe('Preview subcomponent', () => {
   const createComponent = (props: PreviewProps<DragContent>) => {
