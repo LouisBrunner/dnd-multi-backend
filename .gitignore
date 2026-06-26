@@ -1,12 +1,9 @@
 # OS files
 .DS_Store
 
-# npm / bun
+# bun
 node_modules
 *-debug.log
-
-# Go build artifacts
-/dnd-multi-backend
 
 # Code coverage
 /coverage

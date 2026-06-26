@@ -1,4 +1,4 @@
-# React DnD: HTML5 to Touch Pipeline [![NPM Version][npm-image]][npm-url] [![dependencies Status][deps-image]][deps-url] [![devDependencies Status][deps-dev-image]][deps-dev-url]
+# React DnD: HTML5 to Touch Pipeline [![NPM Version][npm-image]][npm-url]
 
 [Try it here!](https://louisbrunner.github.io/dnd-multi-backend/examples/react-dnd-multi-backend.html)
 
@@ -61,7 +61,3 @@ MIT, Copyright (c) 2021-2022 Louis Brunner
 
 [npm-image]: https://img.shields.io/npm/v/rdndmb-html5-to-touch.svg
 [npm-url]: https://npmjs.org/package/rdndmb-html5-to-touch
-[deps-image]: https://david-dm.org/louisbrunner/rdndmb-html5-to-touch/status.svg
-[deps-url]: https://david-dm.org/louisbrunner/rdndmb-html5-to-touch
-[deps-dev-image]: https://david-dm.org/louisbrunner/rdndmb-html5-to-touch/dev-status.svg
-[deps-dev-url]: https://david-dm.org/louisbrunner/rdndmb-html5-to-touch?type=dev

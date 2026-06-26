@@ -38,6 +38,7 @@
     "clean": "rm -rf packages/*/dist examples/*.js coverage",
     "format:fix": "bunx @biomejs/biome check --write .",
     "prepare": "bun run clean && bun run build && bun run vet && bun run test",
+    "publish": "bun run prepare && go run ./cmd/publish",
     "start": "go run ./cmd/bundler -mode dev",
     "start:dev": "NODE_ENV=development bun run start",
     "test": "bun test",

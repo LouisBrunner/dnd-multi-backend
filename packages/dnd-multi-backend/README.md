@@ -1,4 +1,4 @@
-# DnD Multi Backend [![NPM Version][npm-image]][npm-url] [![dependencies Status][deps-image]][deps-url] [![devDependencies Status][deps-dev-image]][deps-dev-url]
+# DnD Multi Backend [![NPM Version][npm-image]][npm-url]
 
 [Try it here!](https://louisbrunner.github.io/dnd-multi-backend/examples/dnd-multi-backend.html)
 
@@ -148,7 +148,3 @@ MIT, Copyright (c) 2016-2022 Louis Brunner
 
 [npm-image]: https://img.shields.io/npm/v/dnd-multi-backend.svg
 [npm-url]: https://npmjs.org/package/dnd-multi-backend
-[deps-image]: https://david-dm.org/louisbrunner/dnd-multi-backend/status.svg
-[deps-url]: https://david-dm.org/louisbrunner/dnd-multi-backend
-[deps-dev-image]: https://david-dm.org/louisbrunner/dnd-multi-backend/dev-status.svg
-[deps-dev-url]: https://david-dm.org/louisbrunner/dnd-multi-backend?type=dev
