@@ -1,8 +1,8 @@
 {
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
   "dependencies": {
-    "dnd-multi-backend": "^9.0.1-rc0001",
-    "react-dnd-preview": "^9.0.1-rc0001"
+    "dnd-multi-backend": "workspace:*",
+    "react-dnd-preview": "workspace:*"
   },
   "description": "Multi Backend system compatible with React DnD",
   "funding": {
@@ -24,10 +24,10 @@
   "module": "dist/index.js",
   "name": "react-dnd-multi-backend",
   "peerDependencies": {
-    "dnd-core": "^16.0.1",
-    "react": "^16.14.0 || ^17.0.2 || ^18.0.0 || ^19.0.0",
-    "react-dnd": "^16.0.1",
-    "react-dom": "^16.14.0 || ^17.0.2 || ^18.0.0 || ^19.0.0"
+    "dnd-core": "catalog:",
+    "react": "catalog:",
+    "react-dnd": "catalog:",
+    "react-dom": "catalog:"
   },
   "repository": {
     "directory": "packages/react-dnd-multi-backend",
@@ -35,7 +35,7 @@
     "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git"
   },
   "scripts": {
-    "build:types": "tsc -p tsconfig.json --declarationDir dist"
+    "build:types": "tsc -p tsconfig.json"
   },
   "sideEffects": false,
   "type": "module",

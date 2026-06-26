@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    "types": []
   },
-  "exclude": ["node_modules", "**/__tests__/**/*", "**/__mocks__/**/*"],
+  "exclude": ["node_modules", "**/__tests__/**/*"],
   "extends": "./tsconfig.json"
 }

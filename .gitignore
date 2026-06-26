@@ -16,3 +16,5 @@ webpack-stats.json
 .vscode
 
 /examples/*.js
+
+packages/*/*.tgz
