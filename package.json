@@ -42,7 +42,7 @@
     "publish": "bun run prepare && go run ./cmd/publish",
     "start": "go run ./cmd/bundler -mode dev",
     "start:dev": "NODE_ENV=development bun run start",
-    "test": "bun test",
+    "test": "bun test --isolate",
     "test:ci": "bun run test",
     "test:watch": "bun test --watch",
     "typecheck": "tsc --noEmit",
