@@ -1,4 +1,4 @@
-import {describe, expect, mock, test} from 'bun:test'
+import {afterAll, describe, expect, mock, test} from 'bun:test'
 import {createMock} from '@mocks/mocks.js'
 import {render, screen} from '@testing-library/react'
 import {useContext} from 'react'
@@ -18,6 +18,8 @@ const __setMockReturn = (state: usePreviewState) => {
     usePreview: () => state,
   }))
 }
+
+afterAll(() => mock.restore())
 
 describe('Preview subcomponent', () => {
   const createComponent = (props: PreviewProps<DragContent>) => {
