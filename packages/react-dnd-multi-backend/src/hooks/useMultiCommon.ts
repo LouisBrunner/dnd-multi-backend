@@ -28,6 +28,7 @@ export const useMultiCommon = <Spec, Res>(spec: Spec, fn: Fn<Spec, Res>): [Res, 
   const multiResult: Record<string, Res> = {}
   const backends = (dndBackend as MultiBackendSwitcher).backendsList()
   for (const backend of backends) {
+    // biome-ignore lint/correctness/useHookAtTopLevel: fine as number of backends is constant
     multiResult[backend.id] = useForBackend(spec, fn, dndContext.dragDropManager as DragDropManagerImpl, backend.instance)
   }
 

@@ -7,9 +7,8 @@
 # Output
 /examples
 
-# npm
+# bun
 node_modules
-npm-debug.log
 
 # Config
 biome.json

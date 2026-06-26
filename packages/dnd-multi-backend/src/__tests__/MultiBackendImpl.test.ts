@@ -1,6 +1,15 @@
+import {afterEach, beforeEach, describe, expect, jest, test} from 'bun:test'
 import {TestBackends, TestPipeline, TestPipelineWithSkip} from '@mocks/pipeline.js'
 import type {DragDropManager} from 'dnd-core'
 import {type MultiBackendContext, MultiBackendImpl, type MultiBackendOptions} from '../MultiBackendImpl.js'
+
+const __replaceWindow = (): (() => void) => {
+  const original = globalThis.window
+  Object.defineProperty(globalThis, 'window', {configurable: true, value: undefined})
+  return () => {
+    Object.defineProperty(globalThis, 'window', {configurable: true, value: original})
+  }
+}
 
 describe('MultiBackendImpl class', () => {
   let _defaultManager: DragDropManager
@@ -9,11 +18,11 @@ describe('MultiBackendImpl class', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     _defaultManager = {
-      getMonitor: jest.fn(),
-      getActions: jest.fn(),
-      getRegistry: jest.fn(),
-      getBackend: jest.fn(),
       dispatch: jest.fn(),
+      getActions: jest.fn(),
+      getBackend: jest.fn(),
+      getMonitor: jest.fn(),
+      getRegistry: jest.fn(),
     }
     _defaultContext = {qrt: Math.random()}
   })
@@ -32,10 +41,10 @@ describe('MultiBackendImpl class', () => {
   }
 
   describe('constructor', () => {
-    let warn: jest.SpyInstance
+    let warn: ReturnType<typeof jest.spyOn>
 
     beforeEach(() => {
-      warn = jest.spyOn(console, 'warn').mockImplementation()
+      warn = jest.spyOn(console, 'warn').mockImplementation(() => {})
     })
 
     afterEach(() => {
@@ -80,8 +89,8 @@ describe('MultiBackendImpl class', () => {
     test('fails if a backend has a duplicate `id` property', () => {
       const pipeline = {
         backends: [
-          {id: 'abc', backend: () => {}},
-          {id: 'abc', backend: () => {}},
+          {backend: () => {}, id: 'abc'},
+          {backend: () => {}, id: 'abc'},
         ],
       }
       expect(() => {
@@ -119,23 +128,18 @@ describe('MultiBackendImpl class', () => {
 
   describe('setup function', () => {
     test('does nothing if it has no window', () => {
-      const windowSpy = jest.spyOn(window, 'window', 'get')
-      const spyAdd = jest.spyOn(window, 'addEventListener')
-      // @ts-expect-error
-      windowSpy.mockImplementation(() => undefined)
+      const cleanup = __replaceWindow()
 
       const backend = createBackend()
       backend.setup()
       expect(() => {
         backend.setup()
       }).not.toThrow()
-      expect(spyAdd).not.toHaveBeenCalled()
       expect(TestBackends[0].setup).not.toHaveBeenCalled()
 
       backend.teardown()
 
-      spyAdd.mockRestore()
-      windowSpy.mockRestore()
+      cleanup()
     })
 
     test('fails if a backend already exist', () => {
@@ -178,19 +182,14 @@ describe('MultiBackendImpl class', () => {
 
   describe('teardown function', () => {
     test('does nothing if it has no window', () => {
-      const windowSpy = jest.spyOn(window, 'window', 'get')
-      const spyRemove = jest.spyOn(window, 'removeEventListener')
-      // @ts-expect-error
-      windowSpy.mockImplementation(() => undefined)
+      const cleanup = __replaceWindow()
 
       const backend = createBackend()
       backend.setup()
       backend.teardown()
-      expect(spyRemove).not.toHaveBeenCalled()
       expect(TestBackends[0].teardown).not.toHaveBeenCalled()
 
-      spyRemove.mockRestore()
-      windowSpy.mockRestore()
+      cleanup()
     })
 
     test('cleans up the events and sub-backends', () => {

@@ -1,19 +1,20 @@
 import {MultiBackend, type MultiBackendOptions} from 'dnd-multi-backend'
-import {type JSX, type ReactNode, createContext, useState} from 'react'
+import {createContext, type JSX, type ReactNode, useState} from 'react'
 import {DndProvider as ReactDndProvider} from 'react-dnd'
 
 export const PreviewPortalContext = createContext<Element | null>(null)
 
-export type DndProviderProps = {
-  // biome-ignore lint/suspicious/noExplicitAny: not sure why
-  context?: any
+// biome-ignore lint/suspicious/noExplicitAny: legacy
+export type DndProviderProps<BackendContext = any> = {
+  context?: BackendContext
   options: MultiBackendOptions
   children?: ReactNode
   debugMode?: boolean
   portal?: Element
 }
 
-export const DndProvider = ({portal, ...props}: DndProviderProps): JSX.Element => {
+// biome-ignore lint/suspicious/noExplicitAny: legacy
+export const DndProvider = <T = any>({portal, ...props}: DndProviderProps<T>): JSX.Element => {
   const [previewPortal, setPreviewPortal] = useState<Element | null>(null)
 
   return (

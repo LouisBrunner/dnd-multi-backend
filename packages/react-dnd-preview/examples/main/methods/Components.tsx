@@ -1,18 +1,17 @@
+import type {JSX} from 'react'
 import {Context, Preview, type PreviewState} from '../../../src/index.js'
 import type {DragContent} from '../../shared.js'
 import {type GenPreviewLiteProps, WithChildComponent, WithChildFunction, WithChildFunctionContext, WithPropFunction} from './common.js'
 
-import type {JSX} from 'react'
-
 export const Components = ({title, col}: GenPreviewLiteProps): JSX.Element => {
   return (
     <>
-      <Preview generator={WithPropFunction({title, col})} />
+      <Preview generator={WithPropFunction({col, title})} />
 
-      <Preview>{WithChildFunction({title, col})}</Preview>
+      <Preview>{WithChildFunction({col, title})}</Preview>
 
       <Preview>
-        <WithChildComponent title={title} col={col} />
+        <WithChildComponent col={col} title={title} />
       </Preview>
 
       <Preview>
@@ -21,7 +20,7 @@ export const Components = ({title, col}: GenPreviewLiteProps): JSX.Element => {
             if (!props) {
               throw new Error('missing preview context')
             }
-            return WithChildFunctionContext({title, col})(props as PreviewState<DragContent, HTMLDivElement>)
+            return WithChildFunctionContext({col, title})(props as PreviewState<DragContent, HTMLDivElement>)
           }}
         </Context.Consumer>
       </Preview>

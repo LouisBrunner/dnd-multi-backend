@@ -1,3 +1,4 @@
+import {describe, expect, test} from 'bun:test'
 import {PointerTransition, TouchTransition} from 'dnd-multi-backend'
 import {HTML5toTouch} from '../index.js'
 

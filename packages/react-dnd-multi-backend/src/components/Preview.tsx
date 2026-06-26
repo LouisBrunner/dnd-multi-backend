@@ -20,5 +20,6 @@ export const Preview = <T = unknown, El extends Element = Element>(props: Previe
 }
 
 Preview.Context = PreviewContext
-export {PreviewContext}
+
 export type {PreviewState}
+export {PreviewContext}

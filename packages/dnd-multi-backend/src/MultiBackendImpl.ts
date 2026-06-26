@@ -41,7 +41,7 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
   /*private*/ #nodes: Record<string, DnDNode>
 
   constructor(manager: DragDropManager, context?: MultiBackendContext, options?: MultiBackendOptions) {
-    if (!options || !options.backends || options.backends.length < 1) {
+    if (!options?.backends || options.backends.length < 1) {
       throw new Error(
         `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
         see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-2xx`,
@@ -98,8 +98,8 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
       id,
       instance,
       preview: backend.preview ?? false,
-      transition: backend.transition,
       skipDispatchOnTransition: backend.skipDispatchOnTransition ?? false,
+      transition: backend.transition,
     }
   }
 
@@ -214,8 +214,8 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
     const nodeId = `${func}_${sourceId as number}`
     const unsubscribe = this.#callBackend(func, sourceId, node, options)
     this.#nodes[nodeId] = {
-      func,
       args: [sourceId, node, options],
+      func,
       unsubscribe,
     }
 

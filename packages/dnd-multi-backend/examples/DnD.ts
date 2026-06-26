@@ -18,7 +18,7 @@ export class DragSource implements IDragSource {
   #color: string
 
   constructor({text, color}: createElementProps) {
-    this.#node = createElement({text, color})
+    this.#node = createElement({color, text})
     this.#color = color
   }
 
@@ -48,7 +48,7 @@ export class DropTarget<T> implements IDropTarget {
   #onDrop?: (r: T) => void
 
   constructor({text, color, onDrop}: createElementProps & {onDrop?: (r: T) => void}) {
-    this.#node = createElement({text, color})
+    this.#node = createElement({color, text})
     this.#onDrop = onDrop
   }
 

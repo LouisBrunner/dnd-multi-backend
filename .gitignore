@@ -1,7 +1,7 @@
 # OS files
 .DS_Store
 
-# npm
+# bun
 node_modules
 *-debug.log
 
@@ -14,3 +14,5 @@ webpack-stats.json
 
 # IDE
 .vscode
+
+/examples/*.js

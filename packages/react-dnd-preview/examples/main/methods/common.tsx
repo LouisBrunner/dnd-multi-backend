@@ -15,12 +15,12 @@ export const generatePreview = ({itemType, item, style, ref}: PreviewProps, {row
   return (
     <Shape
       color={item.color}
-      size={50}
       ref={ref}
+      size={50}
       style={{
         ...style,
-        top: `${row * 60}px`,
         left: `${col * 100}px`,
+        top: `${row * 60}px`,
         whiteSpace: 'nowrap',
       }}
     >
@@ -39,12 +39,12 @@ export type GenPreviewLiteProps = Pick<GenPreviewProps, 'col' | 'title'>
 
 export const WithPropFunction = ({col, title}: GenPreviewLiteProps): WithPreviewState => {
   return (props) => {
-    return generatePreview(props, {row: 0, col, title, method: 'with prop function'})
+    return generatePreview(props, {col, method: 'with prop function', row: 0, title})
   }
 }
 export const WithChildFunction = ({col, title}: GenPreviewLiteProps): WithPreviewState => {
   return (props) => {
-    return generatePreview(props, {row: 1, col, title, method: 'with child function'})
+    return generatePreview(props, {col, method: 'with child function', row: 1, title})
   }
 }
 
@@ -53,12 +53,11 @@ export const WithChildComponent = ({col, title}: GenPreviewLiteProps): JSX.Eleme
   if (!props) {
     throw new Error('missing preview context')
   }
-  // FIXME: any better way?
-  return generatePreview(props as PreviewState<DragContent, HTMLDivElement>, {row: 2, col, title, method: 'with child component (using context)'})
+  return generatePreview(props as PreviewState<DragContent, HTMLDivElement>, {col, method: 'with child component (using context)', row: 2, title})
 }
 
 export const WithChildFunctionContext = ({col, title}: GenPreviewLiteProps): WithPreviewState => {
   return (props) => {
-    return generatePreview(props, {row: 3, col, title, method: 'with child function (using context)'})
+    return generatePreview(props, {col, method: 'with child function (using context)', row: 3, title})
   }
 }

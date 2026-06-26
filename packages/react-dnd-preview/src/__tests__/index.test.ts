@@ -1,6 +1,6 @@
-import * as Module from '../index.js'
-
+import {describe, expect, test} from 'bun:test'
 import {Context} from '../Context.js'
+import * as Module from '../index.js'
 import {Preview} from '../Preview.js'
 import {usePreview} from '../usePreview.js'
 

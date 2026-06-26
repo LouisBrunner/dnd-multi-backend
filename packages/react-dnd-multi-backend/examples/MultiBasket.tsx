@@ -11,21 +11,20 @@ export const MultiBasket = ({logs}: {logs: RefObject<Element | null>}): JSX.Elem
     },
   ] = useMultiDrop<DragContent, void, {isOver: boolean; canDrop: boolean}>({
     accept: 'card',
+    collect: (monitor) => {
+      return {
+        canDrop: monitor.canDrop(),
+        isOver: monitor.isOver(),
+      }
+    },
     drop: (item) => {
       const message = `Dropped: ${item.color}`
       if (logs.current) {
         logs.current.innerHTML += `${message}<br />`
       }
     },
-    collect: (monitor) => {
-      return {
-        isOver: monitor.isOver(),
-        canDrop: monitor.canDrop(),
-      }
-    },
   })
 
-  // TODO: replace with autoprefixer+astroturf
   const containerStyle: CSSProperties = {
     border: '1px dashed black',
     display: 'inline-block',
@@ -34,29 +33,29 @@ export const MultiBasket = ({logs}: {logs: RefObject<Element | null>}): JSX.Elem
   const html5DropStyle: CSSProperties = {
     backgroundColor: html5Props.isOver && html5Props.canDrop ? '#f3f3f3' : '#bbbbbb',
     display: 'inline-block',
-    margin: '5px',
-    width: '90px',
     height: '90px',
+    margin: '5px',
     textAlign: 'center',
     userSelect: 'none',
+    width: '90px',
   }
   const touchDropStyle: CSSProperties = {
     backgroundColor: touchProps.isOver && touchProps.canDrop ? '#f3f3f3' : '#bbbbbb',
     display: 'inline-block',
-    margin: '5px',
-    width: '90px',
     height: '90px',
+    margin: '5px',
     textAlign: 'center',
     userSelect: 'none',
+    width: '90px',
   }
   const html5DropRef = useFixRDnDRef(html5Drop)
   const touchDropRef = useFixRDnDRef(touchDrop)
   return (
     <div style={containerStyle}>
-      <div style={html5DropStyle} ref={html5DropRef}>
+      <div ref={html5DropRef} style={html5DropStyle}>
         HTML5
       </div>
-      <div style={touchDropStyle} ref={touchDropRef}>
+      <div ref={touchDropRef} style={touchDropStyle}>
         Touch
       </div>
     </div>

@@ -5,6 +5,5 @@ __tests__
 src
 tsconfig.json
 
-# npm
+# bun
 node_modules
-npm-debug.log

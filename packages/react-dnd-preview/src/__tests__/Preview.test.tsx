@@ -1,25 +1,17 @@
+import {describe, expect, mock, test} from 'bun:test'
+import {createMock} from '@mocks/mocks.js'
 import {render, screen} from '@testing-library/react'
-// FIXME: esbuild-jest is struggling in this file because of jest.mock (I think), so we need:
-// - a special React import
-// - @babel/preset-typescript installed (and set in a tiny babel.config.json)
 import {useContext} from 'react'
-
-import {MockDragMonitor} from '@mocks/mocks.js'
+import type {DragLayerMonitor} from 'react-dnd'
 import {Context, type PreviewState} from '../Context.js'
 import {Preview, type PreviewProps} from '../Preview.js'
 import type {usePreviewState} from '../usePreview.js'
-
-jest.mock('../usePreview')
 
 type DragContent = {
   coucou: string
 }
 
 type GeneratorProps = PreviewState<DragContent>
-
-const {__setMockReturn} = require('../usePreview') as {
-  __setMockReturn: (state: usePreviewState<DragContent>) => void
-}
 
 describe('Preview subcomponent', () => {
   const createComponent = (props: PreviewProps<DragContent>) => {
@@ -34,6 +26,12 @@ describe('Preview subcomponent', () => {
     )
   }
 
+  const __setMockReturn = (state: usePreviewState) => {
+    mock.module('../usePreview.js', () => ({
+      usePreview: () => state,
+    }))
+  }
+
   const setupTest = (props: PreviewProps<DragContent>): void => {
     test('is null when DnD is not in progress', () => {
       __setMockReturn({display: false})
@@ -42,34 +40,36 @@ describe('Preview subcomponent', () => {
     })
 
     test('is valid when DnD is in progress', () => {
+      const monitor = createMock<DragLayerMonitor<{coucou: string}>>()
+      monitor.getItem.mockReturnValue({coucou: 'dauphin'})
       __setMockReturn({
         display: true,
+        item: {coucou: 'dauphin'},
+        itemType: 'toto',
+        monitor,
+        ref: {current: null},
         style: {
+          left: 0,
           pointerEvents: 'none',
           position: 'fixed',
           top: 0,
-          left: 0,
           transform: 'translate(1000px, 2000px)',
           WebkitTransform: 'translate(1000px, 2000px)',
         },
-        item: {coucou: 'dauphin'},
-        itemType: 'toto',
-        monitor: MockDragMonitor<{coucou: string}>({coucou: 'dauphin'}),
-        ref: {current: null},
       })
       createComponent(props)
       const node = screen.queryByText('dauphin: toto')
       expect(node).toBeInTheDocument()
       // FIXME: toHaveStyle ignores pointer-events and WebkitTransform
       // expect(node).toHaveStyle({
+      //   left: 0,
       //   pointerEvents: 'none',
       //   position: 'fixed',
       //   top: 0,
-      //   left: 0,
       //   transform: 'translate(1000px, 2000px)',
       //   WebkitTransform: 'translate(1000px, 2000px)',
       // })
-      expect(node).toHaveAttribute('style', ['pointer-events: none', 'position: fixed', 'top: 0px', 'left: 0px', 'transform: translate(1000px, 2000px);'].join('; '))
+      expect(node).toHaveAttribute('style', ['left: 0px', 'pointer-events: none', 'position: fixed', 'top: 0px', 'transform: translate(1000px, 2000px);'].join('; '))
     })
   }
 
@@ -87,8 +87,7 @@ describe('Preview subcomponent', () => {
       if (props === undefined) {
         return null
       }
-      // FIXME: gross
-      return generator(props as GeneratorProps)
+      return generator(props as PreviewState<DragContent>)
     }
 
     setupTest({
@@ -104,7 +103,7 @@ describe('Preview subcomponent', () => {
             if (props === undefined) {
               return null
             }
-            return generator(props as GeneratorProps)
+            return generator(props as PreviewState<DragContent>)
           }}
         </Context.Consumer>
       ),

@@ -19,8 +19,8 @@ export type PreviewProps<T = unknown, El extends Element = Element> = (
 
 export const Preview = <T = unknown, El extends Element = Element>(props: PreviewProps<T, El>): JSX.Element | null => {
   const result = usePreview<T, El>({
-    placement: props.placement,
     padding: props.padding,
+    placement: props.placement,
   })
 
   if (!result.display) {

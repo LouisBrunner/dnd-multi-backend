@@ -1,3 +1,4 @@
+import {describe, expect, jest, test} from 'bun:test'
 import {createTransition} from '../createTransition.js'
 
 describe('createTransition function', () => {

@@ -1,26 +1,36 @@
 {
-  "name": "dnd-multi-backend",
-  "version": "9.0.1-rc0001",
-  "sideEffects": false,
-  "description": "Multi Backend system compatible with DnD Core / React DnD",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git",
-    "directory": "packages/dnd-multi-backend"
-  },
-  "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/dnd-multi-backend/",
-  "keywords": ["agnostic", "dnd", "drag", "drop", "backend", "multi"],
+  "description": "Multi Backend system compatible with DnD Core / React DnD",
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/LouisBrunner"
   },
-  "type": "module",
+  "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/dnd-multi-backend/",
+  "keywords": [
+    "agnostic",
+    "dnd",
+    "drag",
+    "drop",
+    "backend",
+    "multi"
+  ],
+  "license": "MIT",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "module": "dist/index.js",
+  "name": "dnd-multi-backend",
   "peerDependencies": {
     "dnd-core": "^16.0.1"
-  }
+  },
+  "repository": {
+    "directory": "packages/dnd-multi-backend",
+    "type": "git",
+    "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git"
+  },
+  "scripts": {
+    "build:types": "tsc -p tsconfig.json --declarationDir dist"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "version": "9.0.1-rc0001"
 }
