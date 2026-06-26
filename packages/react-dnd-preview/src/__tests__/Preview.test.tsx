@@ -5,8 +5,8 @@ import {useContext} from 'react'
 import type {DragLayerMonitor} from 'react-dnd'
 import {Context, type PreviewState} from '../Context.js'
 import {Preview, type PreviewProps} from '../Preview.js'
-import * as realUsePreview from '../usePreview.js'
 import type {usePreviewState} from '../usePreview.js'
+import * as realUsePreview from '../usePreview.js'
 
 type DragContent = {
   coucou: string
