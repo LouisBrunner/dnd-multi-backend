@@ -43,7 +43,7 @@
     "start": "go run ./cmd/bundler -mode dev",
     "start:dev": "NODE_ENV=development bun run start",
     "test": "bun test",
-    "test:ci": "bun test",
+    "test:ci": "bun test --max-concurrency=1",
     "test:watch": "bun test --watch",
     "typecheck": "tsc --noEmit",
     "vet": "bun run typecheck && bunx @biomejs/biome check",
