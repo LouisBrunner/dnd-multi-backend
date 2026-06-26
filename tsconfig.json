@@ -13,7 +13,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@mocks/*": ["./__mocks__/*"]
+      "@mocks/*": ["./__mocks__/*"],
+      "dnd-multi-backend": ["./packages/dnd-multi-backend/src"],
+      "rdndmb-html5-to-touch": ["./packages/rdndmb-html5-to-touch/src"]
     },
     "preserveConstEnums": true,
     "resolveJsonModule": true,

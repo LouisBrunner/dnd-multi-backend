@@ -31,6 +31,7 @@
   "name": "meta",
   "private": true,
   "scripts": {
+    "all": "bun run clean && bun run build && bun run vet && bun run test",
     "build": "bun run build:esm && bun run build:types",
     "build:all": "bun run build && bun run build:examples",
     "build:esm": "go run ./cmd/bundler",
@@ -38,7 +39,7 @@
     "build:types": "bun run --filter '*' build:types",
     "clean": "rm -rf packages/*/dist examples/*.js coverage",
     "format:fix": "bunx @biomejs/biome check --write .",
-    "prepublishOnly": "bun run clean && bun run build && bun run vet && bun run test",
+    "prepublishOnly": "bun run all",
     "publish": "go run ./cmd/publish",
     "start": "go run ./cmd/bundler -mode dev",
     "start:dev": "NODE_ENV=development bun run start",

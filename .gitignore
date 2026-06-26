@@ -5,8 +5,9 @@
 node_modules
 *-debug.log
 
-# Code coverage
+# Test artifacts
 /coverage
+/report-*.xml
 
 # Output
 packages/*/dist
