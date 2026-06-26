@@ -1,32 +1,23 @@
+import {jest} from 'bun:test'
 import type {Backend} from 'dnd-core'
-import {type MultiBackendOptions, createTransition} from 'dnd-multi-backend'
+import {createTransition, type MultiBackendOptions} from 'dnd-multi-backend'
+import {createMock} from './mocks'
 
-const createBackend = () => {
-  return {
-    setup: jest.fn(),
-    teardown: jest.fn(),
-    connectDragSource: jest.fn(),
-    connectDragPreview: jest.fn(),
-    connectDropTarget: jest.fn(),
-    profile: jest.fn(),
-  }
-}
-
-export const TestBackends = [createBackend(), createBackend()]
+export const TestBackends = [createMock<Backend>(), createMock<Backend>()]
 
 export const TestPipeline: MultiBackendOptions = {
   backends: [
     {
-      id: 'back1',
       backend: jest.fn((): Backend => {
         return TestBackends[0]
       }),
+      id: 'back1',
     },
     {
-      id: 'back2',
       backend: jest.fn((): Backend => {
         return TestBackends[1]
       }),
+      id: 'back2',
       options: {abc: 123},
       preview: true,
       transition: createTransition(

@@ -1,7 +1,7 @@
+import {describe, expect, jest, test} from 'bun:test'
 import {TestPipeline} from '@mocks/pipeline.js'
 import {renderHook} from '@testing-library/react'
 import type {ReactNode} from 'react'
-
 import {DndProvider} from '../../index.js'
 import {useMultiDrop} from '../useMultiDrop.js'
 
@@ -11,8 +11,8 @@ describe('useMultiDrop component', () => {
       accept: 'card',
       collect: (monitor) => {
         return {
-          isOver: monitor.isOver(),
           canDrop: monitor.canDrop(),
+          isOver: monitor.isOver(),
         }
       },
     })

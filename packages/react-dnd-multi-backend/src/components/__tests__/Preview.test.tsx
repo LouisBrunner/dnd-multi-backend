@@ -1,5 +1,7 @@
-import {MockMultiBackend, MockPreviewList, type MockedMultiBackend, type MockedPreviewList} from '@mocks/mocks.js'
+import {beforeEach, describe, expect, jest, test} from 'bun:test'
+import {createMock, type Mocked} from '@mocks/mocks.js'
 import {act, render, screen} from '@testing-library/react'
+import type {MultiBackendSwitcher, PreviewList} from 'dnd-multi-backend'
 import {type JSX, useState} from 'react'
 import {DndContext, type DndContextType} from 'react-dnd'
 import type {PreviewGenerator} from 'react-dnd-preview'
@@ -11,23 +13,23 @@ type TestProps = {
 }
 
 describe('Preview component', () => {
-  let list: MockedPreviewList
-  let backend: MockedMultiBackend
+  let list: Mocked<PreviewList>
+  let backend: Mocked<MultiBackendSwitcher>
   let context: DndContextType
 
   beforeEach(() => {
-    list = MockPreviewList()
-    backend = MockMultiBackend()
+    list = createMock<PreviewList>()
+    backend = createMock<MultiBackendSwitcher>()
     backend.previewsList.mockReturnValue(list)
     context = {
       dragDropManager: {
+        dispatch: jest.fn(),
+        getActions: jest.fn(),
         getBackend: () => {
           return backend
         },
         getMonitor: jest.fn(),
         getRegistry: jest.fn(),
-        getActions: jest.fn(),
-        dispatch: jest.fn(),
       },
     }
   })

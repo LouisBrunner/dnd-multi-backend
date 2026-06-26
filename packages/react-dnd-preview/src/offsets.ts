@@ -77,7 +77,7 @@ export const calculatePointerPosition = (monitor: DragLayerMonitor, childRef: Re
 
   // If we don't have a reference to a valid child, use the default offset:
   // current cursor - initial parent/drag source offset
-  if (!childRef.current || !childRef.current.getBoundingClientRect) {
+  if (!childRef.current?.getBoundingClientRect) {
     return subtract(offset, calculateParentOffset(monitor))
   }
 

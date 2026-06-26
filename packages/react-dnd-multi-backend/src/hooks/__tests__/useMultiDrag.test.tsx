@@ -1,3 +1,4 @@
+import {describe, expect, jest, test} from 'bun:test'
 import {TestPipeline} from '@mocks/pipeline.js'
 import {renderHook} from '@testing-library/react'
 import type {ReactNode} from 'react'
@@ -7,13 +8,13 @@ import {useMultiDrag} from '../useMultiDrag.js'
 describe('useMultiDrag component', () => {
   const MultiAction = () => {
     return useMultiDrag({
-      type: 'card',
-      item: {},
       collect: (monitor) => {
         return {
           isDragging: monitor.isDragging(),
         }
       },
+      item: {},
+      type: 'card',
     })
   }
 

@@ -1,25 +1,24 @@
+import {HTML5toTouch} from 'rdndmb-html5-to-touch'
 import {type CSSProperties, type JSX, type RefObject, StrictMode, useContext, useRef, useState} from 'react'
 import {DndProvider as ReactDndProvider} from 'react-dnd'
-
-import {HTML5toTouch} from 'rdndmb-html5-to-touch'
 import {DndProvider, MultiBackend, Preview, PreviewContext, type PreviewState, usePreview} from '../src/index.js'
 
 import {Basket} from './Basket.js'
 import {Card} from './Card.js'
+import type {DragContent} from './common.js'
 import {MultiBasket} from './MultiBasket.js'
 import {MultiCard} from './MultiCard.js'
-import type {DragContent} from './common.js'
 
 const Block = ({row, text, item, style}: {row: number; text: string; item: DragContent; style: CSSProperties}): JSX.Element => {
   return (
     <div
       style={{
         ...style,
-        top: `${row * 60}px`,
         backgroundColor: item.color,
-        width: '50px',
         height: '50px',
+        top: `${row * 60}px`,
         whiteSpace: 'nowrap',
+        width: '50px',
       }}
     >
       Generated {text}
@@ -33,7 +32,7 @@ const ContextPreview = ({text}: {text: string}): JSX.Element => {
     throw new Error('missing preview context')
   }
   const {style, item} = preview as PreviewState<DragContent>
-  return <Block row={0} text={`${text} with Context`} item={item} style={style} />
+  return <Block item={item} row={0} style={style} text={`${text} with Context`} />
 }
 
 const HookPreview = ({text}: {text: string}): JSX.Element | null => {
@@ -42,14 +41,14 @@ const HookPreview = ({text}: {text: string}): JSX.Element | null => {
     return null
   }
   const {style, item} = preview
-  return <Block row={1} text={`${text} with Hook`} item={item} style={style} />
+  return <Block item={item} row={1} style={style} text={`${text} with Hook`} />
 }
 
 const ComponentPreview = ({text}: {text: string}): JSX.Element => {
   return (
     <Preview
       generator={({item, style}: PreviewState<DragContent>): JSX.Element => {
-        return <Block row={2} text={`${text} with Component`} item={item} style={style} />
+        return <Block item={item} row={2} style={style} text={`${text} with Component`} />
       }}
     />
   )
@@ -90,13 +89,13 @@ export const App = (): JSX.Element => {
 
   const oldAPI = (
     <ReactDndProvider backend={MultiBackend} options={HTML5toTouch}>
-      <Content title="Old" fref={refOld} />
+      <Content fref={refOld} title="Old" />
     </ReactDndProvider>
   )
 
   const newAPI = (
     <DndProvider options={HTML5toTouch}>
-      <Content title="New" fref={refNew} />
+      <Content fref={refNew} title="New" />
     </DndProvider>
   )
 
@@ -104,12 +103,12 @@ export const App = (): JSX.Element => {
     <StrictMode>
       <div>
         <input
-          id="api_selector"
-          type="checkbox"
           checked={useNew}
+          id="api_selector"
           onChange={(e) => {
             setAPI(e.target.checked)
           }}
+          type="checkbox"
         />
         <label htmlFor="api_selector">Use New API</label>
       </div>

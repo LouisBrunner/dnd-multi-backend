@@ -1,33 +1,44 @@
 {
-  "name": "react-dnd-multi-backend",
-  "version": "9.0.1-rc0001",
-  "sideEffects": false,
-  "description": "Multi Backend system compatible with React DnD",
   "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git",
-    "directory": "packages/react-dnd-multi-backend"
-  },
-  "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/react-dnd-multi-backend/",
-  "keywords": ["react", "dnd", "drag", "drop", "html5", "touch", "react-dnd"],
-  "funding": {
-    "type": "individual",
-    "url": "https://github.com/sponsors/LouisBrunner"
-  },
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.js",
   "dependencies": {
     "dnd-multi-backend": "^9.0.1-rc0001",
     "react-dnd-preview": "^9.0.1-rc0001"
   },
+  "description": "Multi Backend system compatible with React DnD",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/LouisBrunner"
+  },
+  "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/react-dnd-multi-backend/",
+  "keywords": [
+    "react",
+    "dnd",
+    "drag",
+    "drop",
+    "html5",
+    "touch",
+    "react-dnd"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "name": "react-dnd-multi-backend",
   "peerDependencies": {
     "dnd-core": "^16.0.1",
     "react": "^16.14.0 || ^17.0.2 || ^18.0.0 || ^19.0.0",
     "react-dnd": "^16.0.1",
     "react-dom": "^16.14.0 || ^17.0.2 || ^18.0.0 || ^19.0.0"
-  }
+  },
+  "repository": {
+    "directory": "packages/react-dnd-multi-backend",
+    "type": "git",
+    "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git"
+  },
+  "scripts": {
+    "build:types": "tsc -p tsconfig.json --declarationDir dist"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "version": "9.0.1-rc0001"
 }

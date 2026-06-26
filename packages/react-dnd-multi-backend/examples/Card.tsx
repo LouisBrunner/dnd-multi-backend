@@ -4,24 +4,24 @@ import {useFixRDnDRef} from './common.js'
 
 export const Card = (props: {color: string}): JSX.Element => {
   const [collectedProps, drag] = useDrag({
-    type: 'card',
-    item: {color: props.color},
     collect: (monitor) => {
       return {
         isDragging: monitor.isDragging(),
       }
     },
+    item: {color: props.color},
+    type: 'card',
   })
   const isDragging = collectedProps.isDragging
   const style: CSSProperties = {
     backgroundColor: props.color,
-    opacity: isDragging ? 0.5 : 1,
     display: 'inline-block',
-    width: '100px',
     height: '100px',
     margin: '10px',
+    opacity: isDragging ? 0.5 : 1,
+    width: '100px',
   }
 
   const dragRef = useFixRDnDRef(drag)
-  return <div style={style} ref={dragRef} />
+  return <div ref={dragRef} style={style} />
 }

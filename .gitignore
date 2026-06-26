@@ -1,9 +1,12 @@
 # OS files
 .DS_Store
 
-# npm
+# npm / bun
 node_modules
 *-debug.log
+
+# Go build artifacts
+/dnd-multi-backend
 
 # Code coverage
 /coverage
@@ -14,3 +17,5 @@ webpack-stats.json
 
 # IDE
 .vscode
+
+/examples/*.js

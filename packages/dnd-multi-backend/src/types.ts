@@ -15,8 +15,8 @@ export type BackendEntry = {
 
 export interface MultiBackendSwitcher extends Backend {
   backendsList(): BackendEntry[]
-  previewsList(): PreviewList
   previewEnabled(): boolean
+  previewsList(): PreviewList
 }
 
 export interface PreviewListener {
@@ -24,7 +24,7 @@ export interface PreviewListener {
 }
 
 export interface PreviewList {
+  backendChanged(backend: MultiBackendSwitcher): void
   register(listener: PreviewListener): void
   unregister(listener: PreviewListener): void
-  backendChanged(backend: MultiBackendSwitcher): void
 }

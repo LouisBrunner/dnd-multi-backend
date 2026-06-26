@@ -1,8 +1,7 @@
+import type {JSX} from 'react'
 import {usePreview} from '../../../src/index.js'
 import type {DragContent} from '../../shared.js'
 import {type GenPreviewLiteProps, type GenPreviewProps, generatePreview} from './common.js'
-
-import type {JSX} from 'react'
 
 const WithHook = (props: GenPreviewProps): JSX.Element | null => {
   const preview = usePreview<DragContent, HTMLDivElement>()
@@ -13,9 +12,5 @@ const WithHook = (props: GenPreviewProps): JSX.Element | null => {
 }
 
 export const Hooks = (props: GenPreviewLiteProps): JSX.Element => {
-  return (
-    <>
-      <WithHook row={0} method="with hook" {...props} />
-    </>
-  )
+  return <WithHook method="with hook" row={0} {...props} />
 }

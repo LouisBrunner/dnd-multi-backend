@@ -7,13 +7,13 @@ import {DragSource, DropTarget} from './DnD.js'
 const pipeline = {
   backends: [
     {
-      id: 'html5',
       backend: HTML5Backend,
+      id: 'html5',
       transition: MouseTransition,
     },
     {
-      id: 'touch',
       backend: TouchBackend,
+      id: 'touch',
       preview: true,
       transition: TouchTransition,
     },
@@ -25,13 +25,13 @@ const manager = createDragDropManager(MultiBackend, {}, pipeline)
 const registry = manager.getRegistry()
 
 // Create logic
-const src = new DragSource({text: 'Source', color: 'red'})
+const src = new DragSource({color: 'red', text: 'Source'})
 const dst = new DropTarget<{color: string}>({
-  text: 'Target',
   color: 'orange',
   onDrop: (item) => {
     console.log(`Dropped: ${item.color}`)
   },
+  text: 'Target',
 })
 
 const Item = 'item'

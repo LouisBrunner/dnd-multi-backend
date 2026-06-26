@@ -21,8 +21,8 @@ export const Shape = ({style, size, color, children, ref}: ShapeProps) => {
       style={{
         ...style,
         backgroundColor: color,
-        width: `${size}px`,
         height: `${size}px`,
+        width: `${size}px`,
       }}
     >
       {children}
@@ -32,10 +32,10 @@ export const Shape = ({style, size, color, children, ref}: ShapeProps) => {
 
 export const Draggable = (): JSX.Element => {
   const [_, drag] = useDrag({
-    type: 'thing',
     item: {
       color: '#eedd00',
     },
+    type: 'thing',
   })
   // FIXME: issue with react-dnd when using React v19
   const refTrampoline = useCallback(
@@ -44,5 +44,5 @@ export const Draggable = (): JSX.Element => {
     },
     [drag],
   )
-  return <Shape ref={refTrampoline} style={{}} size={100} color="blue" />
+  return <Shape color="blue" ref={refTrampoline} size={100} style={{}} />
 }

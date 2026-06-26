@@ -10,8 +10,8 @@ export const App = (): JSX.Element => {
     <StrictMode>
       <DndProvider backend={TouchBackend} options={{enableMouseEvents: true}}>
         <Draggable />
-        <Components title="Components" col={0} />
-        <Hooks title="Hooks" col={1} />
+        <Components col={0} title="Components" />
+        <Hooks col={1} title="Hooks" />
       </DndProvider>
     </StrictMode>
   )

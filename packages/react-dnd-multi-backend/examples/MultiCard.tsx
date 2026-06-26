@@ -10,13 +10,13 @@ export const MultiCard = (props: {color: string}): JSX.Element => {
       touch: [touchProps, touchDrag],
     },
   ] = useMultiDrag<DragContent, void, {isDragging: boolean}>({
-    type: 'card',
-    item: {color: props.color},
     collect: (monitor) => {
       return {
         isDragging: monitor.isDragging(),
       }
     },
+    item: {color: props.color},
+    type: 'card',
   })
 
   const containerStyle: CSSProperties = {
@@ -25,32 +25,32 @@ export const MultiCard = (props: {color: string}): JSX.Element => {
   }
   const html5DragStyle: CSSProperties = {
     backgroundColor: props.color,
-    opacity: html5Props.isDragging ? 0.5 : 1,
     display: 'inline-block',
-    margin: '5px',
-    width: '90px',
     height: '90px',
+    margin: '5px',
+    opacity: html5Props.isDragging ? 0.5 : 1,
     textAlign: 'center',
     userSelect: 'none',
+    width: '90px',
   }
   const touchDragStyle: CSSProperties = {
     backgroundColor: props.color,
-    opacity: touchProps.isDragging ? 0.5 : 1,
     display: 'inline-block',
-    margin: '5px',
-    width: '90px',
     height: '90px',
+    margin: '5px',
+    opacity: touchProps.isDragging ? 0.5 : 1,
     textAlign: 'center',
     userSelect: 'none',
+    width: '90px',
   }
   const html5DragRef = useFixRDnDRef(html5Drag)
   const touchDragRef = useFixRDnDRef(touchDrag)
   return (
     <div style={containerStyle}>
-      <div style={html5DragStyle} ref={html5DragRef}>
+      <div ref={html5DragRef} style={html5DragStyle}>
         HTML5
       </div>
-      <div style={touchDragStyle} ref={touchDragRef}>
+      <div ref={touchDragRef} style={touchDragStyle}>
         Touch
       </div>
     </div>

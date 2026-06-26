@@ -14,7 +14,7 @@ type PreviewProps = {
 }
 
 export const Preview = ({kind, text, placement, padding}: PreviewProps): JSX.Element | null => {
-  const preview = usePreview<DragContent, HTMLDivElement>({placement, padding})
+  const preview = usePreview<DragContent, HTMLDivElement>({padding, placement})
   if (!preview.display) {
     return null
   }
@@ -47,7 +47,7 @@ export const Preview = ({kind, text, placement, padding}: PreviewProps): JSX.Ele
   }
 
   return (
-    <Shape ref={finalRef} style={finalStyle} size={50} color="red">
+    <Shape color="red" ref={finalRef} size={50} style={finalStyle}>
       {text}
     </Shape>
   )
@@ -76,7 +76,7 @@ export const App = (): JSX.Element => {
     <StrictMode>
       <p>
         <label htmlFor="previewPlacement">Preview placement: </label>
-        <select value={previewPlacement} id="previewPlacement" onChange={handlePlacementChange}>
+        <select id="previewPlacement" onChange={handlePlacementChange} value={previewPlacement}>
           <option value="center">center (default)</option>
           <option value="top-start">top-start</option>
           <option value="top">top</option>
@@ -90,31 +90,31 @@ export const App = (): JSX.Element => {
       </p>
       <p>
         <label htmlFor="previewPlacement">Padding x: </label>
-        <input type="text" value={paddingX} onChange={handlePaddingXChange} />
+        <input onChange={handlePaddingXChange} type="text" value={paddingX} />
       </p>
       <p>
         <label htmlFor="previewPlacement">Padding y: </label>
-        <input type="text" value={paddingY} onChange={handlePaddingYChange} />
+        <input onChange={handlePaddingYChange} type="text" value={paddingY} />
       </p>
       <p>
         <input
-          type="checkbox"
           checked={debug}
+          id="debug_mode"
           onChange={(e) => {
             setDebug(e.target.checked)
           }}
-          id="debug_mode"
+          type="checkbox"
         />
         <label htmlFor="debug_mode">Debug mode</label>
       </p>
       <DndProvider backend={TouchBackend} options={{enableMouseEvents: true}}>
         <Draggable />
-        <Preview text="default" kind="default" />
-        <Preview text="with ref" kind="ref" placement={previewPlacement} padding={{x: Number(paddingX), y: Number(paddingY)}} />
+        <Preview kind="default" text="default" />
+        <Preview kind="ref" padding={{x: Number(paddingX), y: Number(paddingY)}} placement={previewPlacement} text="with ref" />
         {debug ? (
           <>
-            <Preview text="custom ClientOffset" kind="custom_client" />
-            <Preview text="custom SourceClientOffset" kind="custom_source_client" />
+            <Preview kind="custom_client" text="custom ClientOffset" />
+            <Preview kind="custom_source_client" text="custom SourceClientOffset" />
           </>
         ) : null}
       </DndProvider>

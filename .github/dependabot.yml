@@ -1,0 +1,70 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+      actions-major:
+        applies-to: version-updates
+        update-types:
+          - "major"
+        patterns:
+          - "*"
+      actions-minor:
+        applies-to: version-updates
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "*"
+
+  - package-ecosystem: "bun"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      bun-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+      bun-major:
+        applies-to: version-updates
+        update-types:
+          - "major"
+        patterns:
+          - "*"
+      bun-minor:
+        applies-to: version-updates
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "*"
+
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      gomod-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+      gomod-major:
+        applies-to: version-updates
+        update-types:
+          - "major"
+        patterns:
+          - "*"
+      gomod-minor:
+        applies-to: version-updates
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "*"
