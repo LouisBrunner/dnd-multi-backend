@@ -1,4 +1,4 @@
-import {beforeEach, describe, expect, mock, test} from 'bun:test'
+import {describe, expect, mock, test} from 'bun:test'
 import {createMock} from '@mocks/mocks.js'
 import {act, renderHook} from '@testing-library/react'
 import type {DragLayerMonitor} from 'react-dnd'
@@ -64,18 +64,14 @@ const makeFakeDiv = (): HTMLDivElement => ({
   },
 })
 
-const __setMockMonitor = <T extends DragLayerMonitor>(monitor: T) => {
-  mock.module('react-dnd', () => ({
-    useDragLayer: <D, C>(collect: (monitor: DragLayerMonitor<D>) => C) => {
-      return collect(monitor)
-    },
-  }))
-}
-
 describe('usePreview hook', () => {
-  beforeEach(() => {
-    __setMockMonitor(createMock<DragLayerMonitor>())
-  })
+  const __setMockMonitor = <T extends DragLayerMonitor>(monitor: T) => {
+    mock.module('react-dnd', () => ({
+      useDragLayer: <D, C>(collect: (monitor: DragLayerMonitor<D>) => C) => {
+        return collect(monitor)
+      },
+    }))
+  }
 
   test('return false when DnD is not in progress (neither dragging or offset)', () => {
     __setMockMonitor({...createMock<DragLayerMonitor>(), ...EmptyMonitor})

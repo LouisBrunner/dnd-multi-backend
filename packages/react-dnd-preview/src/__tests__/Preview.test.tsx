@@ -1,4 +1,4 @@
-import {afterAll, describe, expect, mock, test} from 'bun:test'
+import {describe, expect, mock, test} from 'bun:test'
 import {createMock} from '@mocks/mocks.js'
 import {render, screen} from '@testing-library/react'
 import {useContext} from 'react'
@@ -6,23 +6,12 @@ import type {DragLayerMonitor} from 'react-dnd'
 import {Context, type PreviewState} from '../Context.js'
 import {Preview, type PreviewProps} from '../Preview.js'
 import type {usePreviewState} from '../usePreview.js'
-import * as realUsePreview from '../usePreview.js'
 
 type DragContent = {
   coucou: string
 }
 
 type GeneratorProps = PreviewState<DragContent>
-
-const __setMockReturn = (state: usePreviewState) => {
-  mock.module('../usePreview.js', () => ({
-    usePreview: () => state,
-  }))
-}
-
-afterAll(() => {
-  mock.module('../usePreview.js', () => realUsePreview)
-})
 
 describe('Preview subcomponent', () => {
   const createComponent = (props: PreviewProps<DragContent>) => {
@@ -35,6 +24,12 @@ describe('Preview subcomponent', () => {
         {item.coucou}: {itemType?.toString()}
       </div>
     )
+  }
+
+  const __setMockReturn = (state: usePreviewState) => {
+    mock.module('../usePreview.js', () => ({
+      usePreview: () => state,
+    }))
   }
 
   const setupTest = (props: PreviewProps<DragContent>): void => {
