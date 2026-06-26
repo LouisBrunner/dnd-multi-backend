@@ -12,6 +12,3 @@ concurrency:
 jobs:
   configs:
     uses: LouisBrunner/.github/.github/workflows/lint-configs.yml@main
-
-  vet:
-    uses: LouisBrunner/.github/.github/workflows/lint-bun.yml@main
