@@ -35,6 +35,7 @@ export type usePreviewOptions = {
 export const usePreview = <T = unknown, El extends Element = Element>(options?: usePreviewOptions): usePreviewState<T, El> => {
   const child = useRef<El | null>(null)
   const collectedProps = useDragLayer((monitor: DragLayerMonitor<T>) => {
+    console.log(monitor)
     return {
       currentOffset: calculatePointerPosition(monitor, child, options?.placement, options?.padding),
       isDragging: monitor.isDragging(),
@@ -43,6 +44,7 @@ export const usePreview = <T = unknown, El extends Element = Element>(options?: 
       monitor,
     }
   })
+  console.log(collectedProps)
 
   if (!collectedProps.isDragging || collectedProps.currentOffset === null) {
     return {display: false}
