@@ -18,7 +18,7 @@
     "react-dnd-test-utils": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1",
     "react-dom": "^19.2.7",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   },
   "engines": {
     "bun": ">=1.0.0"
