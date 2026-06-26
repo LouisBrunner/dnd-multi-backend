@@ -1,7 +1,7 @@
 import {describe, expect, test} from 'bun:test'
 import {createMock, type Mocked} from '@mocks/mocks.js'
 import {act, renderHook} from '@testing-library/react'
-import type {DragDropManager} from 'dnd-core'
+import type {DragDropManager, DragDropMonitor} from 'dnd-core'
 import type {MultiBackendSwitcher, PreviewList} from 'dnd-multi-backend'
 import type {ReactNode} from 'react'
 import {DndContext, type DndContextType} from 'react-dnd'
@@ -14,6 +14,11 @@ describe('usePreview component', () => {
     backend.previewsList.mockReturnValue(list)
     const manager = createMock<DragDropManager>()
     manager.getBackend.mockReturnValue(backend)
+    const monitor = createMock<DragDropMonitor>()
+    monitor.isDragging.mockReturnValue(true)
+    monitor.getClientOffset.mockReturnValue({x: 0, y: 0})
+    monitor.getInitialClientOffset.mockReturnValue(null)
+    manager.getMonitor.mockReturnValue(monitor)
     const context: DndContextType = {
       dragDropManager: manager,
     }

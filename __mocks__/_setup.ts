@@ -3,8 +3,10 @@ import {GlobalRegistrator} from '@happy-dom/global-registrator'
 
 GlobalRegistrator.register()
 
-const {default: _, ...matchers} = await import('@testing-library/jest-dom/matchers')
-const {cleanup} = await import('@testing-library/react')
+// require() is synchronous: ensures DOM is available when matchers load,
+// and avoids async timing issues with --isolate mode
+const {default: _, ...matchers} = require('@testing-library/jest-dom/matchers')
+const {cleanup} = require('@testing-library/react')
 
 expect.extend(matchers)
 
