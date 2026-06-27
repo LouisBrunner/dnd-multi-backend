@@ -1,0 +1,44 @@
+{
+  "author": "Louis Brunner <louis.brunner.fr@gmail.com> (https://github.com/LouisBrunner)",
+  "dependencies": {
+    "dnd-multi-backend": "workspace:*",
+    "react-dnd-preview": "workspace:*"
+  },
+  "description": "Multi Backend system compatible with React DnD",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/LouisBrunner"
+  },
+  "homepage": "https://louisbrunner.github.io/dnd-multi-backend/packages/react-dnd-multi-backend/",
+  "keywords": [
+    "react",
+    "dnd",
+    "drag",
+    "drop",
+    "html5",
+    "touch",
+    "react-dnd"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "name": "react-dnd-multi-backend",
+  "peerDependencies": {
+    "dnd-core": "catalog:",
+    "react": "catalog:",
+    "react-dnd": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "repository": {
+    "directory": "packages/react-dnd-multi-backend",
+    "type": "git",
+    "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git"
+  },
+  "scripts": {
+    "build:types": "tsc -p tsconfig.json"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "version": "9.0.1-rc0001"
+}

@@ -1,0 +1,8 @@
+# Input
+examples
+__tests__
+src
+tsconfig.json
+
+# bun
+node_modules
