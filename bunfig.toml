@@ -1,3 +1,7 @@
 [test]
 preload = ["./__mocks__/_setup.ts"]
 coverage = true
+coveragePathIgnorePatterns = ["**/dist/**"]
+
+[test.reporter]
+junit = "report-junit.xml"

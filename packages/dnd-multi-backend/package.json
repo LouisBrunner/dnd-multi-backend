@@ -19,7 +19,7 @@
   "module": "dist/index.js",
   "name": "dnd-multi-backend",
   "peerDependencies": {
-    "dnd-core": "^16.0.1"
+    "dnd-core": "catalog:"
   },
   "repository": {
     "directory": "packages/dnd-multi-backend",
@@ -27,7 +27,7 @@
     "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git"
   },
   "scripts": {
-    "build:types": "tsc -p tsconfig.json --declarationDir dist"
+    "build:types": "tsc -p tsconfig.json"
   },
   "sideEffects": false,
   "type": "module",

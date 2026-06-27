@@ -19,9 +19,9 @@
   "module": "dist/index.js",
   "name": "react-dnd-preview",
   "peerDependencies": {
-    "dnd-core": "^16.0.1",
-    "react": "^16.14.0 || ^17.0.2 || ^18.0.0 || ^19.0.0",
-    "react-dnd": "^16.0.1"
+    "dnd-core": "catalog:",
+    "react": "catalog:",
+    "react-dnd": "catalog:"
   },
   "repository": {
     "directory": "packages/react-dnd-preview",
@@ -29,7 +29,7 @@
     "url": "git+https://github.com/LouisBrunner/dnd-multi-backend.git"
   },
   "scripts": {
-    "build:types": "tsc -p tsconfig.json --declarationDir dist"
+    "build:types": "tsc -p tsconfig.json"
   },
   "sideEffects": false,
   "type": "module",

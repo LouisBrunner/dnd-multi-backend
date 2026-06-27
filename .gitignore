@@ -5,8 +5,9 @@
 node_modules
 *-debug.log
 
-# Code coverage
+# Test artifacts
 /coverage
+/report-*.xml
 
 # Output
 packages/*/dist
@@ -16,3 +17,5 @@ webpack-stats.json
 .vscode
 
 /examples/*.js
+
+packages/*/*.tgz

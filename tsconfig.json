@@ -2,7 +2,6 @@
   "compilerOptions": {
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -14,17 +13,18 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@mocks/*": ["__mocks__/*"],
-      "dnd-multi-backend": ["packages/dnd-multi-backend/src"],
-      "rdndmb-html5-to-touch": ["packages/rdndmb-html5-to-touch/src"],
-      "react-dnd-preview": ["packages/react-dnd-preview/src"]
+      "@mocks/*": ["./__mocks__/*"],
+      "dnd-multi-backend": ["./packages/dnd-multi-backend/src"],
+      "rdndmb-html5-to-touch": ["./packages/rdndmb-html5-to-touch/src"],
+      "react-dnd-preview": ["./packages/react-dnd-preview/src"]
     },
     "preserveConstEnums": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2020"
+    "target": "es2020",
+    "types": ["bun"]
   },
   "exclude": ["node_modules"],
-  "include": [".jest-setup.ts", "__mocks__/**/*.ts", "packages/*/examples/**/*.ts*", "packages/*/src/**/*.ts*"]
+  "include": ["__mocks__/**/*.ts", "packages/*/examples/**/*.ts*", "packages/*/src/**/*.ts*"]
 }

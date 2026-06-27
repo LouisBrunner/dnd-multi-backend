@@ -72,7 +72,7 @@ func buildPackage(dir string) {
 	})
 	if len(result.Errors) > 0 {
 		for _, e := range result.Errors {
-			log.Printf("Error: %s", e.Text)
+			log.Printf("Error: %s (%s:%d)", e.Text, e.Location.File, e.Location.Line)
 		}
 		log.Fatalf("Build failed for %s", dir)
 	}
@@ -92,10 +92,11 @@ func buildExamples(outdir string) {
 		MinifyIdentifiers:   true,
 		MinifySyntax:        true,
 		Write:               true,
+		Tsconfig:            "./tsconfig.json",
 	})
 	if len(result.Errors) > 0 {
 		for _, e := range result.Errors {
-			log.Printf("Error: %s", e.Text)
+			log.Printf("Error: %s (%s:%d)", e.Text, e.Location.File, e.Location.Line)
 		}
 		log.Fatalf("Examples build failed")
 	}
