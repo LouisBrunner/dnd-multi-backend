@@ -44,4 +44,27 @@ jobs:
     name: Deploy
     needs: [build]
     if: github.ref == 'refs/heads/main'
-    uses: LouisBrunner/.github/.github/workflows/deploy-pages.yml@main
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Clean gitignore
+        run: |
+          # the action doesn't copy files in gitignore
+          # so we manually remove the /examples line
+          sed -i '/^\/examples/d' .gitignore
+
+      - name: Download examples build
+        uses: actions/download-artifact@v8
+        with:
+          name: Examples
+          path: examples
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          enable_jekyll: true
+          publish_dir: ./
+          force_orphan: true
