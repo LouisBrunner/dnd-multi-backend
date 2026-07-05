@@ -14,7 +14,7 @@
     "enabled": true
   },
   "files": {
-    "includes": ["**", "!examples/*.js", "!coverage"]
+    "includes": ["**", "!examples/*.js", "!coverage", "!**/.jscpd.json"]
   },
   "formatter": {
     "enabled": true,
