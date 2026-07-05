@@ -14,7 +14,8 @@ permissions: {}
 jobs:
   test:
     uses: LouisBrunner/.github/.github/workflows/lint-bun.yml@main
-    permissions: {}
+    permissions:
+      contents: read
     with:
       run: |
         bun run all

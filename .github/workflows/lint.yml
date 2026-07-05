@@ -12,6 +12,10 @@ concurrency:
 permissions: {}
 
 jobs:
-  configs:
-    uses: LouisBrunner/.github/.github/workflows/lint-configs.yml@main
-    permissions: {}
+  all:
+    uses: LouisBrunner/.github/.github/workflows/lint-all.yml@main
+    permissions:
+      actions: read
+      contents: read
+      statuses: write
+      pull-requests: write
