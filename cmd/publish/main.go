@@ -55,7 +55,7 @@ func writePackageJSON(dir string, pkg packageJSON) {
 	if err != nil {
 		log.Fatalf("❌ failed to marshal package.json: %v", err)
 	}
-	err = os.WriteFile(filepath.Join(dir, "package.json"), append(data, '\n'), 0o644)
+	err = os.WriteFile(filepath.Join(dir, "package.json"), append(data, '\n'), 0o644) // #nosec G306
 	if err != nil {
 		log.Fatalf("❌ failed to write %s/package.json: %v", dir, err)
 	}

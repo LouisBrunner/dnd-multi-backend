@@ -1,6 +1,8 @@
 version: 2
 updates:
   - package-ecosystem: "github-actions"
+    cooldown:
+      default-days: 7
     directory: "/"
     schedule:
       interval: "weekly"
@@ -24,6 +26,8 @@ updates:
           - "*"
 
   - package-ecosystem: "bun"
+    cooldown:
+      default-days: 7
     directory: "/"
     schedule:
       interval: "weekly"
@@ -47,6 +51,8 @@ updates:
           - "*"
 
   - package-ecosystem: "gomod"
+    cooldown:
+      default-days: 7
     directory: "/"
     schedule:
       interval: "weekly"

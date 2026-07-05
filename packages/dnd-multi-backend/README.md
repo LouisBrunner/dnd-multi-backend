@@ -5,7 +5,7 @@
 This project is a Drag'n'Drop backend compatible with [DnD Core](https://github.com/react-dnd/react-dnd/tree/master/packages/dnd-core).
 It enables your application to use different DnD backends depending on the situation.
 This package is completely frontend-agnostic, you can refer to [this page](https://github.com/LouisBrunner/dnd-multi-backend) for frontend-specific packages.
-This means if your front-end is not yet supported, you'll have to roll out your own.
+This means if your frontend is not yet supported, you'll have to roll out your own.
 
 See the [migration section](#migrating) for instructions when switching from `5.0.x` or `6.x.x`.
 

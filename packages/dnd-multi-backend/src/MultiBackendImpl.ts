@@ -84,7 +84,7 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
     if (inferName) {
       console.warn(
         `Deprecation notice: You are using a pipeline which doesn't include backends' 'id'.
-        This might be unsupported in the future, please specify 'id' explicitely for every backend.`,
+        This might be unsupported in the future, please specify 'id' explicitly for every backend.`,
       )
     }
     if (this.#backends[id]) {

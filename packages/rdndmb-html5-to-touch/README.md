@@ -39,7 +39,7 @@ const App = () => {
 
 ### Migrating from 6.x.x and earlier
 
-`HTML5toTouch` used to be provided as part of `react-dnd-multi-backend` which made importing different builds (commonjs vs esm) more difficult. It also used to be a default export.
+`HTML5toTouch` used to be provided as part of `react-dnd-multi-backend` which made importing different builds (CommonJS vs esm) more difficult. It also used to be a default export.
 
 Previously:
 

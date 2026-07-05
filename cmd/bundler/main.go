@@ -1,12 +1,18 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"flag"
 	"log"
+	"maps"
 	"os"
+	"os/signal"
 	"path/filepath"
+	"slices"
+	"syscall"
 
+	"github.com/LouisBrunner/esbuild-plugins/pkg/devserver"
 	"github.com/evanw/esbuild/pkg/api"
 )
 
@@ -36,105 +42,73 @@ func externalsForPackage(dir string) []string {
 		log.Fatalf("reading %s: %v", path, err)
 	}
 	var pkg packageJSON
-	if err := json.Unmarshal(data, &pkg); err != nil {
+	err = json.Unmarshal(data, &pkg)
+	if err != nil {
 		log.Fatalf("parsing %s: %v", path, err)
 	}
-	seen := map[string]bool{}
-	var externals []string
+	seen := map[string]struct{}{}
 	for name := range pkg.Dependencies {
-		if !seen[name] {
-			seen[name] = true
-			externals = append(externals, name)
+		if _, found := seen[name]; !found {
+			seen[name] = struct{}{}
 		}
 	}
 	for name := range pkg.PeerDependencies {
-		if !seen[name] {
-			seen[name] = true
-			externals = append(externals, name)
+		if _, found := seen[name]; !found {
+			seen[name] = struct{}{}
 		}
 	}
-	return externals
+	return slices.Collect(maps.Keys(seen))
 }
 
-func buildPackage(dir string) {
+func buildPackage(dir string) error {
 	log.Printf("> Building %s\n", dir)
-	result := api.Build(api.BuildOptions{
-		EntryPoints:       []string{dir + "/src/index.ts"},
-		Outfile:           dir + "/dist/index.js",
-		Format:            api.FormatESModule,
-		Bundle:            true,
-		MinifyWhitespace:  true,
-		MinifyIdentifiers: true,
-		MinifySyntax:      true,
-		External:          externalsForPackage(dir),
-		Target:            api.ES2020,
-		Write:             true,
+	return devserver.Build(devserver.Options{
+		Build: api.BuildOptions{
+			EntryPoints: []string{dir + "/src/index.ts"},
+			Outfile:     dir + "/dist/index.js",
+			Format:      api.FormatESModule,
+			Bundle:      true,
+			External:    externalsForPackage(dir),
+			Target:      api.ES2020,
+		},
 	})
-	if len(result.Errors) > 0 {
-		for _, e := range result.Errors {
-			log.Printf("Error: %s (%s:%d)", e.Text, e.Location.File, e.Location.Line)
-		}
-		log.Fatalf("Build failed for %s", dir)
-	}
 }
 
-func buildExamples(outdir string) {
+func buildExamples(outdir string) error {
 	log.Printf("> Building examples -> %s\n", outdir)
 	entries := make([]api.EntryPoint, 0, len(exampleEntryPoints))
 	for out, in := range exampleEntryPoints {
 		entries = append(entries, api.EntryPoint{InputPath: in, OutputPath: out})
 	}
-	result := api.Build(api.BuildOptions{
-		EntryPointsAdvanced: entries,
-		Outdir:              outdir,
-		Bundle:              true,
-		MinifyWhitespace:    true,
-		MinifyIdentifiers:   true,
-		MinifySyntax:        true,
-		Write:               true,
-		Tsconfig:            "./tsconfig.json",
+	return devserver.Build(devserver.Options{
+		Build: api.BuildOptions{
+			EntryPointsAdvanced: entries,
+			Bundle:              true,
+			Tsconfig:            "./tsconfig.json",
+		},
+		PublicDir: outdir,
 	})
-	if len(result.Errors) > 0 {
-		for _, e := range result.Errors {
-			log.Printf("Error: %s (%s:%d)", e.Text, e.Location.File, e.Location.Line)
-		}
-		log.Fatalf("Examples build failed")
-	}
 }
 
-func devExamples(port int) {
-	log.Printf("> Starting dev server on port %d\n", port)
+func devExamples(port int) error {
 	entries := make([]api.EntryPoint, 0, len(exampleEntryPoints))
 	for out, in := range exampleEntryPoints {
 		entries = append(entries, api.EntryPoint{InputPath: in, OutputPath: out})
 	}
-	ctx, err := api.Context(api.BuildOptions{
-		EntryPointsAdvanced: entries,
-		Outdir:              "examples/",
-		Bundle:              true,
-		Sourcemap:           api.SourceMapInline,
-		Write:               true,
+
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer cancel()
+
+	return devserver.Start(ctx, devserver.Options{
+		Build: api.BuildOptions{
+			EntryPointsAdvanced: entries,
+			Bundle:              true,
+			Tsconfig:            "./tsconfig.json",
+		},
+		OpenBrowser: true,
+		PublicDir:   "examples/",
+		Port:        port,
 	})
-	if err != nil {
-		log.Fatalf("Context: %v", err)
-	}
-
-	if err := ctx.Watch(api.WatchOptions{}); err != nil {
-		log.Fatalf("Watch: %v", err)
-	}
-
-	_, serveErr := ctx.Serve(api.ServeOptions{
-		Host:     "localhost",
-		Port:     port,
-		Servedir: "examples/",
-	})
-	if serveErr != nil {
-		log.Fatalf("Serve: %v", serveErr)
-	}
-
-	log.Printf("Listening on http://localhost:%d", port)
-	<-make(chan struct{})
-	ctx.Dispose()
 }
 
 func main() {
@@ -146,16 +120,24 @@ func main() {
 	case "build":
 		log.Println("Building packages")
 		for _, pkg := range packages {
-			buildPackage(pkg)
+			err := buildPackage(pkg)
+			if err != nil {
+				log.Fatalf("Build %s: %v", pkg, err)
+			}
 		}
 		log.Println("Done")
 
 	case "examples":
-		buildExamples("examples/")
-		log.Println("Done")
+		err := buildExamples("examples/")
+		if err != nil {
+			log.Fatalf("Examples: %v", err)
+		}
 
 	case "dev":
-		devExamples(*port)
+		err := devExamples(*port)
+		if err != nil {
+			log.Fatalf("Dev: %v", err)
+		}
 
 	default:
 		log.Fatalf("Unknown mode: %s (use build, examples, or dev)", *mode)
