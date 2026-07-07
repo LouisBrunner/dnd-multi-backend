@@ -1,0 +1,20 @@
+# OS files
+.DS_Store
+
+# bun
+node_modules
+*-debug.log
+
+# Test artifacts
+/coverage
+/report-*.xml
+
+# Output
+packages/*/dist
+webpack-stats.json
+
+# IDE
+.vscode
+
+
+packages/*/*.tgz
