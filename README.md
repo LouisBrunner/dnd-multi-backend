@@ -12,7 +12,7 @@ This project also contains some helpers (available standalone or included in oth
 
 - React DnD Preview: [`react-dnd-preview`](packages/react-dnd-preview) (included in `react-dnd-multi-backend`)
 
-[Try them here!](https://louisbrunner.github.io/dnd-multi-backend/examples)
+[Try them here!](https://dnd-mb.lbrunner.net/examples)
 
 ## Thanks
 
