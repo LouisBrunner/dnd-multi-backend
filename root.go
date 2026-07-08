@@ -1,3 +1,0 @@
-package root
-
-// FIXME: just to make super-linter's GO_MODULES happy...

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: Build & Deploy
 
 on:
@@ -20,40 +21,19 @@ jobs:
       run: |
         bun run all
 
-  build:
-    name: Build
-    runs-on: ubuntu-24.04
+  build-deploy:
+    name: Build & Deploy
     needs: [test]
     permissions:
       contents: read
       pages: write
       id-token: write
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-        with:
-          persist-credentials: false
-
-      - name: Build
-        uses: LouisBrunner/.github/.github/actions/build-bun-go@main
-        with:
-          run: |
-            bun i
-            bun build:examples
-
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
-
-      - name: Upload Pages artifact
-        uses: LouisBrunner/.github/.github/actions/upload-pages@main
-        with:
-          path: _site
-
-  deploy:
-    name: Deploy
-    needs: [build]
-    if: github.ref_name == 'main'
-    permissions:
-      pages: write
-      id-token: write
-    uses: LouisBrunner/.github/.github/workflows/deploy-pages.yml@main
+    uses: LouisBrunner/.github/.github/workflows/build-bun-pages.yml@main
+    with:
+      run: |
+        bun i
+        bun run build:examples
+        cp -r dist/. .
+        rm -rf dist
+      path: _site
+      jekyll: true

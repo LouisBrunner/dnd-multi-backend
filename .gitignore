@@ -16,6 +16,6 @@ webpack-stats.json
 # IDE
 .vscode
 
-/examples/*.js
+/dist
 
 packages/*/*.tgz
