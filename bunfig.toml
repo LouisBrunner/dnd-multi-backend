@@ -1,4 +1,5 @@
 #:schema https://json.schemastore.org/bunfig.json
+
 [test]
 preload = ["./__mocks__/_setup.ts"]
 coverage = true
