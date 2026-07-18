@@ -1,9 +1,9 @@
 import {beforeEach, describe, expect, jest, test} from 'bun:test'
 import {TestPipeline} from '@mocks/pipeline.js'
 import type {DragDropManager} from 'dnd-core'
-import {MultiBackendImpl} from '../MultiBackendImpl.js'
-import {PreviewListImpl} from '../PreviewListImpl.js'
-import type {MultiBackendSwitcher, PreviewList} from '../types.js'
+import {MultiBackendImpl} from '../MultiBackendImpl.ts'
+import {PreviewListImpl} from '../PreviewListImpl.ts'
+import type {MultiBackendSwitcher, PreviewList} from '../types.ts'
 
 describe('PreviewListImpl class', () => {
   let list: PreviewList
@@ -14,9 +14,7 @@ describe('PreviewListImpl class', () => {
     mb = new MultiBackendImpl(undefined as unknown as DragDropManager, undefined, TestPipeline)
   })
 
-  const createPreview = () => {
-    return {backendChanged: jest.fn()}
-  }
+  const createPreview = () => ({backendChanged: jest.fn()})
 
   test('does nothing when empty', () => {
     expect(() => {

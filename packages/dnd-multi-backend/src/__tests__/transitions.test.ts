@@ -1,6 +1,6 @@
 import {describe, expect, test} from 'bun:test'
 
-import {HTML5DragTransition, MouseTransition, PointerTransition, TouchTransition} from '../transitions.js'
+import {HTML5DragTransition, MouseTransition, PointerTransition, TouchTransition} from '../transitions.ts'
 
 describe('Transitions collection', () => {
   const fakeDragEvent = (type: string): Event => {

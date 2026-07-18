@@ -5,13 +5,13 @@ type Options = {
 }
 
 class DnDBackend implements Backend {
-  #manager: DragDropManager
-  #actions: DragDropActions
-  #label: string
-  #startEvents: string[]
-  #hoverEvents: string[]
-  #stopEvents: string[]
-  #draggable: boolean
+  readonly #manager: DragDropManager
+  readonly #actions: DragDropActions
+  readonly #label: string
+  readonly #startEvents: string[]
+  readonly #hoverEvents: string[]
+  readonly #stopEvents: string[]
+  readonly #draggable: boolean
 
   constructor(manager: DragDropManager, label: string, startEvents: string[], hoverEvents: string[], stopEvents: string[], {draggable = false}: Options = {}) {
     this.#manager = manager
@@ -50,9 +50,7 @@ class DnDBackend implements Backend {
       console.log(`${this.#label}: drag`)
       this.#actions.beginDrag([sourceId], {
         clientOffset: this.#getXY(node),
-        getSourceClientOffset: (_id: unknown): {x: number; y: number} => {
-          return this.#getXY(node)
-        },
+        getSourceClientOffset: (_id: unknown): {x: number; y: number} => this.#getXY(node),
       })
     }
 
@@ -77,13 +75,13 @@ class DnDBackend implements Backend {
 
   // biome-ignore lint/suspicious/noExplicitAny: interface is like that
   connectDragPreview(_sourceId: any, _node?: any, _options?: any): Unsubscribe {
-    return () => {}
+    return () => undefined
   }
 
   // biome-ignore lint/suspicious/noExplicitAny: interface is like that
   connectDropTarget(targetId: Identifier, node?: Element, _options?: any): Unsubscribe {
     if (node === undefined) {
-      return () => {}
+      return () => undefined
     }
 
     const hover = (e: Event) => {
@@ -117,13 +115,13 @@ class DnDBackend implements Backend {
     return {}
   }
 
-  #drop = () => {
+  readonly #drop = () => {
     console.log(`${this.#label}: drop`)
     this.#actions.drop()
     this.#actions.endDrag()
   }
 
-  #getXY = (node: Element): {x: number; y: number} => {
+  readonly #getXY = (node: Element): {x: number; y: number} => {
     const {top: x, left: y} = node.getBoundingClientRect()
     return {x, y}
   }
@@ -135,9 +133,7 @@ class HTML5BackendImpl extends DnDBackend {
   }
 }
 
-export const HTML5Backend: BackendFactory = (manager: DragDropManager) => {
-  return new HTML5BackendImpl(manager)
-}
+export const HTML5Backend: BackendFactory = (manager: DragDropManager) => new HTML5BackendImpl(manager)
 
 class TouchBackendImpl extends DnDBackend {
   constructor(manager: DragDropManager) {
@@ -145,6 +141,4 @@ class TouchBackendImpl extends DnDBackend {
   }
 }
 
-export const TouchBackend: BackendFactory = (manager: DragDropManager) => {
-  return new TouchBackendImpl(manager)
-}
+export const TouchBackend: BackendFactory = (manager: DragDropManager) => new TouchBackendImpl(manager)

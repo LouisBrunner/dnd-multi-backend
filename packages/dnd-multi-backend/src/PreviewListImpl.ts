@@ -1,7 +1,7 @@
-import type {MultiBackendSwitcher, PreviewList, PreviewListener} from './types.js'
+import type {MultiBackendSwitcher, PreviewList, PreviewListener} from './types.ts'
 
 export class PreviewListImpl implements PreviewList {
-  /*private*/ #previews: PreviewListener[]
+  /*private*/ readonly #previews: PreviewListener[]
 
   constructor() {
     this.#previews = []

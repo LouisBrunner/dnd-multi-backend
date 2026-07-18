@@ -1,8 +1,6 @@
-import type {Transition} from './types.js'
+import type {Transition} from './types.ts'
 
-export const createTransition = (event: Transition['event'], check: Transition['check']): Transition => {
-  return {
-    check,
-    event,
-  }
-}
+export const createTransition = (event: Transition['event'], check: Transition['check']): Transition => ({
+  check,
+  event,
+})

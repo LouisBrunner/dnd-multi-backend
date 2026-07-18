@@ -3,9 +3,9 @@ import {createMock} from '@mocks/mocks.js'
 import {render, screen} from '@testing-library/react'
 import {useContext} from 'react'
 import type {DragLayerMonitor} from 'react-dnd'
-import {Context, type PreviewState} from '../Context.js'
-import {Preview, type PreviewProps} from '../Preview.js'
-import type {usePreviewState} from '../usePreview.js'
+import {Context, type PreviewState} from '../Context.ts'
+import {Preview, type PreviewProps} from '../Preview.tsx'
+import type {usePreviewState} from '../usePreview.ts'
 
 type DragContent = {
   coucou: string
@@ -14,17 +14,13 @@ type DragContent = {
 type GeneratorProps = PreviewState<DragContent>
 
 describe('Preview subcomponent', () => {
-  const createComponent = (props: PreviewProps<DragContent>) => {
-    return render(<Preview {...props} />)
-  }
+  const createComponent = (props: PreviewProps<DragContent>) => render(<Preview {...props} />)
 
-  const generator = ({itemType, item, style}: GeneratorProps) => {
-    return (
-      <div style={style}>
-        {item.coucou}: {itemType?.toString()}
-      </div>
-    )
-  }
+  const generator = ({itemType, item, style}: GeneratorProps) => (
+    <div style={style}>
+      {item.coucou}: {itemType?.toString()}
+    </div>
+  )
 
   const __setMockReturn = (state: usePreviewState) => {
     mock.module('../usePreview.js', () => ({
@@ -54,6 +50,7 @@ describe('Preview subcomponent', () => {
           position: 'fixed',
           top: 0,
           transform: 'translate(1000px, 2000px)',
+          // biome-ignore lint/style/useNamingConvention: CSSProperties requires this exact key
           WebkitTransform: 'translate(1000px, 2000px)',
         },
       })

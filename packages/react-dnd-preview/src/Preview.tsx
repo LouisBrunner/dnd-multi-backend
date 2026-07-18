@@ -1,7 +1,7 @@
 import type {JSX, ReactNode} from 'react'
-import {Context, type PreviewState} from './Context.js'
-import type {Point, PreviewPlacement} from './offsets.js'
-import {usePreview} from './usePreview.js'
+import {Context, type PreviewState} from './Context.ts'
+import type {Point, PreviewPlacement} from './offsets.ts'
+import {usePreview} from './usePreview.ts'
 
 export type PreviewGenerator<T = unknown, El extends Element = Element> = (state: PreviewState<T, El>) => JSX.Element
 

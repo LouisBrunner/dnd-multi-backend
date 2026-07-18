@@ -1,6 +1,8 @@
 import type {CSSProperties, JSX, RefObject} from 'react'
-import {useMultiDrop} from '../src/index.js'
-import {type DragContent, useFixRDnDRef} from './common.js'
+import {useMultiDrop, type useMultiDropOneState} from '../src/index.ts'
+import {type DragContent, useFixRDnDRef} from './common.ts'
+
+type DropState = useMultiDropOneState<{isOver: boolean; canDrop: boolean}>
 
 export const MultiBasket = ({logs}: {logs: RefObject<Element | null>}): JSX.Element => {
   const [
@@ -11,19 +13,17 @@ export const MultiBasket = ({logs}: {logs: RefObject<Element | null>}): JSX.Elem
     },
   ] = useMultiDrop<DragContent, void, {isOver: boolean; canDrop: boolean}>({
     accept: 'card',
-    collect: (monitor) => {
-      return {
-        canDrop: monitor.canDrop(),
-        isOver: monitor.isOver(),
-      }
-    },
+    collect: (monitor) => ({
+      canDrop: monitor.canDrop(),
+      isOver: monitor.isOver(),
+    }),
     drop: (item) => {
       const message = `Dropped: ${item.color}`
       if (logs.current) {
         logs.current.innerHTML += `${message}<br />`
       }
     },
-  })
+  }) as [DropState, {html5: DropState; touch: DropState}]
 
   const containerStyle: CSSProperties = {
     border: '1px dashed black',

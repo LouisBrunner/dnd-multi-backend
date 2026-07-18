@@ -1,17 +1,17 @@
-export {createTransition} from './createTransition.js'
+export {createTransition} from './createTransition.ts'
 export type {
   MultiBackendContext,
   MultiBackendOptions,
   MultiBackendPipeline,
   MultiBackendPipelineStep,
-} from './MultiBackendImpl.js'
-export {MultiFactory as MultiBackend} from './MultiFactory.js'
+} from './MultiBackendImpl.ts'
+export {MultiFactory as MultiBackend} from './MultiFactory.ts'
 export {
   HTML5DragTransition,
   MouseTransition,
   PointerTransition,
   TouchTransition,
-} from './transitions.js'
+} from './transitions.ts'
 
 export type {
   BackendEntry,
@@ -19,4 +19,4 @@ export type {
   PreviewList,
   PreviewListener,
   Transition,
-} from './types.js'
+} from './types.ts'

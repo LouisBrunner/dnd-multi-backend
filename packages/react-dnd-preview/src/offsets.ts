@@ -16,19 +16,15 @@ export type Point = {
 
 export type PreviewPlacement = 'center' | 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'right'
 
-const subtract = (a: Point, b: Point): Point => {
-  return {
-    x: a.x - b.x,
-    y: a.y - b.y,
-  }
-}
+const subtract = (a: Point, b: Point): Point => ({
+  x: a.x - b.x,
+  y: a.y - b.y,
+})
 
-const add = (a: Point, b: Point): Point => {
-  return {
-    x: a.x + b.x,
-    y: a.y + b.y,
-  }
-}
+const add = (a: Point, b: Point): Point => ({
+  x: a.x + b.x,
+  y: a.y + b.y,
+})
 
 const calculateParentOffset = (monitor: DragLayerMonitor): Point => {
   const client = monitor.getInitialClientOffset()

@@ -18,9 +18,7 @@ export type Workspace = {
   pkg: PackageJSON
 }
 
-export const readPackageJSON = (dir: string): PackageJSON => {
-  return JSON.parse(readFileSync(join(dir, 'package.json'), 'utf8'))
-}
+export const readPackageJSON = (dir: string): PackageJSON => JSON.parse(readFileSync(join(dir, 'package.json'), 'utf8'))
 
 export const writePackageJSON = (dir: string, pkg: PackageJSON): void => {
   writeFileSync(join(dir, 'package.json'), `${JSON.stringify(pkg, null, 2)}\n`)
@@ -60,6 +58,4 @@ export const run = (command: string, args: string[], options?: {cwd?: string}): 
   }
 }
 
-export const output = (command: string, args: string[]): string => {
-  return execFileSync(command, args, {encoding: 'utf8'}).trim()
-}
+export const output = (command: string, args: string[]): string => execFileSync(command, args, {encoding: 'utf8'}).trim()

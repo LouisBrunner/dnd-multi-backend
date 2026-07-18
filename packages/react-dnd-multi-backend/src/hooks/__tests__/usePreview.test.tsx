@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noMisplacedAssertion: shared assertion helpers, only called from within test() bodies */
 import {describe, expect, test} from 'bun:test'
 import {createMock, type Mocked} from '@mocks/mocks.js'
 import {act, renderHook} from '@testing-library/react'
@@ -5,7 +6,7 @@ import type {DragDropManager, DragDropMonitor} from 'dnd-core'
 import type {MultiBackendSwitcher, PreviewList} from 'dnd-multi-backend'
 import type {ReactNode} from 'react'
 import {DndContext, type DndContextType} from 'react-dnd'
-import {usePreview} from '../usePreview.js'
+import {usePreview} from '../usePreview.ts'
 
 describe('usePreview component', () => {
   const setup = () => {
@@ -25,20 +26,11 @@ describe('usePreview component', () => {
     return {backend, context, list}
   }
 
-  const getLastRegister = (list: Mocked<PreviewList>) => {
-    return list.register.mock.calls[list.register.mock.calls.length - 1][0]
-  }
+  const getLastRegister = (list: Mocked<PreviewList>) => list.register.mock.calls[list.register.mock.calls.length - 1]![0]
 
   const createComponent = (context: DndContextType) => {
-    const wrapper = ({children}: {children?: ReactNode}) => {
-      return <DndContext.Provider value={context}>{children}</DndContext.Provider>
-    }
-    return renderHook(
-      () => {
-        return usePreview()
-      },
-      {wrapper},
-    )
+    const wrapper = ({children}: {children?: ReactNode}) => <DndContext.Provider value={context}>{children}</DndContext.Provider>
+    return renderHook(() => usePreview(), {wrapper})
   }
 
   test('registers with the backend', () => {

@@ -1,7 +1,8 @@
+/** biome-ignore-all lint/suspicious/noMisplacedAssertion: shared assertion helpers, only called from within test() bodies */
 import {afterEach, beforeEach, describe, expect, jest, test} from 'bun:test'
 import {TestBackends, TestPipeline, TestPipelineWithSkip} from '@mocks/pipeline.js'
 import type {DragDropManager} from 'dnd-core'
-import {type MultiBackendContext, MultiBackendImpl, type MultiBackendOptions} from '../MultiBackendImpl.js'
+import {type MultiBackendContext, MultiBackendImpl, type MultiBackendOptions} from '../MultiBackendImpl.ts'
 
 const __replaceWindow = (): (() => void) => {
   const original = globalThis.window
@@ -27,9 +28,7 @@ describe('MultiBackendImpl class', () => {
     _defaultContext = {qrt: Math.random()}
   })
 
-  const createBackend = (pipeline: MultiBackendOptions = TestPipeline) => {
-    return new MultiBackendImpl(_defaultManager, _defaultContext, pipeline)
-  }
+  const createBackend = (pipeline: MultiBackendOptions = TestPipeline) => new MultiBackendImpl(_defaultManager, _defaultContext, pipeline)
 
   const switchTouchBackend = (): void => {
     expect(TestBackends[0].teardown).not.toHaveBeenCalled()
@@ -44,7 +43,7 @@ describe('MultiBackendImpl class', () => {
     let warn: ReturnType<typeof jest.spyOn>
 
     beforeEach(() => {
-      warn = jest.spyOn(console, 'warn').mockImplementation(() => {})
+      warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined)
     })
 
     afterEach(() => {
@@ -73,14 +72,14 @@ describe('MultiBackendImpl class', () => {
     })
 
     test('fails if a backend specifies an invalid `transition` property', () => {
-      const pipeline = {backends: [{backend: () => {}, transition: {}}]}
+      const pipeline = {backends: [{backend: () => undefined, transition: {}}]}
       expect(() => {
         createBackend(pipeline as unknown as MultiBackendOptions)
       }).toThrow(Error)
     })
 
     test('fails if a backend lacks an `id` property and one cannot be infered', () => {
-      const pipeline = {backends: [{backend: () => {}}]}
+      const pipeline = {backends: [{backend: () => undefined}]}
       expect(() => {
         createBackend(pipeline as unknown as MultiBackendOptions)
       }).toThrow(Error)
@@ -89,8 +88,8 @@ describe('MultiBackendImpl class', () => {
     test('fails if a backend has a duplicate `id` property', () => {
       const pipeline = {
         backends: [
-          {backend: () => {}, id: 'abc'},
-          {backend: () => {}, id: 'abc'},
+          {backend: () => undefined, id: 'abc'},
+          {backend: () => undefined, id: 'abc'},
         ],
       }
       expect(() => {
@@ -102,9 +101,7 @@ describe('MultiBackendImpl class', () => {
       const pipeline = {
         backends: [
           {
-            backend: () => {
-              return {}
-            },
+            backend: () => ({}),
           },
         ],
       }
@@ -118,11 +115,11 @@ describe('MultiBackendImpl class', () => {
       const pipeline = TestPipeline
       createBackend(pipeline)
 
-      expect(pipeline.backends[0].backend).toHaveBeenCalledTimes(1)
-      expect(pipeline.backends[0].backend).toHaveBeenCalledWith(_defaultManager, _defaultContext, undefined)
+      expect(pipeline.backends[0]!.backend).toHaveBeenCalledTimes(1)
+      expect(pipeline.backends[0]!.backend).toHaveBeenCalledWith(_defaultManager, _defaultContext, undefined)
 
-      expect(pipeline.backends[1].backend).toHaveBeenCalledTimes(1)
-      expect(pipeline.backends[1].backend).toHaveBeenCalledWith(_defaultManager, _defaultContext, pipeline.backends[1].options)
+      expect(pipeline.backends[1]!.backend).toHaveBeenCalledTimes(1)
+      expect(pipeline.backends[1]!.backend).toHaveBeenCalledWith(_defaultManager, _defaultContext, pipeline.backends[1]!.options)
     })
   })
 
@@ -392,7 +389,7 @@ describe('MultiBackendImpl class', () => {
   describe('backendsList function', () => {
     test('returns the backends list based on the pipeline', () => {
       const backend = createBackend()
-      expect(backend.backendsList()[0].id).toBe(TestPipeline.backends[0].id)
+      expect(backend.backendsList()[0]!.id).toBe(TestPipeline.backends[0]!.id)
     })
   })
 

@@ -1,6 +1,8 @@
 import type {CSSProperties, JSX} from 'react'
-import {useMultiDrag} from '../src/index.js'
-import {type DragContent, useFixRDnDRef} from './common.js'
+import {useMultiDrag, type useMultiDragOneState} from '../src/index.ts'
+import {type DragContent, useFixRDnDRef} from './common.ts'
+
+type DragState = useMultiDragOneState<{isDragging: boolean}>
 
 export const MultiCard = (props: {color: string}): JSX.Element => {
   const [
@@ -10,14 +12,12 @@ export const MultiCard = (props: {color: string}): JSX.Element => {
       touch: [touchProps, touchDrag],
     },
   ] = useMultiDrag<DragContent, void, {isDragging: boolean}>({
-    collect: (monitor) => {
-      return {
-        isDragging: monitor.isDragging(),
-      }
-    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
     item: {color: props.color},
     type: 'card',
-  })
+  }) as [DragState, {html5: DragState; touch: DragState}]
 
   const containerStyle: CSSProperties = {
     display: 'inline-block',

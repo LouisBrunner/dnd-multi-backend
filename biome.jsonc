@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.2/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -31,17 +31,146 @@
     }
   },
   "linter": {
+    "domains": {
+      "drizzle": "none",
+      "next": "none",
+      "playwright": "none",
+      "qwik": "none",
+      "reactNative": "none",
+      "solid": "none",
+      "svelte": "none",
+      "turborepo": "none",
+      "vue": "none"
+    },
     "enabled": true,
     "rules": {
+      "complexity": {
+        "noExcessiveLinesPerFunction": "off",
+        "useMaxParams": "off"
+      },
       "correctness": {
+        "noNodejsModules": "off",
+        "noUndeclaredDependencies": "off",
+        "noUnresolvedImports": "off",
         "noUnusedImports": {
           "fix": "safe",
           "level": "warn"
         }
       },
-      "preset": "recommended"
+      "preset": "all",
+      "security": {
+        "noSecrets": {
+          "level": "on",
+          "options": {
+            "entropyThreshold": 50
+          }
+        }
+      },
+      "style": {
+        "noContinue": "off",
+        "noExcessiveLinesPerFile": "off",
+        "noImplicitBoolean": "off",
+        "noJsxLiterals": "off",
+        "noMagicNumbers": "off",
+        "noNestedTernary": "off",
+        "noNonNullAssertion": "off",
+        "noTernary": "off",
+        "useAtIndex": "off",
+        "useConsistentTypeDefinitions": {
+          "level": "on",
+          "options": {
+            "style": "type"
+          }
+        },
+        "useDefaultSwitchClause": "off",
+        "useDestructuring": "off",
+        "useExportsLast": "off",
+        "useGlobalThis": "off",
+        "useNamingConvention": {
+          "level": "on",
+          "options": {
+            "strictCase": false
+          }
+        }
+      }
     }
   },
+  "overrides": [
+    {
+      "includes": ["packages/*/src/index.ts", "packages/*/src/hooks/index.ts"],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noBarrelFile": "off",
+            "noReExportAll": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.test.ts", "**/*.test.tsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["scripts/**", "packages/*/examples/**", "examples/**"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useUniqueElementIds": "off"
+          },
+          "performance": {
+            "noJsxPropsBind": "off"
+          },
+          "style": {
+            "noExcessiveClassesPerFile": "off",
+            "useComponentExportOnlyModules": "off"
+          },
+          "suspicious": {
+            "noConsole": "off",
+            "noLeakedRender": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/hooks/**", "**/use*.ts", "**/use*.tsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNamingConvention": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/dnd-multi-backend/src/types.ts", "packages/dnd-multi-backend/src/MultiBackendImpl.ts", "packages/react-dnd-multi-backend/src/hooks/useMultiCommon.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useConsistentMethodSignatures": "off",
+            "useConsistentTypeDefinitions": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/react-dnd-multi-backend/src/components/DndProvider.tsx", "packages/react-dnd-multi-backend/src/components/Preview.tsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noExportedImports": "off",
+            "useComponentExportOnlyModules": "off"
+          }
+        }
+      }
+    }
+  ],
   "vcs": {
     "clientKind": "git",
     "enabled": true,

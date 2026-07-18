@@ -1,6 +1,6 @@
 import type {BackendFactory, DragDropManager, Unsubscribe} from 'dnd-core'
-import {PreviewListImpl} from './PreviewListImpl.js'
-import type {BackendEntry, MultiBackendSwitcher, PreviewList, Transition} from './types.js'
+import {PreviewListImpl} from './PreviewListImpl.ts'
+import type {BackendEntry, MultiBackendSwitcher, PreviewList, Transition} from './types.ts'
 
 interface EventConstructor {
   new (type: string, eventInitDict?: EventInit): Event
@@ -35,13 +35,13 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
   private static /*#*/ isSetUp = false
 
   /*private*/ #current: string
-  /*private*/ #previews: PreviewList
-  /*private*/ #backends: Record<string, BackendEntry>
-  /*private*/ #backendsList: BackendEntry[]
-  /*private*/ #nodes: Record<string, DnDNode>
+  /*private*/ readonly #previews: PreviewList
+  /*private*/ readonly #backends: Record<string, BackendEntry>
+  /*private*/ readonly #backendsList: BackendEntry[]
+  /*private*/ readonly #nodes: Record<string, DnDNode>
 
   constructor(manager: DragDropManager, context?: MultiBackendContext, options?: MultiBackendOptions) {
-    if (!options?.backends || options.backends.length < 1) {
+    if (!options?.backends || options.backends.length === 0) {
       throw new Error(
         `You must specify at least one Backend, if you are coming from 2.x.x (or don't understand this error)
         see this guide: https://github.com/louisbrunner/dnd-multi-backend/tree/master/packages/react-dnd-multi-backend#migrating-from-2xx`,
@@ -57,12 +57,13 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
       this.#backends[backendRecord.id] = backendRecord
       this.#backendsList.push(backendRecord)
     }
-    this.#current = this.#backendsList[0].id
+    this.#current = this.#backendsList[0]!.id
 
     this.#nodes = {}
   }
 
-  #createBackend = (manager: DragDropManager, context: MultiBackendContext, backend: MultiBackendPipelineStep): BackendEntry => {
+  readonly #createBackend = (manager: DragDropManager, context: MultiBackendContext, backend: MultiBackendPipelineStep): BackendEntry => {
+    // biome-ignore lint/suspicious/noUnnecessaryConditions: backend.backend isn't guaranteed at runtime for plain-JS consumers
     if (!backend.backend) {
       throw new Error(`You must specify a 'backend' property in your Backend entry: ${JSON.stringify(backend)}`)
     }
@@ -82,6 +83,7 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
       )
     }
     if (inferName) {
+      // biome-ignore lint/suspicious/noConsole: deprecation notice for consumers, no logging framework available
       console.warn(
         `Deprecation notice: You are using a pipeline which doesn't include backends' 'id'.
         This might be unsupported in the future, please specify 'id' explicitly for every backend.`,
@@ -109,12 +111,13 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
       return
     }
 
+    // biome-ignore lint/suspicious/noUnnecessaryConditions: isSetUp is mutated across instances, not statically trackable
     if (MultiBackendImpl.isSetUp) {
       throw new Error('Cannot have two MultiBackends at the same time.')
     }
     MultiBackendImpl.isSetUp = true
     this.#addEventListeners(window)
-    this.#backends[this.#current].instance.setup()
+    this.#backends[this.#current]!.instance.setup()
   }
 
   teardown = (): void => {
@@ -124,40 +127,26 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
 
     MultiBackendImpl.isSetUp = false
     this.#removeEventListeners(window)
-    this.#backends[this.#current].instance.teardown()
+    this.#backends[this.#current]!.instance.teardown()
   }
 
-  connectDragSource = (sourceId: unknown, node?: unknown, options?: unknown): Unsubscribe => {
-    return this.#connectBackend('connectDragSource', sourceId, node, options)
-  }
+  connectDragSource = (sourceId: unknown, node?: unknown, options?: unknown): Unsubscribe => this.#connectBackend('connectDragSource', sourceId, node, options)
 
-  connectDragPreview = (sourceId: unknown, node?: unknown, options?: unknown): Unsubscribe => {
-    return this.#connectBackend('connectDragPreview', sourceId, node, options)
-  }
+  connectDragPreview = (sourceId: unknown, node?: unknown, options?: unknown): Unsubscribe => this.#connectBackend('connectDragPreview', sourceId, node, options)
 
-  connectDropTarget = (sourceId: unknown, node?: unknown, options?: unknown): Unsubscribe => {
-    return this.#connectBackend('connectDropTarget', sourceId, node, options)
-  }
+  connectDropTarget = (sourceId: unknown, node?: unknown, options?: unknown): Unsubscribe => this.#connectBackend('connectDropTarget', sourceId, node, options)
 
-  profile = (): Record<string, number> => {
-    return this.#backends[this.#current].instance.profile()
-  }
+  profile = (): Record<string, number> => this.#backends[this.#current]!.instance.profile()
 
   // Used by Preview component
-  previewEnabled = (): boolean => {
-    return this.#backends[this.#current].preview
-  }
+  previewEnabled = (): boolean => this.#backends[this.#current]!.preview
 
-  previewsList = (): PreviewList => {
-    return this.#previews
-  }
+  previewsList = (): PreviewList => this.#previews
 
-  backendsList = (): BackendEntry[] => {
-    return this.#backendsList
-  }
+  backendsList = (): BackendEntry[] => this.#backendsList
 
   // Multi Backend Listeners
-  #addEventListeners = (target: EventTarget): void => {
+  readonly #addEventListeners = (target: EventTarget): void => {
     for (const backend of this.#backendsList) {
       if (backend.transition) {
         target.addEventListener(backend.transition.event, this.#backendSwitcher)
@@ -165,7 +154,7 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
     }
   }
 
-  #removeEventListeners = (target: EventTarget): void => {
+  readonly #removeEventListeners = (target: EventTarget): void => {
     for (const backend of this.#backendsList) {
       if (backend.transition) {
         target.removeEventListener(backend.transition.event, this.#backendSwitcher)
@@ -174,7 +163,7 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
   }
 
   // Switching logic
-  #backendSwitcher = (event: Event): void => {
+  readonly #backendSwitcher = (event: Event): void => {
     const oldBackend = this.#current
 
     this.#backendsList.some((backend) => {
@@ -186,14 +175,14 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
     })
 
     if (this.#current !== oldBackend) {
-      this.#backends[oldBackend].instance.teardown()
+      this.#backends[oldBackend]!.instance.teardown()
       for (const [_, node] of Object.entries(this.#nodes)) {
         node.unsubscribe()
         node.unsubscribe = this.#callBackend(node.func, ...node.args)
       }
       this.#previews.backendChanged(this)
 
-      const newBackend = this.#backends[this.#current]
+      const newBackend = this.#backends[this.#current]!
       newBackend.instance.setup()
 
       if (newBackend.skipDispatchOnTransition) {
@@ -206,11 +195,9 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
     }
   }
 
-  #callBackend = (func: ConnectFunction, sourceId: unknown, node?: unknown, options?: unknown): Unsubscribe => {
-    return this.#backends[this.#current].instance[func](sourceId, node, options)
-  }
+  readonly #callBackend = (func: ConnectFunction, sourceId: unknown, node?: unknown, options?: unknown): Unsubscribe => this.#backends[this.#current]!.instance[func](sourceId, node, options)
 
-  #connectBackend = (func: ConnectFunction, sourceId: unknown, node?: unknown, options?: unknown): Unsubscribe => {
+  readonly #connectBackend = (func: ConnectFunction, sourceId: unknown, node?: unknown, options?: unknown): Unsubscribe => {
     const nodeId = `${func}_${sourceId as number}`
     const unsubscribe = this.#callBackend(func, sourceId, node, options)
     this.#nodes[nodeId] = {
@@ -220,7 +207,7 @@ export class MultiBackendImpl implements MultiBackendSwitcher {
     }
 
     return (): void => {
-      this.#nodes[nodeId].unsubscribe()
+      this.#nodes[nodeId]!.unsubscribe()
       delete this.#nodes[nodeId]
     }
   }

@@ -1,8 +1,9 @@
 import {join} from 'node:path'
+import process from 'node:process'
 import semver from 'semver'
-import {getWorkspaces, output, run, writePackageJSON} from './common'
+import {getWorkspaces, output, run, type Workspace, writePackageJSON} from './common.ts'
 
-const main = () => {
+const parseArgs = (): {ver: string; tag?: string} => {
   const [ver, tag] = process.argv.slice(2)
   if (ver === undefined) {
     console.error('Usage: bun run publish -- <semver> [tag]')
@@ -12,9 +13,10 @@ const main = () => {
     console.error(`❌ Invalid semver version: ${ver}`)
     process.exit(1)
   }
+  return {tag, ver}
+}
 
-  console.log(`🚀 Publishing version: ${ver}${tag !== undefined ? ` with tag ${tag}` : ''}`)
-
+const checkRepoIsReady = (): void => {
   console.log('🔍 Checking if all changes are committed')
   const changes = output('git', ['status', '--porcelain'])
   if (changes !== '') {
@@ -28,8 +30,9 @@ const main = () => {
     console.error('❌ Please switch to main branch before publishing')
     process.exit(1)
   }
+}
 
-  const workspaces = getWorkspaces()
+const updateWorkspaceVersions = (workspaces: Workspace[], ver: string): string[] => {
   const workspaceNames = workspaces.map(({pkg}) => pkg.name)
 
   const pkgFiles: string[] = []
@@ -49,6 +52,10 @@ const main = () => {
   console.log('✅ Formatting package.json files')
   run('bun', ['run', 'format:fix:internal', '--', ...pkgFiles])
 
+  return pkgFiles
+}
+
+const publishWorkspaces = (workspaces: Workspace[], tag?: string): void => {
   for (const {dir, pkg} of workspaces) {
     console.log(`🔨 Publishing ${pkg.name}`)
     const args = ['--cwd', dir, 'publish']
@@ -57,7 +64,9 @@ const main = () => {
     }
     run('bun', args)
   }
+}
 
+const commitAndTag = (ver: string): void => {
   console.log('↩️ Committing changes')
   run('git', ['commit', '-am', `release: v${ver}`])
   run('git', ['push'])
@@ -66,6 +75,19 @@ const main = () => {
   run('git', ['tag', `v${ver}`])
   run('git', ['push', '--tags'])
   run('gh', ['release', 'create', `v${ver}`, '--generate-notes'])
+}
+
+const main = () => {
+  const {ver, tag} = parseArgs()
+
+  console.log(`🚀 Publishing version: ${ver}${tag === undefined ? '' : ` with tag ${tag}`}`)
+
+  checkRepoIsReady()
+
+  const workspaces = getWorkspaces()
+  updateWorkspaceVersions(workspaces, ver)
+  publishWorkspaces(workspaces, tag)
+  commitAndTag(ver)
 }
 
 main()

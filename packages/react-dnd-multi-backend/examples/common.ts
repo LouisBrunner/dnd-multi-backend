@@ -6,11 +6,10 @@ export type DragContent = {
 }
 
 // FIXME: issue with react-dnd when using React v19
-export const useFixRDnDRef = <T extends Element>(ref: ConnectDropTarget | ConnectDragSource) => {
-  return useCallback(
+export const useFixRDnDRef = <T extends Element>(ref: ConnectDropTarget | ConnectDragSource) =>
+  useCallback(
     (node: T | null) => {
       ref(node)
     },
     [ref],
   )
-}

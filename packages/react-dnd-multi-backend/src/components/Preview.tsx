@@ -2,8 +2,8 @@ import {type JSX, useContext} from 'react'
 import {Preview as DnDPreview, Context as PreviewContext, type PreviewProps, type PreviewState} from 'react-dnd-preview'
 import {createPortal} from 'react-dom'
 
-import {useObservePreviews} from '../hooks/useObservePreviews.js'
-import {PreviewPortalContext} from './DndProvider.js'
+import {useObservePreviews} from '../hooks/useObservePreviews.ts'
+import {PreviewPortalContext} from './DndProvider.tsx'
 
 export const Preview = <T = unknown, El extends Element = Element>(props: PreviewProps<T, El>): JSX.Element | null => {
   const enabled = useObservePreviews()

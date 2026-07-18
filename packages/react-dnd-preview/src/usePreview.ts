@@ -1,7 +1,7 @@
 import type {Identifier} from 'dnd-core'
 import {type CSSProperties, type RefObject, useRef} from 'react'
 import {type DragLayerMonitor, useDragLayer} from 'react-dnd'
-import {calculatePointerPosition, type Point, type PreviewPlacement} from './offsets.js'
+import {calculatePointerPosition, type Point, type PreviewPlacement} from './offsets.ts'
 
 const getStyle = (currentOffset: Point): CSSProperties => {
   const transform = `translate(${currentOffset.x.toFixed(1)}px, ${currentOffset.y.toFixed(1)}px)`
@@ -34,15 +34,13 @@ export type usePreviewOptions = {
 
 export const usePreview = <T = unknown, El extends Element = Element>(options?: usePreviewOptions): usePreviewState<T, El> => {
   const child = useRef<El | null>(null)
-  const collectedProps = useDragLayer((monitor: DragLayerMonitor<T>) => {
-    return {
-      currentOffset: calculatePointerPosition(monitor, child, options?.placement, options?.padding),
-      isDragging: monitor.isDragging(),
-      item: monitor.getItem(),
-      itemType: monitor.getItemType(),
-      monitor,
-    }
-  })
+  const collectedProps = useDragLayer((monitor: DragLayerMonitor<T>) => ({
+    currentOffset: calculatePointerPosition(monitor, child, options?.placement, options?.padding),
+    isDragging: monitor.isDragging(),
+    item: monitor.getItem(),
+    itemType: monitor.getItemType(),
+    monitor,
+  }))
 
   if (!collectedProps.isDragging || collectedProps.currentOffset === null) {
     return {display: false}

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noMisplacedAssertion: shared assertion helpers, only called from within test() bodies */
 import {describe, expect, jest, test} from 'bun:test'
 import {createMock, type Mocked} from '@mocks/mocks.js'
 import {act, render, screen} from '@testing-library/react'
@@ -6,8 +7,9 @@ import type {MultiBackendSwitcher, PreviewList} from 'dnd-multi-backend'
 import {type JSX, useState} from 'react'
 import {DndContext, type DndContextType} from 'react-dnd'
 import type {PreviewGenerator} from 'react-dnd-preview'
-import {PreviewPortalContext} from '../DndProvider.js'
-import {Preview, PreviewContext} from '../Preview.js'
+import {Context as PreviewContext} from 'react-dnd-preview'
+import {PreviewPortalContext} from '../DndProvider.tsx'
+import {Preview} from '../Preview.tsx'
 
 type TestProps = {
   generator: PreviewGenerator
@@ -32,26 +34,21 @@ describe('Preview component', () => {
     return {backend, context, list}
   }
 
-  const Simple = () => {
-    return <div>abc</div>
-  }
+  const Simple = () => <div>abc</div>
 
-  const getLastRegister = (list: Mocked<PreviewList>) => {
-    return list.register.mock.calls[list.register.mock.calls.length - 1][0]
-  }
+  const getLastRegister = (list: Mocked<PreviewList>) => list.register.mock.calls[list.register.mock.calls.length - 1]![0]
 
   test('exports a context', () => {
     expect(Preview.Context).toBe(PreviewContext)
   })
 
   describe('using previews context', () => {
-    const createComponent = ({generator, context}: TestProps) => {
-      return render(
+    const createComponent = ({generator, context}: TestProps) =>
+      render(
         <DndContext.Provider value={context}>
           <Preview generator={generator} />
         </DndContext.Provider>,
       )
-    }
 
     test('registers with the backend', () => {
       const {context, list} = setup()

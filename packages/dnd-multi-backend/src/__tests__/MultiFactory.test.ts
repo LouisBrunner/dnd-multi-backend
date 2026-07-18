@@ -1,8 +1,8 @@
 import {describe, expect, jest, test} from 'bun:test'
 import {TestPipeline} from '@mocks/pipeline.js'
 import type {DragDropManager} from 'dnd-core'
-import {MultiBackendImpl} from '../MultiBackendImpl.js'
-import {MultiFactory} from '../MultiFactory.js'
+import {MultiBackendImpl} from '../MultiBackendImpl.ts'
+import {MultiFactory} from '../MultiFactory.ts'
 
 describe('MultiFactory function', () => {
   test('exports a function to create a MultiBackend', () => {

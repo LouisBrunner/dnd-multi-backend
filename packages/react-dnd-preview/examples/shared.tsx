@@ -14,21 +14,19 @@ export type ShapeProps = {
   ref?: Ref<HTMLDivElement>
 }
 
-export const Shape = ({style, size, color, children, ref}: ShapeProps) => {
-  return (
-    <div
-      ref={ref}
-      style={{
-        ...style,
-        backgroundColor: color,
-        height: `${size}px`,
-        width: `${size}px`,
-      }}
-    >
-      {children}
-    </div>
-  )
-}
+export const Shape = ({style, size, color, children, ref}: ShapeProps) => (
+  <div
+    ref={ref}
+    style={{
+      ...style,
+      backgroundColor: color,
+      height: `${size}px`,
+      width: `${size}px`,
+    }}
+  >
+    {children}
+  </div>
+)
 
 export const Draggable = (): JSX.Element => {
   const [_, drag] = useDrag({

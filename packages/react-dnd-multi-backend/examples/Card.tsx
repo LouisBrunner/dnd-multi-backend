@@ -1,14 +1,12 @@
 import type {CSSProperties, JSX} from 'react'
 import {useDrag} from 'react-dnd'
-import {useFixRDnDRef} from './common.js'
+import {useFixRDnDRef} from './common.ts'
 
 export const Card = (props: {color: string}): JSX.Element => {
   const [collectedProps, drag] = useDrag({
-    collect: (monitor) => {
-      return {
-        isDragging: monitor.isDragging(),
-      }
-    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
     item: {color: props.color},
     type: 'card',
   })

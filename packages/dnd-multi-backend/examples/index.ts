@@ -1,7 +1,7 @@
 import {createDragDropManager} from 'dnd-core'
-import {MouseTransition, MultiBackend, TouchTransition} from '../src/index.js'
-import {HTML5Backend, TouchBackend} from './Backends.js'
-import {DragSource, DropTarget} from './DnD.js'
+import {MouseTransition, MultiBackend, TouchTransition} from '../src/index.ts'
+import {HTML5Backend, TouchBackend} from './backends.ts'
+import {DragSource, DropTarget} from './dnd.ts'
 
 // Setup pipeline
 const pipeline = {

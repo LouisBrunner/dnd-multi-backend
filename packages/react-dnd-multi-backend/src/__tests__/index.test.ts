@@ -1,25 +1,38 @@
 import {describe, expect, test} from 'bun:test'
 import {createTransition, HTML5DragTransition, MouseTransition, MultiBackend, TouchTransition} from 'dnd-multi-backend'
-import {DndProvider} from '../components/DndProvider.js'
-import {Preview, PreviewContext} from '../components/Preview.js'
-import {useMultiDrag, useMultiDrop, usePreview} from '../hooks/index.js'
-import * as Module from '../index.js'
+import {Context as PreviewContext} from 'react-dnd-preview'
+import {DndProvider} from '../components/DndProvider.tsx'
+import {Preview} from '../components/Preview.tsx'
+import {useMultiDrag, useMultiDrop, usePreview} from '../hooks/index.ts'
+import {
+  DndProvider as ModuleDndProvider,
+  HTML5DragTransition as ModuleHTML5DragTransition,
+  MouseTransition as ModuleMouseTransition,
+  MultiBackend as ModuleMultiBackend,
+  Preview as ModulePreview,
+  PreviewContext as ModulePreviewContext,
+  TouchTransition as ModuleTouchTransition,
+  createTransition as moduleCreateTransition,
+  useMultiDrag as moduleUseMultiDrag,
+  useMultiDrop as moduleUseMultiDrop,
+  usePreview as moduleUsePreview,
+} from '../index.ts'
 
 describe('react-dnd-multi-backend module', () => {
   test('exports correctly', () => {
-    expect(Module.DndProvider).toBe(DndProvider)
+    expect(ModuleDndProvider).toBe(DndProvider)
 
-    expect(Module.Preview).toBe(Preview)
-    expect(Module.PreviewContext).toBe(PreviewContext)
+    expect(ModulePreview).toBe(Preview)
+    expect(ModulePreviewContext).toBe(PreviewContext)
 
-    expect(Module.usePreview).toBe(usePreview)
-    expect(Module.useMultiDrag).toBe(useMultiDrag)
-    expect(Module.useMultiDrop).toBe(useMultiDrop)
+    expect(moduleUsePreview).toBe(usePreview)
+    expect(moduleUseMultiDrag).toBe(useMultiDrag)
+    expect(moduleUseMultiDrop).toBe(useMultiDrop)
 
-    expect(Module.MultiBackend).toBe(MultiBackend)
-    expect(Module.HTML5DragTransition).toBe(HTML5DragTransition)
-    expect(Module.TouchTransition).toBe(TouchTransition)
-    expect(Module.MouseTransition).toBe(MouseTransition)
-    expect(Module.createTransition).toBe(createTransition)
+    expect(ModuleMultiBackend).toBe(MultiBackend)
+    expect(ModuleHTML5DragTransition).toBe(HTML5DragTransition)
+    expect(ModuleTouchTransition).toBe(TouchTransition)
+    expect(ModuleMouseTransition).toBe(MouseTransition)
+    expect(moduleCreateTransition).toBe(createTransition)
   })
 })

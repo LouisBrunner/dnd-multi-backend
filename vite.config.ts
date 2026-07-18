@@ -4,6 +4,7 @@ import {defineConfig} from 'vite'
 
 const examplesDir = resolve(import.meta.dirname, 'examples')
 
+// biome-ignore lint/style/noDefaultExport: vite requires a default export from its config file
 export default defineConfig(() => ({
   build: {
     rollupOptions: {

@@ -2,8 +2,8 @@ import {describe, expect, mock, test} from 'bun:test'
 import {createMock} from '@mocks/mocks.js'
 import {act, renderHook} from '@testing-library/react'
 import type {DragLayerMonitor} from 'react-dnd'
-import type {PreviewPlacement} from '../offsets.js'
-import {usePreview, type usePreviewStateFull} from '../usePreview.js'
+import type {PreviewPlacement} from '../offsets.ts'
+import {usePreview, type usePreviewStateFull} from '../usePreview.ts'
 
 type MockItemType = {bluh: string}
 
@@ -55,7 +55,7 @@ const makeFakeDiv = (): HTMLDivElement => ({
       height: 70,
       left: 0,
       right: 0,
-      toJSON() {},
+      toJSON: () => undefined,
       top: 0,
       width: 100,
       x: 0,
@@ -67,9 +67,7 @@ const makeFakeDiv = (): HTMLDivElement => ({
 describe('usePreview hook', () => {
   const __setMockMonitor = <T extends DragLayerMonitor>(monitor: T) => {
     mock.module('react-dnd', () => ({
-      useDragLayer: <D, C>(collect: (monitor: DragLayerMonitor<D>) => C) => {
-        return collect(monitor)
-      },
+      useDragLayer: <D, C>(collect: (monitor: DragLayerMonitor<D>) => C) => collect(monitor),
     }))
   }
 
@@ -79,9 +77,7 @@ describe('usePreview hook', () => {
       result: {
         current: {display},
       },
-    } = renderHook(() => {
-      return usePreview()
-    })
+    } = renderHook(() => usePreview())
     expect(display).toBe(false)
   })
 
@@ -97,9 +93,7 @@ describe('usePreview hook', () => {
       result: {
         current: {display},
       },
-    } = renderHook(() => {
-      return usePreview()
-    })
+    } = renderHook(() => usePreview())
     expect(display).toBe(false)
   })
 
@@ -115,9 +109,7 @@ describe('usePreview hook', () => {
       result: {
         current: {display},
       },
-    } = renderHook(() => {
-      return usePreview()
-    })
+    } = renderHook(() => usePreview())
     expect(display).toBe(false)
   })
 
@@ -129,9 +121,7 @@ describe('usePreview hook', () => {
         return {bluh: 'fake'} as T
       },
     })
-    const {result} = renderHook(() => {
-      return usePreview() as usePreviewStateFull
-    })
+    const {result} = renderHook(() => usePreview() as usePreviewStateFull)
     const {
       current: {display, monitor: _monitor, ref, ...rest},
     } = result
@@ -165,9 +155,7 @@ describe('usePreview hook', () => {
         return {bluh: 'fake'} as T
       },
     })
-    const {result} = renderHook(() => {
-      return usePreview() as usePreviewStateFull
-    })
+    const {result} = renderHook(() => usePreview() as usePreviewStateFull)
     const {
       current: {display, monitor: _monitor, ref, ...rest},
     } = result
@@ -198,9 +186,7 @@ describe('usePreview hook', () => {
         return {bluh: 'fake'} as T
       },
     })
-    const {result, rerender} = renderHook(() => {
-      return usePreview() as usePreviewStateFull
-    })
+    const {result, rerender} = renderHook(() => usePreview() as usePreviewStateFull)
     const {
       current: {display, monitor: _monitor, ref, ...rest},
     } = result
@@ -295,9 +281,7 @@ describe('usePreview hook', () => {
         return {bluh: 'fake'} as T
       },
     })
-    const {result, rerender} = renderHook(() => {
-      return usePreview({placement}) as usePreviewStateFull
-    })
+    const {result, rerender} = renderHook(() => usePreview({placement}) as usePreviewStateFull)
     const {
       current: {display, monitor: _monitor, ref, ...rest},
     } = result

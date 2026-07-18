@@ -1,8 +1,8 @@
-import {usePreview as usePreviewDnd, type usePreviewOptions, type usePreviewState, type usePreviewStateContent} from 'react-dnd-preview'
+import {usePreview as usePreviewDnd, type usePreviewOptions, type usePreviewState} from 'react-dnd-preview'
 
-import {useObservePreviews} from './useObservePreviews.js'
+import {useObservePreviews} from './useObservePreviews.ts'
 
-export type {usePreviewState, usePreviewStateContent}
+export type {usePreviewState, usePreviewStateContent} from 'react-dnd-preview'
 
 export const usePreview = <T = unknown, El extends Element = Element>(props?: usePreviewOptions): usePreviewState<T, El> => {
   const enabled = useObservePreviews()

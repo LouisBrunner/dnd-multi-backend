@@ -1,30 +1,28 @@
 import {HTML5toTouch} from 'rdndmb-html5-to-touch'
 import {type CSSProperties, type JSX, type RefObject, StrictMode, useContext, useRef, useState} from 'react'
 import {DndProvider as ReactDndProvider} from 'react-dnd'
-import {DndProvider, MultiBackend, Preview, PreviewContext, type PreviewState, usePreview} from '../src/index.js'
+import {DndProvider, MultiBackend, Preview, PreviewContext, type PreviewState, usePreview} from '../src/index.ts'
 
-import {Basket} from './Basket.js'
-import {Card} from './Card.js'
-import type {DragContent} from './common.js'
-import {MultiBasket} from './MultiBasket.js'
-import {MultiCard} from './MultiCard.js'
+import {Basket} from './Basket.tsx'
+import {Card} from './Card.tsx'
+import type {DragContent} from './common.ts'
+import {MultiBasket} from './MultiBasket.tsx'
+import {MultiCard} from './MultiCard.tsx'
 
-const Block = ({row, text, item, style}: {row: number; text: string; item: DragContent; style: CSSProperties}): JSX.Element => {
-  return (
-    <div
-      style={{
-        ...style,
-        backgroundColor: item.color,
-        height: '50px',
-        top: `${row * 60}px`,
-        whiteSpace: 'nowrap',
-        width: '50px',
-      }}
-    >
-      Generated {text}
-    </div>
-  )
-}
+const Block = ({row, text, item, style}: {row: number; text: string; item: DragContent; style: CSSProperties}): JSX.Element => (
+  <div
+    style={{
+      ...style,
+      backgroundColor: item.color,
+      height: '50px',
+      top: `${row * 60}px`,
+      whiteSpace: 'nowrap',
+      width: '50px',
+    }}
+  >
+    Generated {text}
+  </div>
+)
 
 const ContextPreview = ({text}: {text: string}): JSX.Element => {
   const preview = useContext(PreviewContext)
@@ -44,42 +42,34 @@ const HookPreview = ({text}: {text: string}): JSX.Element | null => {
   return <Block item={item} row={1} style={style} text={`${text} with Hook`} />
 }
 
-const ComponentPreview = ({text}: {text: string}): JSX.Element => {
-  return (
-    <Preview
-      generator={({item, style}: PreviewState<DragContent>): JSX.Element => {
-        return <Block item={item} row={2} style={style} text={`${text} with Component`} />
-      }}
-    />
-  )
-}
+const ComponentPreview = ({text}: {text: string}): JSX.Element => (
+  <Preview generator={({item, style}: PreviewState<DragContent>): JSX.Element => <Block item={item} row={2} style={style} text={`${text} with Component`} />} />
+)
 
-const Content = ({title, fref}: {title: string; fref: RefObject<HTMLDivElement | null>}) => {
-  return (
-    <>
-      <h2>{title} API</h2>
-      <Card color="#cc2211" />
-      <Card color="#22cc11" />
-      <Card color="#2211cc" />
-      <Basket logs={fref} />
+const Content = ({title, fref}: {title: string; fref: RefObject<HTMLDivElement | null>}) => (
+  <>
+    <h2>{title} API</h2>
+    <Card color="#cc2211" />
+    <Card color="#22cc11" />
+    <Card color="#2211cc" />
+    <Basket logs={fref} />
 
-      <br />
+    <br />
 
-      <MultiCard color="#33ff77" />
-      <MultiBasket logs={fref} />
+    <MultiCard color="#33ff77" />
+    <MultiBasket logs={fref} />
 
-      <br />
+    <br />
 
-      <div ref={fref} />
+    <div ref={fref} />
 
-      <Preview>
-        <ContextPreview text={title} />
-      </Preview>
-      <HookPreview text={title} />
-      <ComponentPreview text={title} />
-    </>
-  )
-}
+    <Preview>
+      <ContextPreview text={title} />
+    </Preview>
+    <HookPreview text={title} />
+    <ComponentPreview text={title} />
+  </>
+)
 
 export const App = (): JSX.Element => {
   const [useNew, setAPI] = useState(true)

@@ -1,8 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig.json",
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -11,18 +13,30 @@
     "moduleResolution": "bundler",
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
       "@mocks/*": ["./__mocks__/*"],
       "dnd-multi-backend": ["./packages/dnd-multi-backend/src"],
+      "dnd-multi-backend/*": ["./packages/dnd-multi-backend/src/*"],
       "rdndmb-html5-to-touch": ["./packages/rdndmb-html5-to-touch/src"],
-      "react-dnd-preview": ["./packages/react-dnd-preview/src"]
+      "rdndmb-html5-to-touch/*": ["./packages/rdndmb-html5-to-touch/src/*"],
+      "react-dnd-preview": ["./packages/react-dnd-preview/src"],
+      "react-dnd-preview/*": ["./packages/react-dnd-preview/src/*"]
     },
     "preserveConstEnums": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
+    "strictBindCallApply": true,
+    "strictBuiltinIteratorReturn": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
     "target": "es2020",
     "types": ["bun"]
   },

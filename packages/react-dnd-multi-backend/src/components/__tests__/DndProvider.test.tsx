@@ -2,16 +2,15 @@ import {describe, expect, jest, test} from 'bun:test'
 import {TestPipeline} from '@mocks/pipeline.js'
 import {render} from '@testing-library/react'
 import {type ReactNode, useContext} from 'react'
-import {DndProvider, PreviewPortalContext} from '../DndProvider.js'
+import {DndProvider, PreviewPortalContext} from '../DndProvider.tsx'
 
 describe('DndProvider component', () => {
-  const createComponent = (child: ReactNode, element?: Element) => {
-    return render(
+  const createComponent = (child: ReactNode, element?: Element) =>
+    render(
       <DndProvider options={TestPipeline} portal={element}>
         {child}
       </DndProvider>,
     )
-  }
 
   test('contexts have sensible defaults', () => {
     const Child = () => {

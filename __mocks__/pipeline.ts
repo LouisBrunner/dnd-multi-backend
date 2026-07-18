@@ -1,40 +1,35 @@
 import {jest} from 'bun:test'
 import type {Backend} from 'dnd-core'
-import {createTransition, type MultiBackendOptions} from 'dnd-multi-backend'
-import {createMock} from './mocks'
+import {createTransition, type MultiBackendOptions, type MultiBackendPipelineStep} from 'dnd-multi-backend/index.ts'
+import {createMock, type Mocked} from './mocks.ts'
 
-export const TestBackends = [createMock<Backend>(), createMock<Backend>()]
+export const TestBackends: [Backend & Mocked<Backend>, Backend & Mocked<Backend>] = [createMock<Backend>(), createMock<Backend>()]
+
+const backend1: MultiBackendPipelineStep = {
+  backend: jest.fn((): Backend => TestBackends[0]),
+  id: 'back1',
+}
+
+const backend2: MultiBackendPipelineStep = {
+  backend: jest.fn((): Backend => TestBackends[1]),
+  id: 'back2',
+  options: {abc: 123},
+  preview: true,
+  transition: createTransition(
+    'touchstart',
+    jest.fn((event) => event.type === 'touchstart'),
+  ),
+}
 
 export const TestPipeline: MultiBackendOptions = {
-  backends: [
-    {
-      backend: jest.fn((): Backend => {
-        return TestBackends[0]
-      }),
-      id: 'back1',
-    },
-    {
-      backend: jest.fn((): Backend => {
-        return TestBackends[1]
-      }),
-      id: 'back2',
-      options: {abc: 123},
-      preview: true,
-      transition: createTransition(
-        'touchstart',
-        jest.fn((event) => {
-          return event.type === 'touchstart'
-        }),
-      ),
-    },
-  ],
+  backends: [backend1, backend2],
 }
 
 export const TestPipelineWithSkip: MultiBackendOptions = {
   backends: [
-    TestPipeline.backends[0],
+    backend1,
     {
-      ...TestPipeline.backends[1],
+      ...backend2,
       skipDispatchOnTransition: true,
     },
   ],

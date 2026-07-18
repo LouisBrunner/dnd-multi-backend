@@ -1,11 +1,11 @@
 import type {DragDropMonitor, DragSource as IDragSource, DropTarget as IDropTarget, Identifier} from 'dnd-core'
 
-type createElementProps = {
+type CreateElementProps = {
   text: string
   color: string
 }
 
-const createElement = ({text, color}: createElementProps): Element => {
+const createElement = ({text, color}: CreateElementProps): Element => {
   const p = document.createElement('p')
   const textNode = document.createTextNode(text)
   p.style.cssText = `width: 100px; height: 100px; margin: 10px; padding: 5px; background: ${color}`
@@ -14,10 +14,10 @@ const createElement = ({text, color}: createElementProps): Element => {
 }
 
 export class DragSource implements IDragSource {
-  #node: Element
-  #color: string
+  readonly #node: Element
+  readonly #color: string
 
-  constructor({text, color}: createElementProps) {
+  constructor({text, color}: CreateElementProps) {
     this.#node = createElement({color, text})
     this.#color = color
   }
@@ -32,6 +32,7 @@ export class DragSource implements IDragSource {
     return {color: this.#color} as unknown as undefined
   }
 
+  // biome-ignore lint/suspicious/noEmptyBlockStatements: interface requires this method even though it's a no-op here
   endDrag(_monitor: DragDropMonitor, _targetId: Identifier): void {}
 
   canDrag(_monitor: DragDropMonitor, _targetId: Identifier): boolean {
@@ -44,10 +45,10 @@ export class DragSource implements IDragSource {
 }
 
 export class DropTarget<T> implements IDropTarget {
-  #node: Element
-  #onDrop?: (r: T) => void
+  readonly #node: Element
+  readonly #onDrop?: (r: T) => void
 
-  constructor({text, color, onDrop}: createElementProps & {onDrop?: (r: T) => void}) {
+  constructor({text, color, onDrop}: CreateElementProps & {onDrop?: (r: T) => void}) {
     this.#node = createElement({color, text})
     this.#onDrop = onDrop
   }
@@ -60,6 +61,7 @@ export class DropTarget<T> implements IDropTarget {
     return true
   }
 
+  // biome-ignore lint/suspicious/noEmptyBlockStatements: interface requires this method even though it's a no-op here
   hover(_monitor: DragDropMonitor, _targetId: Identifier): void {}
 
   drop(monitor: DragDropMonitor, _targetId: Identifier): void {

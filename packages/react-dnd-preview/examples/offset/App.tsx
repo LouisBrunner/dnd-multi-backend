@@ -1,8 +1,8 @@
 import {type CSSProperties, type JSX, type Ref, StrictMode, useState} from 'react'
 import {DndProvider} from 'react-dnd'
 import {TouchBackend} from 'react-dnd-touch-backend'
-import {type Point, type PreviewPlacement, usePreview} from '../../src/index.js'
-import {type DragContent, Draggable, Shape} from '../shared.js'
+import {type Point, type PreviewPlacement, usePreview} from '../../src/index.ts'
+import {type DragContent, Draggable, Shape} from '../shared.tsx'
 
 type Kinds = 'default' | 'ref' | 'custom_client' | 'custom_source_client'
 
@@ -42,6 +42,7 @@ export const Preview = ({kind, text, placement, padding}: PreviewProps): JSX.Ele
     finalStyle = {
       ...finalStyle,
       transform,
+      // biome-ignore lint/style/useNamingConvention: CSSProperties requires this exact key
       WebkitTransform: transform,
     }
   }
