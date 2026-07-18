@@ -23,7 +23,7 @@
     "react-dnd-touch-backend": "catalog:",
     "react-dom": "^19.2.7",
     "semver": "^7.8.5",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "vite": "^8.1.4"
   },
   "engines": {
