@@ -14,7 +14,7 @@
     "@types/semver": "^7.8.0",
     "@vitejs/plugin-react": "^6.0.5",
     "dnd-core": "catalog:",
-    "esbuild": "^0.28.1",
+    "esbuild": "^0.28.2",
     "react": "^19.2.8",
     "react-dnd": "catalog:",
     "react-dnd-html5-backend": "catalog:",
@@ -24,7 +24,9 @@
     "react-dom": "^19.2.8",
     "semver": "^7.8.5",
     "typescript": "^7.0.2",
-    "vite": "^8.2.1"
+    "vite": "^8.2.1",
+    "vite-plugin-csp-guard": "4.0.1",
+    "vite-plugin-sri-gen": "^1.7.3"
   },
   "engines": {
     "bun": ">=1.0.0"

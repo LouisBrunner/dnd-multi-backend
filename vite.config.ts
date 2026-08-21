@@ -1,6 +1,8 @@
 import {resolve} from 'node:path'
 import react from '@vitejs/plugin-react'
 import {defineConfig} from 'vite'
+import csp from 'vite-plugin-csp-guard'
+import sri from 'vite-plugin-sri-gen'
 
 const examplesDir = resolve(import.meta.dirname, 'examples')
 
@@ -17,7 +19,22 @@ export default defineConfig(() => ({
       },
     },
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    csp({
+      algorithm: 'sha256',
+      override: true,
+      policy: {
+        'base-uri': ["'none'"],
+        'connect-src': ["'self'"],
+        'default-src': ["'none'"],
+        'form-action': ["'none'"],
+        'object-src': ["'none'"],
+        'script-src': ["'self'", 'https://static.cloudflareinsights.com'],
+      },
+    }),
+    sri(),
+  ],
   resolve: {
     alias: {
       'dnd-multi-backend': resolve(import.meta.dirname, 'packages/dnd-multi-backend/src'),

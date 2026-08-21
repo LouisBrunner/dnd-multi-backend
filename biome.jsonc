@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.2/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.4/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -14,13 +14,19 @@
     "enabled": true
   },
   "files": {
-    "includes": ["**", "!examples/*.js", "!coverage", "!**/.jscpd.json"]
+    "includes": ["**", "!.git", "!examples/*.js", "!coverage", "!**/.jscpd.json"]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
     "lineWidth": 200
+  },
+  "html": {
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "enabled": true
+    }
   },
   "javascript": {
     "formatter": {
