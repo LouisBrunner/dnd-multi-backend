@@ -29,6 +29,7 @@ export default defineConfig(() => ({
         'connect-src': ["'self'"],
         'default-src': ["'none'"],
         'form-action': ["'none'"],
+        'img-src': ["'self'"],
         'object-src': ["'none'"],
         'script-src': ["'self'", 'https://static.cloudflareinsights.com'],
       },
